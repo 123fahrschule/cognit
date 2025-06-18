@@ -1,13 +1,16 @@
 defmodule Cognit.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :cognit,
-      version: "0.1.0",
-      elixir: "~> 1.18",
+      version: @version,
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -34,6 +37,16 @@ defmodule Cognit.MixProject do
 
       # Mishka Chelekom is a fully featured components and UI kit library for Phoenix & Phoenix LiveView
       {:mishka_chelekom, "~> 0.0.5", only: :dev}
+    ]
+  end
+
+  defp aliases do
+    [
+      release: [
+        "cmd git tag #{@version}",
+        "cmd git push",
+        "cmd git push --tags"
+      ]
     ]
   end
 end
