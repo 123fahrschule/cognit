@@ -24,6 +24,13 @@ defmodule Cognit.MixProject do
       {:phoenix, "~> 1.7"},
       {:phoenix_live_view, "~> 1.0"},
       {:gettext, "~> 0.26"},
+      {:heroicons,
+       github: "tailwindlabs/heroicons",
+       tag: "v2.1.1",
+       sparse: "optimized",
+       app: false,
+       compile: false,
+       depth: 1},
 
       # Mishka Chelekom is a fully featured components and UI kit library for Phoenix & Phoenix LiveView
       {:mishka_chelekom, "~> 0.0.5", only: :dev}
