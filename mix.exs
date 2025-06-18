@@ -21,6 +21,10 @@ defmodule Cognit.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:phoenix, "~> 1.7"},
+      {:phoenix_live_view, "~> 1.0"},
+      {:gettext, "~> 0.26"},
+
       # Mishka Chelekom is a fully featured components and UI kit library for Phoenix & Phoenix LiveView
       {:mishka_chelekom, "~> 0.0.5", only: :dev}
     ]
