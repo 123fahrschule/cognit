@@ -3,16 +3,9 @@ defmodule Cognit do
   Documentation for `Cognit`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Cognit.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  defmacro __using__(_) do
+    quote do
+      use CognitWeb.Components.MishkaComponents
+    end
   end
 end
