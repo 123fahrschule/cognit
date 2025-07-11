@@ -14,13 +14,18 @@ defmodule Cognit.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Cognit.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:phoenix, "~> 1.7"},
+      {:phoenix_live_view, "~> 1.0"},
+      {:gettext, "~> 0.26"},
+
       # A collection of Live View components inspired by shadcn
       {:salad_ui, "~> 1.0.0-beta.3", only: :dev}
     ]
