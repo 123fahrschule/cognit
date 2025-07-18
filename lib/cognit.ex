@@ -197,7 +197,7 @@ defmodule Cognit do
       import Cognit.Input
       import Cognit.Label
       import Cognit.Menu
-      import Cognit.Pagination
+      # import Cognit.Pagination
       import Cognit.Popover
       import Cognit.Progress
       import Cognit.RadioGroup
@@ -215,6 +215,8 @@ defmodule Cognit do
       import Cognit.Toggle
       import Cognit.ToggleGroup
       import Cognit.Tooltip
+
+      defdelegate pagination(assigns), to: Cognit.Components.Pagination, as: :custom_pagination
     end
   end
 end
