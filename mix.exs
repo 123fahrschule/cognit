@@ -25,6 +25,7 @@ defmodule Cognit.MixProject do
       {:phoenix, "~> 1.7"},
       {:phoenix_live_view, "~> 1.0"},
       {:gettext, "~> 0.26"},
+      {:tw_merge, "~> 0.1"},
 
       # A collection of Live View components inspired by shadcn
       {:salad_ui, "~> 1.0.0-beta.3", only: :dev}
