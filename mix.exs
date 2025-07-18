@@ -23,6 +23,13 @@ defmodule Cognit.MixProject do
       {:phoenix_live_view, "~> 1.0"},
       {:gettext, "~> 0.26"},
       {:tw_merge, "~> 0.1"},
+      {:heroicons,
+       github: "tailwindlabs/heroicons",
+       tag: "v2.1.1",
+       sparse: "optimized",
+       app: false,
+       compile: false,
+       depth: 1},
 
       # A collection of Live View components inspired by shadcn
       {:salad_ui, "~> 1.0.0-beta.3", only: :dev}
