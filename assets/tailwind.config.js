@@ -1,7 +1,11 @@
 module.exports = {
-  content: [],
+  content: [
+"../deps/salad_ui/lib/**/*.ex",],
   theme: {
-    extend: {},
+    extend: {
+      colors: require("./tailwind.colors.json"),},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("./vendor/tailwindcss-animate"),],
 };
