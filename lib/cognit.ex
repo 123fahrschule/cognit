@@ -218,6 +218,7 @@ defmodule Cognit do
 
       import Cognit.Components.Flash
       import Cognit.Components.Logo
+      import Cognit.Components.Page
 
       defdelegate pagination(assigns), to: Cognit.Components.Pagination, as: :custom_pagination
     end
