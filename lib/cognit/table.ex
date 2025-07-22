@@ -64,7 +64,7 @@ defmodule Cognit.Table do
 
   def table_header(assigns) do
     ~H"""
-    <thead class={classes(["[&_tr]:border-b", @class])} {@rest}>
+    <thead class={classes(["[&_tr]:border-b [&_tr]:bg-neutral-50", @class])} {@rest}>
       {render_slot(@inner_block)}
     </thead>
     """
@@ -78,7 +78,7 @@ defmodule Cognit.Table do
   * `:class` - Additional CSS classes
   * `:aria-rowindex` - Numeric index of the row
   """
-  attr(:class, :string, default: nil)
+  attr(:class, :any, default: nil)
   attr(:"aria-rowindex", :integer, default: nil)
   attr(:rest, :global)
   slot(:inner_block, required: true)
@@ -156,8 +156,8 @@ defmodule Cognit.Table do
   * `:class` - Additional CSS classes
   """
   attr(:class, :any, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr(:rest, :global, include: ["colspan"])
+  slot(:inner_block)
 
   def table_cell(assigns) do
     ~H"""
