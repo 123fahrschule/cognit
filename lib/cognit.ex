@@ -216,6 +216,8 @@ defmodule Cognit do
       import Cognit.ToggleGroup
       import Cognit.Tooltip
 
+      import Cognit.CoreComponents
+
       import Cognit.Components.Flash
       import Cognit.Components.Logo
       import Cognit.Components.Page
