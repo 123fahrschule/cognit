@@ -336,7 +336,7 @@ defmodule Cognit.Helpers do
   end
 
   defp get_translator_from_config do
-    case Application.get_env(:salad_ui, :error_translator_function) do
+    case Application.get_env(:cognit, :error_translator_function) do
       {module, function} -> &apply(module, function, [&1])
       nil -> nil
     end
