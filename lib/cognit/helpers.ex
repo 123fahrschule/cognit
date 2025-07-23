@@ -303,7 +303,7 @@ defmodule Cognit.Helpers do
 
   # Translate error message
   # borrowed from https://github.com/petalframework/petal_components/blob/main/lib/petal_components/field.ex#L414
-  defp translate_error({msg, opts}) do
+  def translate_error({msg, opts}) do
     config_translator = get_translator_from_config() || (&fallback_translate_error/1)
 
     config_translator.({msg, opts})
