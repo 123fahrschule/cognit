@@ -1,7 +1,7 @@
 defmodule Cognit.Components.Logo do
   use Cognit, :component
 
-  attr :rest, :global
+  attr(:rest, :global)
 
   def logo(assigns) do
     ~H"""

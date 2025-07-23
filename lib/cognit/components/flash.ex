@@ -1,4 +1,3 @@
-
 defmodule Cognit.Components.Flash do
   use Cognit, :component
   use Gettext, backend: CognitWeb.Gettext
@@ -7,13 +6,13 @@ defmodule Cognit.Components.Flash do
   import Cognit.Button
   import Cognit.Icon
 
-  attr :id, :string
-  attr :title, :string
-  attr :description, :string, default: nil
-  attr :kind, :string, default: "info"
-  attr :rest, :global
+  attr(:id, :string)
+  attr(:title, :string)
+  attr(:description, :string, default: nil)
+  attr(:kind, :string, default: "info")
+  attr(:rest, :global)
 
-  slot :icon
+  slot(:icon)
 
   def flash(assigns) do
     ~H"""
@@ -43,7 +42,7 @@ defmodule Cognit.Components.Flash do
     """
   end
 
-  attr :flash, :map
+  attr(:flash, :map)
 
   def flash_group(assigns) do
     ~H"""
