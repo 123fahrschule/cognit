@@ -4,7 +4,8 @@ defmodule Cognit.Components.Flash do
 
   import Cognit.Alert
   import Cognit.Button
-  import Cognit.Icon
+
+  import Cognit.Components.Icon
 
   attr(:id, :string)
   attr(:title, :string)
@@ -20,7 +21,7 @@ defmodule Cognit.Components.Flash do
       <%= if @icon != [] do %>
         {render_slot(@icon)}
       <% else %>
-        <.icon name={alert_icon(@kind)} class="h-4 w-4" />
+        <.icon name={alert_icon(@kind)} class="text-[16px]" />
       <% end %>
       <.alert_title class="pr-7">
         {@title}
@@ -35,7 +36,7 @@ defmodule Cognit.Components.Flash do
           class="size-6"
           phx-click={JS.exec("phx-remove", to: "##{@id}")}
         >
-          <.icon name="hero-x-mark" class="h-4 w-4" />
+          <.icon name="close" class="text-[16px]" />
         </.button>
       </div>
     </.alert>
@@ -82,7 +83,7 @@ defmodule Cognit.Components.Flash do
       hidden
     >
       <:icon>
-        <.icon name="hero-arrow-path" class="h-4 w-4 motion-safe:animate-spin" />
+        <.icon name="autorenew" class="text-[16px] motion-safe:animate-spin" />
       </:icon>
     </.flash>
     """
@@ -106,7 +107,7 @@ defmodule Cognit.Components.Flash do
       hidden
     >
       <:icon>
-        <.icon name="hero-arrow-path" class="h-4 w-4 motion-safe:animate-spin" />
+        <.icon name="autorenew" class="text-[16px] motion-safe:animate-spin" />
       </:icon>
     </.flash>
     """
@@ -115,8 +116,8 @@ defmodule Cognit.Components.Flash do
   defp alert_variant("error"), do: "destructive"
   defp alert_variant(_), do: "default"
 
-  defp alert_icon("error"), do: "hero-exclamation-circle"
-  defp alert_icon(_), do: "hero-information-circle"
+  defp alert_icon("error"), do: "error"
+  defp alert_icon(_), do: "info"
 
   defp hide(js, selector) do
     JS.hide(js,
