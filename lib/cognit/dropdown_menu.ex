@@ -275,6 +275,7 @@ defmodule Cognit.DropdownMenu do
       class={
         classes([
           "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
+          "[&_.icon]:text-[16px] [&_.icon]:shrink-0 [&_.icon]:mr-1",
           @variant == "destructive" &&
             "text-destructive focus:bg-destructive/10 focus:text-destructive dark:focus:bg-destructive/20",
           @class
@@ -316,6 +317,7 @@ defmodule Cognit.DropdownMenu do
       class={
         classes([
           "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
+          "[&_.icon]:text-[16px] [&_.icon]:shrink-0 [&_.icon]:mr-1",
           @variant == "destructive" &&
             "text-destructive focus:bg-destructive/10 focus:text-destructive dark:focus:bg-destructive/20",
           @class
