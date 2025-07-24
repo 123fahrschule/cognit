@@ -525,7 +525,7 @@ defmodule Cognit.Sidebar do
   attr(:is_mobile, :boolean, default: false)
   attr(:state, :string, default: "expanded")
   attr(:as, :any, default: "button")
-  attr(:rest, :global)
+  attr(:rest, :global, include: ["navigate", "patch", "href"])
   slot(:inner_block, required: true)
   attr(:tooltip, :string, required: false)
 
