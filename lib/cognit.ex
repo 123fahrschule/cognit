@@ -193,7 +193,7 @@ defmodule Cognit do
       import Cognit.Form
       import Cognit.Helpers
       import Cognit.HoverCard
-      import Cognit.Icon
+      # import Cognit.Icon
       import Cognit.Input
       import Cognit.Label
       import Cognit.Menu
@@ -220,6 +220,7 @@ defmodule Cognit do
 
       import Cognit.Components.Flash
       import Cognit.Components.FormField
+      import Cognit.Components.Icon
       import Cognit.Components.Logo
       import Cognit.Components.Page
       import Cognit.Components.Table
