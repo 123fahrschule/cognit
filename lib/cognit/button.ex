@@ -38,6 +38,31 @@ defmodule Cognit.Button do
       </.button>
       <.button type="submit" phx-disable-with="Saving...">Save Changes</.button>
   """
+  @button_attributes [
+    "form",
+    "name",
+    "value",
+    "disabled"
+  ]
+
+  @link_attributes [
+    "navigate",
+    "patch",
+    "href",
+    "method",
+    "download",
+    "referrerpolicy",
+    "rel",
+    "target"
+  ]
+
+  @label_attributes [
+    "for"
+  ]
+
+  @rest_attributes @button_attributes ++ @link_attributes ++ @label_attributes
+
+  attr(:as, :any, default: "button")
   attr(:type, :string, default: nil)
   attr(:class, :any, default: nil)
 
@@ -48,7 +73,7 @@ defmodule Cognit.Button do
   )
 
   attr(:size, :string, values: ~w(default sm lg icon), default: "default")
-  attr(:rest, :global, include: ~w(disabled form name value))
+  attr(:rest, :global, include: @rest_attributes)
 
   slot(:inner_block, required: true)
 
@@ -56,7 +81,8 @@ defmodule Cognit.Button do
     assigns = assign(assigns, :variant_class, button_variant(assigns))
 
     ~H"""
-    <button
+    <.dynamic
+      tag={@as}
       type={@type}
       class={
         classes([
@@ -68,7 +94,7 @@ defmodule Cognit.Button do
       {@rest}
     >
       {render_slot(@inner_block)}
-    </button>
+    </.dynamic>
     """
   end
 end
