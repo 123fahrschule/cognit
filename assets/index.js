@@ -18,6 +18,8 @@ import "./js/ui/components/slider.js";
 import "./js/ui/components/switch.js";
 import "./js/ui/components/dropdown_menu.js";
 
+import "./js/live_reload_listeners.js";
+
 /* Hooks */
 import { SaladUIHook } from "./js/ui/core/hook";
 
