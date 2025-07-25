@@ -221,6 +221,7 @@ defmodule Cognit do
       import Cognit.Components.Flash
       import Cognit.Components.FormField
       import Cognit.Components.Icon
+      import Cognit.Components.LocaleSelect
       import Cognit.Components.Logo
       import Cognit.Components.Page
       import Cognit.Components.Table
