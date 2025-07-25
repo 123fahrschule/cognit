@@ -248,7 +248,7 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
+  attr(:class, :any, default: nil)
   attr(:value, :string, default: nil)
   attr(:variant, :string, values: ~w(default destructive), default: "default")
   attr(:disabled, :boolean, default: false)
