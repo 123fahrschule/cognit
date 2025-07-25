@@ -1,0 +1,22 @@
+{
+  "name": "cognit",
+  "version": "0.1.0",
+  "description": "**TODO: Add description**",
+  "exports": {
+    ".": "./assets/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/123fahrschule/cognit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/123fahrschule/cognit/issues"
+  },
+  "homepage": "https://github.com/123fahrschule/cognit#readme"
+}
