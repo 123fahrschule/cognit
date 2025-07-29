@@ -1,0 +1,22 @@
+@import "./salad_ui.css";
+@import "./theme.css";
+
+a,
+button,
+[phx-click],
+[role="menuitem"] {
+  cursor: pointer !important;
+}
+
+button:disabled,
+.disabled {
+  cursor: not-allowed !important;
+}
+
+td a {
+  text-decoration: underline;
+}
+
+td [role="menu"] a {
+  text-decoration: none;
+}
