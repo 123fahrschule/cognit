@@ -431,7 +431,9 @@ class SelectComponent extends Component {
     const name = this.options.name || "";
 
     // Remove existing hidden inputs
-    const existingInputs = this.el.querySelectorAll("input[type='hidden']");
+    const existingInputs = this.el.querySelectorAll(
+      "input[type='hidden']:not([data-input])",
+    );
     existingInputs.forEach((input) => input.remove());
 
     const inputsContainer = this.el.querySelector("[data-inputs-container]");
