@@ -22,6 +22,7 @@ class Component {
     this.componentConfig = {};
     this.hiddenConfig = {};
     this.ariaConfig = {};
+    this.destroyed = false;
 
     // Initialize component
     this.parseOptions();
@@ -120,6 +121,7 @@ class Component {
   initStateMachine(stateMachineConfig, initialState) {
     this.stateMachine = new StateMachine(stateMachineConfig, initialState, {
       onStateChanged: this.onStateChanged.bind(this),
+      validCheck: () => !this.destroyed,
     });
   }
 
@@ -133,6 +135,7 @@ class Component {
   }
 
   onStateChanged(prevState, nextState, params) {
+    if (this.destroyed) return;
     // Check if we should animate
     const transitionName = `${prevState}_to_${nextState}`;
     const animConfig = this.options.animations?.[transitionName];
@@ -151,6 +154,7 @@ class Component {
 
     // Animate with the config
     return animateTransition(animConfig, targetElement).then(() => {
+      if (this.destroyed) return;
       this.updatePartsVisibility(nextState);
     });
   }
@@ -360,6 +364,8 @@ class Component {
    * Transition to a new state - delegates to the state machine
    */
   transition(event, params = {}) {
+    if (this.destroyed) return;
+
     return this.stateMachine.transition(event, params);
   }
 
@@ -468,6 +474,7 @@ class Component {
     this.hook = null;
     this.options = null;
     this.componentConfig = null;
+    this.destroyed = true;
   }
 
   // Lifecycle hooks
@@ -504,9 +511,10 @@ class AriaManager {
       // Apply attributes to all matching elements
       parts.forEach((part, index) => {
         // Set ID if not already defined
-        if (!part.id) {
-          part.id = `${this.component.el.id}-${partName}${parts.length > 1 ? `-${index}` : ""}`;
-        }
+        // this cause server dom patching break the client DOM
+        // if (!part.id) {
+        //   part.id = `${this.component.el.id}-${partName}${parts.length > 1 ? `-${index}` : ""}`;
+        // }
 
         this.applyGlobalAriaAttributes(part, states);
         this.applyStateSpecificAriaAttributes(part, states, currentState);
