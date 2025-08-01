@@ -89,7 +89,7 @@ defmodule Cognit.Select do
     ~H"""
     <div
       id={@id}
-      class={classes(["relative inline-flex", @class])}
+      class={classes(["relative inline-flex w-full", @class])}
       data-part="root"
       data-component="select"
       data-state="closed"
@@ -99,6 +99,9 @@ defmodule Cognit.Select do
       {@rest}
     >
       {render_slot(@inner_block)}
+      <input type="hidden" name={@name} value="" data-input/>
+      <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore">
+      </div>
     </div>
     """
   end

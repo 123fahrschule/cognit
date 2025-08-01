@@ -434,17 +434,16 @@ class SelectComponent extends Component {
     const existingInputs = this.el.querySelectorAll("input[type='hidden']");
     existingInputs.forEach((input) => input.remove());
 
+    const inputsContainer = this.el.querySelector("[data-inputs-container]");
+
     // Create new hidden inputs
     if (this.multiple) {
-      // Multiple select - create multiple inputs with array notation
-      const inputName = name ? `${name}[]` : "";
-
       values.forEach((value) => {
         const input = document.createElement("input");
         input.type = "hidden";
-        input.name = inputName;
+        input.name = name;
         input.value = value;
-        this.el.appendChild(input);
+        inputsContainer.appendChild(input);
       });
     } else if (values.length > 0) {
       // Single select - create one input
@@ -452,8 +451,12 @@ class SelectComponent extends Component {
       input.type = "hidden";
       input.name = name;
       input.value = values[0];
-      this.el.appendChild(input);
+      inputsContainer.appendChild(input);
     }
+
+    this.el
+      .querySelector("[data-input]")
+      .dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   // Cleanup
