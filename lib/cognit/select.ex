@@ -99,7 +99,7 @@ defmodule Cognit.Select do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <input type="hidden" name={@name} value="" data-input/>
+      <input name={@name} value="" data-input class="hidden"/>
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore">
       </div>
     </div>

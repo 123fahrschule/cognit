@@ -9,6 +9,7 @@ defmodule Cognit.Components.FormField do
   import Cognit.Label
   import Cognit.Switch
   import Cognit.Textarea
+  import Cognit.Select
 
   @rest_attributes [
     "accept",
@@ -47,6 +48,8 @@ defmodule Cognit.Components.FormField do
   attr(:form_field, :any, default: nil, doc: "internal assign for use in SaladUI components")
   attr(:rest, :global, include: @rest_attributes)
 
+  slot(:select_content)
+
   def form_field(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(:field, nil)
@@ -68,6 +71,30 @@ defmodule Cognit.Components.FormField do
       value={Phoenix.HTML.Form.normalize_value(@type, @value)}
       {@rest}
     />
+    """
+  end
+
+  def form_field(%{type: "select"} = assigns) do
+    ~H"""
+    <div class={@class}>
+      <.form_label :if={@label} error={@has_errors}>
+        {@label}
+      </.form_label>
+      <.select field={@form_field} multiple={@multiple}>
+        <.select_trigger>
+          <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
+        </.select_trigger>
+        <.select_content>
+          {render_slot(@select_content)}
+        </.select_content>
+      </.select>
+      <.form_description :if={@description}>
+        {@description}
+      </.form_description>
+      <.form_message :for={msg <- @errors} errors={@errors}>
+        {msg}
+      </.form_message>
+    </div>
     """
   end
 
