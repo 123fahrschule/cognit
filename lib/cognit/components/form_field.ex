@@ -71,7 +71,7 @@ defmodule Cognit.Components.FormField do
     """
   end
 
-  def form_field(%{type: "select"} = assigns) do
+  def form_field(%{type: "native-select"} = assigns) do
     ~H"""
     <.form_item class={@class}>
       <.form_label :if={@label} error={@has_errors}>
