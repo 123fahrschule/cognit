@@ -1,11 +1,13 @@
 defmodule Cognit.Components.FormField do
-  use Phoenix.Component
+  use Cognit, :component
 
   import Cognit.Helpers
 
   import Cognit.Checkbox
   import Cognit.Form
   import Cognit.Input
+  import Cognit.Label
+  import Cognit.Switch
   import Cognit.Textarea
 
   @rest_attributes [
@@ -42,11 +44,13 @@ defmodule Cognit.Components.FormField do
   attr(:errors, :list, default: [])
   attr(:has_errors, :boolean, default: false)
   attr(:description, :string, default: nil)
+  attr(:form_field, :any, default: nil, doc: "internal assign for use in SaladUI components")
   attr(:rest, :global, include: @rest_attributes)
 
   def form_field(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(:field, nil)
+    |> assign(:form_field, field)
     |> assign_new(:id, fn -> field.id end)
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
@@ -113,6 +117,22 @@ defmodule Cognit.Components.FormField do
       </.form_message>
     </.form_item>
 
+    """
+  end
+
+  def form_field(%{type: "switch"} = assigns) do
+    ~H"""
+    <div class={@class}>
+      <div class="flex items-center gap-2">
+      <.switch field={@form_field} />
+      <.label :if={@label} for={@form_field.id <> "-input"}>
+        {@label}
+      </.label>
+      </div>
+      <.form_message :for={msg <- @errors} errors={@errors}>
+        {msg}
+      </.form_message>
+    </div>
     """
   end
 
