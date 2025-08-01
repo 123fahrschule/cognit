@@ -157,6 +157,7 @@ defmodule Cognit do
   def component do
     quote do
       use Phoenix.Component
+      use Gettext, backend: Cognit.Gettext
 
       import Cognit.Helpers
 

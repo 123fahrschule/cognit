@@ -1,4 +1,4 @@
-defmodule CognitWeb.Gettext do
+defmodule Cognit.Gettext do
   @moduledoc """
   A module providing Internationalization with a gettext-based API.
 
@@ -6,7 +6,7 @@ defmodule CognitWeb.Gettext do
   that you can use in your application. To use this Gettext backend module,
   call `use Gettext` and pass it as an option:
 
-      use Gettext, backend: AppWeb.Gettext
+      use Gettext, backend: Cognit.Gettext
 
       # Simple translation
       gettext("Here is the string to translate")

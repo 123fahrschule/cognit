@@ -1,6 +1,5 @@
 defmodule Cognit.Components.Flash do
   use Cognit, :component
-  use Gettext, backend: CognitWeb.Gettext
 
   import Cognit.Alert
   import Cognit.Button
