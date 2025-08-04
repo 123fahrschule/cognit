@@ -101,6 +101,7 @@ defmodule Cognit.Select do
       {render_slot(@inner_block)}
       <input name={@name} value="" data-input class="hidden"/>
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore">
+        <input :for={value <- List.wrap(@value)} type="hidden" name={@name} value={value} />
       </div>
     </div>
     """
