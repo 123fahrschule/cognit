@@ -358,7 +358,10 @@ class SelectComponent extends Component {
   updateValueDisplay() {
     if (!this.valueDisplay) return;
 
-    const selectedValues = this.collection.getValue(true);
+    const selectedValues = this.collection
+      .getValue(true)
+      .filter((v) => v !== "");
+
     const placeholder =
       this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
 
