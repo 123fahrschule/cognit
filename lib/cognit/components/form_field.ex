@@ -181,7 +181,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(assigns) do
     ~H"""
-    <.form_item>
+    <.form_item class={@class}>
       <.form_label :if={@label} for={@id} error={@has_errors}>
         {@label}
       </.form_label>
