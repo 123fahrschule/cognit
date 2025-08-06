@@ -23,7 +23,7 @@ defmodule Cognit.Components.Table do
 
   def table_empty(assigns) do
     ~H"""
-    <.table_row class={["[&:not(:only-child)]:hidden", @class]}>
+    <.table_row class={["[&:not(:only-child)]:hidden", @class]} {@rest}>
       <.table_cell colspan="100%">
         {render_slot(@inner_block)}
       </.table_cell>
