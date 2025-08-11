@@ -40,7 +40,7 @@ defmodule Cognit.Components.Page do
 
   def page_content(assigns) do
     ~H"""
-    <div class={["px-16 py-6 flex flex-col gap-6", @class]} {@rest}>
+    <div class={["px-14 py-6 flex flex-col gap-6", @class]} {@rest}>
       <%= render_slot(@inner_block) %>
     </div>
     """
@@ -53,7 +53,7 @@ defmodule Cognit.Components.Page do
 
   def page_footer(assigns) do
     ~H"""
-    <div class={["px-16 py-6", @class]} {@rest}>
+    <div class={["px-14 py-6", @class]} {@rest}>
       <%= render_slot(@inner_block) %>
     </div>
     """
