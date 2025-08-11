@@ -4,7 +4,7 @@ defmodule Cognit.Components.Flash do
   import Cognit.Alert
   import Cognit.Button
 
-  import Cognit.Components.Icon
+  import Cognit.Icon
 
   attr(:id, :string)
   attr(:title, :string)

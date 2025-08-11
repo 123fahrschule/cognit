@@ -129,7 +129,7 @@ defmodule Cognit.Command do
   def command_input(assigns) do
     ~H"""
     <div data-part="input-wrapper" class="flex items-center border-b px-3">
-      <.icon name="hero-magnifying-glass" />
+      <.icon name="search" />
       <input
         type="text"
         data-part="input"

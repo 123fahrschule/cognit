@@ -4,7 +4,7 @@ defmodule Cognit.Components.LocaleSelect do
   import Cognit.Button
   import Cognit.DropdownMenu
 
-  import Cognit.Components.Icon
+  import Cognit.Icon
 
   attr(:rest, :global)
 

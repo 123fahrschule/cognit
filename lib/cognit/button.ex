@@ -34,7 +34,7 @@ defmodule Cognit.Button do
       <.button variant="destructive" phx-click="delete">Delete</.button>
       <.button variant="outline" size="sm">Cancel</.button>
       <.button variant="ghost" size="icon">
-        <.icon name="hero-x-mark" />
+        <.icon name="close" />
       </.button>
       <.button type="submit" phx-disable-with="Saving...">Save Changes</.button>
   """
