@@ -1,4 +1,5 @@
 defmodule Storybook.CognitComponents.Popover do
+  # TODO: Fix popover styles
   @moduledoc false
   use PhoenixStorybook.Story, :component
 
