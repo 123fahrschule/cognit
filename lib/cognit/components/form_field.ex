@@ -39,6 +39,7 @@ defmodule Cognit.Components.FormField do
   attr(:type, :string, default: "text")
   attr(:field, Phoenix.HTML.FormField)
   attr(:label, :string, default: nil)
+  attr(:disabled, :boolean, default: false)
   attr(:options, :list, default: [])
   attr(:multiple, :boolean, default: false)
   attr(:checked, :boolean, default: false)
@@ -81,7 +82,7 @@ defmodule Cognit.Components.FormField do
         {@label}
       </.form_label>
       <.select field={@form_field} multiple={@multiple}>
-        <.select_trigger>
+        <.select_trigger disabled={@disabled}>
           <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
         </.select_trigger>
         <.select_content>
