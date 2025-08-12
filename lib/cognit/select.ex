@@ -109,7 +109,7 @@ defmodule Cognit.Select do
 
   attr(:class, :string, default: nil)
   slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr(:rest, :global, include: ["disabled"])
 
   def select_trigger(assigns) do
     ~H"""
