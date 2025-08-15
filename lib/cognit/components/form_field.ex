@@ -186,7 +186,7 @@ defmodule Cognit.Components.FormField do
       <.form_label :if={@label} for={@id} error={@has_errors}>
         {@label}
       </.form_label>
-      <.input type={@type} id={@id} name={@name} value={@value} {@rest} />
+      <.input type={@type} id={@id} name={@name} value={@value} disabled={@disabled} {@rest} />
       <.form_description :if={@description}>
         {@description}
       </.form_description>
