@@ -6,7 +6,8 @@ import ClickOutsideMonitor from "../core/click-outside";
 
 class DialogComponent extends Component {
   constructor(el, hookContext) {
-    super(el, { hookContext, initialState: "closed" });
+    const initialState = el.dataset.state || "closed";
+    super(el, { hookContext, initialState });
 
     // Initialize properties
     this.root = this.el;
