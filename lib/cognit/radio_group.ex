@@ -74,14 +74,15 @@ defmodule Cognit.RadioGroup do
   @doc """
   Individual radio button in a radio group.
   """
-  attr(:id, :string, required: true)
+  attr(:id, :string)
   attr(:value, :string, required: true)
   attr(:disabled, :boolean, default: false)
   attr(:name, :string, default: nil)
   attr(:class, :string, default: nil)
 
   attr(:field, Phoenix.HTML.FormField,
-    doc: "a form field struct retrieved from the form, for example: @form[:email]"
+    doc: "a form field struct retrieved from the form, for example: @form[:email]",
+    default: nil
   )
 
   attr(:rest, :global)
