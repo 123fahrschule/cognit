@@ -77,15 +77,29 @@ defmodule Cognit.RadioGroup do
   attr(:id, :string, required: true)
   attr(:value, :string, required: true)
   attr(:disabled, :boolean, default: false)
+  attr(:name, :string, default: nil)
   attr(:class, :string, default: nil)
+
+  attr(:field, Phoenix.HTML.FormField,
+    doc: "a form field struct retrieved from the form, for example: @form[:email]"
+  )
+
   attr(:rest, :global)
 
   def radio_group_item(assigns) do
+    assigns = prepare_assign(assigns)
+
+    assigns =
+      assign_new(assigns, :checked, fn ->
+        Phoenix.HTML.Form.normalize_value("radio", assigns[:value])
+      end)
+      |> assign(:id, "#{assigns[:id]}_#{assigns[:value]}")
+
     ~H"""
     <div
       data-part="item"
       data-value={@value}
-      data-state="unchecked"
+      data-state={if @checked, do: "checked", else: "unchecked"}
       data-disabled={to_string(@disabled)}
       class={
         classes([
@@ -97,7 +111,7 @@ defmodule Cognit.RadioGroup do
       tabindex="-1"
       {@rest}
     >
-      <input type="radio" id={@id} value={@value} disabled={@disabled} class="sr-only" tabindex="-1" />
+      <input type="radio" id={@id} value={@value} name={@name} disabled={@disabled} class="sr-only" checked={@checked} />
       <span class="hidden group-data-[state=checked]/item:flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

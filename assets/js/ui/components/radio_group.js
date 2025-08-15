@@ -116,6 +116,10 @@ class RadioGroupComponent extends Component {
         value,
         previousValue,
       });
+
+      collectionItem.instance
+        ?.querySelector("input")
+        .dispatchEvent(new Event("change", { bubbles: true }));
     }
   }
 
