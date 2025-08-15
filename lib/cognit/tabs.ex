@@ -31,6 +31,7 @@ defmodule Cognit.Tabs do
   Primary tabs component that serves as a container for tab triggers and content.
   """
   attr(:id, :string, required: true, doc: "Unique identifier for the tabs component")
+  attr(:value, :string, default: nil, doc: "Default selected tab value")
   attr(:default, :string, default: nil, doc: "Default selected tab value")
   attr(:class, :string, default: nil)
   attr(:"on-tab-changed", :any, default: nil, doc: "Handler for tab change events")
@@ -48,6 +49,7 @@ defmodule Cognit.Tabs do
       |> assign(
         :options,
         json(%{
+          value: assigns.value,
           defaultValue: assigns.default
         })
       )
