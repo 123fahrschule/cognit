@@ -20,27 +20,25 @@ defmodule Cognit.ToggleGroup do
       </.toggle_group_item>
     </.toggle_group>
   """
-  attr(:name, :string, default: nil)
-  attr(:multiple, :any, values: [true, false, "true", "false"], default: false)
+  attr :name, :string, default: nil
+  attr :multiple, :any, values: [true, false, "true", "false"], default: false
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:"default-value", :any, values: [true, false, "true", "false"])
+  attr :"default-value", :any, values: [true, false, "true", "false"]
 
-  attr(:value, :string,
+  attr :value, :string,
     default: nil,
     doc:
       "The value of the toggle group. It's a single value for single type and a list of values for multiple type."
-  )
 
-  attr(:disabled, :boolean, default: false)
-  attr(:class, :string, default: nil)
-  attr(:variant, :string, default: "default")
-  attr(:size, :string, default: "default")
-  attr(:rest, :global)
-  slot(:inner_block)
+  attr :disabled, :boolean, default: false
+  attr :class, :string, default: nil
+  attr :variant, :string, default: "default"
+  attr :size, :string, default: "default"
+  attr :rest, :global
+  slot :inner_block
 
   def toggle_group(assigns) do
     assigns = prepare_assign(assigns)
@@ -73,12 +71,12 @@ defmodule Cognit.ToggleGroup do
     end
   end
 
-  attr(:class, :string, default: nil)
-  attr(:disabled, :boolean, default: false)
-  attr(:value, :string, default: nil)
-  attr(:builder, :map, required: true, doc: "The builder context of toggle group.")
-  attr(:rest, :global)
-  slot(:inner_block)
+  attr :class, :string, default: nil
+  attr :disabled, :boolean, default: false
+  attr :value, :string, default: nil
+  attr :builder, :map, required: true, doc: "The builder context of toggle group."
+  attr :rest, :global
+  slot :inner_block
 
   def toggle_group_item(%{builder: %{multiple: true}} = assigns) do
     assigns =

@@ -70,15 +70,15 @@ defmodule Cognit.DropdownMenu do
   * `:on-close` - Handler for dropdown menu close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the dropdown menu")
-  attr(:open, :boolean, default: false, doc: "Whether the dropdown menu is initially open")
-  attr(:"use-portal", :boolean, default: false, doc: "Whether to render the content in a portal")
-  attr(:"portal-container", :string, default: nil, doc: "CSS selector for the portal container")
-  attr(:"on-open", :any, default: nil, doc: "Handler for dropdown menu open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for dropdown menu close event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true, doc: "Unique identifier for the dropdown menu"
+  attr :open, :boolean, default: false, doc: "Whether the dropdown menu is initially open"
+  attr :"use-portal", :boolean, default: false, doc: "Whether to render the content in a portal"
+  attr :"portal-container", :string, default: nil, doc: "CSS selector for the portal container"
+  attr :"on-open", :any, default: nil, doc: "Handler for dropdown menu open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for dropdown menu close event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu(assigns) do
     # Collect event mappings
@@ -128,10 +128,10 @@ defmodule Cognit.DropdownMenu do
   * `:class` - Additional CSS classes.
   * `:as` - The HTML tag to use for the trigger. Defaults to `"div"`.
   """
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "div")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :as, :any, default: "div"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_trigger(assigns) do
     ~H"""
@@ -152,13 +152,13 @@ defmodule Cognit.DropdownMenu do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:side, :string, values: ~w(top right bottom left), default: "bottom")
-  attr(:align, :string, values: ~w(start center end), default: "start")
-  attr(:"side-offset", :integer, default: 4, doc: "Distance from the trigger in pixels")
-  attr(:"align-offset", :integer, default: 0, doc: "Offset along the alignment axis")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :side, :string, values: ~w(top right bottom left), default: "bottom"
+  attr :align, :string, values: ~w(start center end), default: "start"
+  attr :"side-offset", :integer, default: 4, doc: "Distance from the trigger in pixels"
+  attr :"align-offset", :integer, default: 0, doc: "Offset along the alignment axis"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_content(assigns) do
     assigns =
@@ -201,9 +201,9 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_group(assigns) do
     ~H"""
@@ -221,10 +221,10 @@ defmodule Cognit.DropdownMenu do
   * `:inset` - Whether to inset the label. Defaults to `false`.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:inset, :boolean, default: false)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :inset, :boolean, default: false
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_label(assigns) do
     ~H"""
@@ -248,14 +248,14 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :any, default: nil)
-  attr(:value, :string, default: nil)
-  attr(:variant, :string, values: ~w(default destructive), default: "default")
-  attr(:disabled, :boolean, default: false)
-  attr(:"on-select", :any, default: nil, doc: "Handler for item selection")
-  attr(:as, :any, default: "div")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :any, default: nil
+  attr :value, :string, default: nil
+  attr :variant, :string, values: ~w(default destructive), default: "default"
+  attr :disabled, :boolean, default: false
+  attr :"on-select", :any, default: nil, doc: "Handler for item selection"
+  attr :as, :any, default: "div"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_item(assigns) do
     # Collect event mappings
@@ -299,12 +299,12 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:value, :string, default: nil)
-  attr(:variant, :string, values: ~w(default destructive), default: "default")
-  attr(:disabled, :boolean, default: false)
-  attr(:rest, :global, include: ~w(navigate patch href method))
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :value, :string, default: nil
+  attr :variant, :string, values: ~w(default destructive), default: "default"
+  attr :disabled, :boolean, default: false
+  attr :rest, :global, include: ~w(navigate patch href method)
+  slot :inner_block, required: true
 
   def dropdown_menu_link_item(assigns) do
     # Collect event mappings
@@ -342,15 +342,15 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:value, :string, default: nil)
-  attr(:checked, :boolean, default: false)
-  attr(:disabled, :boolean, default: false)
-  attr(:"on-select", :any, default: nil, doc: "Handler for item selected event")
-  attr(:"on-checked-change", :any, default: nil, doc: "Handler for when checked state changes")
+  attr :class, :string, default: nil
+  attr :value, :string, default: nil
+  attr :checked, :boolean, default: false
+  attr :disabled, :boolean, default: false
+  attr :"on-select", :any, default: nil, doc: "Handler for item selected event"
+  attr :"on-checked-change", :any, default: nil, doc: "Handler for when checked state changes"
 
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_checkbox_item(assigns) do
     # Collect event mappings
@@ -413,9 +413,9 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: false)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: false
 
   def dropdown_menu_separator(assigns) do
     ~H"""
@@ -437,9 +437,9 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def dropdown_menu_shortcut(assigns) do
     ~H"""

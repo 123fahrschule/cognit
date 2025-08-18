@@ -29,27 +29,24 @@ defmodule Cognit.Input do
   * `:readonly` - Whether the input is readonly (passed through as rest)
   * `:autocomplete` - Hints for form autofill feature (passed through as rest)
   """
-  attr(:id, :any, default: nil)
-  attr(:name, :any, default: nil)
-  attr(:value, :any)
+  attr :id, :any, default: nil
+  attr :name, :any, default: nil
+  attr :value, :any
 
-  attr(:type, :string,
+  attr :type, :string,
     default: "text",
     values: ~w(date datetime-local email file hidden month number password tel text time url week)
-  )
 
-  attr(:"default-value", :any)
+  attr :"default-value", :any
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:class, :any, default: nil)
+  attr :class, :any, default: nil
 
-  attr(:rest, :global,
+  attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
-  )
 
   def input(assigns) do
     assigns = prepare_assign(assigns)

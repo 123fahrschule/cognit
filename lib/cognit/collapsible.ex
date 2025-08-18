@@ -33,13 +33,13 @@ defmodule Cognit.Collapsible do
   * `:on-close` - Handler for collapsible close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the collapsible")
-  attr(:open, :boolean, default: false, doc: "Whether the collapsible is initially open")
-  attr(:"on-open", :any, default: nil, doc: "Handler for collapsible open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for collapsible close event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true, doc: "Unique identifier for the collapsible"
+  attr :open, :boolean, default: false, doc: "Whether the collapsible is initially open"
+  attr :"on-open", :any, default: nil, doc: "Handler for collapsible open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for collapsible close event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def collapsible(assigns) do
     # Collect event mappings
@@ -80,10 +80,10 @@ defmodule Cognit.Collapsible do
   @doc """
   The trigger element that toggles the collapsible content.
   """
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "div")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :as, :any, default: "div"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def collapsible_trigger(assigns) do
     ~H"""
@@ -102,9 +102,9 @@ defmodule Cognit.Collapsible do
   @doc """
   The collapsible content that appears when triggered.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def collapsible_content(assigns) do
     ~H"""

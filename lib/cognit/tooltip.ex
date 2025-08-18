@@ -35,23 +35,21 @@ defmodule Cognit.Tooltip do
   * `:on-close` - Handler for tooltip close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, default: nil)
+  attr :id, :string, default: nil
 
-  attr(:"open-delay", :integer,
+  attr :"open-delay", :integer,
     default: 150,
     doc: "Delay in milliseconds before opening the tooltip"
-  )
 
-  attr(:"close-delay", :integer,
+  attr :"close-delay", :integer,
     default: 100,
     doc: "Delay in milliseconds before closing the tooltip"
-  )
 
-  attr(:"on-open", :any, default: nil, doc: "Handler for tooltip open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for tooltip close event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :"on-open", :any, default: nil, doc: "Handler for tooltip open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for tooltip close event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tooltip(assigns) do
     assigns = assign_new(assigns, :id, fn -> "tooltip-#{System.unique_integer()}" end)
@@ -96,9 +94,9 @@ defmodule Cognit.Tooltip do
 
   If not provided, the first child of the tooltip will be used as trigger.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tooltip_trigger(assigns) do
     ~H"""
@@ -119,13 +117,13 @@ defmodule Cognit.Tooltip do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:side, :string, values: ~w(top right bottom left), default: "top")
-  attr(:align, :string, values: ~w(start center end), default: "center")
-  attr(:"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels")
-  attr(:"align-offset", :integer, default: 0, doc: "Offset along the alignment axis")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :side, :string, values: ~w(top right bottom left), default: "top"
+  attr :align, :string, values: ~w(start center end), default: "center"
+  attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"
+  attr :"align-offset", :integer, default: 0, doc: "Offset along the alignment axis"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tooltip_content(assigns) do
     assigns =

@@ -53,9 +53,9 @@ defmodule Cognit.Command do
         ...
       </.command>
   """
-  attr(:id, :string, required: true)
-  attr(:class, :any, default: "")
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true
+  attr :class, :any, default: ""
+  slot :inner_block, required: true
 
   def command(assigns) do
     ~H"""
@@ -95,9 +95,9 @@ defmodule Cognit.Command do
         ...
       </.command_dialog>
   """
-  attr(:id, :string, required: true)
-  attr(:open, :boolean, default: false)
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true
+  attr :open, :boolean, default: false
+  slot :inner_block, required: true
 
   def command_dialog(assigns) do
     ~H"""
@@ -123,8 +123,8 @@ defmodule Cognit.Command do
 
       <.command_input placeholder="Type a command..." />
   """
-  attr(:class, :any, default: "")
-  attr(:rest, :global, default: %{})
+  attr :class, :any, default: ""
+  attr :rest, :global, default: %{}
 
   def command_input(assigns) do
     ~H"""
@@ -168,8 +168,8 @@ defmodule Cognit.Command do
         </.command_group>
       </.command_list>
   """
-  attr(:class, :any, default: "")
-  slot(:inner_block, required: true)
+  attr :class, :any, default: ""
+  slot :inner_block, required: true
 
   def command_list(assigns) do
     ~H"""
@@ -201,8 +201,8 @@ defmodule Cognit.Command do
         <span>No results found</span>
       </.command_empty>
   """
-  attr(:class, :any, default: "")
-  slot(:inner_block, required: true)
+  attr :class, :any, default: ""
+  slot :inner_block, required: true
 
   def command_empty(assigns) do
     ~H"""
@@ -233,8 +233,8 @@ defmodule Cognit.Command do
         <.command_item>Profile</.command_item>
       </.command_group>
   """
-  attr(:heading, :string, required: true)
-  slot(:inner_block, required: true)
+  attr :heading, :string, required: true
+  slot :inner_block, required: true
 
   def command_group(assigns) do
     ~H"""
@@ -273,10 +273,10 @@ defmodule Cognit.Command do
         <span>Calendar</span>
       </.command_item>
   """
-  attr(:disabled, :boolean, default: false)
-  attr(:selected, :boolean, default: false)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :disabled, :boolean, default: false
+  attr :selected, :boolean, default: false
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def command_item(assigns) do
     ~H"""
@@ -310,8 +310,8 @@ defmodule Cognit.Command do
 
       <.command_shortcut>⌘P</.command_shortcut>
   """
-  attr(:class, :any, default: "")
-  slot(:inner_block, required: true)
+  attr :class, :any, default: ""
+  slot :inner_block, required: true
 
   def command_shortcut(assigns) do
     ~H"""

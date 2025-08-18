@@ -62,22 +62,21 @@ defmodule Cognit.Button do
 
   @rest_attributes @button_attributes ++ @link_attributes ++ @label_attributes
 
-  attr(:as, :any, default: "button")
-  attr(:type, :string, default: nil)
-  attr(:class, :any, default: nil)
+  attr :as, :any, default: "button"
+  attr :type, :string, default: nil
+  attr :class, :any, default: nil
 
-  attr(:variant, :string,
+  attr :variant, :string,
     values: ~w(default secondary destructive outline ghost link),
     default: "default",
     doc: "the button variant style"
-  )
 
-  attr(:size, :string, values: ~w(default sm lg icon), default: "default")
-  attr(:rest, :global, include: @rest_attributes)
+  attr :size, :string, values: ~w(default sm lg icon), default: "default"
+  attr :rest, :global, include: @rest_attributes
 
-  slot(:inner_block, required: true)
+  slot :inner_block, required: true
 
-  def(button(assigns)) do
+  def button(assigns) do
     assigns = assign(assigns, :variant_class, button_variant(assigns))
 
     ~H"""

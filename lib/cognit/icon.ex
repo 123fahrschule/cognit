@@ -1,10 +1,10 @@
 defmodule Cognit.Icon do
   use Cognit, :component
 
-  attr(:class, :any, default: nil)
-  attr(:name, :any, required: true)
-  attr(:outlined, :boolean, default: false)
-  attr(:rest, :global)
+  attr :class, :any, default: nil
+  attr :name, :any, required: true
+  attr :outlined, :boolean, default: false
+  attr :rest, :global
 
   def icon(assigns) do
     ~H"""

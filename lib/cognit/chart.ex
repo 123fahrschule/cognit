@@ -45,11 +45,11 @@ defmodule Cognit.Chart do
   """
   use Cognit, :component
 
-  attr(:id, :string, required: true)
-  attr(:name, :string, default: "", doc: "name of the chart for screen readers")
-  attr(:"chart-type", :string, default: "line", doc: "type of the chart (e.g., line, bar)")
-  attr(:"chart-options", :map, required: true)
-  attr(:"chart-data", :list, required: true)
+  attr :id, :string, required: true
+  attr :name, :string, default: "", doc: "name of the chart for screen readers"
+  attr :"chart-type", :string, default: "line", doc: "type of the chart (e.g., line, bar)"
+  attr :"chart-options", :map, required: true
+  attr :"chart-data", :list, required: true
 
   def chart(assigns) do
     assigns =

@@ -41,23 +41,21 @@ defmodule Cognit.HoverCard do
   * `:on-close` - Handler for hover card close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the hover card")
+  attr :id, :string, required: true, doc: "Unique identifier for the hover card"
 
-  attr(:"open-delay", :integer,
+  attr :"open-delay", :integer,
     default: 300,
     doc: "Delay in milliseconds before opening the hover card"
-  )
 
-  attr(:"close-delay", :integer,
+  attr :"close-delay", :integer,
     default: 200,
     doc: "Delay in milliseconds before closing the hover card"
-  )
 
-  attr(:"on-open", :any, default: nil, doc: "Handler for hover card open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for hover card close event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :"on-open", :any, default: nil, doc: "Handler for hover card open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for hover card close event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def hover_card(assigns) do
     # Collect event mappings
@@ -98,9 +96,9 @@ defmodule Cognit.HoverCard do
   @doc """
   The trigger element that activates the hover card when hovered.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def hover_card_trigger(assigns) do
     ~H"""
@@ -121,13 +119,13 @@ defmodule Cognit.HoverCard do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:side, :string, values: ~w(top right bottom left), default: "top")
-  attr(:align, :string, values: ~w(start center end), default: "center")
-  attr(:"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels")
-  attr(:"align-offset", :integer, default: 0, doc: "Offset along the alignment axis")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :side, :string, values: ~w(top right bottom left), default: "top"
+  attr :align, :string, values: ~w(start center end), default: "center"
+  attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"
+  attr :"align-offset", :integer, default: 0, doc: "Offset along the alignment axis"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def hover_card_content(assigns) do
     assigns =

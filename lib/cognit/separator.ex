@@ -17,9 +17,9 @@ defmodule Cognit.Separator do
   * `:orientation` - The orientation of the separator (`horizontal` or `vertical`). Defaults to `horizontal`.
   * `:class` - Additional CSS classes
   """
-  attr(:orientation, :string, values: ~w(vertical horizontal), default: "horizontal")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global, include: ~w(disabled form name value))
+  attr :orientation, :string, values: ~w(vertical horizontal), default: "horizontal"
+  attr :class, :string, default: nil
+  attr :rest, :global, include: ~w(disabled form name value)
 
   def separator(assigns) do
     ~H"""

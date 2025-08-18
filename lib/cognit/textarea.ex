@@ -24,16 +24,15 @@ defmodule Cognit.Textarea do
   * `:disabled` - Whether the textarea is disabled (passed through as rest)
   * `:required` - Whether the textarea is required (passed through as rest)
   """
-  attr(:id, :any, default: nil)
-  attr(:name, :any, default: nil)
-  attr(:value, :any)
+  attr :id, :any, default: nil
+  attr :name, :any, default: nil
+  attr :value, :any
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:class, :any, default: nil)
-  attr(:rest, :global, include: ~w(disabled form rows cols))
+  attr :class, :any, default: nil
+  attr :rest, :global, include: ~w(disabled form rows cols)
 
   def textarea(assigns) do
     assigns = prepare_assign(assigns)

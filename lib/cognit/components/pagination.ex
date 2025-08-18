@@ -10,10 +10,10 @@ defmodule Cognit.Components.Pagination do
 
       <.pagination page={1} total_pages={100} />
   """
-  attr(:page, :integer, default: 1)
-  attr(:total_pages, :integer)
-  attr(:on_select, :any, default: %JS{})
-  attr(:rest, :global)
+  attr :page, :integer, default: 1
+  attr :total_pages, :integer
+  attr :on_select, :any, default: %JS{}
+  attr :rest, :global
 
   def custom_pagination(assigns) do
     ~H"""
@@ -23,7 +23,7 @@ defmodule Cognit.Components.Pagination do
           <.pagination_previous phx-click={@on_select} phx-value-page={max(1, @page - 1)} />
         </.pagination_item>
 
-        <.pagination_item :for={block <- calculate_display_btn(@page, @total_pages) }>
+        <.pagination_item :for={block <- calculate_display_btn(@page, @total_pages)}>
           <%= case block do %>
             <% :ellipsis -> %>
               <.pagination_ellipsis />

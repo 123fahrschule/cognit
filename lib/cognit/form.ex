@@ -52,9 +52,9 @@ defmodule Cognit.Form do
         <.form_message field={@form[:email]} />
       </.form_item>
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def form_item(assigns) do
     ~H"""
@@ -74,18 +74,17 @@ defmodule Cognit.Form do
       <.form_label>Email</.form_label>
       <.form_label field={@form[:email]}>Email</.form_label>
   """
-  attr(:class, :string, default: nil)
+  attr :class, :string, default: nil
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     default: nil,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:for, :string, default: nil)
+  attr :for, :string, default: nil
 
-  attr(:error, :boolean, default: false, doc: "whether the field has an error")
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :error, :boolean, default: false, doc: "whether the field has an error"
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def form_label(assigns) do
     assigns = assign(assigns, error: assigns[:error] || has_error?(assigns[:field]))
@@ -117,7 +116,7 @@ defmodule Cognit.Form do
         <.input field={@form[:email]} type="email" />
       </.form_control>
   """
-  slot(:inner_block, required: true)
+  slot :inner_block, required: true
 
   def form_control(assigns) do
     ~H"""
@@ -134,9 +133,9 @@ defmodule Cognit.Form do
         We'll only use your email for account-related purposes.
       </.form_description>
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def form_description(assigns) do
     ~H"""
@@ -157,19 +156,17 @@ defmodule Cognit.Form do
         Please enter a valid email address.
       </.form_message>
   """
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     default: nil,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:errors, :any,
+  attr :errors, :any,
     default: [],
     doc: "a list of error messages to display"
-  )
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: false)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: false
+  attr :rest, :global
 
   def form_message(assigns) do
     assigns =

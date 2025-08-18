@@ -43,15 +43,15 @@ defmodule Cognit.Sheet do
   * `:on-close` - Handler for sheet close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the sheet")
-  attr(:open, :boolean, default: false, doc: "Whether the sheet is initially open")
-  attr(:class, :string, default: nil)
-  attr(:"close-on-outside-click", :boolean, default: true)
+  attr :id, :string, required: true, doc: "Unique identifier for the sheet"
+  attr :open, :boolean, default: false, doc: "Whether the sheet is initially open"
+  attr :class, :string, default: nil
+  attr :"close-on-outside-click", :boolean, default: true
 
-  attr(:"on-open", :any, default: nil, doc: "Handler for sheet open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for sheet close event")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :"on-open", :any, default: nil, doc: "Handler for sheet open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for sheet close event"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet(assigns) do
     # Collect event mappings
@@ -93,9 +93,9 @@ defmodule Cognit.Sheet do
   @doc """
   The trigger element that opens the sheet.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_trigger(assigns) do
     ~H"""
@@ -113,16 +113,15 @@ defmodule Cognit.Sheet do
   * `:side` - The side from which the sheet appears (top, right, bottom, left). Defaults to `"right"`.
   * `:class` - Additional CSS classes to customize dimensions and appearance.
   """
-  attr(:class, :string, default: nil)
+  attr :class, :string, default: nil
 
-  attr(:side, :string,
+  attr :side, :string,
     values: ~w(top right bottom left),
     default: "right",
     doc: "The side from which the sheet appears"
-  )
 
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_content(assigns) do
     assigns = assign(assigns, :variant_class, sheet_variants(assigns))
@@ -178,9 +177,9 @@ defmodule Cognit.Sheet do
   @doc """
   Renders a sheet header section for title and description.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_header(assigns) do
     ~H"""
@@ -193,9 +192,9 @@ defmodule Cognit.Sheet do
   @doc """
   Renders a sheet title within the header section.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_title(assigns) do
     ~H"""
@@ -208,9 +207,9 @@ defmodule Cognit.Sheet do
   @doc """
   Renders a sheet description within the header section.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_description(assigns) do
     ~H"""
@@ -223,9 +222,9 @@ defmodule Cognit.Sheet do
   @doc """
   Renders a footer section for the sheet, typically containing actions.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_footer(assigns) do
     ~H"""
@@ -241,9 +240,9 @@ defmodule Cognit.Sheet do
   @doc """
   The close button for the sheet.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sheet_close(assigns) do
     ~H"""

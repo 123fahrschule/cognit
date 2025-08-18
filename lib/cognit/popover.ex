@@ -30,19 +30,18 @@ defmodule Cognit.Popover do
   * `:on-close` - Handler for popover close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the popover")
-  attr(:open, :boolean, default: false, doc: "Whether the popover is initially open")
+  attr :id, :string, required: true, doc: "Unique identifier for the popover"
+  attr :open, :boolean, default: false, doc: "Whether the popover is initially open"
 
-  attr(:"portal-container", :string,
+  attr :"portal-container", :string,
     default: nil,
     doc: "The portal container to render the popover in"
-  )
 
-  attr(:class, :string, default: nil)
-  attr(:"on-open", :any, default: nil, doc: "Handler for popover open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for popover close event")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :"on-open", :any, default: nil, doc: "Handler for popover open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for popover close event"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def popover(assigns) do
     # Collect event mappings
@@ -83,9 +82,9 @@ defmodule Cognit.Popover do
   @doc """
   The trigger element that toggles the popover.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def popover_trigger(assigns) do
     ~H"""
@@ -106,13 +105,13 @@ defmodule Cognit.Popover do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:side, :string, values: ~w(top right bottom left), default: "bottom")
-  attr(:align, :string, values: ~w(start center end), default: "center")
-  attr(:"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels")
-  attr(:"align-offset", :integer, default: 0, doc: "Offset along the alignment axis")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :side, :string, values: ~w(top right bottom left), default: "bottom"
+  attr :align, :string, values: ~w(start center end), default: "center"
+  attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"
+  attr :"align-offset", :integer, default: 0, doc: "Offset along the alignment axis"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def popover_content(assigns) do
     assigns =

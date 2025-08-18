@@ -68,9 +68,9 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the breadcrumb container
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def breadcrumb(assigns) do
     ~H"""
@@ -99,9 +99,9 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the list
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def breadcrumb_list(assigns) do
     ~H"""
@@ -129,9 +129,9 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the item
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def breadcrumb_item(assigns) do
     ~H"""
@@ -159,9 +159,9 @@ defmodule Cognit.Breadcrumb do
   * `:class` - Additional CSS classes to apply to the link
   * Standard HTML link attributes (href, target, etc.) are supported
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global, include: ~w(download href hreflang ping referrerpolicy rel target type))
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global, include: ~w(download href hreflang ping referrerpolicy rel target type)
+  slot :inner_block, required: true
 
   def breadcrumb_link(assigns) do
     ~H"""
@@ -189,9 +189,9 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the current page element
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def breadcrumb_page(assigns) do
     ~H"""
@@ -220,8 +220,8 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the separator
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def breadcrumb_separator(assigns) do
     ~H"""
@@ -259,8 +259,8 @@ defmodule Cognit.Breadcrumb do
 
   * `:class` - Additional CSS classes to apply to the ellipsis
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def breadcrumb_ellipsis(assigns) do
     ~H"""

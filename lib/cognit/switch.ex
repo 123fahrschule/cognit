@@ -19,18 +19,17 @@ defmodule Cognit.Switch do
     * `:disabled` - Whether the switch is disabled
     * `:on-checked-changed` - Handler for value change event
   """
-  attr(:id, :string, default: nil)
-  attr(:name, :string, default: nil)
-  attr(:class, :string, default: nil)
-  attr(:checked, :boolean)
-  attr(:disabled, :boolean, default: false)
-  attr(:"on-checked-changed", :any, default: nil, doc: "Handler for value change event")
+  attr :id, :string, default: nil
+  attr :name, :string, default: nil
+  attr :class, :string, default: nil
+  attr :checked, :boolean
+  attr :disabled, :boolean, default: false
+  attr :"on-checked-changed", :any, default: nil, doc: "Handler for value change event"
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:active]"
-  )
 
-  attr(:rest, :global)
+  attr :rest, :global
 
   def switch(assigns) do
     assigns = prepare_assign(assigns)

@@ -36,11 +36,11 @@ defmodule Cognit.Table do
   * `:aria-label` - Accessible name for the table when no caption is present
   * `:aria-describedby` - ID of an element that describes the table
   """
-  attr(:class, :string, default: nil)
-  attr(:"aria-label", :string, default: nil)
-  attr(:"aria-describedby", :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :"aria-label", :string, default: nil
+  attr :"aria-describedby", :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table(assigns) do
     ~H"""
@@ -58,9 +58,9 @@ defmodule Cognit.Table do
   @doc """
   Renders the table header container.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table_header(assigns) do
     ~H"""
@@ -78,10 +78,10 @@ defmodule Cognit.Table do
   * `:class` - Additional CSS classes
   * `:aria-rowindex` - Numeric index of the row
   """
-  attr(:class, :any, default: nil)
-  attr(:"aria-rowindex", :integer, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :any, default: nil
+  attr :"aria-rowindex", :integer, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table_row(assigns) do
     ~H"""
@@ -109,11 +109,11 @@ defmodule Cognit.Table do
   * `:scope` - Scope of the header cell (default: "col")
   * `:aria-sort` - Sort direction for screen readers (ascending, descending, or none)
   """
-  attr(:class, :string, default: nil)
-  attr(:scope, :string, default: "col")
-  attr(:"aria-sort", :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :scope, :string, default: "col"
+  attr :"aria-sort", :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table_head(assigns) do
     ~H"""
@@ -136,9 +136,9 @@ defmodule Cognit.Table do
   @doc """
   Renders the table body.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table_body(assigns) do
     ~H"""
@@ -155,9 +155,9 @@ defmodule Cognit.Table do
 
   * `:class` - Additional CSS classes
   """
-  attr(:class, :any, default: nil)
-  attr(:rest, :global, include: ["colspan"])
-  slot(:inner_block)
+  attr :class, :any, default: nil
+  attr :rest, :global, include: ["colspan"]
+  slot :inner_block
 
   def table_cell(assigns) do
     ~H"""
@@ -170,9 +170,9 @@ defmodule Cognit.Table do
   @doc """
   Renders a table footer.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global, include: ~w(disabled form name value))
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global, include: ~w(disabled form name value)
+  slot :inner_block, required: true
 
   def table_footer(assigns) do
     ~H"""
@@ -195,9 +195,9 @@ defmodule Cognit.Table do
 
   A caption provides an accessible name for the table.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def table_caption(assigns) do
     ~H"""

@@ -30,13 +30,13 @@ defmodule Cognit.Tabs do
   @doc """
   Primary tabs component that serves as a container for tab triggers and content.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the tabs component")
-  attr(:value, :string, default: nil, doc: "Default selected tab value")
-  attr(:default, :string, default: nil, doc: "Default selected tab value")
-  attr(:class, :string, default: nil)
-  attr(:"on-tab-changed", :any, default: nil, doc: "Handler for tab change events")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true, doc: "Unique identifier for the tabs component"
+  attr :value, :string, default: nil, doc: "Default selected tab value"
+  attr :default, :string, default: nil, doc: "Default selected tab value"
+  attr :class, :string, default: nil
+  attr :"on-tab-changed", :any, default: nil, doc: "Handler for tab change events"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tabs(assigns) do
     # Collect event mappings
@@ -74,9 +74,9 @@ defmodule Cognit.Tabs do
   @doc """
   Container for tab triggers that provides proper styling and ARIA attributes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tabs_list(assigns) do
     ~H"""
@@ -98,11 +98,11 @@ defmodule Cognit.Tabs do
   @doc """
   Individual tab button that activates its corresponding content panel.
   """
-  attr(:value, :string, required: true, doc: "Unique value that identifies this tab")
-  attr(:class, :string, default: nil)
-  attr(:disabled, :boolean, default: false)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :value, :string, required: true, doc: "Unique value that identifies this tab"
+  attr :class, :string, default: nil
+  attr :disabled, :boolean, default: false
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tabs_trigger(assigns) do
     ~H"""
@@ -129,10 +129,10 @@ defmodule Cognit.Tabs do
   @doc """
   Content panel that corresponds to a tab trigger.
   """
-  attr(:value, :string, required: true, doc: "Value that matches a tab trigger")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :value, :string, required: true, doc: "Value that matches a tab trigger"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def tabs_content(assigns) do
     ~H"""

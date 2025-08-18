@@ -47,21 +47,20 @@ defmodule Cognit.Accordion do
   * `:on-value-changed` - Handler for accordion value change event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the accordion")
+  attr :id, :string, required: true, doc: "Unique identifier for the accordion"
 
-  attr(:type, :string,
+  attr :type, :string,
     values: ~w(single multiple),
     default: "single",
     doc: "Whether only one item can be open at a time"
-  )
 
-  attr(:value, :any, default: nil, doc: "The value(s) of the currently expanded item(s)")
-  attr(:"default-value", :any, default: nil, doc: "The default value(s) of the expanded item(s)")
-  attr(:disabled, :boolean, default: false, doc: "Whether the accordion is disabled")
-  attr(:"on-value-changed", :any, default: nil, doc: "Handler for accordion value change event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :value, :any, default: nil, doc: "The value(s) of the currently expanded item(s)"
+  attr :"default-value", :any, default: nil, doc: "The default value(s) of the expanded item(s)"
+  attr :disabled, :boolean, default: false, doc: "Whether the accordion is disabled"
+  attr :"on-value-changed", :any, default: nil, doc: "Handler for accordion value change event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def accordion(assigns) do
     # Collect event mappings
@@ -107,11 +106,11 @@ defmodule Cognit.Accordion do
   * `:disabled` - Whether this item is disabled. Defaults to `false`.
   * `:class` - Additional CSS classes.
   """
-  attr(:value, :string, required: true, doc: "Unique value for this accordion item")
-  attr(:disabled, :boolean, default: false, doc: "Whether this item is disabled")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :value, :string, required: true, doc: "Unique value for this accordion item"
+  attr :disabled, :boolean, default: false, doc: "Whether this item is disabled"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def accordion_item(assigns) do
     ~H"""
@@ -136,9 +135,9 @@ defmodule Cognit.Accordion do
 
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def accordion_trigger(assigns) do
     ~H"""
@@ -182,9 +181,9 @@ defmodule Cognit.Accordion do
 
   * `:class` - Additional CSS classes.
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def accordion_content(assigns) do
     ~H"""

@@ -39,13 +39,13 @@ defmodule Cognit.AlertDialog do
   * `:on-close` - Handler for alert dialog close event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the alert dialog")
-  attr(:open, :boolean, default: false, doc: "Whether the alert dialog is initially open")
-  attr(:"on-open", :any, default: nil, doc: "Handler for alert dialog open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for alert dialog close event")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :id, :string, required: true, doc: "Unique identifier for the alert dialog"
+  attr :open, :boolean, default: false, doc: "Whether the alert dialog is initially open"
+  attr :"on-open", :any, default: nil, doc: "Handler for alert dialog open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for alert dialog close event"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def alert_dialog(assigns) do
     # Collect event mappings
@@ -85,10 +85,10 @@ defmodule Cognit.AlertDialog do
   @doc """
   The trigger element that opens the alert dialog.
   """
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "div")
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :as, :any, default: "div"
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_trigger(assigns) do
     ~H"""
@@ -101,9 +101,9 @@ defmodule Cognit.AlertDialog do
   @doc """
   The content container of the alert dialog.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_content(assigns) do
     ~H"""
@@ -151,9 +151,9 @@ defmodule Cognit.AlertDialog do
   @doc """
   The header section of the alert dialog.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_header(assigns) do
     ~H"""
@@ -174,9 +174,9 @@ defmodule Cognit.AlertDialog do
   @doc """
   The title of the alert dialog.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_title(assigns) do
     ~H"""
@@ -198,9 +198,9 @@ defmodule Cognit.AlertDialog do
   @doc """
   The description of the alert dialog.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_description(assigns) do
     ~H"""
@@ -222,9 +222,9 @@ defmodule Cognit.AlertDialog do
   @doc """
   The footer section of the alert dialog containing action buttons.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def alert_dialog_footer(assigns) do
     ~H"""
@@ -245,16 +245,15 @@ defmodule Cognit.AlertDialog do
   @doc """
   The cancel button for the alert dialog.
   """
-  attr(:class, :string, default: nil)
+  attr :class, :string, default: nil
 
-  attr(:variant, :string,
+  attr :variant, :string,
     values: ~w(default secondary destructive outline ghost link),
     default: "outline"
-  )
 
-  attr(:size, :string, values: ~w(default sm lg icon), default: "default")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :size, :string, values: ~w(default sm lg icon), default: "default"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def alert_dialog_cancel(assigns) do
     assigns =
@@ -286,16 +285,15 @@ defmodule Cognit.AlertDialog do
   @doc """
   The primary action button for the alert dialog.
   """
-  attr(:class, :string, default: nil)
+  attr :class, :string, default: nil
 
-  attr(:variant, :string,
+  attr :variant, :string,
     values: ~w(default secondary destructive outline ghost link),
     default: "default"
-  )
 
-  attr(:size, :string, values: ~w(default sm lg icon), default: "default")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :size, :string, values: ~w(default sm lg icon), default: "default"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def alert_dialog_action(assigns) do
     assigns =

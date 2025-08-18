@@ -39,23 +39,21 @@ defmodule Cognit.Dialog do
       </.dialog>
   """
 
-  attr(:id, :string, required: true)
-  attr(:open, :boolean, default: false)
-  attr(:class, :string, default: nil)
-  attr(:"close-on-outside-click", :boolean, default: true)
+  attr :id, :string, required: true
+  attr :open, :boolean, default: false
+  attr :class, :string, default: nil
+  attr :"close-on-outside-click", :boolean, default: true
 
-  attr(:"on-open", :any,
+  attr :"on-open", :any,
     default: nil,
     doc: "Handler for dialog open event. Support both server event handler and JS command struct"
-  )
 
-  attr(:"on-close", :any,
+  attr :"on-close", :any,
     default: nil,
     doc:
       "Handler for dialog closed event. Support both server event handler and JS command struct"
-  )
 
-  slot(:inner_block, required: true)
+  slot :inner_block, required: true
 
   def dialog(assigns) do
     event_map =
@@ -91,10 +89,10 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "div")
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :as, :any, default: "div"
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def dialog_trigger(assigns) do
     ~H"""
@@ -104,8 +102,8 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
 
   def dialog_content(assigns) do
     ~H"""
@@ -154,8 +152,8 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
 
   def dialog_header(assigns) do
     ~H"""
@@ -165,8 +163,8 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
 
   def dialog_title(assigns) do
     ~H"""
@@ -176,8 +174,8 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
 
   def dialog_description(assigns) do
     ~H"""
@@ -187,8 +185,8 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
 
   def dialog_footer(assigns) do
     ~H"""

@@ -22,19 +22,18 @@ defmodule Cognit.RadioGroup do
   @doc """
   Radio group component that allows selection of one option from a set.
   """
-  attr(:id, :string, default: nil)
-  attr(:name, :string, default: nil)
-  attr(:value, :any, default: nil, doc: "The current value of the radio group")
-  attr(:"default-value", :any, default: nil, doc: "The default value of the radio group")
-  attr(:"on-value-changed", :any, default: nil, doc: "Handler for value changed event")
+  attr :id, :string, default: nil
+  attr :name, :string, default: nil
+  attr :value, :any, default: nil, doc: "The current value of the radio group"
+  attr :"default-value", :any, default: nil, doc: "The default value of the radio group"
+  attr :"on-value-changed", :any, default: nil, doc: "Handler for value changed event"
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def radio_group(assigns) do
     assigns = prepare_assign(assigns)
@@ -74,18 +73,17 @@ defmodule Cognit.RadioGroup do
   @doc """
   Individual radio button in a radio group.
   """
-  attr(:id, :string)
-  attr(:value, :string, required: true)
-  attr(:disabled, :boolean, default: false)
-  attr(:name, :string, default: nil)
-  attr(:class, :string, default: nil)
+  attr :id, :string
+  attr :value, :string, required: true
+  attr :disabled, :boolean, default: false
+  attr :name, :string, default: nil
+  attr :class, :string, default: nil
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]",
     default: nil
-  )
 
-  attr(:rest, :global)
+  attr :rest, :global
 
   def radio_group_item(assigns) do
     assigns = prepare_assign(assigns)
@@ -112,7 +110,15 @@ defmodule Cognit.RadioGroup do
       tabindex="-1"
       {@rest}
     >
-      <input type="radio" id={@id} value={@value} name={@name} disabled={@disabled} class="sr-only" checked={@checked} />
+      <input
+        type="radio"
+        id={@id}
+        value={@value}
+        name={@name}
+        disabled={@disabled}
+        class="sr-only"
+        checked={@checked}
+      />
       <span class="hidden group-data-[state=checked]/item:flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

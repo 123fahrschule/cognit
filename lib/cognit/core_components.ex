@@ -12,7 +12,7 @@ defmodule Cognit.CoreComponents do
       </.list>
   """
   slot :item, required: true do
-    attr(:title, :string, required: true)
+    attr :title, :string, required: true
   end
 
   def list(assigns) do

@@ -42,9 +42,9 @@ defmodule Cognit.Avatar do
 
       <.avatar class="h-16 w-16">...</.avatar>
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: false)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: false
 
   def avatar(assigns) do
     ~H"""
@@ -74,8 +74,8 @@ defmodule Cognit.Avatar do
       <.avatar_image src="/images/profile.jpg" alt="User profile" />
       <.avatar_image src={@user.avatar_url} alt={@user.name} class="border-2" />
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global, include: ~w(alt src))
+  attr :class, :string, default: nil
+  attr :rest, :global, include: ~w(alt src)
 
   def avatar_image(assigns) do
     ~H"""
@@ -107,9 +107,9 @@ defmodule Cognit.Avatar do
         <svg><!-- User icon SVG --></svg>
       </.avatar_fallback>
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: false)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: false
 
   def avatar_fallback(assigns) do
     ~H"""

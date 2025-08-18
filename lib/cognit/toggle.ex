@@ -9,22 +9,21 @@ defmodule Cognit.Toggle do
 
       <.toggle value="true" size="sm" variant="outline">Bold</.toggle>
   """
-  attr(:id, :any, default: nil)
-  attr(:name, :any, default: nil)
+  attr :id, :any, default: nil
+  attr :name, :any, default: nil
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:value, :boolean, default: false)
-  attr(:"default-value", :any, values: [true, false, "true", "false"], default: false)
+  attr :value, :boolean, default: false
+  attr :"default-value", :any, values: [true, false, "true", "false"], default: false
 
-  attr(:disabled, :boolean, default: false)
-  attr(:variant, :string, values: ~w(default outline), default: "default")
-  attr(:size, :string, values: ~w(default sm lg), default: "default")
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :disabled, :boolean, default: false
+  attr :variant, :string, values: ~w(default outline), default: "default"
+  attr :size, :string, values: ~w(default sm lg), default: "default"
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def toggle(assigns) do
     assigns =

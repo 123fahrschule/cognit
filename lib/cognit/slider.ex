@@ -28,22 +28,21 @@ defmodule Cognit.Slider do
   * `:on-value-changed` - Handler for value changed event.
   * `:class` - Additional CSS classes.
   """
-  attr(:id, :string, required: true, doc: "Unique identifier for the slider")
-  attr(:name, :any, default: nil, doc: "Name of the slider for form submission")
-  attr(:min, :integer, default: 0, doc: "Minimum value")
-  attr(:max, :integer, default: 100, doc: "Maximum value")
-  attr(:step, :integer, default: 1, doc: "Step size for value changes")
-  attr(:value, :integer, default: nil, doc: "Current value of the slider")
-  attr(:"default-value", :integer, default: nil, doc: "Default value if value is not provided")
-  attr(:disabled, :boolean, default: false, doc: "Whether the slider is disabled")
-  attr(:"on-value-changed", :any, default: nil, doc: "Handler for value changed event")
+  attr :id, :string, required: true, doc: "Unique identifier for the slider"
+  attr :name, :any, default: nil, doc: "Name of the slider for form submission"
+  attr :min, :integer, default: 0, doc: "Minimum value"
+  attr :max, :integer, default: 100, doc: "Maximum value"
+  attr :step, :integer, default: 1, doc: "Step size for value changes"
+  attr :value, :integer, default: nil, doc: "Current value of the slider"
+  attr :"default-value", :integer, default: nil, doc: "Default value if value is not provided"
+  attr :disabled, :boolean, default: false, doc: "Whether the slider is disabled"
+  attr :"on-value-changed", :any, default: nil, doc: "Handler for value changed event"
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "A form field struct retrieved from the form, for example: @form[:volume]"
-  )
 
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def slider(assigns) do
     assigns = prepare_assign(assigns)

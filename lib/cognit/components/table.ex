@@ -3,23 +3,23 @@ defmodule Cognit.Components.Table do
 
   import Cognit.Table
 
-  attr(:class, :any, default: nil)
-  attr(:rest, :global)
+  attr :class, :any, default: nil
+  attr :rest, :global
 
-  slot(:inner_block)
+  slot :inner_block
 
   def table_container(assigns) do
     ~H"""
     <div class={["rounded-md border overflow-auto", @class]} {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
 
-  attr(:class, :any, default: nil)
-  attr(:rest, :global)
+  attr :class, :any, default: nil
+  attr :rest, :global
 
-  slot(:inner_block)
+  slot :inner_block
 
   def table_empty(assigns) do
     ~H"""

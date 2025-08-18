@@ -20,11 +20,11 @@ defmodule Cognit.Progress do
   * `:value` - The current progress value (0-100)
   * `:class` - Additional CSS classes
   """
-  attr(:class, :string, default: nil)
-  attr(:value, :integer, default: 0, doc: "Current progress value (0-100)")
-  attr(:max, :integer, default: 100, doc: "Maximum value")
-  attr(:indeterminate, :boolean, default: false, doc: "Whether the progress is indeterminate")
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :value, :integer, default: 0, doc: "Current progress value (0-100)"
+  attr :max, :integer, default: 100, doc: "Maximum value"
+  attr :indeterminate, :boolean, default: false, doc: "Whether the progress is indeterminate"
+  attr :rest, :global
 
   def progress(assigns) do
     # Normalize and clamp value between 0 and 100

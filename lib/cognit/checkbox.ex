@@ -32,12 +32,12 @@ defmodule Cognit.Checkbox do
   * `:field` - A Phoenix form field
   * `:class` - Additional classes to add to the checkbox
   """
-  attr(:name, :any, default: nil)
-  attr(:value, :any, default: nil)
-  attr(:"default-value", :any, values: [true, false, "true", "false"], default: false)
-  attr(:field, Phoenix.HTML.FormField)
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :name, :any, default: nil
+  attr :value, :any, default: nil
+  attr :"default-value", :any, values: [true, false, "true", "false"], default: false
+  attr :field, Phoenix.HTML.FormField
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def checkbox(assigns) do
     assigns =

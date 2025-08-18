@@ -32,24 +32,24 @@ defmodule Cognit.Components.FormField do
     "step"
   ]
 
-  attr(:class, :any, default: nil)
-  attr(:id, :string)
-  attr(:name, :string)
-  attr(:value, :string)
-  attr(:type, :string, default: "text")
-  attr(:field, Phoenix.HTML.FormField)
-  attr(:label, :string, default: nil)
-  attr(:disabled, :boolean, default: false)
-  attr(:options, :list, default: [])
-  attr(:multiple, :boolean, default: false)
-  attr(:checked, :boolean, default: false)
-  attr(:errors, :list, default: [])
-  attr(:has_errors, :boolean, default: false)
-  attr(:description, :string, default: nil)
-  attr(:form_field, :any, default: nil, doc: "internal assign for use in SaladUI components")
-  attr(:rest, :global, include: @rest_attributes)
+  attr :class, :any, default: nil
+  attr :id, :string
+  attr :name, :string
+  attr :value, :string
+  attr :type, :string, default: "text"
+  attr :field, Phoenix.HTML.FormField
+  attr :label, :string, default: nil
+  attr :disabled, :boolean, default: false
+  attr :options, :list, default: []
+  attr :multiple, :boolean, default: false
+  attr :checked, :boolean, default: false
+  attr :errors, :list, default: []
+  attr :has_errors, :boolean, default: false
+  attr :description, :string, default: nil
+  attr :form_field, :any, default: nil, doc: "internal assign for use in SaladUI components"
+  attr :rest, :global, include: @rest_attributes
 
-  slot(:select_content)
+  slot :select_content
 
   def form_field(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
@@ -123,7 +123,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} >
+      <.form_message :for={msg <- @errors}>
         {msg}
       </.form_message>
     </.form_item>
@@ -140,11 +140,10 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} >
+      <.form_message :for={msg <- @errors}>
         {msg}
       </.form_message>
     </.form_item>
-
     """
   end
 
@@ -152,10 +151,10 @@ defmodule Cognit.Components.FormField do
     ~H"""
     <div class={@class}>
       <div class="flex items-center gap-2">
-      <.switch field={@form_field} />
-      <.label :if={@label} for={@form_field.id <> "-input"}>
-        {@label}
-      </.label>
+        <.switch field={@form_field} />
+        <.label :if={@label} for={@form_field.id <> "-input"}>
+          {@label}
+        </.label>
       </div>
       <.form_message :for={msg <- @errors} errors={@errors}>
         {msg}
@@ -167,12 +166,12 @@ defmodule Cognit.Components.FormField do
   def form_field(%{type: "checkbox"} = assigns) do
     ~H"""
     <div class={@class}>
-      <div class={["flex items-center gap-2", @class]} >
-        <.checkbox id={@id} name={@name} value={@value} {@rest}/>
+      <div class={["flex items-center gap-2", @class]}>
+        <.checkbox id={@id} name={@name} value={@value} {@rest} />
         <.form_label :if={@label} for={@id} error={@has_errors}>
           {@label}
         </.form_label>
-        <.form_message :for={msg <- @errors} >
+        <.form_message :for={msg <- @errors}>
           {msg}
         </.form_message>
       </div>

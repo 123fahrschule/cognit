@@ -6,7 +6,7 @@ defmodule Cognit.Components.LocaleSelect do
 
   import Cognit.Icon
 
-  attr(:rest, :global)
+  attr :rest, :global
 
   def locale_select(assigns) do
     assigns =
@@ -17,18 +17,22 @@ defmodule Cognit.Components.LocaleSelect do
     <div id="locale-select" phx-hook="LocaleSelect" {@rest}>
       <.dropdown_menu id="locale-elect-dropdown-menu">
         <.dropdown_menu_trigger>
-          <.button size="icon" variant="secondary" >
+          <.button size="icon" variant="secondary">
             <.icon name="language" class="text-[20px]" />
           </.button>
         </.dropdown_menu_trigger>
         <.dropdown_menu_content align="end">
-          <.dropdown_menu_item :for={
+          <.dropdown_menu_item
+            :for={
               {locale, text} <- [
                 {"de", "Deutsch"},
                 {"en", "English"}
               ]
             }
-            on-select={locale != @current_locale && JS.dispatch("set-locale", to: "#locale-select", detail: %{locale: locale})}
+            on-select={
+              locale != @current_locale &&
+                JS.dispatch("set-locale", to: "#locale-select", detail: %{locale: locale})
+            }
             class={["w-full", locale == @current_locale && "font-semibold"]}
           >
             {text}

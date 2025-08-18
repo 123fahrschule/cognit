@@ -31,34 +31,31 @@ defmodule Cognit.Select do
   Ready to use select component with all required parts.
   """
 
-  attr(:id, :string, default: nil)
-  attr(:name, :any, default: nil)
-  attr(:value, :any, default: nil, doc: "The value of the select")
-  attr(:"default-value", :any, default: nil, doc: "The default value of the select")
-  attr(:multiple, :boolean, default: false, doc: "Allow multiple selection")
-  attr(:"use-portal", :boolean, default: false, doc: "Whether to render the content in a portal")
-  attr(:"portal-container", :string, default: nil, doc: "CSS selector for the portal container")
-  attr(:"on-value-changed", :any, default: nil, doc: "Handler for value changed event")
-  attr(:"on-open", :any, default: nil, doc: "Handler for select open event")
-  attr(:"on-close", :any, default: nil, doc: "Handler for select closed event")
+  attr :id, :string, default: nil
+  attr :name, :any, default: nil
+  attr :value, :any, default: nil, doc: "The value of the select"
+  attr :"default-value", :any, default: nil, doc: "The default value of the select"
+  attr :multiple, :boolean, default: false, doc: "Allow multiple selection"
+  attr :"use-portal", :boolean, default: false, doc: "Whether to render the content in a portal"
+  attr :"portal-container", :string, default: nil, doc: "CSS selector for the portal container"
+  attr :"on-value-changed", :any, default: nil, doc: "Handler for value changed event"
+  attr :"on-open", :any, default: nil, doc: "Handler for select open event"
+  attr :"on-close", :any, default: nil, doc: "Handler for select closed event"
 
-  attr(:field, Phoenix.HTML.FormField,
+  attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
-  )
 
-  attr(:label, :string,
+  attr :label, :string,
     default: nil,
     doc: "The display label of the select value. If not provided, the value will be used."
-  )
 
-  attr(:placeholder, :string,
+  attr :placeholder, :string,
     default: nil,
     doc: "The placeholder text when no value is selected."
-  )
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def select(assigns) do
     assigns = prepare_assign(assigns)
@@ -99,7 +96,7 @@ defmodule Cognit.Select do
       {@rest}
     >
       {render_slot(@inner_block)}
-      <input name={@name} value="" data-input class="hidden"/>
+      <input name={@name} value="" data-input class="hidden" />
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore">
         <input :for={value <- List.wrap(@value)} type="hidden" name={@name} value={value} />
       </div>
@@ -107,9 +104,9 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global, include: ["disabled"])
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global, include: ["disabled"]
 
   def select_trigger(assigns) do
     ~H"""
@@ -145,9 +142,9 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:placeholder, :string, default: nil)
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :placeholder, :string, default: nil
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def select_value(assigns) do
     ~H"""
@@ -164,11 +161,11 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:class, :string, default: nil)
-  attr(:side, :string, values: ~w(top bottom), default: "bottom")
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :side, :string, values: ~w(top bottom), default: "bottom"
+  slot :inner_block, required: true
 
-  attr(:rest, :global)
+  attr :rest, :global
 
   def select_content(assigns) do
     position_class =
@@ -203,9 +200,9 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def select_group(assigns) do
     ~H"""
@@ -215,9 +212,9 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def select_label(assigns) do
     ~H"""
@@ -227,11 +224,11 @@ defmodule Cognit.Select do
     """
   end
 
-  attr(:value, :string, required: true)
-  attr(:disabled, :boolean, default: false)
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :value, :string, required: true
+  attr :disabled, :boolean, default: false
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def select_item(assigns) do
     ~H"""

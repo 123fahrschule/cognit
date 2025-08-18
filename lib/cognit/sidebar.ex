@@ -15,10 +15,10 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:style, :map, default: %{})
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :style, :map, default: %{}
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_provider(assigns) do
     assigns =
@@ -52,20 +52,19 @@ defmodule Cognit.Sidebar do
   Render
   """
 
-  attr(:id, :string,
+  attr :id, :string,
     required: true,
     doc: "The id of the sidebar, used for the trigger to identify the target sidebar"
-  )
 
-  attr(:side, :string, values: ~w(left right), default: "left")
-  attr(:variant, :string, values: ~w(sidebar floating inset), default: "sidebar")
-  attr(:collapsible, :string, values: ~w(offcanvas icon none), default: "offcanvas")
-  attr(:is_mobile, :boolean, default: false)
-  attr(:state, :string, values: ~w(expanded collapsed), default: "expanded")
-  attr(:class, :string, default: nil)
-  attr(:style, :map, default: %{})
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :side, :string, values: ~w(left right), default: "left"
+  attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
+  attr :collapsible, :string, values: ~w(offcanvas icon none), default: "offcanvas"
+  attr :is_mobile, :boolean, default: false
+  attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
+  attr :class, :string, default: nil
+  attr :style, :map, default: %{}
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar(%{collapsible: "none"} = assigns) do
     ~H"""
@@ -162,10 +161,10 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:target, :string, required: true, doc: "The id of the target sidebar")
-  attr(:as, :any, default: "button")
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :target, :string, required: true, doc: "The id of the target sidebar"
+  attr :as, :any, default: "button"
+  attr :rest, :global
 
   def sidebar_trigger(assigns) do
     ~H"""
@@ -201,8 +200,8 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def sidebar_rail(assigns) do
     ~H"""
@@ -231,9 +230,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_inset(assigns) do
     ~H"""
@@ -255,8 +254,8 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def sidebar_input(assigns) do
     ~H"""
@@ -276,9 +275,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_header(assigns) do
     ~H"""
@@ -300,9 +299,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_footer(assigns) do
     ~H"""
@@ -324,8 +323,8 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :rest, :global
 
   def sidebar_separator(assigns) do
     ~H"""
@@ -340,9 +339,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_content(assigns) do
     ~H"""
@@ -365,9 +364,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_group(assigns) do
     ~H"""
@@ -390,10 +389,10 @@ defmodule Cognit.Sidebar do
   Render
   TODO: class merge not work well here
   """
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "div")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :as, :any, default: "div"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_group_label(assigns) do
     ~H"""
@@ -420,9 +419,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_group_action(assigns) do
     ~H"""
@@ -446,9 +445,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_group_content(assigns) do
     ~H"""
@@ -470,9 +469,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu(assigns) do
     ~H"""
@@ -494,9 +493,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_item(assigns) do
     ~H"""
@@ -518,16 +517,16 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:variant, :string, values: ~w(default outline), default: "default")
-  attr(:size, :string, values: ~w(default sm lg), default: "default")
-  attr(:is_active, :boolean, default: false)
-  attr(:class, :string, default: nil)
-  attr(:is_mobile, :boolean, default: false)
-  attr(:state, :string, default: "expanded")
-  attr(:as, :any, default: "button")
-  attr(:rest, :global, include: ["navigate", "patch", "href"])
-  slot(:inner_block, required: true)
-  attr(:tooltip, :string, required: false)
+  attr :variant, :string, values: ~w(default outline), default: "default"
+  attr :size, :string, values: ~w(default sm lg), default: "default"
+  attr :is_active, :boolean, default: false
+  attr :class, :string, default: nil
+  attr :is_mobile, :boolean, default: false
+  attr :state, :string, default: "expanded"
+  attr :as, :any, default: "button"
+  attr :rest, :global, include: ["navigate", "patch", "href"]
+  slot :inner_block, required: true
+  attr :tooltip, :string, required: false
 
   def sidebar_menu_button(assigns) do
     button = ~H"""
@@ -564,10 +563,10 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:show_on_hover, :boolean, default: false)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :show_on_hover, :boolean, default: false
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_action(assigns) do
     ~H"""
@@ -596,9 +595,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_badge(assigns) do
     ~H"""
@@ -625,9 +624,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:show_icon, :boolean, default: false)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  attr :show_icon, :boolean, default: false
+  attr :rest, :global
 
   def sidebar_menu_skeleton(assigns) do
     width = :rand.uniform(40) + 50
@@ -658,9 +657,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_sub(assigns) do
     ~H"""
@@ -683,9 +682,9 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:class, :string, default: nil)
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :class, :string, default: nil
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_sub_item(assigns) do
     ~H"""
@@ -705,12 +704,12 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr(:size, :string, values: ~w(sm md), default: "md")
-  attr(:is_active, :boolean, default: false)
-  attr(:class, :string, default: nil)
-  attr(:as, :any, default: "a")
-  attr(:rest, :global)
-  slot(:inner_block, required: true)
+  attr :size, :string, values: ~w(sm md), default: "md"
+  attr :is_active, :boolean, default: false
+  attr :class, :string, default: nil
+  attr :as, :any, default: "a"
+  attr :rest, :global
+  slot :inner_block, required: true
 
   def sidebar_menu_sub_button(assigns) do
     ~H"""

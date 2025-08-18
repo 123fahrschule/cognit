@@ -27,9 +27,9 @@ defmodule Cognit.Card do
       </.card>
   """
 
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card(assigns) do
     ~H"""
@@ -42,9 +42,9 @@ defmodule Cognit.Card do
   @doc """
   Renders a card header section for title and description.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card_header(assigns) do
     ~H"""
@@ -57,9 +57,9 @@ defmodule Cognit.Card do
   @doc """
   Renders a card title within the header section.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card_title(assigns) do
     ~H"""
@@ -72,9 +72,9 @@ defmodule Cognit.Card do
   @doc """
   Renders a card description within the header section.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card_description(assigns) do
     ~H"""
@@ -87,9 +87,9 @@ defmodule Cognit.Card do
   @doc """
   Renders the main content area of the card.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card_content(assigns) do
     ~H"""
@@ -102,9 +102,9 @@ defmodule Cognit.Card do
   @doc """
   Renders a footer section for the card, typically containing actions.
   """
-  attr(:class, :string, default: nil)
-  slot(:inner_block, required: true)
-  attr(:rest, :global)
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+  attr :rest, :global
 
   def card_footer(assigns) do
     ~H"""
