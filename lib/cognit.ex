@@ -189,6 +189,7 @@ defmodule Cognit do
       import Cognit.Chart
       import Cognit.Checkbox
       import Cognit.Collapsible
+      import Cognit.ConfirmationDialog
       import Cognit.Dialog
       import Cognit.DropdownMenu
       import Cognit.Form
