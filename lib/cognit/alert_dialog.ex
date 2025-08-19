@@ -70,11 +70,12 @@ defmodule Cognit.AlertDialog do
       id={@id}
       class={classes(["relative z-50 group/alert-dialog", @class])}
       data-component="dialog"
-      data-options={@options}
       data-state={@initial_state}
+      data-open={to_string(@open)}
       data-event-mappings={@event_map}
-      phx-hook="SaladUI"
+      data-options={@options}
       data-part="root"
+      phx-hook="SaladUI"
       {@rest}
     >
       {render_slot(@inner_block)}

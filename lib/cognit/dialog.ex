@@ -78,11 +78,12 @@ defmodule Cognit.Dialog do
       id={@id}
       class="relative z-50 group/dialog"
       data-component="dialog"
-      data-options={@options}
+      data-state={@initial_state}
       data-open={to_string(@open)}
       data-event-mappings={@event_map}
-      phx-hook="SaladUI"
+      data-options={@options}
       data-part="root"
+      phx-hook="SaladUI"
     >
       {render_slot(@inner_block)}
     </div>
