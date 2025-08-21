@@ -43,7 +43,7 @@ defmodule Cognit.Components.FormField do
   attr :options, :list, default: []
   attr :multiple, :boolean, default: false
   attr :checked, :boolean, default: false
-  attr :errors, :list, default: []
+  attr :errors, :list
   attr :has_errors, :boolean, default: false
   attr :description, :string, default: nil
   attr :form_field, :any, default: nil, doc: "internal assign for use in SaladUI components"
@@ -197,7 +197,12 @@ defmodule Cognit.Components.FormField do
   end
 
   defp assign_errors(assigns, field) do
-    errors = if Phoenix.Component.used_input?(field), do: field.errors, else: []
+    errors =
+      cond do
+        assigns[:errors] -> assigns.errors
+        Phoenix.Component.used_input?(field) -> field.errors
+        true -> []
+      end
 
     assigns
     |> assign(:errors, Enum.map(errors, &translate_error/1))
