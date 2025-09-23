@@ -264,12 +264,13 @@ class SelectComponent extends Component {
   initializePlaceholder() {
     if (!this.valueDisplay) return;
 
-    const placeholder =
-      this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
-
     // If no selection, display the placeholder
     if (this.collection.getValue(true).length === 0) {
-      this.valueDisplay.setAttribute("data-content", placeholder);
+      const placeholder =
+        this.valueDisplay.getAttribute("data-placeholder") ||
+        "Select an option";
+
+      this.valueDisplay.replaceChildren(placeholder);
     }
   }
 
@@ -367,30 +368,33 @@ class SelectComponent extends Component {
 
     if (selectedValues.length === 0) {
       // No selection, show placeholder
-      this.valueDisplay.setAttribute("data-content", placeholder);
+      this.valueDisplay.replaceChildren(placeholder);
     } else if (this.multiple) {
       // Multiple selection
       if (selectedValues.length === 1) {
         // Get the label from the selected item
-        const selectedItem = this.collection.getItemByValue(selectedValues[0]);
-        this.valueDisplay.setAttribute(
-          "data-content",
-          selectedItem.instance.label,
-        );
+        const content =
+          this.collection
+            .getItemByValue(selectedValues[0])
+            ?.instance.el.cloneNode(true)
+            .querySelector('[data-part="item-text"]') || "";
+
+        this.valueDisplay.replaceChildren(content);
       } else {
         // Show count for multiple selections
-        this.valueDisplay.setAttribute(
-          "data-content",
+        this.valueDisplay.replaceChildren(
           `${selectedValues.length} items selected`,
         );
       }
     } else {
       // Single selection - get label from the selected item
-      const selectedItem = this.collection.getItemByValue(selectedValues[0]);
-      this.valueDisplay.setAttribute(
-        "data-content",
-        selectedItem.instance.label,
-      );
+      const content =
+        this.collection
+          .getItemByValue(selectedValues[0])
+          ?.instance.el.cloneNode(true)
+          .querySelector('[data-part="item-text"]') || "";
+
+      this.valueDisplay.replaceChildren(content);
     }
   }
 

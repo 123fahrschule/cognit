@@ -151,9 +151,8 @@ defmodule Cognit.Select do
     <span
       data-part="value"
       class={
-        classes(["select-value pointer-events-none before:content-[attr(data-content)]", @class])
+        classes(["select-value pointer-events-none text-start", @class])
       }
-      data-content={@placeholder}
       data-placeholder={@placeholder}
       {@rest}
     >
