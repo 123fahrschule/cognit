@@ -74,7 +74,7 @@ defmodule Cognit.Select do
         :options,
         json(%{
           defaultValue: assigns[:"default-value"],
-          value: assigns.value,
+          value: to_string(assigns.value),
           name: assigns.name,
           multiple: assigns.multiple,
           usePortal: assigns[:"use-portal"],
