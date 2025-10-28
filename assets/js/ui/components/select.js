@@ -144,7 +144,9 @@ class SelectComponent extends Component {
     this.collection = new Collection({
       type: this.multiple ? "multiple" : "single",
       defaultValue: this.options.defaultValue,
-      value: this.options.value,
+      value: this.multiple
+        ? this.options.value
+        : this.options.value?.toString(),
       getItemValue: (item) => item.value,
       isItemDisabled: (item) => item.disabled || this.disabled,
     });
@@ -163,6 +165,7 @@ class SelectComponent extends Component {
     // Initialize select items
     this.initializeItems();
     this.initializePlaceholder();
+    this.syncHiddenInputs(false);
   }
 
   getComponentConfig() {
@@ -432,7 +435,7 @@ class SelectComponent extends Component {
   }
 
   // Form integration
-  syncHiddenInputs() {
+  syncHiddenInputs(notifyChanges = true) {
     // Get the selected values
     const values = this.collection.getValue(true);
     const name = this.options.name || "";
@@ -463,9 +466,11 @@ class SelectComponent extends Component {
       inputsContainer.appendChild(input);
     }
 
-    this.el
-      .querySelector("[data-input]")
-      .dispatchEvent(new Event("change", { bubbles: true }));
+    if (notifyChanges) {
+      this.el
+        .querySelector("[data-input]")
+        .dispatchEvent(new Event("change", { bubbles: true }));
+    }
   }
 
   // Cleanup
