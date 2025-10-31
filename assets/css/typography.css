@@ -1,0 +1,79 @@
+@layer utilities {
+  .text-h1 {
+    font-size: 3rem;
+    line-height: 3.75rem;
+    font-weight: 700;
+    letter-spacing: 0.24px;
+  }
+
+  .text-h2 {
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.16px;
+  }
+
+  .text-h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+  }
+
+  .text-h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+  }
+
+  .text-h5 {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+  }
+
+  .text-h6 {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.48px;
+    text-transform: uppercase;
+  }
+
+  .text-body {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .text-body-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .text-body-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .text-button-lg {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+  }
+
+  .text-button {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+  }
+
+  .text-button-sm {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+  }
+
+  .text-helper {
+    font-size: 11px;
+    line-height: 12px;
+  }
+}
