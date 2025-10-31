@@ -43,6 +43,83 @@
     --sidebar-foreground: 211 12% 53%;
     --sidebar-accent: 210 20% 18%;
     --sidebar-accent-foreground: 0 0% 100%;
+
+    /* primary colors */
+    --primary-50: 198 45% 92%;
+    --primary-100: 198 33% 81%;
+    --primary-200: 198 23% 55%;
+    --primary-300: 198 48% 29%;
+    --primary-400: 197 48% 19%;
+    --primary-500: 197 47% 15%;
+    --primary-600: 198 47% 6%;
+
+    /* secondary colors */
+    --secondary-50: 14 100% 97%;
+    --secondary-100: 14 100% 91%;
+    --secondary-200: 14 100% 74%;
+    --secondary-300: 14 100% 57%;
+    --secondary-400: 14 76% 46%;
+    --secondary-500: 14 75% 33%;
+    --secondary-600: 14 76% 23%;
+
+    /* neutral colors */
+    --neutral-100: 0 0% 100%;
+    --neutral-200: 210 23% 97%;
+    --neutral-300: 214 18% 90%;
+    --neutral-400: 212 11% 82%;
+    --neutral-500: 209 11% 66%;
+    --neutral-600: 206 11% 53%;
+    --neutral-700: 207 14% 43%;
+    --neutral-800: 207 20% 18%;
+    --neutral-900: 207 21% 13%;
+
+    /* warning colors */
+    --warning-50: 42 100% 95%;
+    --warning-100: 43 100% 90%;
+    --warning-200: 42 100% 73%;
+    --warning-300: 36 100% 59%;
+    --warning-400: 27 100% 48%;
+    --warning-500: 22 100% 34%;
+
+    /* success colors */
+    --success-50: 117 76% 97%;
+    --success-100: 118 77% 90%;
+    --success-200: 130 69% 68%;
+    --success-300: 150 70% 41%;
+    --success-400: 160 84% 31%;
+    --success-500: 164 93% 23%;
+
+    /* error colors */
+    --error-50: 10 100% 97%;
+    --error-100: 11 100% 92%;
+    --error-200: 7 100% 76%;
+    --error-300: 0 91% 58%;
+    --error-400: 349 78% 45%;
+    --error-500: 338 88% 25%;
+
+    /* info colors */
+    --info-50: 194 80% 97%;
+    --info-100: 195 71% 87%;
+    --info-200: 194 75% 81%;
+    --info-300: 194 73% 68%;
+    --info-400: 196 36% 45%;
+    --info-500: 195 45% 22%;
+
+    /* driving colors */
+    --driving-50: 180 32% 96%;
+    --driving-100: 182 32% 86%;
+    --driving-200: 182 27% 69%;
+    --driving-300: 182 39% 48%;
+    --driving-400: 182 37% 38%;
+    --driving-500: 182 35% 19%;
+
+    /* theory colors */
+    --theory-50: 196 67% 97%;
+    --theory-100: 198 82% 91%;
+    --theory-200: 194 57% 68%;
+    --theory-300: 192 100% 33%;
+    --theory-400: 191 98% 25%;
+    --theory-500: 195 100% 13%;
   }
 
   * {

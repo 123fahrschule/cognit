@@ -23,15 +23,7 @@
     "DEFAULT": "hsl(var(--popover))",
     "foreground": "hsl(var(--popover-foreground))"
   },
-  "primary": {
-    "DEFAULT": "hsl(var(--primary))",
-    "foreground": "hsl(var(--primary-foreground))"
-  },
   "ring": "hsl(var(--ring))",
-  "secondary": {
-    "DEFAULT": "hsl(var(--secondary))",
-    "foreground": "hsl(var(--secondary-foreground))"
-  },
   "sidebar": {
     "DEFAULT": "hsl(var(--sidebar-background))",
     "foreground": "hsl(var(--sidebar-foreground))",
@@ -41,5 +33,93 @@
     "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
     "border": "hsl(var(--sidebar-border))",
     "ring": "hsl(var(--sidebar-ring))"
+  },
+  "primary": {
+    "50": "hsl(var(--primary-50))",
+    "100": "hsl(var(--primary-100))",
+    "200": "hsl(var(--primary-200))",
+    "300": "hsl(var(--primary-300))",
+    "400": "hsl(var(--primary-400))",
+    "500": "hsl(var(--primary-500))",
+    "600": "hsl(var(--primary-600))",
+    "DEFAULT": "hsl(var(--primary))",
+    "foreground": "hsl(var(--primary-foreground))"
+  },
+  "secondary": {
+    "50": "hsl(var(--secondary-50))",
+    "100": "hsl(var(--secondary-100))",
+    "200": "hsl(var(--secondary-200))",
+    "300": "hsl(var(--secondary-300))",
+    "400": "hsl(var(--secondary-400))",
+    "500": "hsl(var(--secondary-500))",
+    "600": "hsl(var(--secondary-600))",
+    "DEFAULT": "hsl(var(--secondary))",
+    "foreground": "hsl(var(--secondary-foreground))"
+  },
+  "neutral": {
+    "100": "hsl(var(--neutral-100))",
+    "200": "hsl(var(--neutral-200))",
+    "300": "hsl(var(--neutral-300))",
+    "400": "hsl(var(--neutral-400))",
+    "500": "hsl(var(--neutral-500))",
+    "600": "hsl(var(--neutral-600))",
+    "700": "hsl(var(--neutral-700))",
+    "800": "hsl(var(--neutral-800))",
+    "900": "hsl(var(--neutral-900))"
+  },
+  "warning": {
+    "50": "hsl(var(--warning-50))",
+    "100": "hsl(var(--warning-100))",
+    "200": "hsl(var(--warning-200))",
+    "300": "hsl(var(--warning-300))",
+    "400": "hsl(var(--warning-400))",
+    "500": "hsl(var(--warning-500))"
+  },
+  "success": {
+    "50": "hsl(var(--success-50))",
+    "100": "hsl(var(--success-100))",
+    "200": "hsl(var(--success-200))",
+    "300": "hsl(var(--success-300))",
+    "400": "hsl(var(--success-400))",
+    "500": "hsl(var(--success-500))"
+  },
+  "error": {
+    "50": "hsl(var(--error-50))",
+    "100": "hsl(var(--error-100))",
+    "200": "hsl(var(--error-200))",
+    "300": "hsl(var(--error-300))",
+    "400": "hsl(var(--error-400))",
+    "500": "hsl(var(--error-500))"
+  },
+  "info": {
+    "50": "hsl(var(--info-50))",
+    "100": "hsl(var(--info-100))",
+    "200": "hsl(var(--info-200))",
+    "300": "hsl(var(--info-300))",
+    "400": "hsl(var(--info-400))",
+    "500": "hsl(var(--info-500))"
+  },
+  "driving": {
+    "50": "hsl(var(--driving-50))",
+    "100": "hsl(var(--driving-100))",
+    "200": "hsl(var(--driving-200))",
+    "300": "hsl(var(--driving-300))",
+    "400": "hsl(var(--driving-400))",
+    "500": "hsl(var(--driving-500))"
+  },
+  "theory": {
+    "50": "hsl(var(--theory-50))",
+    "100": "hsl(var(--theory-100))",
+    "200": "hsl(var(--theory-200))",
+    "300": "hsl(var(--theory-300))",
+    "400": "hsl(var(--theory-400))",
+    "500": "hsl(var(--theory-500))"
+  },
+  "chart": {
+    "1": "hsl(var(--chart-1))",
+    "2": "hsl(var(--chart-2))",
+    "3": "hsl(var(--chart-3))",
+    "4": "hsl(var(--chart-4))",
+    "5": "hsl(var(--chart-5))"
   }
 }
