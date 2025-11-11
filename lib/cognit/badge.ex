@@ -23,9 +23,8 @@ defmodule Cognit.Badge do
       </div>
 
 
-      # Example with manual tooltip for long text
+      # Example with manual tooltip for truncate
       <.badge
-        :for={role <- employee_roles(@selected_employee)}
         variant="secondary"
         title={if String.length(role) > 30, do: role, else: nil}
         truncate_on={30}
