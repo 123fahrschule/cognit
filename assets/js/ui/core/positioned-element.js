@@ -145,7 +145,7 @@ class PositionedElement {
     }
 
     // Restore from portal if needed
-    if (this.inPortal) {
+    if (Portal.isInPortal(this.element)) {
       this.restoreFromPortal();
     }
 
@@ -335,8 +335,9 @@ class PositionedElement {
     }
     this.scrollManager.destroy();
 
+    // Restore from portal instead of removing, so LiveView can manage the element
     if (Portal.isInPortal(this.element)) {
-      this.element.remove();
+      Portal.restore(this.element);
     }
 
     // Clear references
