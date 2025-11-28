@@ -18,6 +18,7 @@ defmodule Cognit.Button do
       * `"default"` - Primary action button
       * `"secondary"` - Secondary action button
       * `"destructive"` - Buttons for destructive actions
+      * `"success"` - Buttons for success actions
       * `"outline"` - Button with outline style
       * `"ghost"` - Button with minimal styling
       * `"link"` - Button that appears as a link
@@ -67,7 +68,7 @@ defmodule Cognit.Button do
   attr :class, :any, default: nil
 
   attr :variant, :string,
-    values: ~w(default secondary destructive outline ghost link),
+    values: ~w(default secondary destructive success outline ghost link),
     default: "default",
     doc: "the button variant style"
 

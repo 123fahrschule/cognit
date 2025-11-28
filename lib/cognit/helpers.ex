@@ -100,6 +100,7 @@ defmodule Cognit.Helpers do
       "default" => "bg-primary text-primary-foreground shadow hover:bg-primary/90",
       "destructive" =>
         "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+      "success" => "bg-success text-success-foreground shadow hover:bg-success/90",
       "outline" =>
         "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
       "secondary" => "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
@@ -122,7 +123,7 @@ defmodule Cognit.Helpers do
   @doc """
   Reuseable button variant helper. Support 2 variant
   - size: `default|sm|lg|icon`
-  - variant: `default|destructive|outline|secondary|ghost|link`
+  - variant: `default|destructive|success|outline|secondary|ghost|link`
   """
   def button_variant(props \\ %{}) do
     variants = Map.take(props, ~w(variant size)a)

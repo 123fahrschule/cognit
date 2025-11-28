@@ -30,6 +30,13 @@ defmodule Storybook.CognitComponents.Button do
             slots: ["Destructive"]
           },
           %Variation{
+            id: :color_success,
+            attributes: %{
+              variant: "success"
+            },
+            slots: ["Success"]
+          },
+          %Variation{
             id: :color_outline,
             attributes: %{
               variant: "outline"
