@@ -10,8 +10,8 @@
     "foreground": "hsl(var(--card-foreground))"
   },
   "destructive": {
-    "DEFAULT": "hsl(var(--destructive))",
-    "foreground": "hsl(var(--destructive-foreground))"
+    "DEFAULT": "hsl(var(--error-400))",
+    "foreground": "hsl(var(--neutral-100))"
   },
   "foreground": "hsl(var(--foreground))",
   "input": "hsl(var(--input))",
