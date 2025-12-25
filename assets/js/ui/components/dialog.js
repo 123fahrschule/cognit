@@ -4,6 +4,10 @@ import SaladUI from "../index";
 import FocusTrap from "../core/focus-trap";
 import ClickOutsideMonitor from "../core/click-outside";
 
+let openDialogCount = 0;
+let originalBodyOverflow = null;
+let originalHtmlOverflow = null;
+
 class DialogComponent extends Component {
   constructor(el, hookContext) {
     const initialState = el.dataset.state || "closed";
@@ -16,6 +20,18 @@ class DialogComponent extends Component {
     this.config.preventDefaultKeys = ["Escape"];
 
     this.setupEvents();
+
+    // If starting in open state, lock scroll immediately
+    if (initialState === "open") {
+      if (openDialogCount === 0) {
+        originalHtmlOverflow = document.documentElement.style.overflow;
+        originalBodyOverflow = document.body.style.overflow;
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      openDialogCount++;
+    }
+
     this.transition(this.el.dataset.open == "true" ? "open" : "close");
   }
 
@@ -120,12 +136,32 @@ class DialogComponent extends Component {
       this.clickOutsideMonitor.stop();
     }
 
+    // Restore body scroll when last dialog closes
+    openDialogCount = Math.max(0, openDialogCount - 1);
+    if (openDialogCount === 0) {
+      if (originalHtmlOverflow !== null) {
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        originalHtmlOverflow = null;
+      }
+      if (originalBodyOverflow !== null) {
+        document.body.style.overflow = originalBodyOverflow;
+        originalBodyOverflow = null;
+      }
+    }
+
     // Notify the server of the state change
     this.pushEvent("closed");
   }
 
   onClosedExit() {
-    // No special handling needed
+    // Prevent body scroll when opening
+    if (openDialogCount === 0) {
+      originalHtmlOverflow = document.documentElement.style.overflow;
+      originalBodyOverflow = document.body.style.overflow;
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+    openDialogCount++;
   }
 
   onOpenEnter() {
@@ -150,6 +186,21 @@ class DialogComponent extends Component {
   }
 
   beforeDestroy() {
+    // If dialog is open when destroyed, restore scroll
+    if (this.state === "open") {
+      openDialogCount = Math.max(0, openDialogCount - 1);
+      if (openDialogCount === 0) {
+        if (originalHtmlOverflow !== null) {
+          document.documentElement.style.overflow = originalHtmlOverflow;
+          originalHtmlOverflow = null;
+        }
+        if (originalBodyOverflow !== null) {
+          document.body.style.overflow = originalBodyOverflow;
+          originalBodyOverflow = null;
+        }
+      }
+    }
+
     // Clean up focus trap
     this.focusTrap?.destroy();
     this.focusTrap = null;
