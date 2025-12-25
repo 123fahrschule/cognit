@@ -342,6 +342,9 @@ class SelectComponent extends Component {
     // Update value display
     this.updateValueDisplay();
 
+    // Sync hidden inputs immediately on value change
+    this.syncHiddenInputs();
+
     // Close dropdown if single select
     if (!this.multiple) {
       this.transition("select");
