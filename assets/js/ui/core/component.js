@@ -481,6 +481,15 @@ class Component {
   // Lifecycle hooks
   beforeDestroy() {}
 
+  /**
+   * Determine if component state should be preserved during LiveView updates
+   * Override in subclasses to return true for components that should preserve state
+   * @returns {boolean}
+   */
+  shouldPreserveStateOnUpdate() {
+    return false;
+  }
+
   // Alias for transition()
   handleCommand(command, params = {}) {
     return this.transition(command, params);

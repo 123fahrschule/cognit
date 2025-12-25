@@ -473,6 +473,10 @@ class SelectComponent extends Component {
     }
   }
 
+  shouldPreserveStateOnUpdate() {
+    return true;
+  }
+
   // Cleanup
   beforeDestroy() {
     if (this.positionedElement) {
