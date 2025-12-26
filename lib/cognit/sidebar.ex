@@ -167,10 +167,23 @@ defmodule Cognit.Sidebar do
   attr :class, :string, default: nil
   attr :target, :string, required: true, doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
+  attr :is_mobile, :boolean, default: false, doc: "Whether targeting a mobile Sheet sidebar"
   attr :rest, :global
   slot :icon, required: false, doc: "Custom icon, overrides context-aware icons"
 
   def sidebar_trigger(assigns) do
+    click_action =
+      if assigns.is_mobile do
+        JS.dispatch("salad_ui:command",
+          to: "##{assigns.target}",
+          detail: %{id: assigns.target, command: "open"}
+        )
+      else
+        JS.exec("phx-toggle-sidebar", to: "##{assigns.target}")
+      end
+
+    assigns = assign(assigns, :click_action, click_action)
+
     ~H"""
     <.dynamic
       tag={@as}
@@ -178,7 +191,7 @@ defmodule Cognit.Sidebar do
       variant="ghost"
       size="icon"
       class={classes(["p-2 rounded-md", @class])}
-      phx-click={JS.exec("phx-toggle-sidebar", to: "#" <> @target)}
+      phx-click={@click_action}
       {@rest}
     >
       <%= if @icon != [] do %>
