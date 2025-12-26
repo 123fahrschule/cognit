@@ -26,6 +26,7 @@ import { SaladUIHook } from "./js/ui/core/hook";
 import { FlashMessage } from "./js/hooks/flash_message.js";
 import { LocaleSelect } from "./js/hooks/locale_select.js";
 import { Sidebar } from "./js/hooks/sidebar.js";
+import { getCognitParams } from "./js/connect_params.js";
 
 export const Hooks = {
   FlashMessage,
@@ -37,4 +38,5 @@ export const Hooks = {
 
 export default {
   Hooks,
+  getCognitParams,
 };
