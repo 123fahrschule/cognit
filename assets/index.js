@@ -25,10 +25,12 @@ import { SaladUIHook } from "./js/ui/core/hook";
 
 import { FlashMessage } from "./js/hooks/flash_message.js";
 import { LocaleSelect } from "./js/hooks/locale_select.js";
+import { Sidebar } from "./js/hooks/sidebar.js";
 
 export const Hooks = {
   FlashMessage,
   LocaleSelect,
+  Sidebar,
 
   SaladUI: SaladUIHook,
 };

@@ -120,6 +120,7 @@ defmodule Cognit.Sidebar do
       data-variant={@variant}
       data-side={@side}
       id={@id}
+      phx-hook="Sidebar"
       phx-toggle-sidebar={toggle_sidebar({"none", @collapsible})}
     >
       <div class={
