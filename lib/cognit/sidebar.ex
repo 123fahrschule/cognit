@@ -162,28 +162,19 @@ defmodule Cognit.Sidebar do
   end
 
   @doc """
-  Render
+  Render sidebar trigger.
+
+  Mobile version (is_mobile=true): Renders in toolbar, opens Sheet with menu icon.
+  Desktop version: Renders in sidebar header, toggles with context-aware arrows.
   """
   attr :class, :string, default: nil
   attr :target, :string, required: true, doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
-  attr :is_mobile, :boolean, default: false, doc: "Whether targeting a mobile Sheet sidebar"
+  attr :is_mobile, :boolean, default: false
   attr :rest, :global
-  slot :icon, required: false, doc: "Custom icon, overrides context-aware icons"
+  slot :icon, required: false, doc: "Custom icon, overrides default icon"
 
-  def sidebar_trigger(assigns) do
-    click_action =
-      if assigns.is_mobile do
-        JS.dispatch("salad_ui:command",
-          to: "##{assigns.target}",
-          detail: %{id: assigns.target, command: "open"}
-        )
-      else
-        JS.exec("phx-toggle-sidebar", to: "##{assigns.target}")
-      end
-
-    assigns = assign(assigns, :click_action, click_action)
-
+  def sidebar_trigger(%{is_mobile: true} = assigns) do
     ~H"""
     <.dynamic
       tag={@as}
@@ -191,7 +182,28 @@ defmodule Cognit.Sidebar do
       variant="ghost"
       size="icon"
       class={classes(["p-2 rounded-md", @class])}
-      phx-click={@click_action}
+      phx-click={Cognit.JS.dispatch_command(@target, "open")}
+      {@rest}
+    >
+      <%= if @icon != [] do %>
+        {render_slot(@icon)}
+      <% else %>
+        <.icon name="menu" />
+      <% end %>
+      <span class="sr-only">Toggle Sidebar</span>
+    </.dynamic>
+    """
+  end
+
+  def sidebar_trigger(assigns) do
+    ~H"""
+    <.dynamic
+      tag={@as}
+      data-sidebar="trigger"
+      variant="ghost"
+      size="icon"
+      class={classes(["p-2 rounded-md", @class])}
+      phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target})}
       {@rest}
     >
       <%= if @icon != [] do %>
@@ -199,7 +211,6 @@ defmodule Cognit.Sidebar do
       <% else %>
         <.icon name="chevron_left" class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]" />
         <.icon name="chevron_right" class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]" />
-        <.icon name="menu" class="block group-data-[sidebar=root]:hidden" />
       <% end %>
       <span class="sr-only">Toggle Sidebar</span>
     </.dynamic>
