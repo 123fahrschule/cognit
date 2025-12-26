@@ -11,6 +11,7 @@ export const Sidebar = {
           const state = sidebarRoot.getAttribute("data-state");
           if (state) {
             this.saveSidebarState(state);
+            this.handleTransition();
           }
         }
       });
@@ -24,6 +25,16 @@ export const Sidebar = {
     this.observer = observer;
 
     this.updateActiveItems();
+  },
+
+  handleTransition() {
+    const sidebarRoot = this.el;
+    sidebarRoot.classList.add("is-transitioning");
+
+    clearTimeout(this.transitionTimer);
+    this.transitionTimer = setTimeout(() => {
+      sidebarRoot.classList.remove("is-transitioning");
+    }, 200);
   },
 
   updateActiveItems() {
@@ -56,5 +67,6 @@ export const Sidebar = {
     if (this.observer) {
       this.observer.disconnect();
     }
+    clearTimeout(this.transitionTimer);
   },
 };
