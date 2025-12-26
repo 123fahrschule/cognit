@@ -2,6 +2,7 @@ defmodule Cognit.Sidebar do
   @moduledoc false
   use Cognit, :component
 
+  import Cognit.Icon
   import Cognit.Input
   import Cognit.Separator
   import Cognit.Sheet
@@ -115,6 +116,7 @@ defmodule Cognit.Sidebar do
     ~H"""
     <div
       class="group peer hidden md:block text-sidebar-foreground sidebar-root"
+      data-sidebar="root"
       data-state={@state}
       data-collapsible={(@state == "collapsed" && @collapsible) || "none"}
       data-variant={@variant}
@@ -166,6 +168,7 @@ defmodule Cognit.Sidebar do
   attr :target, :string, required: true, doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
   attr :rest, :global
+  slot :icon, required: false, doc: "Custom icon, overrides context-aware icons"
 
   def sidebar_trigger(assigns) do
     ~H"""
@@ -174,25 +177,17 @@ defmodule Cognit.Sidebar do
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      class={classes(["h-7 w-7", @class])}
+      class={classes(["p-2 rounded-md", @class])}
       phx-click={JS.exec("phx-toggle-sidebar", to: "#" <> @target)}
       {@rest}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="h-4 w-4"
-      >
-        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-        <path d="M9 3v18"></path>
-      </svg>
+      <%= if @icon != [] do %>
+        {render_slot(@icon)}
+      <% else %>
+        <.icon name="chevron_left" class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]" />
+        <.icon name="chevron_right" class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]" />
+        <.icon name="menu" class="block group-data-[sidebar=root]:hidden" />
+      <% end %>
       <span class="sr-only">Toggle Sidebar</span>
     </.dynamic>
     """
