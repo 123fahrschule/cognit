@@ -105,7 +105,7 @@ defmodule Cognit.Sidebar do
         }
         side={@side}
       >
-        <div class="flex h-full w-full flex-col">
+        <div class="flex h-full w-full flex-col" id={"#{@id}-mobile-menu"} phx-hook="SidebarMenu">
           {render_slot(@inner_block)}
         </div>
       </.sheet_content>
@@ -154,6 +154,8 @@ defmodule Cognit.Sidebar do
         <div
           data-sidebar="sidebar"
           class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+          id={"#{@id}-menu"}
+          phx-hook="SidebarMenu"
         >
           {render_slot(@inner_block)}
         </div>
