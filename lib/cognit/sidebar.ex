@@ -54,13 +54,14 @@ defmodule Cognit.Sidebar do
   """
 
   attr :id, :string,
-    required: true,
+    default: "sidebar",
     doc: "The id of the sidebar, used for the trigger to identify the target sidebar"
 
   attr :side, :string, values: ~w(left right), default: "left"
   attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
   attr :collapsible, :string, values: ~w(offcanvas icon none), default: "offcanvas"
   attr :is_mobile, :boolean, default: false
+  attr :is_desktop, :boolean, default: false
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
   attr :class, :string, default: nil
   attr :style, :map, default: %{}
@@ -88,7 +89,7 @@ defmodule Cognit.Sidebar do
     assigns = assign(assigns, :sidebar_width_mobile, @sidebar_width_mobile)
 
     ~H"""
-    <.sheet id={@id}>
+    <.sheet id={"#{@id}-mobile"}>
       <.sheet_content
         data-sidebar="sidebar"
         data-mobile="true"
@@ -112,7 +113,7 @@ defmodule Cognit.Sidebar do
     """
   end
 
-  def sidebar(assigns) do
+  def sidebar(%{is_desktop: true} = assigns) do
     ~H"""
     <div
       class="group peer hidden md:block text-sidebar-foreground sidebar-root"
@@ -161,6 +162,17 @@ defmodule Cognit.Sidebar do
     """
   end
 
+  def sidebar(assigns) do
+    ~H"""
+    <.sidebar is_mobile={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} {@rest}>
+      {render_slot(@inner_block)}
+    </.sidebar>
+    <.sidebar is_desktop={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} collapsible={@collapsible} {@rest}>
+      {render_slot(@inner_block)}
+    </.sidebar>
+    """
+  end
+
   @doc """
   Render sidebar trigger.
 
@@ -168,7 +180,7 @@ defmodule Cognit.Sidebar do
   Desktop version: Renders in sidebar header, toggles with context-aware arrows.
   """
   attr :class, :string, default: nil
-  attr :target, :string, required: true, doc: "The id of the target sidebar"
+  attr :target, :string, default: "sidebar", doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
   attr :is_mobile, :boolean, default: false
   attr :rest, :global
@@ -181,8 +193,8 @@ defmodule Cognit.Sidebar do
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      class={classes(["p-2 rounded-md", @class])}
-      phx-click={Cognit.JS.dispatch_command(@target, "open")}
+      class={classes(["p-2 rounded-md inline-flex", @class])}
+      phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
       {@rest}
     >
       <%= if @icon != [] do %>
@@ -203,7 +215,7 @@ defmodule Cognit.Sidebar do
       variant="ghost"
       size="icon"
       class={classes(["p-2 rounded-md", @class])}
-      phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target})}
+      phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
       {@rest}
     >
       <%= if @icon != [] do %>
