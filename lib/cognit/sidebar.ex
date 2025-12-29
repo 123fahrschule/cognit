@@ -2,6 +2,7 @@ defmodule Cognit.Sidebar do
   @moduledoc false
   use Cognit, :component
 
+  import Cognit.Icon
   import Cognit.Input
   import Cognit.Separator
   import Cognit.Sheet
@@ -53,13 +54,14 @@ defmodule Cognit.Sidebar do
   """
 
   attr :id, :string,
-    required: true,
+    default: "sidebar",
     doc: "The id of the sidebar, used for the trigger to identify the target sidebar"
 
   attr :side, :string, values: ~w(left right), default: "left"
   attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
   attr :collapsible, :string, values: ~w(offcanvas icon none), default: "offcanvas"
   attr :is_mobile, :boolean, default: false
+  attr :is_desktop, :boolean, default: false
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
   attr :class, :string, default: nil
   attr :style, :map, default: %{}
@@ -87,7 +89,7 @@ defmodule Cognit.Sidebar do
     assigns = assign(assigns, :sidebar_width_mobile, @sidebar_width_mobile)
 
     ~H"""
-    <.sheet id={@id}>
+    <.sheet id={"#{@id}-mobile"}>
       <.sheet_content
         data-sidebar="sidebar"
         data-mobile="true"
@@ -103,7 +105,7 @@ defmodule Cognit.Sidebar do
         }
         side={@side}
       >
-        <div class="flex h-full w-full flex-col">
+        <div class="flex h-full w-full flex-col" id={"#{@id}-mobile-menu"} phx-hook="SidebarMenu">
           {render_slot(@inner_block)}
         </div>
       </.sheet_content>
@@ -111,15 +113,17 @@ defmodule Cognit.Sidebar do
     """
   end
 
-  def sidebar(assigns) do
+  def sidebar(%{is_desktop: true} = assigns) do
     ~H"""
     <div
       class="group peer hidden md:block text-sidebar-foreground sidebar-root"
+      data-sidebar="root"
       data-state={@state}
       data-collapsible={(@state == "collapsed" && @collapsible) || "none"}
       data-variant={@variant}
       data-side={@side}
       id={@id}
+      phx-hook="Sidebar"
       phx-toggle-sidebar={toggle_sidebar({"none", @collapsible})}
     >
       <div class={
@@ -150,6 +154,8 @@ defmodule Cognit.Sidebar do
         <div
           data-sidebar="sidebar"
           class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+          id={"#{@id}-menu"}
+          phx-hook="SidebarMenu"
         >
           {render_slot(@inner_block)}
         </div>
@@ -158,13 +164,50 @@ defmodule Cognit.Sidebar do
     """
   end
 
+  def sidebar(assigns) do
+    ~H"""
+    <.sidebar is_mobile={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} {@rest}>
+      {render_slot(@inner_block)}
+    </.sidebar>
+    <.sidebar is_desktop={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} collapsible={@collapsible} {@rest}>
+      {render_slot(@inner_block)}
+    </.sidebar>
+    """
+  end
+
   @doc """
-  Render
+  Render sidebar trigger.
+
+  Mobile version (is_mobile=true): Renders in toolbar, opens Sheet with menu icon.
+  Desktop version: Renders in sidebar header, toggles with context-aware arrows.
   """
   attr :class, :string, default: nil
-  attr :target, :string, required: true, doc: "The id of the target sidebar"
+  attr :target, :string, default: "sidebar", doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
+  attr :is_mobile, :boolean, default: false
   attr :rest, :global
+  slot :icon, required: false, doc: "Custom icon, overrides default icon"
+
+  def sidebar_trigger(%{is_mobile: true} = assigns) do
+    ~H"""
+    <.dynamic
+      tag={@as}
+      data-sidebar="trigger"
+      variant="ghost"
+      size="icon"
+      class={classes(["p-2 rounded-md inline-flex", @class])}
+      phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
+      {@rest}
+    >
+      <%= if @icon != [] do %>
+        {render_slot(@icon)}
+      <% else %>
+        <.icon name="menu" />
+      <% end %>
+      <span class="sr-only">Toggle Sidebar</span>
+    </.dynamic>
+    """
+  end
 
   def sidebar_trigger(assigns) do
     ~H"""
@@ -173,25 +216,16 @@ defmodule Cognit.Sidebar do
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      class={classes(["h-7 w-7", @class])}
-      phx-click={JS.exec("phx-toggle-sidebar", to: "#" <> @target)}
+      class={classes(["p-2 rounded-md", @class])}
+      phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
       {@rest}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="h-4 w-4"
-      >
-        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-        <path d="M9 3v18"></path>
-      </svg>
+      <%= if @icon != [] do %>
+        {render_slot(@icon)}
+      <% else %>
+        <.icon name="chevron_left" class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]" />
+        <.icon name="chevron_right" class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]" />
+      <% end %>
       <span class="sr-only">Toggle Sidebar</span>
     </.dynamic>
     """
@@ -611,6 +645,7 @@ defmodule Cognit.Sidebar do
           "peer-data-[size=default]/menu-button:top-1.5",
           "peer-data-[size=lg]/menu-button:top-2.5",
           "group-data-[collapsible=icon]:hidden",
+          "group-[.is-transitioning]:hidden",
           @class
         ])
       }
@@ -753,7 +788,7 @@ defmodule Cognit.Sidebar do
       size: "default"
     }
   }
-  @shared_classes "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&_.icon]:text-[16px] [&_.icon]:shrink-0"
+  @shared_classes "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 group-[.is-transitioning]:truncate [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&_.icon]:text-[16px] [&_.icon]:shrink-0"
   defp sidebar_button_variant(input) do
     @shared_classes <> " " <> variant_class(@variant_config, input)
   end
