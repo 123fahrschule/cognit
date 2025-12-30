@@ -18,6 +18,7 @@ class DialogComponent extends Component {
     this.content = this.getPart("content");
     this.contentPanel = this.getPart("content-panel");
     this.config.preventDefaultKeys = ["Escape"];
+    this.hasLockedScroll = false;
 
     this.setupEvents();
 
@@ -26,10 +27,11 @@ class DialogComponent extends Component {
       if (openDialogCount === 0) {
         originalHtmlOverflow = document.documentElement.style.overflow;
         originalBodyOverflow = document.body.style.overflow;
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
       }
       openDialogCount++;
+      this.hasLockedScroll = true;
     }
 
     this.transition(this.el.dataset.open == "true" ? "open" : "close");
@@ -137,16 +139,19 @@ class DialogComponent extends Component {
     }
 
     // Restore body scroll when last dialog closes
-    openDialogCount = Math.max(0, openDialogCount - 1);
-    if (openDialogCount === 0) {
-      if (originalHtmlOverflow !== null) {
-        document.documentElement.style.overflow = originalHtmlOverflow;
-        originalHtmlOverflow = null;
+    if (this.hasLockedScroll) {
+      openDialogCount = Math.max(0, openDialogCount - 1);
+      if (openDialogCount === 0) {
+        if (originalHtmlOverflow !== null) {
+          document.documentElement.style.overflow = originalHtmlOverflow;
+          originalHtmlOverflow = null;
+        }
+        if (originalBodyOverflow !== null) {
+          document.body.style.overflow = originalBodyOverflow;
+          originalBodyOverflow = null;
+        }
       }
-      if (originalBodyOverflow !== null) {
-        document.body.style.overflow = originalBodyOverflow;
-        originalBodyOverflow = null;
-      }
+      this.hasLockedScroll = false;
     }
 
     // Notify the server of the state change
@@ -158,10 +163,11 @@ class DialogComponent extends Component {
     if (openDialogCount === 0) {
       originalHtmlOverflow = document.documentElement.style.overflow;
       originalBodyOverflow = document.body.style.overflow;
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     }
     openDialogCount++;
+    this.hasLockedScroll = true;
   }
 
   onOpenEnter() {
@@ -186,8 +192,8 @@ class DialogComponent extends Component {
   }
 
   beforeDestroy() {
-    // If dialog is open when destroyed, restore scroll
-    if (this.state === "open") {
+    // If dialog has locked scroll, restore it
+    if (this.hasLockedScroll) {
       openDialogCount = Math.max(0, openDialogCount - 1);
       if (openDialogCount === 0) {
         if (originalHtmlOverflow !== null) {
@@ -199,6 +205,7 @@ class DialogComponent extends Component {
           originalBodyOverflow = null;
         }
       }
+      this.hasLockedScroll = false;
     }
 
     // Clean up focus trap
