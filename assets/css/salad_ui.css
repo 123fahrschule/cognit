@@ -39,7 +39,6 @@
 }
 
 /* Dialog - prevent body scroll when dialog is open */
-body:has([data-component="dialog"][data-state="open"]),
-html:has([data-component="dialog"][data-state="open"]) {
+body:has([data-component="dialog"][data-state="open"]) {
     overflow: hidden;
 }
