@@ -37,3 +37,8 @@
     background-size: 200% 100%;
     width: 100%;
 }
+
+/* Dialog - prevent body scroll when dialog is open */
+body:has([data-component="dialog"][data-state="open"]) {
+    overflow: hidden;
+}
