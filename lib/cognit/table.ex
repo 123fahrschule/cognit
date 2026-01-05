@@ -27,6 +27,10 @@ defmodule Cognit.Table do
   """
   use Cognit, :component
 
+  import Cognit.Button
+  import Cognit.DropdownMenu
+  import Cognit.Icon
+
   @doc """
   Renders a data table.
 
@@ -204,6 +208,27 @@ defmodule Cognit.Table do
     <caption class={classes(["mt-4 text-sm text-muted-foreground", @class])} {@rest}>
       {render_slot(@inner_block)}
     </caption>
+    """
+  end
+
+  attr :id, :string, required: true
+  attr :rest, :global
+
+  slot :inner_block
+
+  def table_actions(assigns) do
+    ~H"""
+    <.dropdown_menu id={@id} {@rest}>
+      <.dropdown_menu_trigger>
+        <.button variant="ghost" size="icon">
+          <.icon name="more_vert" />
+        </.button>
+      </.dropdown_menu_trigger>
+
+      <.dropdown_menu_content side="bottom" align="end">
+        {render_slot(@inner_block)}
+      </.dropdown_menu_content>
+    </.dropdown_menu>
     """
   end
 end
