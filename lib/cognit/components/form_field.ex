@@ -77,7 +77,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "select"} = assigns) do
     ~H"""
-    <div class={@class}>
+    <.form_item class={@class}>
       <.form_label :if={@label} error={@has_errors}>
         {@label}
       </.form_label>
@@ -95,7 +95,7 @@ defmodule Cognit.Components.FormField do
       <.form_message :for={msg <- @errors} errors={@errors}>
         {msg}
       </.form_message>
-    </div>
+    </.form_item>
     """
   end
 
