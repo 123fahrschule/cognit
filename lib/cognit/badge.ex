@@ -68,7 +68,9 @@ defmodule Cognit.Badge do
     default: "default",
     doc: "the badge variant style"
 
-  attr :truncate_on, :integer, default: nil, doc: "truncate text after specified number of characters"
+  attr :truncate_on, :integer,
+    default: nil,
+    doc: "truncate text after specified number of characters"
 
   attr :rest, :global
   slot :inner_block, required: true
@@ -89,11 +91,7 @@ defmodule Cognit.Badge do
       {@rest}
     >
       <%= if @truncate_on do %>
-        <span
-          class="truncate"
-          style={"max-width: #{@truncate_on - 4}ch"}
-          title={@tooltip_content}
-        >
+        <span class="truncate" style={"max-width: #{@truncate_on - 4}ch"} title={@tooltip_content}>
           {render_slot(@inner_block)}
         </span>
       <% else %>
@@ -153,9 +151,10 @@ defmodule Cognit.Badge do
   # Helper to extract simple string content
   defp extract_simple_content(content) when is_binary(content), do: content
   defp extract_simple_content({:safe, content}) when is_binary(content), do: content
+
   defp extract_simple_content({:safe, content_list}) when is_list(content_list) do
     content_list |> IO.iodata_to_binary()
   end
+
   defp extract_simple_content(_), do: ""
 end
-

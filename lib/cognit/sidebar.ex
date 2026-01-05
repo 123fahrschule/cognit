@@ -166,10 +166,29 @@ defmodule Cognit.Sidebar do
 
   def sidebar(assigns) do
     ~H"""
-    <.sidebar is_mobile={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} {@rest}>
+    <.sidebar
+      is_mobile={true}
+      id={@id}
+      side={@side}
+      variant={@variant}
+      state={@state}
+      class={@class}
+      style={@style}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </.sidebar>
-    <.sidebar is_desktop={true} id={@id} side={@side} variant={@variant} state={@state} class={@class} style={@style} collapsible={@collapsible} {@rest}>
+    <.sidebar
+      is_desktop={true}
+      id={@id}
+      side={@side}
+      variant={@variant}
+      state={@state}
+      class={@class}
+      style={@style}
+      collapsible={@collapsible}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </.sidebar>
     """
@@ -223,8 +242,14 @@ defmodule Cognit.Sidebar do
       <%= if @icon != [] do %>
         {render_slot(@icon)}
       <% else %>
-        <.icon name="chevron_left" class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]" />
-        <.icon name="chevron_right" class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]" />
+        <.icon
+          name="chevron_left"
+          class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]"
+        />
+        <.icon
+          name="chevron_right"
+          class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]"
+        />
       <% end %>
       <span class="sr-only">Toggle Sidebar</span>
     </.dynamic>

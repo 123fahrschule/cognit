@@ -8,8 +8,11 @@ defmodule Storybook.Foundation.Typography do
       <.section title="Typography System">
         <p class="text-body text-neutral-600 mb-8">
           Typography utility classes for consistent text styling across the application.
-          All classes use the <code class="px-2 py-1 bg-neutral-100 rounded text-sm font-mono">
-          .text-*</code> prefix.
+          All classes use the
+          <code class="px-2 py-1 bg-neutral-100 rounded text-sm font-mono">
+            .text-*
+          </code>
+          prefix.
         </p>
       </.section>
 

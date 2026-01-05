@@ -14,11 +14,15 @@ defmodule Storybook.Foundation.Colors do
           <p class="text-body-sm font-semibold text-neutral-800">Usage Guidelines:</p>
           <ul class="text-body-sm text-neutral-700 space-y-1 list-disc list-inside">
             <li>
-              <strong>Brand Colors:</strong> Use primary/secondary for brand identity, main actions, and emphasis
+              <strong>Brand Colors:</strong>
+              Use primary/secondary for brand identity, main actions, and emphasis
             </li>
-            <li><strong>Neutral:</strong> Use for text, borders, backgrounds, and subtle UI elements</li>
             <li>
-              <strong>Semantic:</strong> Use warning/success/error/info to communicate status and feedback
+              <strong>Neutral:</strong> Use for text, borders, backgrounds, and subtle UI elements
+            </li>
+            <li>
+              <strong>Semantic:</strong>
+              Use warning/success/error/info to communicate status and feedback
             </li>
             <li>
               <strong>Domain:</strong> Use driving/theory colors for domain-specific categorization
@@ -34,17 +38,15 @@ defmodule Storybook.Foundation.Colors do
             <p class="text-body-sm text-neutral-600 mb-4">
               Main brand color. Use for primary buttons, links, and key UI elements.
             </p>
-            <.color_palette
-              colors={[
-                {"primary-50", "bg-primary-50"},
-                {"primary-100", "bg-primary-100"},
-                {"primary-200", "bg-primary-200"},
-                {"primary-300", "bg-primary-300"},
-                {"primary-400", "bg-primary-400"},
-                {"primary-500", "bg-primary-500"},
-                {"primary-600", "bg-primary-600"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"primary-50", "bg-primary-50"},
+              {"primary-100", "bg-primary-100"},
+              {"primary-200", "bg-primary-200"},
+              {"primary-300", "bg-primary-300"},
+              {"primary-400", "bg-primary-400"},
+              {"primary-500", "bg-primary-500"},
+              {"primary-600", "bg-primary-600"}
+            ]} />
           </div>
 
           <div>
@@ -52,17 +54,15 @@ defmodule Storybook.Foundation.Colors do
             <p class="text-body-sm text-neutral-600 mb-4">
               Accent brand color. Use for highlights, badges, and visual interest.
             </p>
-            <.color_palette
-              colors={[
-                {"secondary-50", "bg-secondary-50"},
-                {"secondary-100", "bg-secondary-100"},
-                {"secondary-200", "bg-secondary-200"},
-                {"secondary-300", "bg-secondary-300"},
-                {"secondary-400", "bg-secondary-400"},
-                {"secondary-500", "bg-secondary-500"},
-                {"secondary-600", "bg-secondary-600"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"secondary-50", "bg-secondary-50"},
+              {"secondary-100", "bg-secondary-100"},
+              {"secondary-200", "bg-secondary-200"},
+              {"secondary-300", "bg-secondary-300"},
+              {"secondary-400", "bg-secondary-400"},
+              {"secondary-500", "bg-secondary-500"},
+              {"secondary-600", "bg-secondary-600"}
+            ]} />
           </div>
         </div>
       </.section>
@@ -71,19 +71,17 @@ defmodule Storybook.Foundation.Colors do
         <p class="text-body-sm text-neutral-600 mb-4">
           Grayscale palette for text, borders, backgrounds, and general UI elements.
         </p>
-        <.color_palette
-          colors={[
-            {"neutral-100", "bg-neutral-100"},
-            {"neutral-200", "bg-neutral-200"},
-            {"neutral-300", "bg-neutral-300"},
-            {"neutral-400", "bg-neutral-400"},
-            {"neutral-500", "bg-neutral-500"},
-            {"neutral-600", "bg-neutral-600"},
-            {"neutral-700", "bg-neutral-700"},
-            {"neutral-800", "bg-neutral-800"},
-            {"neutral-900", "bg-neutral-900"}
-          ]}
-        />
+        <.color_palette colors={[
+          {"neutral-100", "bg-neutral-100"},
+          {"neutral-200", "bg-neutral-200"},
+          {"neutral-300", "bg-neutral-300"},
+          {"neutral-400", "bg-neutral-400"},
+          {"neutral-500", "bg-neutral-500"},
+          {"neutral-600", "bg-neutral-600"},
+          {"neutral-700", "bg-neutral-700"},
+          {"neutral-800", "bg-neutral-800"},
+          {"neutral-900", "bg-neutral-900"}
+        ]} />
       </.section>
 
       <.section title="Semantic Colors">
@@ -96,16 +94,14 @@ defmodule Storybook.Foundation.Colors do
               <span class="w-4 h-4 bg-warning-400 rounded-full"></span>
               <span class="text-neutral-800">Warning</span>
             </h3>
-            <.color_palette
-              colors={[
-                {"warning-50", "bg-warning-50"},
-                {"warning-100", "bg-warning-100"},
-                {"warning-200", "bg-warning-200"},
-                {"warning-300", "bg-warning-300"},
-                {"warning-400", "bg-warning-400"},
-                {"warning-500", "bg-warning-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"warning-50", "bg-warning-50"},
+              {"warning-100", "bg-warning-100"},
+              {"warning-200", "bg-warning-200"},
+              {"warning-300", "bg-warning-300"},
+              {"warning-400", "bg-warning-400"},
+              {"warning-500", "bg-warning-500"}
+            ]} />
           </div>
 
           <div>
@@ -113,16 +109,14 @@ defmodule Storybook.Foundation.Colors do
               <span class="w-4 h-4 bg-success-400 rounded-full"></span>
               <span class="text-neutral-800">Success</span>
             </h3>
-            <.color_palette
-              colors={[
-                {"success-50", "bg-success-50"},
-                {"success-100", "bg-success-100"},
-                {"success-200", "bg-success-200"},
-                {"success-300", "bg-success-300"},
-                {"success-400", "bg-success-400"},
-                {"success-500", "bg-success-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"success-50", "bg-success-50"},
+              {"success-100", "bg-success-100"},
+              {"success-200", "bg-success-200"},
+              {"success-300", "bg-success-300"},
+              {"success-400", "bg-success-400"},
+              {"success-500", "bg-success-500"}
+            ]} />
           </div>
 
           <div>
@@ -130,16 +124,14 @@ defmodule Storybook.Foundation.Colors do
               <span class="w-4 h-4 bg-error-400 rounded-full"></span>
               <span class="text-neutral-800">Error</span>
             </h3>
-            <.color_palette
-              colors={[
-                {"error-50", "bg-error-50"},
-                {"error-100", "bg-error-100"},
-                {"error-200", "bg-error-200"},
-                {"error-300", "bg-error-300"},
-                {"error-400", "bg-error-400"},
-                {"error-500", "bg-error-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"error-50", "bg-error-50"},
+              {"error-100", "bg-error-100"},
+              {"error-200", "bg-error-200"},
+              {"error-300", "bg-error-300"},
+              {"error-400", "bg-error-400"},
+              {"error-500", "bg-error-500"}
+            ]} />
           </div>
 
           <div>
@@ -147,16 +139,14 @@ defmodule Storybook.Foundation.Colors do
               <span class="w-4 h-4 bg-info-400 rounded-full"></span>
               <span class="text-neutral-800">Info</span>
             </h3>
-            <.color_palette
-              colors={[
-                {"info-50", "bg-info-50"},
-                {"info-100", "bg-info-100"},
-                {"info-200", "bg-info-200"},
-                {"info-300", "bg-info-300"},
-                {"info-400", "bg-info-400"},
-                {"info-500", "bg-info-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"info-50", "bg-info-50"},
+              {"info-100", "bg-info-100"},
+              {"info-200", "bg-info-200"},
+              {"info-300", "bg-info-300"},
+              {"info-400", "bg-info-400"},
+              {"info-500", "bg-info-500"}
+            ]} />
           </div>
         </div>
       </.section>
@@ -168,30 +158,26 @@ defmodule Storybook.Foundation.Colors do
         <div class="space-y-8">
           <div>
             <h3 class="text-h5 mb-3 text-neutral-800">Driving</h3>
-            <.color_palette
-              colors={[
-                {"driving-50", "bg-driving-50"},
-                {"driving-100", "bg-driving-100"},
-                {"driving-200", "bg-driving-200"},
-                {"driving-300", "bg-driving-300"},
-                {"driving-400", "bg-driving-400"},
-                {"driving-500", "bg-driving-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"driving-50", "bg-driving-50"},
+              {"driving-100", "bg-driving-100"},
+              {"driving-200", "bg-driving-200"},
+              {"driving-300", "bg-driving-300"},
+              {"driving-400", "bg-driving-400"},
+              {"driving-500", "bg-driving-500"}
+            ]} />
           </div>
 
           <div>
             <h3 class="text-h5 mb-3 text-neutral-800">Theory</h3>
-            <.color_palette
-              colors={[
-                {"theory-50", "bg-theory-50"},
-                {"theory-100", "bg-theory-100"},
-                {"theory-200", "bg-theory-200"},
-                {"theory-300", "bg-theory-300"},
-                {"theory-400", "bg-theory-400"},
-                {"theory-500", "bg-theory-500"}
-              ]}
-            />
+            <.color_palette colors={[
+              {"theory-50", "bg-theory-50"},
+              {"theory-100", "bg-theory-100"},
+              {"theory-200", "bg-theory-200"},
+              {"theory-300", "bg-theory-300"},
+              {"theory-400", "bg-theory-400"},
+              {"theory-500", "bg-theory-500"}
+            ]} />
           </div>
         </div>
       </.section>

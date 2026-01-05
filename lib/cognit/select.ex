@@ -97,8 +97,7 @@ defmodule Cognit.Select do
     >
       {render_slot(@inner_block)}
       <input name={@name} value="" data-input class="hidden" />
-      <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore">
-      </div>
+      <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore"></div>
     </div>
     """
   end
@@ -149,9 +148,7 @@ defmodule Cognit.Select do
     ~H"""
     <span
       data-part="value"
-      class={
-        classes(["select-value pointer-events-none text-start", @class])
-      }
+      class={classes(["select-value pointer-events-none text-start", @class])}
       data-placeholder={@placeholder}
       {@rest}
     >
