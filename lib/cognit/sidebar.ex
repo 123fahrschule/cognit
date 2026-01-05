@@ -9,6 +9,8 @@ defmodule Cognit.Sidebar do
   import Cognit.Skeleton
   import Cognit.Tooltip
 
+  import Cognit.Components.Logo
+
   @sidebar_width "16rem"
   @sidebar_width_mobile "18rem"
   @sidebar_width_icon "3rem"
@@ -351,6 +353,16 @@ defmodule Cognit.Sidebar do
       {@rest}
     >
       {render_slot(@inner_block)}
+    </div>
+    """
+  end
+
+  attr :class, :any, default: nil
+
+  def sidebar_logo(assigns) do
+    ~H"""
+    <div class={["bg-neutral-100 p-2 rounded-lg group-data-[state=collapsed]:hidden", @class]}>
+      <.brand_logo class="size-6" />
     </div>
     """
   end
