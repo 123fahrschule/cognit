@@ -61,7 +61,7 @@ defmodule Cognit.Sidebar do
 
   attr :side, :string, values: ~w(left right), default: "left"
   attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
-  attr :collapsible, :string, values: ~w(offcanvas icon none), default: "offcanvas"
+  attr :collapsible, :string, values: ~w(offcanvas icon none), default: "icon"
   attr :is_mobile, :boolean, default: false
   attr :is_desktop, :boolean, default: false
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
@@ -338,7 +338,7 @@ defmodule Cognit.Sidebar do
   """
   attr :class, :string, default: nil
   attr :rest, :global
-  slot :inner_block, required: true
+  slot :inner_block
 
   def sidebar_header(assigns) do
     ~H"""
@@ -346,13 +346,19 @@ defmodule Cognit.Sidebar do
       data-sidebar="header"
       class={
         classes([
-          "flex flex-col gap-2 p-2",
+          "flex justify-between items-center gap-2 p-2",
           @class
         ])
       }
       {@rest}
     >
-      {render_slot(@inner_block)}
+      <div class="flex items-center gap-2 flex-grow group-data-[state=collapsed]:hidden">
+        <.sidebar_logo />
+
+        {render_slot(@inner_block)}
+      </div>
+
+      <.sidebar_trigger class="max-md:hidden ml-auto" />
     </div>
     """
   end
@@ -361,7 +367,7 @@ defmodule Cognit.Sidebar do
 
   def sidebar_logo(assigns) do
     ~H"""
-    <div class={["bg-neutral-100 p-2 rounded-lg group-data-[state=collapsed]:hidden", @class]}>
+    <div class={["bg-neutral-100 p-2 rounded-lg", @class]}>
       <.brand_logo class="size-6" />
     </div>
     """
@@ -594,7 +600,7 @@ defmodule Cognit.Sidebar do
   attr :class, :string, default: nil
   attr :is_mobile, :boolean, default: false
   attr :state, :string, default: "expanded"
-  attr :as, :any, default: "button"
+  attr :as, :any, default: &link/1
   attr :rest, :global, include: ["navigate", "patch", "href"]
   slot :inner_block, required: true
   attr :tooltip, :string, required: false
