@@ -220,6 +220,7 @@ defmodule Cognit do
 
       import Cognit.CoreComponents
 
+      import Cognit.Components.CopyButton
       import Cognit.Components.Flash
       import Cognit.Components.FormField
       import Cognit.Components.LocaleSelect
