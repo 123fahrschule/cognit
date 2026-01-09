@@ -45,7 +45,7 @@ defmodule Cognit.Components.UserMenu do
       first_name -> first_name
       last_name -> last_name
       email -> email
-      true -> "Unknown User"
+      true -> pgettext("user menu, fallback username", "Unknown User")
     end
   end
 end

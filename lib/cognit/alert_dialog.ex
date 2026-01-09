@@ -142,7 +142,7 @@ defmodule Cognit.AlertDialog do
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
           </svg>
-          <span class="sr-only">Close</span>
+          <span class="sr-only">{pgettext("alert dialog, close button", "Close")}</span>
         </button>
       </div>
     </div>

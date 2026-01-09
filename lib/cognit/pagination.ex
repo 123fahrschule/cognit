@@ -151,12 +151,12 @@ defmodule Cognit.Pagination do
   def pagination_next(assigns) do
     ~H"""
     <.pagination_link
-      aria-label="Go to next page"
+      aria-label={pgettext("pagination, next page aria label", "Go to next page")}
       size="default"
       class={classes(["gap-1 pr-2.5", @class])}
       {@rest}
     >
-      <span>Next</span>
+      <span>{pgettext("pagination, next button text", "Next")}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -180,7 +180,7 @@ defmodule Cognit.Pagination do
   def pagination_previous(assigns) do
     ~H"""
     <.pagination_link
-      aria-label="Go to previous page"
+      aria-label={pgettext("pagination, previous page aria label", "Go to previous page")}
       size="default"
       class={classes(["gap-1 pr-2.5", @class])}
       {@rest}
@@ -195,7 +195,7 @@ defmodule Cognit.Pagination do
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>
-      <span>Previous</span>
+      <span>{pgettext("pagination, previous button text", "Previous")}</span>
     </.pagination_link>
     """
   end
@@ -232,7 +232,7 @@ defmodule Cognit.Pagination do
         />
       </svg>
 
-      <span class="sr-only">More pages</span>
+      <span class="sr-only">{pgettext("pagination, ellipsis aria label", "More pages")}</span>
     </span>
     """
   end

@@ -225,7 +225,7 @@ defmodule Cognit.Sidebar do
       <% else %>
         <.icon name="menu" />
       <% end %>
-      <span class="sr-only">Toggle Sidebar</span>
+      <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
   end
@@ -253,7 +253,7 @@ defmodule Cognit.Sidebar do
           class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]"
         />
       <% end %>
-      <span class="sr-only">Toggle Sidebar</span>
+      <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
   end
@@ -268,10 +268,10 @@ defmodule Cognit.Sidebar do
     ~H"""
     <button
       data-sidebar="rail"
-      aria-label="Toggle Sidebar"
+      aria-label={pgettext("sidebar, toggle button", "Toggle Sidebar")}
       tab-index={-1}
       onclick={exec_closest("phx-toggle-sidebar", ".sidebar-root")}
-      title="Toggle Sidebar"
+      title={pgettext("sidebar, toggle button", "Toggle Sidebar")}
       class={
         classes([
           "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",

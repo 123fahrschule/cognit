@@ -1,0 +1,129 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/cognit/confirmation_dialog.ex:67
+#, elixir-autogen, elixir-format
+msgctxt "confirmation dialog action"
+msgid "No"
+msgstr ""
+
+#: lib/cognit/confirmation_dialog.ex:70
+#, elixir-autogen, elixir-format
+msgctxt "confirmation dialog action"
+msgid "Yes"
+msgstr ""
+
+#: lib/cognit/components/copy_button.ex:93
+#, elixir-autogen, elixir-format
+msgctxt "copy button, button title"
+msgid "Copy to clipboard"
+msgstr ""
+
+#: lib/cognit/components/copy_button.ex:103
+#, elixir-autogen, elixir-format
+msgctxt "copy button, success feedback"
+msgid "Copied!"
+msgstr ""
+
+#: lib/cognit/components/flash.ex:74
+#, elixir-autogen, elixir-format
+msgctxt "flash message, live socket disconnected description"
+msgid "Attempting to reconnect"
+msgstr ""
+
+#: lib/cognit/components/flash.ex:72
+#, elixir-autogen, elixir-format
+msgctxt "flash message, live socket disconnected title"
+msgid "We can't find the internet"
+msgstr ""
+
+#: lib/cognit/components/flash.ex:98
+#, elixir-autogen, elixir-format
+msgctxt "flash message, live view crashed description"
+msgid "Hang in there while we get back on track"
+msgstr ""
+
+#: lib/cognit/components/flash.ex:96
+#, elixir-autogen, elixir-format
+msgctxt "flash message, live view crashed title"
+msgid "Something went wrong!"
+msgstr ""
+
+#: lib/cognit/components/form_field.ex:86
+#, elixir-autogen, elixir-format
+msgctxt "select placeholder"
+msgid "Select"
+msgstr ""
+
+#: lib/cognit/alert_dialog.ex:145
+#, elixir-autogen, elixir-format
+msgctxt "alert dialog, close button"
+msgid "Close"
+msgstr ""
+
+#: lib/cognit/dialog.ex:149
+#, elixir-autogen, elixir-format
+msgctxt "dialog, close button"
+msgid "Close"
+msgstr ""
+
+#: lib/cognit/pagination.ex:235
+#, elixir-autogen, elixir-format
+msgctxt "pagination, ellipsis aria label"
+msgid "More pages"
+msgstr ""
+
+#: lib/cognit/pagination.ex:159
+#, elixir-autogen, elixir-format
+msgctxt "pagination, next button text"
+msgid "Next"
+msgstr ""
+
+#: lib/cognit/pagination.ex:154
+#, elixir-autogen, elixir-format
+msgctxt "pagination, next page aria label"
+msgid "Go to next page"
+msgstr ""
+
+#: lib/cognit/pagination.ex:198
+#, elixir-autogen, elixir-format
+msgctxt "pagination, previous button text"
+msgid "Previous"
+msgstr ""
+
+#: lib/cognit/pagination.ex:183
+#, elixir-autogen, elixir-format
+msgctxt "pagination, previous page aria label"
+msgid "Go to previous page"
+msgstr ""
+
+#: lib/cognit/sheet.ex:170
+#, elixir-autogen, elixir-format
+msgctxt "sheet, close button"
+msgid "Close"
+msgstr ""
+
+#: lib/cognit/sidebar.ex:228
+#: lib/cognit/sidebar.ex:256
+#: lib/cognit/sidebar.ex:271
+#: lib/cognit/sidebar.ex:274
+#, elixir-autogen, elixir-format
+msgctxt "sidebar, toggle button"
+msgid "Toggle Sidebar"
+msgstr ""
+
+#: lib/cognit/components/user_menu.ex:48
+#, elixir-autogen, elixir-format
+msgctxt "user menu, fallback username"
+msgid "Unknown User"
+msgstr ""
