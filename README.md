@@ -1,6 +1,17 @@
 # Cognit
 
-**TODO: Add description**
+Phoenix LiveView UI component library providing 40+ accessible, interactive components built with function components, JavaScript state machines, and LiveView hooks.
+
+This library is a fork/variant of [SaladUI](https://github.com/bluzky/salad_ui).
+
+## Features
+
+- 40+ accessible, interactive components
+- Built with Phoenix function components and HEEx templates
+- Client-side state management with JavaScript state machines
+- Tailwind CSS styling with TwMerge for class composition
+- Internationalization support with Gettext
+- **Material Symbols icons** - Search icons at [Google Fonts Icons](https://fonts.google.com/icons)
 
 ## Installation
 

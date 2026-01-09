@@ -1,4 +1,15 @@
-# CognitStorybook
+# Cognit Storybook
+
+Interactive component documentation and development environment for Cognit.
+
+## Icons
+
+This project uses **Material Symbols** for icons. Search and browse available icons at:
+**[Google Fonts Icons](https://fonts.google.com/icons)**
+
+Use the `<.icon>` component with icon names from the Material Symbols collection.
+
+## Getting Started
 
 To start your Phoenix server:
 
