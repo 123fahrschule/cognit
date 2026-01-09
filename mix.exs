@@ -1,13 +1,16 @@
 defmodule Cognit.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :cognit,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -23,9 +26,23 @@ defmodule Cognit.MixProject do
       {:phoenix_live_view, "~> 1.0"},
       {:gettext, "~> 0.26 or ~> 1.0"},
       {:tw_merge, "~> 0.1"},
+      {:jason, "~> 1.4"}
+    ]
+  end
 
-      # A collection of Live View components inspired by shadcn
-      {:salad_ui, "~> 1.0.0-beta.3", only: :dev}
+  defp aliases do
+    [
+      check: [
+        "format --check-formatted",
+        "deps.unlock --check-unused",
+        "compile --force --warnings-as-errors"
+      ],
+      release: [
+        "check",
+        "cmd git tag #{@version}",
+        "cmd git push",
+        "cmd git push --tags"
+      ]
     ]
   end
 end
