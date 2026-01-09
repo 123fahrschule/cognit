@@ -146,6 +146,75 @@ defmodule Storybook.CognitComponents.Sheet do
         """
       },
       %Variation{
+        id: :sizes,
+        description: """
+        Sheets support different sizes: sm (420px, default), md (500px), and lg (580px).
+        """,
+        template: """
+        <div class="flex flex-wrap gap-4">
+          <.sheet id="sheet-sm">
+            <.sheet_trigger>
+              <.button variant="outline">Small (420px)</.button>
+            </.sheet_trigger>
+            <.sheet_content side="right" size="sm">
+              <.sheet_header>
+                <.sheet_title>Small Sheet</.sheet_title>
+                <.sheet_description>This is a small sheet (420px width).</.sheet_description>
+              </.sheet_header>
+              <div class="py-4">
+                <p>Default size for sheets.</p>
+              </div>
+              <.sheet_footer>
+                <.sheet_close>
+                  <.button>Close</.button>
+                </.sheet_close>
+              </.sheet_footer>
+            </.sheet_content>
+          </.sheet>
+
+          <.sheet id="sheet-md">
+            <.sheet_trigger>
+              <.button variant="outline">Medium (500px)</.button>
+            </.sheet_trigger>
+            <.sheet_content side="right" size="md">
+              <.sheet_header>
+                <.sheet_title>Medium Sheet</.sheet_title>
+                <.sheet_description>This is a medium sheet (500px width).</.sheet_description>
+              </.sheet_header>
+              <div class="py-4">
+                <p>Medium size for more content.</p>
+              </div>
+              <.sheet_footer>
+                <.sheet_close>
+                  <.button>Close</.button>
+                </.sheet_close>
+              </.sheet_footer>
+            </.sheet_content>
+          </.sheet>
+
+          <.sheet id="sheet-lg">
+            <.sheet_trigger>
+              <.button variant="outline">Large (580px)</.button>
+            </.sheet_trigger>
+            <.sheet_content side="right" size="lg">
+              <.sheet_header>
+                <.sheet_title>Large Sheet</.sheet_title>
+                <.sheet_description>This is a large sheet (580px width).</.sheet_description>
+              </.sheet_header>
+              <div class="py-4">
+                <p>Large size for complex forms or detailed content.</p>
+              </div>
+              <.sheet_footer>
+                <.sheet_close>
+                  <.button>Close</.button>
+                </.sheet_close>
+              </.sheet_footer>
+            </.sheet_content>
+          </.sheet>
+        </div>
+        """
+      },
+      %Variation{
         id: :programmatic,
         description: """
         Sheets can be controlled programmatically using LiveView's JS commands.

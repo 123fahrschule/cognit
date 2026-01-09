@@ -11,7 +11,7 @@ defmodule Cognit.Sheet do
         <.sheet_trigger>
           <.button variant="outline">Open Sheet</.button>
         </.sheet_trigger>
-        <.sheet_content side="right">
+        <.sheet_content side="right" size="md">
           <.sheet_header>
             <.sheet_title>Edit profile</.sheet_title>
             <.sheet_description>
@@ -111,6 +111,7 @@ defmodule Cognit.Sheet do
   ## Options
 
   * `:side` - The side from which the sheet appears (top, right, bottom, left). Defaults to `"right"`.
+  * `:size` - The width of the sheet (sm, md, lg). Defaults to `"sm"`.
   * `:class` - Additional CSS classes to customize dimensions and appearance.
   """
   attr :class, :string, default: nil
@@ -119,6 +120,11 @@ defmodule Cognit.Sheet do
     values: ~w(top right bottom left),
     default: "right",
     doc: "The side from which the sheet appears"
+
+  attr :size, :string,
+    values: ~w(sm md lg),
+    default: "sm",
+    doc: "The width of the sheet"
 
   attr :rest, :global
   slot :inner_block, required: true
@@ -268,15 +274,20 @@ defmodule Cognit.Sheet do
       "bottom" =>
         "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
       "left" =>
-        "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-[406px]",
+        "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
       "right" =>
-        "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-[406px]"
+        "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right"
+    },
+    size: %{
+      "sm" => "sm:max-w-[420px]",
+      "md" => "sm:max-w-[500px]",
+      "lg" => "sm:max-w-[580px]"
     }
   }
 
   defp sheet_variants(props) do
     variants =
-      Map.take(props, ~w(side)a)
+      Map.take(props, ~w(side size)a)
 
     Enum.map_join(variants, " ", fn {key, value} -> @variants[key][value] end)
   end
