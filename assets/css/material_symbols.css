@@ -1,25 +1,15 @@
-/* material-symbols-regular - latin */
+/* material-symbols-outlined - variable font */
 @font-face {
-  font-display: block; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Material Symbols";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/material_symbols/material-symbols-v2-latin-regular.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* material-symbols-outlined-regular - latin */
-@font-face {
-  font-display: block; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: block;
   font-family: "Material Symbols Outlined";
   font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/material_symbols/material-symbols-outlined-v266-latin-regular.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-weight: 100 700;
+  src: url("../fonts/material_symbols/MaterialSymbolsOutlined.woff2")
+    format("woff2-variations");
 }
 
-.material-symbols,
 .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -36,12 +26,18 @@
   min-width: 1em;
   max-width: 1em;
   overflow: hidden;
+
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
 
-.material-symbols {
-  font-family: "Material Symbols";
-}
-
-.material-symbols-outlined {
-  font-family: "Material Symbols Outlined";
+.material-symbols-outlined.filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
