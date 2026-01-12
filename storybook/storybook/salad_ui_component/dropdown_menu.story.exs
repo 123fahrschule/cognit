@@ -44,17 +44,17 @@ defmodule Storybook.CognitComponents.DropdownMenu do
               <.dropdown_menu_separator />
               <.dropdown_menu_group>
                 <.dropdown_menu_item on-select="on_command" value="profile">
-                  <.icon name="person" class="mr-2 text-[16px]" />
+                  <.icon name="person" size="xs" class="mr-2" />
                   <span>Profile</span>
                   <.dropdown_menu_shortcut>⌘P</.dropdown_menu_shortcut>
                 </.dropdown_menu_item>
                 <.dropdown_menu_item on-select="on_command">
-                  <.icon name="settings" class="mr-2 text-[16px]" />
+                  <.icon name="settings" size="xs" class="mr-2" />
                   <span>Settings</span>
                   <.dropdown_menu_shortcut>⌘S</.dropdown_menu_shortcut>
                 </.dropdown_menu_item>
                 <.dropdown_menu_item on-select="on_command">
-                  <.icon name="payments" class="mr-2 text-[16px]" />
+                  <.icon name="payments" size="xs" class="mr-2" />
                   <span>Billing</span>
                   <.dropdown_menu_shortcut>⌘B</.dropdown_menu_shortcut>
                 </.dropdown_menu_item>
@@ -62,18 +62,18 @@ defmodule Storybook.CognitComponents.DropdownMenu do
               <.dropdown_menu_separator />
               <.dropdown_menu_group>
                 <.dropdown_menu_item on-select="on_command">
-                  <.icon name="group" class="mr-2 text-[16px]" />
+                  <.icon name="group" size="xs" class="mr-2" />
                   <span>Team</span>
                 </.dropdown_menu_item>
                 <.dropdown_menu_item disabled>
-                  <.icon name="add" class="mr-2 text-[16px]" />
+                  <.icon name="add" size="xs" class="mr-2" />
                   <span>New Team</span>
                   <.dropdown_menu_shortcut>⌘T</.dropdown_menu_shortcut>
                 </.dropdown_menu_item>
               </.dropdown_menu_group>
               <.dropdown_menu_separator />
               <.dropdown_menu_item on-select="on_command">
-                <.icon name="logout" class="mr-2 text-[16px]" />
+                <.icon name="logout" size="xs" class="mr-2" />
                 <span>Log out</span>
               </.dropdown_menu_item>
             </.dropdown_menu_content>

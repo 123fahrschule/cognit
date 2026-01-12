@@ -19,13 +19,13 @@ defmodule Storybook.CognitComponents.ToggleGroup do
         slots: [
           """
           <.toggle_group_item value="bold" builder={builder} aria-label="Toggle bold">
-          <.icon name="format_bold" class="text-[16px]" />
+          <.icon name="format_bold" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="italic" builder={builder} aria-label="Toggle italic">
-          <.icon name="format_italic" class="text-[16px]" />
+          <.icon name="format_italic" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="underline" builder={builder} aria-label="Toggle underline">
-          <.icon name="format_underlined" class="text-[16px]" />
+          <.icon name="format_underlined" size="xs" />
           </.toggle_group_item>
           """
         ]
@@ -37,13 +37,13 @@ defmodule Storybook.CognitComponents.ToggleGroup do
         slots: [
           """
           <.toggle_group_item value="bold" builder={builder} aria-label="Toggle bold">
-          <.icon name="format_bold" class="text-[16px]" />
+          <.icon name="format_bold" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="italic" builder={builder} aria-label="Toggle italic">
-          <.icon name="format_italic" class="text-[16px]" />
+          <.icon name="format_italic" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="underline" builder={builder} aria-label="Toggle underline">
-          <.icon name="format_underlined" class="text-[16px]" />
+          <.icon name="format_underlined" size="xs" />
           </.toggle_group_item>
           """
         ]
@@ -61,13 +61,13 @@ defmodule Storybook.CognitComponents.ToggleGroup do
         slots: [
           """
           <.toggle_group_item value="bold" builder={builder} aria-label="Toggle bold">
-          <.icon name="format_bold" class="text-[16px]" />
+          <.icon name="format_bold" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="italic" builder={builder} aria-label="Toggle italic">
-          <.icon name="format_italic" class="text-[16px]" />
+          <.icon name="format_italic" size="xs" />
           </.toggle_group_item>
           <.toggle_group_item value="underline" builder={builder} aria-label="Toggle underline">
-          <.icon name="format_underlined" class="text-[16px]" />
+          <.icon name="format_underlined" size="xs" />
           </.toggle_group_item>
           """
         ]

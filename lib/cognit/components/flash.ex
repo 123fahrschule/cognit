@@ -20,7 +20,7 @@ defmodule Cognit.Components.Flash do
       <%= if @icon != [] do %>
         {render_slot(@icon)}
       <% else %>
-        <.icon name={alert_icon(@kind)} class="text-[16px]" />
+        <.icon name={alert_icon(@kind)} size="xs" />
       <% end %>
       <.alert_title class="pr-7">
         {@title}
@@ -35,7 +35,7 @@ defmodule Cognit.Components.Flash do
           class="size-6"
           phx-click={JS.exec("phx-remove", to: "##{@id}")}
         >
-          <.icon name="close" class="text-[16px]" />
+          <.icon name="close" size="xs" />
         </.button>
       </div>
     </.alert>
@@ -82,7 +82,7 @@ defmodule Cognit.Components.Flash do
       hidden
     >
       <:icon>
-        <.icon name="autorenew" class="text-[16px] motion-safe:animate-spin" />
+        <.icon name="autorenew" size="xs" class="motion-safe:animate-spin" />
       </:icon>
     </.flash>
     """
@@ -106,7 +106,7 @@ defmodule Cognit.Components.Flash do
       hidden
     >
       <:icon>
-        <.icon name="autorenew" class="text-[16px] motion-safe:animate-spin" />
+        <.icon name="autorenew" size="xs" class="motion-safe:animate-spin" />
       </:icon>
     </.flash>
     """

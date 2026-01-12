@@ -46,7 +46,7 @@ defmodule Storybook.CognitComponents.ConfirmationDialog do
           """
           <:trigger>
             <.button variant="destructive">
-              <.icon name="delete" class="text-[20px] mr-2" />
+              <.icon name="delete" size="sm" class="mr-2" />
               Custom Trigger
             </.button>
           </:trigger>

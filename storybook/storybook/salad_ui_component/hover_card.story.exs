@@ -151,11 +151,11 @@ defmodule Storybook.CognitComponents.HoverCard do
               </p>
               <ul class="text-sm space-y-1">
                 <li class="flex items-center text-muted-foreground">
-                  <.icon name="check_circle" class="text-[16px] mr-2 text-green-500"/>
+                  <.icon name="check_circle" size="xs" class="mr-2 text-green-500"/>
                   100% Accessible
                 </li>
                 <li class="flex items-center text-muted-foreground">
-                  <.icon name="check_circle" class="text-[16px] mr-2 text-green-500"/>
+                  <.icon name="check_circle" size="xs" class="mr-2 text-green-500"/>
                   State Management
                 </li>
               </ul>

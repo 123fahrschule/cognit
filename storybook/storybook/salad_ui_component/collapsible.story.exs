@@ -26,7 +26,7 @@ defmodule Storybook.CognitComponents.Collapsible do
             </h4>
             <.collapsible_trigger>
               <.button variant="ghost" size="sm" class="w-9 p-0">
-                <.icon name="expand_all" class="text-[16px]" />
+                <.icon name="expand_all" size="xs" />
                 <span class="sr-only">
                   Toggle
                 </span>

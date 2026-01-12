@@ -19,7 +19,7 @@ defmodule Storybook.CognitComponents.Alert do
         id: :default_alert,
         template: """
         <.alert>
-          <.icon name="terminal" class="text-[16px]" />
+          <.icon name="terminal" size="xs" />
           <.alert_title>Heads up!</.alert_title>
           <.alert_description>
             You can add components to your app using the cli
@@ -32,7 +32,7 @@ defmodule Storybook.CognitComponents.Alert do
         id: :destructive,
         template: """
         <.alert variant="destructive">
-          <.icon name="warning" class="text-[16px]" />
+          <.icon name="warning" size="xs" />
           <.alert_title>Heads up!</.alert_title>
           <.alert_description>
             You can add components to your app using the cli

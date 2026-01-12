@@ -24,7 +24,7 @@ defmodule Cognit.Components.UserMenu do
         <.dropdown_menu_trigger>
           <.button variant="ghost" class="px-3">
             {user_display_name(@user)}
-            <.icon name="keyboard_arrow_down" class="text-[20px] ml-2" />
+            <.icon name="keyboard_arrow_down" size="sm" class="ml-2" />
           </.button>
         </.dropdown_menu_trigger>
         <.dropdown_menu_content>

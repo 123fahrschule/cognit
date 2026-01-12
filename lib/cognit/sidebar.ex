@@ -246,11 +246,13 @@ defmodule Cognit.Sidebar do
       <% else %>
         <.icon
           name="chevron_left"
-          class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block text-[16px]"
+          size="xs"
+          class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block"
         />
         <.icon
           name="chevron_right"
-          class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block text-[16px]"
+          size="xs"
+          class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block"
         />
       <% end %>
       <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>

@@ -18,7 +18,7 @@ defmodule Cognit.Components.LocaleSelect do
       <.dropdown_menu id="locale-elect-dropdown-menu">
         <.dropdown_menu_trigger>
           <.button size="icon" variant="secondary">
-            <.icon name="language" class="text-[20px]" />
+            <.icon name="language" size="sm" />
           </.button>
         </.dropdown_menu_trigger>
         <.dropdown_menu_content align="end">

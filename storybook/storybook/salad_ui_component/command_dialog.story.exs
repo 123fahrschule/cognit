@@ -37,32 +37,32 @@ defmodule Storybook.CognitComponents.CommandDialog do
           <.command_list>
             <.command_group heading="Suggestions">
               <.command_item phx-value-name="calendar" phx-click="select_command">
-                <.icon name="calendar_today" class="text-[16px]" />
+                <.icon name="calendar_today" size="xs" />
                 <span>Calendar</span>
               </.command_item>
               <.command_item phx-value-name="global-map" phx-click="select_command">
-                <.icon name="globe" class="text-[16px]" />
+                <.icon name="globe" size="xs" />
                 <span>Global map</span>
               </.command_item>
               <.command_item disabled={true}>
-                <.icon name="calculate" class="text-[16px]" />
+                <.icon name="calculate" size="xs" />
                 <span>Calculator</span>
               </.command_item>
             </.command_group>
             <.separator />
             <.command_group heading="Settings">
               <.command_item phx-value-name="profile" phx-click="select_command">
-                <.icon name="person" class="text-[16px]" />
+                <.icon name="person" size="xs" />
                 <span>Profile</span>
                 <.command_shortcut>⌘P</.command_shortcut>
               </.command_item>
               <.command_item phx-value-name="billing" phx-click="select_command">
-                <.icon name="credit_card" class="text-[16px]" />
+                <.icon name="credit_card" size="xs" />
                 <span>Billing</span>
                 <.command_shortcut>⌘B</.command_shortcut>
               </.command_item>
               <.command_item value="settings" phx-click="select_command">
-                <.icon name="settings" class="text-[16px]" />
+                <.icon name="settings" size="xs" />
                 <span>Settings</span>
                 <.command_shortcut>⌘,</.command_shortcut>
               </.command_item>
