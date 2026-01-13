@@ -1,8 +1,8 @@
 defmodule Cognit.LocalePlug do
   import Plug.Conn
 
-  @default_locale "de"
-  @locales ["de", "en"]
+  @default_locale Application.compile_env(:cognit, :default_locale, "de")
+  @locales Application.compile_env(:cognit, :locales, ["de", "en"])
 
   def init(options), do: options
 
