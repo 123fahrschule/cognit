@@ -2,31 +2,154 @@
 
 Phoenix LiveView UI component library providing 40+ accessible, interactive components built with function components, JavaScript state machines, and LiveView hooks.
 
-This library is a fork/variant of [SaladUI](https://github.com/bluzky/salad_ui).
+Fork of [SaladUI](https://github.com/bluzky/salad_ui).
 
 ## Features
 
 - 40+ accessible, interactive components
-- Built with Phoenix function components and HEEx templates
-- Client-side state management with JavaScript state machines
-- Tailwind CSS styling with TwMerge for class composition
-- Internationalization support with Gettext
-- **Material Symbols icons** - Search icons at [Google Fonts Icons](https://fonts.google.com/icons)
+- Phoenix function components with HEEx templates
+- Client-side state machines for interactivity
+- Tailwind CSS styling with TwMerge
+- Internationalization with Gettext
+- Material Symbols icons ([browse icons](https://fonts.google.com/icons))
+
+## Requirements
+
+- Elixir ~> 1.18
+- Phoenix ~> 1.7
+- Phoenix LiveView ~> 1.0
+- Tailwind CSS 3.4+
+
+---
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cognit` to your list of dependencies in `mix.exs`:
+### 1. Add Dependency
 
 ```elixir
-def deps do
+# mix.exs
+defp deps do
   [
-    {:cognit, "~> 0.1.0"}
+    {:cognit, github: "123fahrschule/cognit", tag: "0.1.0"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/cognit>.
+```bash
+mix deps.get
+```
 
+### 2. Configuration
+
+```elixir
+# config/config.exs
+config :cognit, :error_translator_function, {MyAppWeb.ErrorHelpers, :translate_error}
+```
+
+```elixir
+# config/test.exs
+config :cognit, :default_locale, "en"
+```
+
+For fonts, add to esbuild args: `--loader:.woff2=file`
+
+### 3. JavaScript
+
+```javascript
+// assets/js/app.js
+import "phoenix_html";
+import { Socket } from "phoenix";
+import { LiveSocket } from "phoenix_live_view";
+import Cognit from "cognit";
+
+const csrfToken = document
+  .querySelector("meta[name='csrf-token']")
+  .getAttribute("content");
+
+const liveSocket = new LiveSocket("/live", Socket, {
+  params: () => ({
+    ...Cognit.getCognitParams(),
+    _csrf_token: csrfToken,
+  }),
+  hooks: {
+    ...Cognit.Hooks,
+  },
+});
+
+liveSocket.connect();
+window.liveSocket = liveSocket;
+```
+
+### 4. CSS
+
+```css
+/* assets/css/app.css */
+@import "../../deps/cognit/assets/css/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### 5. Tailwind
+
+```javascript
+// assets/tailwind.config.js
+module.exports = {
+  presets: [require("../deps/cognit/assets/tailwind_preset.js")],
+  content: [
+    "../deps/cognit/**/*.*ex",
+    "../deps/cognit/assets/js/**/*.*js",
+    ...
+  ],
+};
+```
+
+### 6. Import Components
+
+`use Cognit` imports all components:
+
+```elixir
+# lib/my_app_web.ex
+defp html_helpers do
+  quote do
+    # ...
+    use Cognit
+  end
+end
+```
+
+For custom components that need only specific imports:
+
+```elixir
+import Cognit.Button
+import Cognit.Dialog
+```
+
+### 7. Router
+
+```elixir
+# lib/my_app_web/router.ex
+
+# Add plugs to browser pipeline
+pipeline :browser do
+  # ...
+  plug Cognit.LocalePlug
+  plug Cognit.SidebarPlug
+end
+
+# Add hooks to live_session
+live_session :default,
+  on_mount: [
+    Cognit.LocaleHook,
+    Cognit.SidebarHook
+  ] do
+  live "/", HomeLive
+end
+```
+
+---
+
+## Usage
+
+See the [Storybook](storybook/) for component examples and documentation.
