@@ -8,7 +8,6 @@ defmodule CognitStorybook.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      TwMerge.Cache,
       {Phoenix.PubSub, name: CognitStorybook.PubSub},
       # Start a worker by calling: CognitStorybook.Worker.start_link(arg)
       # {CognitStorybook.Worker, arg},
