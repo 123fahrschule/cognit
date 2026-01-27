@@ -787,7 +787,7 @@ defmodule Cognit.Sidebar do
   attr :size, :string, values: ~w(sm md), default: "md"
   attr :is_active, :boolean, default: false
   attr :class, :string, default: nil
-  attr :as, :any, default: "a"
+  attr :as, :any, default: &link/1
   attr :rest, :global
   slot :inner_block, required: true
 
