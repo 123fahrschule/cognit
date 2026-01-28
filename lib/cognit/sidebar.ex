@@ -788,7 +788,7 @@ defmodule Cognit.Sidebar do
   attr :is_active, :boolean, default: false
   attr :class, :string, default: nil
   attr :as, :any, default: &link/1
-  attr :rest, :global
+  attr :rest, :global, include: ["navigate", "patch", "href"]
   slot :inner_block, required: true
 
   def sidebar_menu_sub_button(assigns) do
