@@ -10,7 +10,7 @@ export const SidebarMenu = {
     menuButtons.forEach((button) => {
       const href = button.getAttribute("href");
 
-      if (href && currentPath.startsWith(href)) {
+      if (href && (currentPath === href || currentPath.startsWith(href + "/"))) {
         button.setAttribute("data-active", "true");
       } else {
         button.setAttribute("data-active", "false");
