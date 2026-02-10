@@ -31,6 +31,13 @@ export const SidebarMenu = {
       const collapsible = button.closest('[data-component="collapsible"]');
       if (collapsible) {
         collapsible.setAttribute("data-state", "open");
+
+        const parentButton = collapsible.querySelector(
+          '[data-sidebar="menu-button"]',
+        );
+        if (parentButton) {
+          parentButton.setAttribute("data-active", "true");
+        }
       }
     });
   },
