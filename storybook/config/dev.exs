@@ -45,6 +45,7 @@ config :cognit_storybook, CognitStorybookWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :cognit_storybook, CognitStorybookWeb.Endpoint,
+  reloadable_apps: [:cognit],
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
