@@ -145,7 +145,7 @@ class SelectComponent extends Component {
       type: this.multiple ? "multiple" : "single",
       defaultValue: this.options.defaultValue,
       value: this.multiple
-        ? this.options.value
+        ? this.options.value?.map((v) => v?.toString())
         : this.options.value?.toString(),
       getItemValue: (item) => item.value,
       isItemDisabled: (item) => item.disabled || this.disabled,
@@ -478,12 +478,17 @@ class SelectComponent extends Component {
 
   onDomUpdate() {
     super.onDomUpdate();
-    const newValue = this.options.value;
-    if (newValue !== undefined) {
-      const normalizedNew = newValue === null || newValue === "" ? [] : Array.isArray(newValue) ? newValue : [newValue];
+    const raw = this.options.value;
+    if (raw !== undefined) {
+      const toStr = (v) => v == null || v === "" ? null : v.toString();
+      const normalized = raw == null || raw === ""
+        ? []
+        : Array.isArray(raw)
+          ? raw.map((v) => toStr(v)).filter(Boolean)
+          : [toStr(raw)].filter(Boolean);
       const current = this.collection.getValue(true);
-      if (JSON.stringify(normalizedNew.sort()) !== JSON.stringify(current.sort())) {
-        this.collection.setValues(newValue === "" ? null : newValue);
+      if (JSON.stringify(normalized.sort()) !== JSON.stringify(current.sort())) {
+        this.collection.setValues(normalized.length ? normalized : null);
       }
     }
     this.updateValueDisplay();
