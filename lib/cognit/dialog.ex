@@ -72,6 +72,7 @@ defmodule Cognit.Dialog do
             animations: get_animation_config()
           })
       )
+      |> assign(:remove_animation, remove_animation(assigns.id, 200))
 
     ~H"""
     <div
@@ -85,6 +86,7 @@ defmodule Cognit.Dialog do
       data-part="root"
       phx-hook="SaladUI"
       phx-mounted={JS.ignore_attributes(["data-state"])}
+      phx-remove={@remove_animation}
     >
       {render_slot(@inner_block)}
     </div>
@@ -196,6 +198,14 @@ defmodule Cognit.Dialog do
       {render_slot(@inner_block)}
     </div>
     """
+  end
+
+  defp remove_animation(id, duration) do
+    JS.set_attribute({"data-state", "closed"})
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=overlay]")
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=content-panel]")
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=content]")
+    |> JS.hide(transition: {"duration-#{duration}", "", ""}, time: duration)
   end
 
   defp get_animation_config do

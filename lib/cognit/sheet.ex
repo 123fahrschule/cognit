@@ -71,6 +71,7 @@ defmodule Cognit.Sheet do
           closeOnOutsideClick: assigns[:"close-on-outside-click"]
         })
       )
+      |> assign(:remove_animation, remove_animation(assigns.id, 300))
 
     ~H"""
     <div
@@ -84,6 +85,7 @@ defmodule Cognit.Sheet do
       data-part="root"
       phx-hook="SaladUI"
       phx-mounted={JS.ignore_attributes(["data-state"])}
+      phx-remove={@remove_animation}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -259,6 +261,14 @@ defmodule Cognit.Sheet do
       {render_slot(@inner_block)}
     </div>
     """
+  end
+
+  defp remove_animation(id, duration) do
+    JS.set_attribute({"data-state", "closed"})
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=overlay]")
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=content-panel]")
+    |> JS.set_attribute({"data-state", "closed"}, to: "##{id} [data-part=content]")
+    |> JS.hide(transition: {"duration-#{duration}", "", ""}, time: duration)
   end
 
   defp get_animation_config do
