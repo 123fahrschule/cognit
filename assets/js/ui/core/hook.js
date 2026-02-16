@@ -36,7 +36,19 @@ const SaladUIHook = {
 
   updated() {
     if (this.component) {
-      this.component.onDomUpdate();
+      // When morphdom replaces child elements (e.g., after LiveView stream reset
+      // with matching DOM IDs), cached part references become stale. Detect this
+      // by checking if any parts are disconnected, and fully reinitialize.
+      // The root's data-state (preserved by JS.ignore_attributes) ensures correct
+      // state restoration.
+      const partsStale = this.component.allParts.some((p) => !p.isConnected);
+      if (partsStale) {
+        this.component.destroy();
+        this.component = null;
+        this.initComponent();
+      } else {
+        this.component.onDomUpdate();
+      }
     }
   },
 
