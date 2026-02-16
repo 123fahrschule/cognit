@@ -123,7 +123,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors}>
+      <.form_message :for={msg <- @errors} errors={@errors}>
         {msg}
       </.form_message>
     </.form_item>
@@ -140,7 +140,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors}>
+      <.form_message :for={msg <- @errors} errors={@errors}>
         {msg}
       </.form_message>
     </.form_item>
@@ -171,7 +171,7 @@ defmodule Cognit.Components.FormField do
         <.form_label :if={@label} for={@id} error={@has_errors}>
           {@label}
         </.form_label>
-        <.form_message :for={msg <- @errors}>
+        <.form_message :for={msg <- @errors} errors={@errors}>
           {msg}
         </.form_message>
       </div>

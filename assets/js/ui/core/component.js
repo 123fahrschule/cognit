@@ -481,12 +481,15 @@ class Component {
   beforeDestroy() {}
 
   /**
-   * Determine if component state should be preserved during LiveView updates
-   * Override in subclasses to return true for components that should preserve state
-   * @returns {boolean}
+   * Called by the hook when LiveView patches the DOM.
+   * Re-parses options and event mappings without resetting state.
+   * Override in subclasses for component-specific update logic.
    */
-  shouldPreserveStateOnUpdate() {
-    return false;
+  onDomUpdate() {
+    this.parseOptions();
+    this.initEventMappings();
+    this.updatePartsVisibility();
+    this.updateUI();
   }
 
   // Alias for transition()

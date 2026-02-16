@@ -92,6 +92,7 @@ defmodule Cognit.Slider do
       data-event-mappings={@event_map}
       tabindex={if @disabled, do: "-1", else: "0"}
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       data-part="root"
       phx-no-format
       {@rest}

@@ -65,6 +65,7 @@ defmodule Cognit.Command do
       data-component="command"
       data-part="root"
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       class={
         classes([
           "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",

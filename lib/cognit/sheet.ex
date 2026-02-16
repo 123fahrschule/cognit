@@ -83,6 +83,7 @@ defmodule Cognit.Sheet do
       data-options={@options}
       data-part="root"
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -133,14 +134,16 @@ defmodule Cognit.Sheet do
     assigns = assign(assigns, :variant_class, sheet_variants(assigns))
 
     ~H"""
-    <div data-part="content" tabindex="0" hidden>
+    <div data-part="content" tabindex="0" phx-mounted={JS.ignore_attributes(["data-state"])} class="[&:not([data-state])]:hidden">
       <div
         data-part="overlay"
+        phx-mounted={JS.ignore_attributes(["data-state"])}
         class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
       />
 
       <div
         data-part="content-panel"
+        phx-mounted={JS.ignore_attributes(["data-state"])}
         data-side={@side}
         class={
           classes([

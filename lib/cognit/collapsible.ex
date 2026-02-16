@@ -70,6 +70,7 @@ defmodule Cognit.Collapsible do
       data-options={@options}
       data-part="root"
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       {@rest}
     >
       {render_slot(@inner_block)}

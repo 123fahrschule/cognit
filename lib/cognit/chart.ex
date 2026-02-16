@@ -63,6 +63,7 @@ defmodule Cognit.Chart do
       id={@id}
       name={@name}
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       data-component="chart"
       data-part="root"
       data-chart-type={@chart_type}

@@ -64,6 +64,7 @@ defmodule Cognit.Tabs do
       data-event-mappings={@event_map}
       data-part="root"
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       {@rest}
     >
       {render_slot(@inner_block)}

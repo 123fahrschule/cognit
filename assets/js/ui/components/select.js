@@ -476,8 +476,18 @@ class SelectComponent extends Component {
     }
   }
 
-  shouldPreserveStateOnUpdate() {
-    return true;
+  onDomUpdate() {
+    super.onDomUpdate();
+    const newValue = this.options.value;
+    if (newValue !== undefined) {
+      const normalizedNew = newValue === null || newValue === "" ? [] : Array.isArray(newValue) ? newValue : [newValue];
+      const current = this.collection.getValue(true);
+      if (JSON.stringify(normalizedNew.sort()) !== JSON.stringify(current.sort())) {
+        this.collection.setValues(newValue === "" ? null : newValue);
+      }
+    }
+    this.updateValueDisplay();
+    this.syncHiddenInputs(false);
   }
 
   // Cleanup

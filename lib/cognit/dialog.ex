@@ -84,6 +84,7 @@ defmodule Cognit.Dialog do
       data-options={@options}
       data-part="root"
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
     >
       {render_slot(@inner_block)}
     </div>

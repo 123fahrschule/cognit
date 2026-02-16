@@ -93,9 +93,12 @@ defmodule Cognit.Select do
       data-options={@options}
       data-event-mappings={@event_map}
       phx-hook="SaladUI"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
       {@rest}
     >
-      {render_slot(@inner_block)}
+      <div id={@id <> "_inner"} phx-update="ignore" class="contents">
+        {render_slot(@inner_block)}
+      </div>
       <input name={@name} value="" data-input class="hidden" />
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore"></div>
     </div>
