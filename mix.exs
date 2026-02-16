@@ -25,7 +25,7 @@ defmodule Cognit.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7"},
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:gettext, "~> 0.26 or ~> 1.0"},
       {:tw_merge, "~> 0.1"},
       {:jason, "~> 1.4"}
