@@ -43,7 +43,7 @@ defmodule Cognit.Toggle do
       type="button"
       class={
         classes([
-          "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 has-[:checked]:bg-accent has-[:checked]:text-accent-foreground",
+          "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 has-[:checked]:bg-accent has-[:checked]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_.icon]:pointer-events-none [&_.icon]:size-4 [&_.icon]:shrink-0",
           @variant_class,
           @class
         ])
@@ -71,9 +71,9 @@ defmodule Cognit.Toggle do
         "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground"
     },
     size: %{
-      "default" => "h-10 px-3",
-      "sm" => "h-9 px-2.5",
-      "lg" => "h-11 px-5"
+      "default" => "h-10 px-3 min-w-10",
+      "sm" => "h-9 px-2.5 min-w-9",
+      "lg" => "h-11 px-5 min-w-11"
     }
   }
 

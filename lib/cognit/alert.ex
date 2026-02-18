@@ -71,7 +71,7 @@ defmodule Cognit.Alert do
       data-part="root"
       class={
         classes([
-          "relative w-full rounded-lg border p-4 [&>span~*]:pl-7 [&>span+div]:translate-y-[-3px] [&>span]:absolute [&>span]:left-4 [&>span]:top-4",
+          "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>.icon~*]:pl-7 [&>.icon+div]:translate-y-[-3px] [&>.icon]:absolute [&>.icon]:left-4 [&>.icon]:top-4 [&>.icon]:text-foreground",
           @variant_class,
           @class
         ])
@@ -157,7 +157,7 @@ defmodule Cognit.Alert do
     variant: %{
       "default" => "bg-background text-foreground",
       "destructive" =>
-        "bg-background border-destructive/50 text-destructive dark:border-destructive [&>span]:text-destructive"
+        "bg-background border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive [&>.icon]:text-destructive"
     }
   }
 

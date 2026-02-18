@@ -33,7 +33,7 @@ defmodule Cognit.Card do
 
   def card(assigns) do
     ~H"""
-    <div class={classes(["rounded-xl border bg-card text-card-foreground shadow", @class])} {@rest}>
+    <div class={classes(["rounded-lg border bg-card text-card-foreground shadow-sm", @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -108,7 +108,7 @@ defmodule Cognit.Card do
 
   def card_footer(assigns) do
     ~H"""
-    <div class={classes(["flex items-center justify-between p-6 pt-0 ", @class])} {@rest}>
+    <div class={classes(["flex items-center p-6 pt-0", @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
