@@ -136,7 +136,12 @@ defmodule Cognit.Sheet do
     assigns = assign(assigns, :variant_class, sheet_variants(assigns))
 
     ~H"""
-    <div data-part="content" tabindex="0" phx-mounted={JS.ignore_attributes(["data-state"])} class="[&:not([data-state])]:hidden">
+    <div
+      data-part="content"
+      tabindex="0"
+      phx-mounted={JS.ignore_attributes(["data-state"])}
+      class="[&:not([data-state])]:hidden"
+    >
       <div
         data-part="overlay"
         phx-mounted={JS.ignore_attributes(["data-state"])}
