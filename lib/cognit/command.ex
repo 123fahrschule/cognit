@@ -285,7 +285,7 @@ defmodule Cognit.Command do
       tabindex="-1"
       role="option"
       data-part="item"
-      class="relative flex cursor-default w-full gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none disabled:pointer-events-none hover:bg-accent/75 data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[visible=false]:hidden disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_.icon]:pointer-events-none [&_.icon]:size-4 [&_.icon]:shrink-0"
+      class="relative flex cursor-default w-full gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none disabled:pointer-events-none hover:bg-accent/75 data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[visible=false]:hidden disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_.icon]:pointer-events-none [&_.icon]:text-[16px] [&_.icon]:shrink-0"
       data-selected={@selected}
       aria-selected={@selected}
       disabled={@disabled}

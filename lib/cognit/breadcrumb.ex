@@ -229,7 +229,7 @@ defmodule Cognit.Breadcrumb do
       role="presentation"
       class={
         classes([
-          "[&>svg]:size-3.5 [&>.icon]:size-3.5",
+          "[&>svg]:size-3.5 [&>.icon]:text-[14px]",
           @class
         ])
       }
