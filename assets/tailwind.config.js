@@ -6,6 +6,5 @@ module.exports = {
       colors: require("./tailwind.colors.json"),},
   },
   plugins: [
-    require("@tailwindcss/typography"),
     require("./vendor/tailwindcss-animate"),],
 };
