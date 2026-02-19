@@ -106,6 +106,41 @@
     @apply border-border outline-ring/50;
   }
 
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 14 100% 57%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 199 48% 22%;
+    --secondary-foreground: 198 71% 97%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 218 11% 65%;
+    --accent: 0 0% 25%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 91% 58%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 35%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 14 100% 57%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 35%;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
