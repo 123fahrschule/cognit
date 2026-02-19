@@ -104,7 +104,7 @@ defmodule Cognit.RadioGroup do
       class={
         classes([
           "group/item",
-          "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
+          "aspect-square h-4 w-4 rounded-full border border-primary text-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
           @class
         ])
       }
