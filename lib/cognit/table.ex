@@ -68,7 +68,7 @@ defmodule Cognit.Table do
 
   def table_header(assigns) do
     ~H"""
-    <thead class={classes(["[&_tr]:border-b [&_tr]:bg-neutral-50", @class])} {@rest}>
+    <thead class={classes(["[&_tr]:border-b", @class])} {@rest}>
       {render_slot(@inner_block)}
     </thead>
     """
@@ -124,7 +124,7 @@ defmodule Cognit.Table do
     <th
       class={
         classes([
-          "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+          "h-10 px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
           @class
         ])
       }
@@ -165,7 +165,7 @@ defmodule Cognit.Table do
 
   def table_cell(assigns) do
     ~H"""
-    <td class={classes(["p-4 align-middle [&:has([role=checkbox])]:pr-0", @class])} {@rest}>
+    <td class={classes(["px-2 py-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]", @class])} {@rest}>
       {render_slot(@inner_block)}
     </td>
     """
@@ -183,7 +183,7 @@ defmodule Cognit.Table do
     <tfoot
       class={
         classes([
-          "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+          "border-t bg-muted font-medium [&>tr]:last:border-b-0",
           @class
         ])
       }
