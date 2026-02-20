@@ -229,7 +229,7 @@ defmodule Cognit.Table do
     <.dropdown_menu id={@id} {@rest}>
       <.dropdown_menu_trigger>
         <.button variant="ghost" size="icon">
-          <.icon name="more_vert" />
+          <.icon name="more_horiz" class="text-primary" />
         </.button>
       </.dropdown_menu_trigger>
 
