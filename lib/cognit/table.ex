@@ -165,7 +165,15 @@ defmodule Cognit.Table do
 
   def table_cell(assigns) do
     ~H"""
-    <td class={classes(["px-2 py-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]", @class])} {@rest}>
+    <td
+      class={
+        classes([
+          "px-2 py-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+          @class
+        ])
+      }
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </td>
     """

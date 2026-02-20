@@ -207,7 +207,6 @@ defmodule Cognit.Sidebar do
   attr :as, :any, default: "button"
   attr :is_mobile, :boolean, default: false
   attr :rest, :global
-  slot :icon, required: false, doc: "Custom icon, overrides default icon"
 
   def sidebar_trigger(%{is_mobile: true} = assigns) do
     ~H"""
@@ -220,11 +219,7 @@ defmodule Cognit.Sidebar do
       phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
       {@rest}
     >
-      <%= if @icon != [] do %>
-        {render_slot(@icon)}
-      <% else %>
-        <.icon name="menu" />
-      <% end %>
+      <.icon name="dock_to_left" />
       <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
@@ -241,20 +236,7 @@ defmodule Cognit.Sidebar do
       phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
       {@rest}
     >
-      <%= if @icon != [] do %>
-        {render_slot(@icon)}
-      <% else %>
-        <.icon
-          name="chevron_left"
-          size="xs"
-          class="hidden group-data-[sidebar=root]:group-data-[state=expanded]:block"
-        />
-        <.icon
-          name="chevron_right"
-          size="xs"
-          class="hidden group-data-[sidebar=root]:group-data-[state=collapsed]:block"
-        />
-      <% end %>
+      <.icon name="dock_to_left" />
       <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
@@ -359,8 +341,6 @@ defmodule Cognit.Sidebar do
 
         {render_slot(@inner_block)}
       </div>
-
-      <.sidebar_trigger class="max-md:hidden ml-auto" />
     </div>
     """
   end
