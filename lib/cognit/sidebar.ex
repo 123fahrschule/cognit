@@ -213,13 +213,18 @@ defmodule Cognit.Sidebar do
     <.dynamic
       tag={@as}
       data-sidebar="trigger"
-      variant="ghost"
-      size="icon"
-      class={classes(["p-2 rounded-md inline-flex", @class])}
+      class={
+        classes([
+          "inline-flex items-center justify-center h-7 w-7 rounded-md",
+          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+          @class
+        ])
+      }
       phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
       {@rest}
     >
-      <.icon name="dock_to_left" />
+      <.icon name="dock_to_left" size="xs" />
       <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
@@ -230,13 +235,18 @@ defmodule Cognit.Sidebar do
     <.dynamic
       tag={@as}
       data-sidebar="trigger"
-      variant="ghost"
-      size="icon"
-      class={classes(["p-2 rounded-md", @class])}
+      class={
+        classes([
+          "inline-flex items-center justify-center h-7 w-7 rounded-md",
+          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+          @class
+        ])
+      }
       phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
       {@rest}
     >
-      <.icon name="dock_to_left" />
+      <.icon name="dock_to_left" size="xs" />
       <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
     </.dynamic>
     """
