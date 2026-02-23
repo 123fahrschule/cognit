@@ -28,11 +28,13 @@ import { FlashMessage } from "./js/hooks/flash_message.js";
 import { LocaleSelect } from "./js/hooks/locale_select.js";
 import { Sidebar } from "./js/hooks/sidebar.js";
 import { SidebarMenu } from "./js/hooks/sidebar_menu.js";
+import { Pagination } from "./js/hooks/pagination.js";
 import { getCognitParams } from "./js/connect_params.js";
 
 export const Hooks = {
   FlashMessage,
   LocaleSelect,
+  Pagination,
   Sidebar,
   SidebarMenu,
 
