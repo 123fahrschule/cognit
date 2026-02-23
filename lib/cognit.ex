@@ -228,6 +228,8 @@ defmodule Cognit do
       import Cognit.Components.Table
       import Cognit.Components.Pagination
       import Cognit.Components.Topbar
+
+      alias Cognit.PaginationParams
     end
   end
 end

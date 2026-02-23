@@ -4,6 +4,8 @@ defmodule Cognit.Components.Pagination do
   import Cognit.Button
   import Cognit.Icon
 
+  alias Cognit.PaginationParams
+
   @doc """
   Renders a data table pagination component.
 
@@ -12,11 +14,15 @@ defmodule Cognit.Components.Pagination do
 
   ## Examples
 
+      # With PaginationParams struct (recommended with streams)
+      <.pagination pagination={@pagination} on_change="paginate" />
+
+      # With individual attributes
       <.pagination
         page={1}
         total_pages={10}
         total_entries={100}
-        on_change="pagination_changed"
+        on_change="paginate"
       />
 
       <.pagination
@@ -25,17 +31,30 @@ defmodule Cognit.Components.Pagination do
         total_entries={100}
         page_size={10}
         page_sizes={[10, 20, 50, 100]}
-        on_change="pagination_changed"
+        on_change="paginate"
       />
   """
+  attr :pagination, PaginationParams, default: nil
   attr :page, :integer, default: 1
-  attr :total_pages, :integer, required: true
-  attr :total_entries, :integer, required: true
+  attr :total_pages, :integer, default: 1
+  attr :total_entries, :integer, default: 0
   attr :page_size, :integer, default: 10
   attr :page_sizes, :list, default: [10, 20, 30, 40, 50]
   attr :on_change, :any, default: %JS{}
   attr :class, :any, default: nil
   attr :rest, :global
+
+  def pagination(%{pagination: %PaginationParams{} = p} = assigns) do
+    assigns
+    |> assign(
+      page: p.page,
+      total_pages: p.total_pages,
+      total_entries: p.total_entries,
+      page_size: p.page_size,
+      pagination: nil
+    )
+    |> pagination()
+  end
 
   def pagination(assigns) do
     ~H"""
