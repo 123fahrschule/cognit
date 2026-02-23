@@ -7,11 +7,15 @@ defmodule Cognit.Components.Table do
   attr :rest, :global
 
   slot :inner_block
+  slot :footer
 
   def table_container(assigns) do
     ~H"""
-    <div class={["rounded-lg border overflow-auto", @class]} {@rest}>
-      {render_slot(@inner_block)}
+    <div class={["flex flex-col", @class]} {@rest}>
+      <div class="rounded-lg border overflow-auto">
+        {render_slot(@inner_block)}
+      </div>
+      {render_slot(@footer)}
     </div>
     """
   end
