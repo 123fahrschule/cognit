@@ -40,7 +40,7 @@ defmodule Cognit.Components.Page do
 
   def page_content(assigns) do
     ~H"""
-    <div class={["p-6 flex flex-col gap-6", @class]} {@rest}>
+    <div class={["p-6 pb-12 flex flex-col gap-6", @class]} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
