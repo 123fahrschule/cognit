@@ -478,6 +478,9 @@ class SelectComponent extends Component {
 
   onDomUpdate() {
     super.onDomUpdate();
+    if (this.state === "open" && this.positionedElement) {
+      this.positionedElement.update();
+    }
     const raw = this.options.value;
     if (raw !== undefined) {
       const toStr = (v) => v == null || v === "" ? null : v.toString();

@@ -184,6 +184,18 @@ class TooltipComponent extends Component {
     this.pushEvent("closed");
   }
 
+  onDomUpdate() {
+    super.onDomUpdate();
+    if (this.state === "open") {
+      if (this.positionedElement) {
+        this.positionedElement.update();
+      } else {
+        this.initializePositionedElement();
+        this.positionedElement?.activate();
+      }
+    }
+  }
+
   beforeDestroy() {
     this.clearTimers();
 

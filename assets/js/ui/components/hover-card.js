@@ -189,6 +189,13 @@ class HoverCardComponent extends Component {
     this.pushEvent("closed");
   }
 
+  onDomUpdate() {
+    super.onDomUpdate();
+    if (this.state === "open" && this.positionedElement) {
+      this.positionedElement.update();
+    }
+  }
+
   beforeDestroy() {
     this.clearTimers();
 

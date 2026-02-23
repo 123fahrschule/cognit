@@ -46,6 +46,7 @@ const SaladUIHook = {
         this.component.destroy();
         this.component = null;
         this.initComponent();
+        this.component?.onDomUpdate();
       } else {
         this.component.onDomUpdate();
       }

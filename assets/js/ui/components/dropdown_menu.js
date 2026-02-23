@@ -154,6 +154,13 @@ class DropdownMenuComponent extends Component {
     this.transition("close");
   }
 
+  onDomUpdate() {
+    super.onDomUpdate();
+    if (this.state === "open" && this.positionedElement) {
+      this.positionedElement.update();
+    }
+  }
+
   beforeDestroy() {
     // Clean up the positioned element
     if (this.positionedElement) {
