@@ -3,6 +3,7 @@ defmodule Cognit.Components.Pagination do
 
   import Cognit.Button
   import Cognit.Icon
+  import Cognit.Select
 
   alias Cognit.PaginationParams
 
@@ -75,7 +76,9 @@ defmodule Cognit.Components.Pagination do
     ~H"""
     <div
       id={@id}
-      phx-hook={!@on_change && "Pagination"}
+      phx-hook="Pagination"
+      data-on-change={@on_change}
+      data-target={@target}
       class={classes(["flex items-center justify-between pt-4", @class])}
       {@rest}
     >
@@ -114,17 +117,20 @@ defmodule Cognit.Components.Pagination do
           <span class="text-sm font-medium">
             {pgettext("pagination", "Rows per page")}
           </span>
-          <form phx-change={form_js(@on_change, @target)}>
+          <form>
             <input type="hidden" name="page" value={1} />
-            <select
-              name="page_size"
-              data-pagination-select
-              class="h-9 min-w-16 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-            >
-              <option :for={size <- @page_sizes} value={size} selected={size == @page_size}>
-                {size}
-              </option>
-            </select>
+            <.select id={@id <> "_page_size"} name="page_size" value={@page_size}>
+              <.select_trigger class="h-9 min-w-16 w-auto">
+                <.select_value placeholder={@page_size} />
+              </.select_trigger>
+              <.select_content>
+                <.select_group>
+                  <.select_item :for={size <- @page_sizes} value={to_string(size)}>
+                    {size}
+                  </.select_item>
+                </.select_group>
+              </.select_content>
+            </.select>
           </form>
         </div>
 
@@ -187,7 +193,4 @@ defmodule Cognit.Components.Pagination do
 
   defp click_js(event, target, page, page_size),
     do: JS.push(event, value: %{page: page, page_size: page_size}, target: target)
-
-  defp form_js(nil, _target), do: nil
-  defp form_js(event, target), do: JS.push(event, target: target)
 end

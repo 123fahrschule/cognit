@@ -4,17 +4,35 @@ export const Pagination = {
 
     this.el.addEventListener("pagination:navigate", (e) => {
       const { page, page_size } = e.detail;
-      this.patchUrl(page, page_size);
+      this.handleChange(page, page_size);
     });
 
-    this.el.querySelectorAll("select[data-pagination-select]").forEach((el) => {
-      el.addEventListener("change", () => {
-        const pageSize = parseInt(el.value);
-        if (Number.isFinite(pageSize)) {
-          this.patchUrl(1, pageSize);
-        }
-      });
+    this.el.addEventListener("change", (e) => {
+      const form = e.target.closest("form");
+      if (!form) return;
+
+      const formData = new FormData(form);
+      const page = parseInt(formData.get("page")) || 1;
+      const pageSize = parseInt([...formData.getAll("page_size")].pop());
+
+      if (Number.isFinite(pageSize)) {
+        this.handleChange(page, pageSize);
+      }
     });
+  },
+
+  handleChange(page, pageSize) {
+    const event = this.el.dataset.onChange;
+
+    if (event) {
+      const target = this.el.dataset.target;
+      this.pushEventTo(target || this.el, event, {
+        page: page,
+        page_size: pageSize,
+      });
+    } else {
+      this.patchUrl(page, pageSize);
+    }
   },
 
   patchUrl(page, pageSize) {
