@@ -346,11 +346,7 @@ defmodule Cognit.Sidebar do
       }
       {@rest}
     >
-      <div class="flex items-center gap-2 flex-grow group-data-[state=collapsed]:hidden">
-        <.sidebar_logo />
-
-        {render_slot(@inner_block)}
-      </div>
+      {render_slot(@inner_block)}
     </div>
     """
   end
