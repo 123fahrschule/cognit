@@ -107,7 +107,7 @@ defmodule Cognit.Components.FormField do
           value={@value}
           multiple={@multiple}
           class={[
-            "flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-base shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 md:text-sm",
+            "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
             "relative"
           ]}
           {@rest}
