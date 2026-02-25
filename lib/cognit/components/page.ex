@@ -8,7 +8,7 @@ defmodule Cognit.Components.Page do
 
   def page(assigns) do
     ~H"""
-    <div class={["flex flex-col", @class]} {@rest}>
+    <div class={["flex flex-1 min-h-0 flex-col overflow-auto", @class]} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -40,7 +40,7 @@ defmodule Cognit.Components.Page do
 
   def page_content(assigns) do
     ~H"""
-    <div class={["p-6 pb-12 flex flex-col gap-6", @class]} {@rest}>
+    <div class={["p-6 pb-12 flex flex-1 flex-col gap-6", @class]} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -53,7 +53,7 @@ defmodule Cognit.Components.Page do
 
   def page_footer(assigns) do
     ~H"""
-    <div class={["p-6", @class]} {@rest}>
+    <div class={["p-6 shrink-0", @class]} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
