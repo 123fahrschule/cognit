@@ -94,7 +94,7 @@ defmodule Cognit.Components.CopyButton do
         data-copy-feedback-target="true"
         {@rest}
       >
-        <.icon name="content_copy" size="xs" class={classes(["text-muted-foreground", @icon_class])} />
+        <.icon name="content_copy" size="xs" class={["text-muted-foreground", @icon_class]} />
       </button>
       <.tooltip_content side="top" align="end">
         {pgettext("copy button, success feedback", "Copied!")}

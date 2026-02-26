@@ -53,7 +53,7 @@ defmodule Cognit.Select do
     default: nil,
     doc: "The placeholder text when no value is selected."
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -105,7 +105,7 @@ defmodule Cognit.Select do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global, include: ["disabled"]
 
@@ -144,7 +144,7 @@ defmodule Cognit.Select do
   end
 
   attr :placeholder, :string, default: nil
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def select_value(assigns) do
@@ -159,7 +159,7 @@ defmodule Cognit.Select do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :side, :string, values: ~w(top bottom), default: "bottom"
   slot :inner_block, required: true
 
@@ -198,19 +198,19 @@ defmodule Cognit.Select do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
   def select_group(assigns) do
     ~H"""
-    <div data-part="group" class={classes([@class])} {@rest}>
+    <div data-part="group" class={@class} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -224,7 +224,7 @@ defmodule Cognit.Select do
 
   attr :value, :string, required: true
   attr :disabled, :boolean, default: false
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 

@@ -42,7 +42,7 @@ defmodule Cognit.Skeleton do
       <.skeleton class="h-12 w-12 rounded-full" />
       <.skeleton class="h-4 w-full max-w-sm" />
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def skeleton(assigns) do

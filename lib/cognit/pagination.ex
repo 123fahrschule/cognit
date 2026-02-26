@@ -32,7 +32,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders a pagination component.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -57,7 +57,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders pagination content wrapper.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -80,7 +80,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders a pagination item container.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -110,7 +110,7 @@ defmodule Cognit.Pagination do
   """
   attr :"is-active", :boolean, default: false
   attr :size, :string, default: "icon", values: ~w(default sm lg icon)
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -145,7 +145,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders a next page button.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def pagination_next(assigns) do
@@ -174,7 +174,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders a previous page button.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def pagination_previous(assigns) do
@@ -203,7 +203,7 @@ defmodule Cognit.Pagination do
   @doc """
   Renders an ellipsis for page ranges.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def pagination_ellipsis(assigns) do

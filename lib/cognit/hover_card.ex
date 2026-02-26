@@ -53,7 +53,7 @@ defmodule Cognit.HoverCard do
 
   attr :"on-open", :any, default: nil, doc: "Handler for hover card open event"
   attr :"on-close", :any, default: nil, doc: "Handler for hover card close event"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -97,13 +97,13 @@ defmodule Cognit.HoverCard do
   @doc """
   The trigger element that activates the hover card when hovered.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
   def hover_card_trigger(assigns) do
     ~H"""
-    <div data-part="trigger" class={classes(["", @class])} {@rest}>
+    <div data-part="trigger" class={@class} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -120,7 +120,7 @@ defmodule Cognit.HoverCard do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :side, :string, values: ~w(top right bottom left), default: "top"
   attr :align, :string, values: ~w(start center end), default: "center"
   attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"

@@ -34,7 +34,7 @@ defmodule Cognit.Menu do
       </.menu>
   """
 
-  attr :class, :string, default: "top-0 left-full"
+  attr :class, :any, default: "top-0 left-full"
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -52,7 +52,7 @@ defmodule Cognit.Menu do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :disabled, :boolean, default: false
   slot :inner_block, required: true
   attr :rest, :global
@@ -75,7 +75,7 @@ defmodule Cognit.Menu do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :inset, :boolean, default: false
   slot :inner_block, required: true
   attr :rest, :global
@@ -88,7 +88,7 @@ defmodule Cognit.Menu do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block
 
   def menu_separator(assigns) do
@@ -99,7 +99,7 @@ defmodule Cognit.Menu do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -111,13 +111,13 @@ defmodule Cognit.Menu do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
   def menu_group(assigns) do
     ~H"""
-    <div class={classes([@class])} role="group" {@rest}>{render_slot(@inner_block)}</div>
+    <div class={@class} role="group" {@rest}>{render_slot(@inner_block)}</div>
     """
   end
 end

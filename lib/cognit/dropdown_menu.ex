@@ -76,7 +76,7 @@ defmodule Cognit.DropdownMenu do
   attr :"portal-container", :string, default: nil, doc: "CSS selector for the portal container"
   attr :"on-open", :any, default: nil, doc: "Handler for dropdown menu open event"
   attr :"on-close", :any, default: nil, doc: "Handler for dropdown menu close event"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -129,14 +129,14 @@ defmodule Cognit.DropdownMenu do
   * `:class` - Additional CSS classes.
   * `:as` - The HTML tag to use for the trigger. Defaults to `"div"`.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :as, :any, default: "div"
   attr :rest, :global
   slot :inner_block, required: true
 
   def dropdown_menu_trigger(assigns) do
     ~H"""
-    <.dynamic tag={@as} data-part="trigger" tab-index="0" class={classes(["", @class])} {@rest}>
+    <.dynamic tag={@as} data-part="trigger" tab-index="0" class={classes([@class])} {@rest}>
       {render_slot(@inner_block)}
     </.dynamic>
     """
@@ -153,7 +153,7 @@ defmodule Cognit.DropdownMenu do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :side, :string, values: ~w(top right bottom left), default: "bottom"
   attr :align, :string, values: ~w(start center end), default: "start"
   attr :"side-offset", :integer, default: 4, doc: "Distance from the trigger in pixels"
@@ -202,13 +202,13 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
   def dropdown_menu_group(assigns) do
     ~H"""
-    <div data-part="group" role="group" class={classes([@class])} {@rest}>
+    <div data-part="group" role="group" class={@class} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -222,7 +222,7 @@ defmodule Cognit.DropdownMenu do
   * `:inset` - Whether to inset the label. Defaults to `false`.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :inset, :boolean, default: false
   attr :rest, :global
   slot :inner_block, required: true
@@ -300,7 +300,7 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :value, :string, default: nil
   attr :variant, :string, values: ~w(default destructive), default: "default"
   attr :disabled, :boolean, default: false
@@ -343,7 +343,7 @@ defmodule Cognit.DropdownMenu do
   * `:on-select` - Handler for item selection.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :value, :string, default: nil
   attr :checked, :boolean, default: false
   attr :disabled, :boolean, default: false
@@ -414,7 +414,7 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: false
 
@@ -438,7 +438,7 @@ defmodule Cognit.DropdownMenu do
 
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 

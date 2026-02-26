@@ -18,7 +18,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :style, :map, default: %{}
   attr :rest, :global
   slot :inner_block, required: true
@@ -65,7 +65,7 @@ defmodule Cognit.Sidebar do
   attr :is_mobile, :boolean, default: false
   attr :is_desktop, :boolean, default: false
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :style, :map, default: %{}
   attr :rest, :global
   slot :inner_block, required: true
@@ -202,7 +202,7 @@ defmodule Cognit.Sidebar do
   Mobile version (is_mobile=true): Renders in toolbar, opens Sheet with menu icon.
   Desktop version: Renders in sidebar header, toggles with context-aware arrows.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :target, :string, default: "sidebar", doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
   attr :is_mobile, :boolean, default: false
@@ -263,7 +263,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def sidebar_rail(assigns) do
@@ -293,7 +293,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -317,7 +317,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def sidebar_input(assigns) do
@@ -338,7 +338,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block
 
@@ -369,7 +369,7 @@ defmodule Cognit.Sidebar do
 
   def sidebar_logo(assigns) do
     ~H"""
-    <div class={["bg-neutral-100 p-2 rounded-lg", @class]}>
+    <div class={classes(["bg-neutral-100 p-2 rounded-lg", @class])}>
       <.brand_logo class="size-6" />
     </div>
     """
@@ -378,7 +378,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -402,7 +402,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def sidebar_separator(assigns) do
@@ -418,7 +418,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -443,7 +443,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -466,9 +466,8 @@ defmodule Cognit.Sidebar do
 
   @doc """
   Render
-  TODO: class merge not work well here
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :as, :any, default: "div"
   attr :rest, :global
   slot :inner_block, required: true
@@ -479,14 +478,11 @@ defmodule Cognit.Sidebar do
       data-sidebar="group-label"
       tag={@as}
       class={
-        Enum.join(
-          [
-            "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>.icon]:text-[16px] [&>.icon]:shrink-0 text-xs",
-            "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
-            @class
-          ],
-          " "
-        )
+        classes([
+          "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0 [&>.icon]:text-[16px] [&>.icon]:shrink-0 text-xs",
+          "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
+          @class
+        ])
       }
       {@rest}
     >
@@ -498,7 +494,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -524,7 +520,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -548,7 +544,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -572,7 +568,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -599,7 +595,7 @@ defmodule Cognit.Sidebar do
   attr :variant, :string, values: ~w(default outline), default: "default"
   attr :size, :string, values: ~w(default sm lg), default: "default"
   attr :is_active, :boolean, default: false
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :is_mobile, :boolean, default: false
   attr :state, :string, default: "expanded"
   attr :as, :any, default: &link/1
@@ -642,7 +638,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :show_on_hover, :boolean, default: false
   attr :rest, :global
   slot :inner_block, required: true
@@ -674,7 +670,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -704,7 +700,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :show_icon, :boolean, default: false
   attr :rest, :global
 
@@ -737,7 +733,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -762,7 +758,7 @@ defmodule Cognit.Sidebar do
   @doc """
   Render
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -786,7 +782,7 @@ defmodule Cognit.Sidebar do
   """
   attr :size, :string, values: ~w(sm md), default: "md"
   attr :is_active, :boolean, default: false
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :as, :any, default: &link/1
   attr :rest, :global, include: ["navigate", "patch", "href"]
   slot :inner_block, required: true

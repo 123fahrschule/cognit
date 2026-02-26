@@ -9,7 +9,7 @@ defmodule Cognit.Label do
 
       <.label>Send!</.label>
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form name value for)
   slot :inner_block, required: true
 

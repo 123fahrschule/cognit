@@ -166,7 +166,7 @@ defmodule Cognit.Components.FormField do
   def form_field(%{type: "checkbox"} = assigns) do
     ~H"""
     <div class={@class}>
-      <div class={["flex items-center gap-2", @class]}>
+      <div class="flex items-center gap-2">
         <.checkbox id={@id} name={@name} value={@value} {@rest} />
         <.form_label :if={@label} for={@id} error={@has_errors}>
           {@label}

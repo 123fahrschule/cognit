@@ -10,7 +10,7 @@ defmodule Cognit.Components.Table do
 
   def table_container(assigns) do
     ~H"""
-    <div class={["rounded-md border overflow-auto", @class]} {@rest}>
+    <div class={classes(["rounded-md border overflow-auto", @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """

@@ -40,7 +40,7 @@ defmodule Cognit.Table do
   * `:aria-label` - Accessible name for the table when no caption is present
   * `:aria-describedby` - ID of an element that describes the table
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :"aria-label", :string, default: nil
   attr :"aria-describedby", :string, default: nil
   attr :rest, :global
@@ -62,7 +62,7 @@ defmodule Cognit.Table do
   @doc """
   Renders the table header container.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -113,7 +113,7 @@ defmodule Cognit.Table do
   * `:scope` - Scope of the header cell (default: "col")
   * `:aria-sort` - Sort direction for screen readers (ascending, descending, or none)
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :scope, :string, default: "col"
   attr :"aria-sort", :string, default: nil
   attr :rest, :global
@@ -140,7 +140,7 @@ defmodule Cognit.Table do
   @doc """
   Renders the table body.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -174,7 +174,7 @@ defmodule Cognit.Table do
   @doc """
   Renders a table footer.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
   slot :inner_block, required: true
 
@@ -199,7 +199,7 @@ defmodule Cognit.Table do
 
   A caption provides an accessible name for the table.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 

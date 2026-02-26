@@ -47,7 +47,7 @@ defmodule Cognit.Tooltip do
 
   attr :"on-open", :any, default: nil, doc: "Handler for tooltip open event"
   attr :"on-close", :any, default: nil, doc: "Handler for tooltip close event"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -95,13 +95,13 @@ defmodule Cognit.Tooltip do
 
   If not provided, the first child of the tooltip will be used as trigger.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
   def tooltip_trigger(assigns) do
     ~H"""
-    <div data-part="trigger" class={classes(["", @class])} {@rest}>
+    <div data-part="trigger" class={@class} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -118,7 +118,7 @@ defmodule Cognit.Tooltip do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :side, :string, values: ~w(top right bottom left), default: "top"
   attr :align, :string, values: ~w(start center end), default: "center"
   attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"

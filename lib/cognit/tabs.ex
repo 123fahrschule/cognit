@@ -33,7 +33,7 @@ defmodule Cognit.Tabs do
   attr :id, :string, required: true, doc: "Unique identifier for the tabs component"
   attr :value, :string, default: nil, doc: "Default selected tab value"
   attr :default, :string, default: nil, doc: "Default selected tab value"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :"on-tab-changed", :any, default: nil, doc: "Handler for tab change events"
   attr :rest, :global
   slot :inner_block, required: true
@@ -57,7 +57,7 @@ defmodule Cognit.Tabs do
     ~H"""
     <div
       id={@id}
-      class={classes(["", @class])}
+      class={@class}
       data-component="tabs"
       data-state="idle"
       data-options={@options}
@@ -75,7 +75,7 @@ defmodule Cognit.Tabs do
   @doc """
   Container for tab triggers that provides proper styling and ARIA attributes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -100,7 +100,7 @@ defmodule Cognit.Tabs do
   Individual tab button that activates its corresponding content panel.
   """
   attr :value, :string, required: true, doc: "Unique value that identifies this tab"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :disabled, :boolean, default: false
   attr :rest, :global
   slot :inner_block, required: true
@@ -131,7 +131,7 @@ defmodule Cognit.Tabs do
   Content panel that corresponds to a tab trigger.
   """
   attr :value, :string, required: true, doc: "Value that matches a tab trigger"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
