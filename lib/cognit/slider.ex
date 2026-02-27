@@ -41,7 +41,7 @@ defmodule Cognit.Slider do
   attr :field, Phoenix.HTML.FormField,
     doc: "A form field struct retrieved from the form, for example: @form[:volume]"
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
 
   def slider(assigns) do

@@ -37,7 +37,7 @@ defmodule Cognit.Popover do
     default: nil,
     doc: "The portal container to render the popover in"
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :"on-open", :any, default: nil, doc: "Handler for popover open event"
   attr :"on-close", :any, default: nil, doc: "Handler for popover close event"
   attr :rest, :global
@@ -83,13 +83,13 @@ defmodule Cognit.Popover do
   @doc """
   The trigger element that toggles the popover.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
   def popover_trigger(assigns) do
     ~H"""
-    <div data-part="trigger" data-action="toggle" class={classes(["", @class])} {@rest}>
+    <div data-part="trigger" data-action="toggle" class={@class} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -106,7 +106,7 @@ defmodule Cognit.Popover do
   * `:align-offset` - Offset along the alignment axis. Defaults to `0`.
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :side, :string, values: ~w(top right bottom left), default: "bottom"
   attr :align, :string, values: ~w(start center end), default: "center"
   attr :"side-offset", :integer, default: 8, doc: "Distance from the trigger in pixels"

@@ -58,7 +58,7 @@ defmodule Cognit.Accordion do
   attr :"default-value", :any, default: nil, doc: "The default value(s) of the expanded item(s)"
   attr :disabled, :boolean, default: false, doc: "Whether the accordion is disabled"
   attr :"on-value-changed", :any, default: nil, doc: "Handler for accordion value change event"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -109,7 +109,7 @@ defmodule Cognit.Accordion do
   """
   attr :value, :string, required: true, doc: "Unique value for this accordion item"
   attr :disabled, :boolean, default: false, doc: "Whether this item is disabled"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -136,7 +136,7 @@ defmodule Cognit.Accordion do
 
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -182,7 +182,7 @@ defmodule Cognit.Accordion do
 
   * `:class` - Additional CSS classes.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 

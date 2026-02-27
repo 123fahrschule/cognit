@@ -41,7 +41,7 @@ defmodule Cognit.Dialog do
 
   attr :id, :string, required: true
   attr :open, :boolean, default: false
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :"close-on-outside-click", :boolean, default: true
 
   attr :"on-open", :any,
@@ -93,20 +93,20 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :as, :any, default: "div"
   slot :inner_block, required: true
   attr :rest, :global
 
   def dialog_trigger(assigns) do
     ~H"""
-    <.dynamic data-part="trigger" data-action="open" tag={@as} class={classes(["", @class])} {@rest}>
+    <.dynamic data-part="trigger" data-action="open" tag={@as} class={classes([@class])} {@rest}>
       {render_slot(@inner_block)}
     </.dynamic>
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def dialog_content(assigns) do
@@ -156,7 +156,7 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def dialog_header(assigns) do
@@ -167,7 +167,7 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def dialog_title(assigns) do
@@ -178,7 +178,7 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def dialog_description(assigns) do
@@ -189,7 +189,7 @@ defmodule Cognit.Dialog do
     """
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
 
   def dialog_footer(assigns) do

@@ -58,7 +58,7 @@ defmodule Cognit.Alert do
       </.alert>
   """
   attr :variant, :string, default: "default", values: ~w(default destructive)
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global, default: %{}
 
@@ -97,7 +97,7 @@ defmodule Cognit.Alert do
       <.alert_title>Success</.alert_title>
       <.alert_title class="text-primary">Important Notice</.alert_title>
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
   slot :inner_block, required: true
 
@@ -133,7 +133,7 @@ defmodule Cognit.Alert do
         Please review the changes before continuing.
       </.alert_description>
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
   slot :inner_block, required: true
 

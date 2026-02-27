@@ -27,7 +27,7 @@ defmodule Cognit.Card do
       </.card>
   """
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -42,7 +42,7 @@ defmodule Cognit.Card do
   @doc """
   Renders a card header section for title and description.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -57,7 +57,7 @@ defmodule Cognit.Card do
   @doc """
   Renders a card title within the header section.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -72,7 +72,7 @@ defmodule Cognit.Card do
   @doc """
   Renders a card description within the header section.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -87,7 +87,7 @@ defmodule Cognit.Card do
   @doc """
   Renders the main content area of the card.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
@@ -102,7 +102,7 @@ defmodule Cognit.Card do
   @doc """
   Renders a footer section for the card, typically containing actions.
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 

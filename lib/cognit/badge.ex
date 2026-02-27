@@ -61,7 +61,7 @@ defmodule Cognit.Badge do
       <.badge variant="outline" class="text-sm">Custom</.badge>
       <.badge truncate_on="33">This is a very long badge text that will be truncated</.badge>
   """
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
 
   attr :variant, :string,
     values: ~w(default secondary destructive outline),

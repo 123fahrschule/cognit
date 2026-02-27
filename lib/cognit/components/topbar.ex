@@ -11,10 +11,12 @@ defmodule Cognit.Components.Topbar do
   def topbar(assigns) do
     ~H"""
     <div
-      class={[
-        "h-16 shrink-0 sticky top-0 z-[1] bg-background border-b border-border px-6 py-2 flex gap-2 items-center",
-        @class
-      ]}
+      class={
+        classes([
+          "h-16 shrink-0 sticky top-0 z-[1] bg-background border-b border-border px-6 py-2 flex gap-2 items-center",
+          @class
+        ])
+      }
       {@rest}
     >
       <.sidebar_trigger is_mobile class="md:hidden" />

@@ -21,7 +21,7 @@ defmodule Cognit.Toggle do
   attr :disabled, :boolean, default: false
   attr :variant, :string, values: ~w(default outline), default: "default"
   attr :size, :string, values: ~w(default sm lg), default: "default"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 

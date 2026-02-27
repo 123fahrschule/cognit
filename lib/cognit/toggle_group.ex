@@ -34,7 +34,7 @@ defmodule Cognit.ToggleGroup do
       "The value of the toggle group. It's a single value for single type and a list of values for multiple type."
 
   attr :disabled, :boolean, default: false
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :variant, :string, default: "default"
   attr :size, :string, default: "default"
   attr :rest, :global
@@ -71,7 +71,7 @@ defmodule Cognit.ToggleGroup do
     end
   end
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :disabled, :boolean, default: false
   attr :value, :string, default: nil
   attr :builder, :map, required: true, doc: "The builder context of toggle group."

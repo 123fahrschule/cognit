@@ -18,7 +18,7 @@ defmodule Cognit.Separator do
   * `:class` - Additional CSS classes
   """
   attr :orientation, :string, values: ~w(vertical horizontal), default: "horizontal"
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
 
   def separator(assigns) do

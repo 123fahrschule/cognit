@@ -31,7 +31,7 @@ defmodule Cognit.RadioGroup do
   attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
   attr :rest, :global
   slot :inner_block, required: true
 
@@ -78,7 +78,7 @@ defmodule Cognit.RadioGroup do
   attr :value, :string, required: true
   attr :disabled, :boolean, default: false
   attr :name, :string, default: nil
-  attr :class, :string, default: nil
+  attr :class, :any, default: nil
 
   attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]",

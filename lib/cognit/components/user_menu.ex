@@ -15,7 +15,7 @@ defmodule Cognit.Components.UserMenu do
 
   def user_menu(assigns) do
     ~H"""
-    <div class={["flex items-center", @class]} {@rest}>
+    <div class={classes(["flex items-center", @class])} {@rest}>
       <.avatar class="rounded-lg">
         <.avatar_fallback class="rounded-lg">
           <.icon name="account_circle" />

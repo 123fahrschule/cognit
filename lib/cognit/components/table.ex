@@ -11,7 +11,7 @@ defmodule Cognit.Components.Table do
 
   def table_container(assigns) do
     ~H"""
-    <div class={["flex flex-col", @class]} {@rest}>
+    <div class={classes(["flex flex-col", @class])} {@rest}>
       <div class="rounded-lg border overflow-auto">
         {render_slot(@inner_block)}
       </div>
