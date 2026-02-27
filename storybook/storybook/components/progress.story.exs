@@ -48,6 +48,28 @@ defmodule Storybook.CognitComponents.Progress do
           class: "w-[60%]"
         },
         description: "Used when progress value is unknown"
+      },
+      %VariationGroup{
+        id: :colors,
+        description: "Custom color via Tailwind class",
+        variations:
+          for {id, color} <- [
+                {:primary, "bg-primary"},
+                {:blue, "bg-blue-500"},
+                {:green, "bg-green-500"},
+                {:amber, "bg-amber-500"},
+                {:red, "bg-red-500"},
+                {:purple, "bg-purple-500"}
+              ] do
+            %Variation{
+              id: id,
+              attributes: %{
+                value: 60,
+                color: color,
+                class: "w-[60%]"
+              }
+            }
+          end
       }
     ]
   end

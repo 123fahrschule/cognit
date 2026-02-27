@@ -26,16 +26,18 @@
     border-radius: 14px;
 }
 
+@keyframes indeterminate-progress {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 .animate-indeterminate-progress {
-    animation: indeterminate-progress 1.5s infinite linear;
-    background: linear-gradient(
-        to right,
-        transparent,
-        currentColor,
-        transparent
-    );
-    background-size: 200% 100%;
-    width: 100%;
+    animation: indeterminate-progress 1.5s infinite ease-in-out;
+    width: 50%;
 }
 
 /* Checkbox - checkmark for appearance-none */

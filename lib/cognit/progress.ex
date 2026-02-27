@@ -24,6 +24,11 @@ defmodule Cognit.Progress do
   attr :value, :integer, default: 0, doc: "Current progress value (0-100)"
   attr :max, :integer, default: 100, doc: "Maximum value"
   attr :indeterminate, :boolean, default: false, doc: "Whether the progress is indeterminate"
+
+  attr :color, :string,
+    default: "bg-primary",
+    doc: "Tailwind background class for the progress indicator (e.g. bg-primary, bg-red-500)"
+
   attr :rest, :global
 
   def progress(assigns) do
@@ -46,7 +51,8 @@ defmodule Cognit.Progress do
       <div
         class={
           classes([
-            "h-full w-full flex-1 bg-primary transition-all",
+            "h-full w-full flex-1 transition-all",
+            @color,
             @indeterminate && "animate-indeterminate-progress"
           ])
         }
