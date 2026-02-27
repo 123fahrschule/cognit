@@ -11,7 +11,9 @@ defmodule Storybook.CognitComponents.ConfirmationDialog do
   def imports,
     do: [
       {Cognit.Button, button: 1},
-      {Cognit.Icon, icon: 1}
+      {Cognit.Checkbox, checkbox: 1},
+      {Cognit.Icon, icon: 1},
+      {Cognit.Label, label: 1}
     ]
 
   def variations do
@@ -30,6 +32,31 @@ defmodule Storybook.CognitComponents.ConfirmationDialog do
         </button>
         <.psb-variation />
         """
+      },
+      %Variation{
+        id: :delete,
+        description: "Delete Confirmation",
+        attributes: %{
+          id: "delete-confirmation-dialog",
+          title: "Are you absolutely sure you want to delete?",
+          description:
+            "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+          confirm_label: "Delete"
+        },
+        template: """
+        <button phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "#:variation_id")}>
+          Open Delete Dialog
+        </button>
+        <.psb-variation/>
+        """,
+        slots: [
+          """
+          <div class="flex items-center justify-center gap-2">
+            <.checkbox id="dont-ask-again" />
+            <.label for="dont-ask-again">Don't ask next again</.label>
+          </div>
+          """
+        ]
       },
       %Variation{
         id: :with_custom_trigger,

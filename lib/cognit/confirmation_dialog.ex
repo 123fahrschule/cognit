@@ -2,33 +2,7 @@ defmodule Cognit.ConfirmationDialog do
   use Cognit, :component
 
   import Cognit.AlertDialog
-
-  @doc """
-  Renders a confirmation dialog component with customizable behavior and content.
-
-  ## Attributes
-  - `id`: A unique identifier for the alert dialog (required)
-  - `open`: Controls whether the dialog is initially open (default: false)
-  - `on_open`: Optional handler for the dialog open event
-  - `on_close`: Optional handler for the dialog close event
-  - `title`: The title of the confirmation dialog (required)
-  - `description`: Optional description text for the dialog
-  - `on_confirm`: Optional handler for the confirm action
-  - `on_cancel`: Optional handler for the cancel action
-
-  ## Slots
-  - `trigger`: Optional slot to render a custom dialog trigger
-  - `inner_block`: Optional slot for additional content inside the dialog
-
-  ## Example
-      <.confirmation_dialog
-        id="delete-confirmation"
-        title="Confirm Deletion"
-        description="Are you sure you want to delete this item?"
-        on_confirm={JS.push("confirm_delete")}
-        on_cancel={JS.push("cancel_delete")}
-      />
-  """
+  import Cognit.Icon
 
   attr :id, :string, required: true, doc: "Unique identifier for the alert dialog"
   attr :open, :boolean, default: false, doc: "Whether the alert dialog is initially open"
@@ -36,6 +10,14 @@ defmodule Cognit.ConfirmationDialog do
   attr :on_close, :any, default: nil, doc: "Handler for alert dialog close event"
   attr :title, :string, required: true
   attr :description, :string, default: nil
+  attr :icon, :string, default: "warning", doc: "Icon name displayed above the title"
+  attr :confirm_label, :string, default: nil
+  attr :cancel_label, :string, default: nil
+
+  attr :confirm_variant, :string,
+    default: "destructive",
+    values: ~w(default secondary destructive outline ghost link)
+
   attr :on_confirm, :any, default: nil
   attr :on_cancel, :any, default: nil
   attr :rest, :global
@@ -44,6 +26,15 @@ defmodule Cognit.ConfirmationDialog do
   slot :trigger
 
   def confirmation_dialog(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:resolved_confirm_label, fn ->
+        assigns[:confirm_label] || pgettext("confirmation dialog action", "Confirm")
+      end)
+      |> assign_new(:resolved_cancel_label, fn ->
+        assigns[:cancel_label] || pgettext("confirmation dialog action", "Cancel")
+      end)
+
     ~H"""
     <.alert_dialog id={@id} open={@open} on-open={@on_open} on-close={@on_close} {@rest}>
       <.alert_dialog_trigger :if={@trigger != []}>
@@ -51,7 +42,13 @@ defmodule Cognit.ConfirmationDialog do
       </.alert_dialog_trigger>
 
       <.alert_dialog_content>
-        <.alert_dialog_header>
+        <.alert_dialog_header class="text-center sm:text-center">
+          <div
+            :if={@icon}
+            class="mx-auto mb-2 flex size-12 items-center justify-center rounded-full bg-destructive/10"
+          >
+            <.icon name={@icon} class="size-6 text-destructive" />
+          </div>
           <.alert_dialog_title>
             {@title}
           </.alert_dialog_title>
@@ -62,12 +59,12 @@ defmodule Cognit.ConfirmationDialog do
 
         {render_slot(@inner_block)}
 
-        <.alert_dialog_footer>
-          <.alert_dialog_cancel variant="destructive" phx-click={@on_cancel}>
-            {pgettext("confirmation dialog action", "No")}
+        <.alert_dialog_footer class="sm:justify-center">
+          <.alert_dialog_cancel phx-click={@on_cancel}>
+            {@resolved_cancel_label}
           </.alert_dialog_cancel>
-          <.alert_dialog_action variant="secondary" phx-click={@on_confirm}>
-            {pgettext("confirmation dialog action", "Yes")}
+          <.alert_dialog_action variant={@confirm_variant} phx-click={@on_confirm}>
+            {@resolved_confirm_label}
           </.alert_dialog_action>
         </.alert_dialog_footer>
       </.alert_dialog_content>
