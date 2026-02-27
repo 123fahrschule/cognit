@@ -3,6 +3,7 @@ defmodule Storybook.Recipes.AppShell do
   use Cognit
 
   import Cognit.Components.AppSideNav
+  import Cognit.Components.LocaleSelect
   import Cognit.Components.UserSideNav
 
   @impl true
@@ -126,6 +127,7 @@ defmodule Storybook.Recipes.AppShell do
                 </.breadcrumb_item>
               </.breadcrumb_list>
             </.breadcrumb>
+            <.locale_select />
           </.topbar>
 
           <.page>
