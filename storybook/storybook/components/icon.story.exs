@@ -96,7 +96,12 @@ defmodule Storybook.CognitComponents.Icon do
           %Variation{
             id: :standalone_delete,
             description: "Icon-only button (with label)",
-            attributes: %{name: "delete", label: "Delete item", size: "sm", class: "text-destructive"}
+            attributes: %{
+              name: "delete",
+              label: "Delete item",
+              size: "sm",
+              class: "text-destructive"
+            }
           }
         ]
       },

@@ -21,7 +21,7 @@ defmodule Cognit.Components.LocaleSelect do
     <div id="locale-select" phx-hook="LocaleSelect" {@rest}>
       <.dropdown_menu id="locale-select-dropdown-menu">
         <.dropdown_menu_trigger>
-          <.button variant="secondary" >
+          <.button variant="secondary">
             <.flag locale={@current_locale} />
             {String.upcase(@current_locale)}
           </.button>

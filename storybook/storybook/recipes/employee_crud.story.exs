@@ -4,14 +4,14 @@ defmodule Storybook.Recipes.EmployeeCrud.Employee do
 
   @primary_key false
   embedded_schema do
-    field(:first_name, :string)
-    field(:last_name, :string)
-    field(:email, :string)
-    field(:department, :string)
-    field(:role, :string)
-    field(:salary, :integer)
-    field(:start_date, :string)
-    field(:skills, {:array, :string}, default: [])
+    field :first_name, :string
+    field :last_name, :string
+    field :email, :string
+    field :department, :string
+    field :role, :string
+    field :salary, :integer
+    field :start_date, :string
+    field :skills, {:array, :string}, default: []
   end
 
   def changeset(employee \\ %__MODULE__{}, attrs \\ %{}) do
