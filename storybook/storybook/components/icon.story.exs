@@ -1,4 +1,4 @@
-defmodule Storybook.SaladUIComponent.Icon do
+defmodule Storybook.CognitComponents.Icon do
   use PhoenixStorybook.Story, :component
 
   def function, do: &Cognit.Icon.icon/1
