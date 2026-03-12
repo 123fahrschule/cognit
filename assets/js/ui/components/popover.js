@@ -101,7 +101,7 @@ class PopoverComponent extends Component {
           sideOffset,
           alignOffset,
           flip: true,
-          usePortal: true,
+          usePortal: !!this.options.portalContainer,
           portalContainer: document.querySelector(this.options.portalContainer),
           trapFocus: true,
           onOutsideClick: () => this.transition("close"),

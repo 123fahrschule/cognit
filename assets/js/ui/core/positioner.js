@@ -93,10 +93,36 @@ class Positioner {
    */
   static applyPosition(element, x, y) {
     element.style.position = "fixed";
-    // element.style.transform = `translate(${x}px, ${y}px)`;
+
+    const containingBlock = this.getContainingBlock(element);
+    if (containingBlock) {
+      const rect = containingBlock.getBoundingClientRect();
+      x -= rect.left;
+      y -= rect.top;
+    }
+
     element.style.top = y + "px";
     element.style.left = x + "px";
-    element.style.margin = "0"; // Reset margins to avoid positioning issues
+    element.style.margin = "0";
+  }
+
+  static getContainingBlock(element) {
+    let parent = element.parentElement;
+    while (parent && parent !== document.documentElement) {
+      const style = window.getComputedStyle(parent);
+      if (
+        style.transform !== "none" ||
+        style.perspective !== "none" ||
+        style.filter !== "none" ||
+        style.willChange === "transform" ||
+        style.willChange === "perspective" ||
+        style.willChange === "filter"
+      ) {
+        return parent;
+      }
+      parent = parent.parentElement;
+    }
+    return null;
   }
 
   /**
