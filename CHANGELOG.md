@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.1
+
+### New Components
+
+- **`empty_state`** — Empty state component with illustration, title, description, and action slot
+
+### Bug Fixes
+
+- **Positioner**: Account for ancestor CSS transforms in fixed positioning
+- **Select**: Toggle menu on trigger click instead of always opening
+
+### Storybook
+
+- Restore popover story after portal attr fix; add padding to prevent focus ring clipping
+- Add dialog form recipe with nested positioned components
+
 ## 0.2.0
 
 ### Breaking Changes
