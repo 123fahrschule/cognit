@@ -199,7 +199,10 @@ class SelectComponent extends Component {
           },
           mouseMap: {
             trigger: {
-              click: "toggle",
+              click: (e) => {
+                e.stopImmediatePropagation();
+                this.transition("open");
+              },
             },
           },
         },
@@ -211,6 +214,14 @@ class SelectComponent extends Component {
             ArrowDown: () => this.navigateItem("next"),
             Home: () => this.navigateItem("first"),
             End: () => this.navigateItem("last"),
+          },
+          mouseMap: {
+            trigger: {
+              click: (e) => {
+                e.stopImmediatePropagation();
+                this.transition("close");
+              },
+            },
           },
         },
       },
