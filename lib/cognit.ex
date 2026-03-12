@@ -192,6 +192,7 @@ defmodule Cognit do
       import Cognit.ConfirmationDialog
       import Cognit.Dialog
       import Cognit.DropdownMenu
+      import Cognit.EmptyState
       import Cognit.Form
       import Cognit.Helpers
       import Cognit.HoverCard
