@@ -41,7 +41,7 @@ defmodule Storybook.CognitComponents.Popover do
                   Set the dimensions for the layer.
                 </p>
               </div>
-              <div class="grid gap-2 max-h-32 overflow-y-auto">
+              <div class="grid gap-2 max-h-32 overflow-y-auto p-1">
                 <div class="grid grid-cols-3 items-center gap-4">
                   <.label for="width">
                     Width
