@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Bug Fixes
+
+- **Tabs**: Preserve active tab state across LiveView DOM patches
+
 ## 0.2.1
 
 ### New Components
