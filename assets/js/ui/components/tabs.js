@@ -27,11 +27,14 @@ class TabsComponent extends Component {
   }
 
   initialize() {
+    // Restore persisted value from hook context (survives component re-creation)
+    const persistedValue = this.hook?.__tabsActiveValue;
+
     // Initialize collection manager for tabs
     this.collection = new Collection({
       type: "single",
       defaultValue: this.options.defaultValue,
-      value: this.options.value,
+      value: persistedValue || this.options.value,
       getItemValue: (item) => item.getAttribute("data-value"),
       isItemDisabled: (item) => item.getAttribute("data-disabled") === "true",
     });
@@ -134,6 +137,11 @@ class TabsComponent extends Component {
   updateActiveTab() {
     const selectedValue = this.collection.getValue();
 
+    // Persist on hook context (survives component destroy/re-create)
+    if (selectedValue && this.hook) {
+      this.hook.__tabsActiveValue = selectedValue;
+    }
+
     // Update triggers
     this.triggers.forEach((trigger) => {
       const value = trigger.getAttribute("data-value");
@@ -161,6 +169,21 @@ class TabsComponent extends Component {
 
     const nextItem = this.collection.getItem(direction, currentItem);
     if (nextItem) this.selectTab(nextItem.value);
+  }
+
+  onDomUpdate() {
+    this.parseOptions();
+    this.initEventMappings();
+
+    // For controlled tabs, sync server value to collection
+    if (
+      this.options.value != null &&
+      this.options.value !== this.collection.getValue()
+    ) {
+      this.collection.setValues(this.options.value);
+    }
+
+    this.updateActiveTab();
   }
 
   // Cleanup
