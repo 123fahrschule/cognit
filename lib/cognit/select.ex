@@ -96,9 +96,7 @@ defmodule Cognit.Select do
       phx-mounted={JS.ignore_attributes(["data-state"])}
       {@rest}
     >
-      <div id={@id <> "_inner"} phx-update="ignore" class="contents">
-        {render_slot(@inner_block)}
-      </div>
+      {render_slot(@inner_block)}
       <input name={@name} value="" data-input class="hidden" />
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore"></div>
     </div>
