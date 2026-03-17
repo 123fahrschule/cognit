@@ -159,6 +159,14 @@ class PositionedElement {
   update() {
     if (this.active) {
       this.calculateAndApplyPosition();
+      this.element.style.setProperty(
+        "--salad-reference-width",
+        this.reference.offsetWidth + "px",
+      );
+      this.element.style.setProperty(
+        "--salad-reference-height",
+        this.reference.offsetHeight + "px",
+      );
     }
     return this;
   }
