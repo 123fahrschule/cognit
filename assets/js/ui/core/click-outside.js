@@ -36,10 +36,11 @@ class ClickOutsideMonitor {
   start() {
     if (this.active) return;
 
-    // Add document-level event listeners
-    document.addEventListener("click", this.handleClick);
+    // Listen in capture phase so we detect outside clicks even when
+    // the target handler calls stopPropagation/stopImmediatePropagation
+    document.addEventListener("click", this.handleClick, true);
     if (this.options.trackTouch) {
-      document.addEventListener("touchend", this.handleTouchEnd);
+      document.addEventListener("touchend", this.handleTouchEnd, true);
     }
 
     this.active = true;
@@ -51,10 +52,9 @@ class ClickOutsideMonitor {
   stop() {
     if (!this.active) return;
 
-    // Remove document-level event listeners
-    document.removeEventListener("click", this.handleClick);
+    document.removeEventListener("click", this.handleClick, true);
     if (this.options.trackTouch) {
-      document.removeEventListener("touchend", this.handleTouchEnd);
+      document.removeEventListener("touchend", this.handleTouchEnd, true);
     }
 
     this.active = false;
