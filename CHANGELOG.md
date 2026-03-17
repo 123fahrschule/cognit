@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.3
+
+### Bug Fixes
+
+- **Select**: Preserve checkmarks when LiveView patches dynamic options
+- **Select**: Allow LiveView to patch options list and disabled state
+- **Click Outside**: Use capture phase to detect clicks blocked by `stopPropagation`
+- **Positioner**: Re-apply reference size CSS vars on update
+
+### Storybook
+
+- Add multiselect variant to select story
+- Add dynamic select recipe with second select instance
+
 ## 0.2.2
 
 ### Bug Fixes
