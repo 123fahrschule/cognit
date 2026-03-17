@@ -85,6 +85,34 @@ defmodule Storybook.CognitComponents.Select do
         ]
       },
       %Variation{
+        id: :multiple_select,
+        description: "A select component allowing multiple selections",
+        attributes: %{
+          id: "multi-select",
+          name: "fruits[]",
+          multiple: true,
+          "use-portal": false
+        },
+        let: :select,
+        slots: [
+          """
+            <.select_trigger class="w-[220px]">
+              <.select_value placeholder="Select fruits" />
+            </.select_trigger>
+            <.select_content>
+              <.select_group>
+                <.select_label>Fruits</.select_label>
+                <.select_item value="apple">Apple</.select_item>
+                <.select_item value="banana">Banana</.select_item>
+                <.select_item value="blueberry">Blueberry</.select_item>
+                <.select_item value="pineapple">Pineapple</.select_item>
+                <.select_item value="orange">Orange</.select_item>
+              </.select_group>
+            </.select_content>
+          """
+        ]
+      },
+      %Variation{
         id: :in_form,
         description: "A select component used within a form",
         attributes: %{
