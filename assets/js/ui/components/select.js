@@ -492,6 +492,8 @@ class SelectComponent extends Component {
     if (this.state === "open" && this.positionedElement) {
       this.positionedElement.update();
     }
+
+    // Sync value from server if provided
     const raw = this.options.value;
     if (raw !== undefined) {
       const toStr = (v) => v == null || v === "" ? null : v.toString();
@@ -505,8 +507,40 @@ class SelectComponent extends Component {
         this.collection.setValues(normalized.length ? normalized : null);
       }
     }
+
+    // Reinitialize items from (possibly patched) DOM
+    this.reinitializeItems();
+
     this.updateValueDisplay();
     this.syncHiddenInputs(false);
+  }
+
+  reinitializeItems() {
+    // Preserve current selection
+    const selectedValues = this.collection.getValue(true);
+
+    // Destroy old SelectItem instances
+    this.collection.each((item) => {
+      if (typeof item.destroy === "function") {
+        item.destroy();
+      }
+    });
+    this.collection.clear();
+
+    // Re-read disabled state
+    this.disabled = this.el.dataset.disabled === "true";
+
+    // Create fresh SelectItem instances from current DOM
+    const itemElements = Array.from(
+      this.el.querySelectorAll("[data-part='item']"),
+    );
+    itemElements.forEach((element) => {
+      const value = element.dataset.value;
+      const isSelected = selectedValues.includes(value);
+      const initialState = isSelected ? "checked" : "unchecked";
+      const item = new SelectItem(element, this, { initialState });
+      this.collection.add(item);
+    });
   }
 
   // Cleanup
