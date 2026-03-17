@@ -51,23 +51,38 @@ defmodule Storybook.Recipes.SelectDynamic do
         <.input type="text" value={@note} phx-keyup="note_changed" />
       </div>
 
-      <.select
-        id="dynamic-select"
-        name="fruit"
-        on-value-changed="value_changed"
-        use-portal={false}
-      >
-        <.select_trigger class="w-[200px]" disabled={@disabled}>
-          <.select_value placeholder="Select a fruit" />
-        </.select_trigger>
-        <.select_content>
-          <.select_group>
-            <.select_item :for={opt <- @options} value={opt.value}>
-              {opt.label}
-            </.select_item>
-          </.select_group>
-        </.select_content>
-      </.select>
+      <div class="flex gap-4">
+        <.select
+          id="dynamic-select"
+          name="fruit"
+          on-value-changed="value_changed"
+          use-portal={false}
+        >
+          <.select_trigger class="w-[200px]" disabled={@disabled}>
+            <.select_value placeholder="Select a fruit" />
+          </.select_trigger>
+          <.select_content>
+            <.select_group>
+              <.select_item :for={opt <- @options} value={opt.value}>
+                {opt.label}
+              </.select_item>
+            </.select_group>
+          </.select_content>
+        </.select>
+
+        <.select id="color-select" name="color" use-portal={false}>
+          <.select_trigger class="w-[200px]">
+            <.select_value placeholder="Select a color" />
+          </.select_trigger>
+          <.select_content>
+            <.select_group>
+              <.select_item value="red">Red</.select_item>
+              <.select_item value="green">Green</.select_item>
+              <.select_item value="blue">Blue</.select_item>
+            </.select_group>
+          </.select_content>
+        </.select>
+      </div>
     </div>
     """
   end
