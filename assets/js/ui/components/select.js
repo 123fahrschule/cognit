@@ -480,7 +480,10 @@ class SelectComponent extends Component {
       inputsContainer.appendChild(input);
     }
 
-    if (notifyChanges) {
+    const shouldNotifyChanges =
+      notifyChanges && this.el.dataset.notifyFormChange !== "false";
+
+    if (shouldNotifyChanges) {
       this.el
         .querySelector("[data-input]")
         .dispatchEvent(new Event("change", { bubbles: true }));
