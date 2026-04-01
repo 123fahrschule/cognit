@@ -7,7 +7,7 @@ defmodule Cognit.Components.UserSideNav do
   import Cognit.Icon
   import Cognit.Sidebar
 
-  attr :id, :string, default: "user-side-nav"
+  attr :id, :string, default: nil
   attr :class, :any, default: nil
   attr :user, :map, required: true
   attr :on_click, :any, default: nil
@@ -16,6 +16,8 @@ defmodule Cognit.Components.UserSideNav do
   slot :inner_block
 
   def user_side_nav(%{inner_block: [_ | _]} = assigns) do
+    assigns = assign_new(assigns, :id, fn -> unique_id("user-side-nav") end)
+
     ~H"""
     <.sidebar_menu {@rest}>
       <.sidebar_menu_item>
@@ -81,5 +83,9 @@ defmodule Cognit.Components.UserSideNav do
       <span class="truncate text-xs">{user_email(@user)}</span>
     </div>
     """
+  end
+
+  defp unique_id(prefix) do
+    "#{prefix}-#{System.unique_integer([:positive])}"
   end
 end
