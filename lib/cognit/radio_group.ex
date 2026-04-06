@@ -99,7 +99,7 @@ defmodule Cognit.RadioGroup do
     <div
       data-part="item"
       data-value={@value}
-      data-state={if @checked, do: "checked", else: "unchecked"}
+      data-state="unchecked"
       data-disabled={to_string(@disabled)}
       class={
         classes([

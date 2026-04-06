@@ -211,6 +211,11 @@ class RadioGroupComponent extends Component {
     });
   }
 
+  onDomUpdate() {
+    super.onDomUpdate();
+    this.updateItemStates();
+  }
+
   // Clean up when the component is destroyed
   beforeDestroy() {
     this.collection = null;
