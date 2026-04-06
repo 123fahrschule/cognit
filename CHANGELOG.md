@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.6
+
+### Bug Fixes
+
+- **Radio Group**: Preserve selection state across LiveView DOM patches
+
+### Storybook
+
+- Add radio group form integration recipe with empty and preset value variants
+
 ## 0.2.3
 
 ### Bug Fixes
