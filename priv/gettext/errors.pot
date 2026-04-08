@@ -1,0 +1,140 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run `mix gettext.extract` to bring this file up to
+## date. Leave `msgstr`s empty as changing them here has no
+## effect: edit them in PO (`.po`) files instead.
+##
+## This domain contains the default error messages used by
+## `Cognit.Helpers.translate_error/1` when no custom
+## `:error_translator_function` is configured. Consumers can
+## copy these msgids into their own app's `errors.po` to
+## translate them through their own Gettext backend.
+msgid ""
+msgstr ""
+
+msgid "can't be blank"
+msgstr ""
+
+msgid "has already been taken"
+msgstr ""
+
+msgid "is invalid"
+msgstr ""
+
+msgid "must be accepted"
+msgstr ""
+
+msgid "has invalid format"
+msgstr ""
+
+msgid "has an invalid entry"
+msgstr ""
+
+msgid "is reserved"
+msgstr ""
+
+msgid "does not match confirmation"
+msgstr ""
+
+msgid "is still associated with this entry"
+msgstr ""
+
+msgid "are still associated with this entry"
+msgstr ""
+
+msgid "should be %{count} character(s)"
+msgid_plural "should be %{count} character(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "should have %{count} item(s)"
+msgid_plural "should have %{count} item(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "should be at least %{count} character(s)"
+msgid_plural "should be at least %{count} character(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "should have at least %{count} item(s)"
+msgid_plural "should have at least %{count} item(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "should be at most %{count} character(s)"
+msgid_plural "should be at most %{count} character(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "should have at most %{count} item(s)"
+msgid_plural "should have at most %{count} item(s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "must be less than %{number}"
+msgstr ""
+
+msgid "must be greater than %{number}"
+msgstr ""
+
+msgid "must be less than or equal to %{number}"
+msgstr ""
+
+msgid "must be greater than or equal to %{number}"
+msgstr ""
+
+msgid "must be equal to %{number}"
+msgstr ""
+
+msgid "must not be equal to %{number}"
+msgstr ""
+
+msgid "future date is not allowed"
+msgstr ""
+
+msgid "past date is not allowed"
+msgstr ""
+
+msgid "is not a valid date"
+msgstr ""
+
+msgid "is not a valid time"
+msgstr ""
+
+msgid "is not a valid datetime"
+msgstr ""
+
+msgid "must be in the future"
+msgstr ""
+
+msgid "must be in the past"
+msgstr ""
+
+msgid "is not included in the list"
+msgstr ""
+
+msgid "must have unique entries"
+msgstr ""
+
+msgid "must be between %{min} and %{max}"
+msgstr ""
+
+msgid "is out of range"
+msgstr ""
+
+msgid "is not a number"
+msgstr ""
+
+msgid "must be an integer"
+msgstr ""
+
+msgid "must be a positive number"
+msgstr ""
+
+msgid "must be a negative number"
+msgstr ""
