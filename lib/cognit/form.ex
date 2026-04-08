@@ -148,9 +148,15 @@ defmodule Cognit.Form do
   @doc """
   Form message component that displays validation errors for a form field.
 
+  When given a `field`, errors are translated through `Cognit.Helpers.translate_error/1`
+  by default (which uses `Cognit.Gettext` and any consumer-configured translator).
+  Set `translate={false}` to display raw msgids with only `%{key}` interpolation.
+
   ## Examples:
 
       <.form_message field={@form[:email]} />
+
+      <.form_message field={@form[:email]} translate={false} />
 
       <.form_message>
         Please enter a valid email address.
@@ -161,27 +167,46 @@ defmodule Cognit.Form do
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   attr :errors, :any,
-    default: [],
-    doc: "a list of error messages to display"
+    default: nil,
+    doc:
+      "a list of error messages — accepts either raw `{msgid, opts}` tuples (translated) or display-ready strings"
+
+  attr :translate, :boolean,
+    default: true,
+    doc: "whether to translate raw `{msgid, opts}` tuples via Cognit.Helpers.translate_error/1"
 
   attr :class, :any, default: nil
   slot :inner_block, required: false
   attr :rest, :global
 
   def form_message(assigns) do
-    assigns =
-      assigns
-      |> assign(error: has_error?(assigns[:field]) || not Enum.empty?(assigns[:errors]))
-      |> assign(:message, List.first(assigns[:errors] || field_errors(assigns[:field])))
+    messages =
+      cond do
+        is_list(assigns[:errors]) ->
+          Enum.map(assigns[:errors], &normalize_error(&1, assigns[:translate]))
+
+        true ->
+          field_errors(assigns[:field], translate: assigns[:translate])
+      end
+
+    assigns = assign(assigns, :messages, messages)
 
     ~H"""
-    <p
-      :if={(msg = render_slot(@inner_block)) || not is_nil(@error)}
-      class={classes(["text-sm font-medium", @error && "text-destructive", @class])}
-      {@rest}
-    >
-      {msg || @message}
-    </p>
+    <%= if msg = render_slot(@inner_block) do %>
+      <p class={classes(["text-sm font-medium text-destructive", @class])} {@rest}>{msg}</p>
+    <% else %>
+      <p
+        :for={message <- @messages}
+        class={classes(["text-sm font-medium text-destructive", @class])}
+        {@rest}
+      >
+        {message}
+      </p>
+    <% end %>
     """
   end
+
+  defp normalize_error(msg, _translate) when is_binary(msg), do: msg
+  defp normalize_error({_, _} = error, true), do: translate_error(error)
+  defp normalize_error({msg, opts}, false), do: interpolate(msg, opts)
 end

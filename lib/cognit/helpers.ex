@@ -32,13 +32,26 @@ defmodule Cognit.Helpers do
   end
 
   @doc """
-  This function return list of error message from form field
+  Return the list of error messages from a form field.
+
+  ## Options
+
+    * `:translate` (boolean, default `true`) — when `false`, skips
+      `translate_error/1` and only interpolates `%{key}` placeholders in the
+      raw msgid. Useful when the caller has already translated errors
+      upstream or wants to bypass Cognit's default translation entirely.
   """
-  def field_errors(%Phoenix.HTML.FormField{} = field) do
-    Enum.map(field.errors, &translate_error(&1))
+  def field_errors(field, opts \\ [])
+
+  def field_errors(%Phoenix.HTML.FormField{} = field, opts) do
+    if Keyword.get(opts, :translate, true) do
+      Enum.map(field.errors, &translate_error/1)
+    else
+      Enum.map(field.errors, fn {msg, o} -> interpolate(msg, o) end)
+    end
   end
 
-  def field_errors(_), do: []
+  def field_errors(_, _), do: []
 
   @doc """
   This function return true if the field has error
@@ -301,37 +314,73 @@ defmodule Cognit.Helpers do
     |> tag.()
   end
 
-  # Translate error message
-  # borrowed from https://github.com/petalframework/petal_components/blob/main/lib/petal_components/field.ex#L414
-  def translate_error({msg, opts}) do
-    config_translator = get_translator_from_config() || (&fallback_translate_error/1)
+  @doc """
+  Translate a changeset error tuple into a localized string.
 
-    config_translator.({msg, opts})
+  Lookup order:
+
+    1. `Cognit.Gettext` "errors" domain — ships translations for the common
+       Ecto changeset errors out of the box. Can be disabled with:
+
+           config :cognit, :use_default_error_translator, false
+
+    2. Consumer-configured translator (when the Cognit backend has no
+       translation for the given msgid, or when the default lookup is
+       disabled). Configure with:
+
+           config :cognit, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
+
+    3. Manual `%{key}` interpolation of the original msgid as a last resort.
+  """
+  def translate_error({msg, opts}) do
+    result =
+      if use_default_translator?() do
+        cognit_translate({msg, opts})
+      else
+        :missing
+      end
+
+    case result do
+      {:ok, translated} ->
+        translated
+
+      :missing ->
+        case get_translator_from_config() do
+          nil -> interpolate(msg, opts)
+          translator -> translator.({msg, opts})
+        end
+    end
   end
 
-  defp fallback_translate_error({msg, opts}) do
-    Enum.reduce(opts, msg, fn {key, value}, acc ->
-      try do
-        String.replace(acc, "%{#{key}}", to_string(value))
-      rescue
-        e ->
-          IO.warn(
-            """
-            the fallback message translator for the form_field_error function cannot handle the given value.
+  defp use_default_translator? do
+    Application.get_env(:cognit, :use_default_error_translator, true)
+  end
 
-            Hint: you can set up the `error_translator_function` to route all errors to your application helpers:
+  defp cognit_translate({msg, opts}) do
+    locale = Gettext.get_locale(Cognit.Gettext)
+    bindings = Map.new(opts)
 
-              config :salad_ui, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
-
-            Given value: #{inspect(value)}
-
-            Exception: #{Exception.message(e)}
-            """,
-            __STACKTRACE__
-          )
-
-          "invalid value"
+    result =
+      if count = opts[:count] do
+        Cognit.Gettext.lngettext(locale, "errors", nil, msg, msg, count, bindings)
+      else
+        Cognit.Gettext.lgettext(locale, "errors", nil, msg, bindings)
       end
+
+    case result do
+      {:ok, translated} -> {:ok, translated}
+      {:default, _} -> :missing
+    end
+  end
+
+  @doc """
+  Interpolate `%{key}` placeholders in `msg` using values from `opts`.
+
+  Used as the no-translation fallback path for raw error msgids.
+  """
+  def interpolate(msg, opts) do
+    Enum.reduce(opts, msg, fn {key, value}, acc ->
+      String.replace(acc, "%{#{key}}", to_string(value))
     end)
   end
 

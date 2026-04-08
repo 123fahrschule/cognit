@@ -1,8 +1,6 @@
 defmodule Cognit.Components.FormField do
   use Cognit, :component
 
-  import Cognit.Helpers
-
   import Cognit.Checkbox
   import Cognit.Form
   import Cognit.Input
@@ -90,9 +88,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} errors={@errors}>
-        {msg}
-      </.form_message>
+      <.form_message errors={@errors} />
     </.field_wrapper>
     """
   end
@@ -118,9 +114,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} errors={@errors}>
-        {msg}
-      </.form_message>
+      <.form_message errors={@errors} />
     </.field_wrapper>
     """
   end
@@ -132,9 +126,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} errors={@errors}>
-        {msg}
-      </.form_message>
+      <.form_message errors={@errors} />
     </.field_wrapper>
     """
   end
@@ -148,9 +140,7 @@ defmodule Cognit.Components.FormField do
           {@label}
         </.label>
       </div>
-      <.form_message :for={msg <- @errors} errors={@errors}>
-        {msg}
-      </.form_message>
+      <.form_message errors={@errors} />
     </div>
     """
   end
@@ -163,9 +153,7 @@ defmodule Cognit.Components.FormField do
         <.form_label :if={@label} for={@id} error={@has_errors}>
           {@label}
         </.form_label>
-        <.form_message :for={msg <- @errors} errors={@errors}>
-          {msg}
-        </.form_message>
+        <.form_message errors={@errors} />
       </div>
     </div>
     """
@@ -178,9 +166,7 @@ defmodule Cognit.Components.FormField do
       <.form_description :if={@description}>
         {@description}
       </.form_description>
-      <.form_message :for={msg <- @errors} errors={@errors}>
-        {msg}
-      </.form_message>
+      <.form_message errors={@errors} />
     </.field_wrapper>
     """
   end
@@ -218,7 +204,7 @@ defmodule Cognit.Components.FormField do
       end
 
     assigns
-    |> assign(:errors, Enum.map(errors, &translate_error/1))
-    |> assign(:has_errors, !Enum.empty?(errors))
+    |> assign(:errors, errors)
+    |> assign(:has_errors, errors != [])
   end
 end
