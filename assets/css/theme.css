@@ -1,5 +1,6 @@
 @layer base {
   :root {
+    --neutral-100: 0 0% 98%;
     --background: 0 0% 100%;
     --foreground: 199 48% 22%;
     --card: 0 0% 100%;
@@ -107,6 +108,7 @@
   }
 
   .dark {
+    --neutral-100: 0 0% 98%;
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
     --card: 0 0% 9%;

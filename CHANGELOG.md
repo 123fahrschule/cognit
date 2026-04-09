@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.8
+
+### Bug Fixes
+
+- **Theme**: Define `neutral-100` foundation token used by `success-foreground` and neutral backgrounds
+- **Button**: Restore readable foreground color for `success` variant in downstream apps importing Cognit styles
+
 ## 0.2.7
 
 ### Features
