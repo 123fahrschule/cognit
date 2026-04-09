@@ -7,7 +7,7 @@ defmodule Cognit.Components.UserSideNav do
   import Cognit.Icon
   import Cognit.Sidebar
 
-  attr :id, :string, default: nil
+  attr :id, :string
   attr :class, :any, default: nil
   attr :user, :map, required: true
   attr :on_click, :any, default: nil
