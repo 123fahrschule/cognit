@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.2.7
+
+### Features
+
+- **Gettext**: Bundled `errors` domain with EN/DE translations for Ecto changeset messages
+- **Form**: `form_message` now translates field errors via `Cognit.Gettext` by default
+
+### Bug Fixes
+
+- **User Side Nav**: Drop default that blocked `id` assignment
+
+### Refactoring
+
+- **Form Field**: Drop error state from labels
+
+### Docs
+
+- Document bundled error translations and umbrella setup in README
+- Rebrand moduledoc from SaladUI to Cognit
+
+### Storybook
+
+- Reorganize sidebar with `examples` and `bug_reproductions` sections
+- Add `form_message` variations for error translation
+
 ## 0.2.6
 
 ### Bug Fixes
