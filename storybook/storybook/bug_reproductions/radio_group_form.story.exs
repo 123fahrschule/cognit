@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.RadioGroupForm do
+defmodule Storybook.BugReproductions.RadioGroupForm do
   @moduledoc """
   Bug reproduction: radio_group with field binding in a LiveView form.
 

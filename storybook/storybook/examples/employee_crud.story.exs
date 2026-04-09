@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.EmployeeCrud.Employee do
+defmodule Storybook.Examples.EmployeeCrud.Employee do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -34,12 +34,12 @@ defmodule Storybook.Recipes.EmployeeCrud.Employee do
   end
 end
 
-defmodule Storybook.Recipes.EmployeeCrud do
+defmodule Storybook.Examples.EmployeeCrud do
   use PhoenixStorybook.Story, :example
   use Cognit
 
   alias Phoenix.LiveView.JS
-  alias Storybook.Recipes.EmployeeCrud.Employee
+  alias Storybook.Examples.EmployeeCrud.Employee
 
   @employees [
     %{

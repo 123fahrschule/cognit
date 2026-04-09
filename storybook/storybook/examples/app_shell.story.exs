@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.AppShell do
+defmodule Storybook.Examples.AppShell do
   use PhoenixStorybook.Story, :example
   use Cognit
 

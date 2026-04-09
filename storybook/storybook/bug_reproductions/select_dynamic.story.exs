@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.SelectDynamic do
+defmodule Storybook.BugReproductions.SelectDynamic do
   use PhoenixStorybook.Story, :example
   use Cognit
 

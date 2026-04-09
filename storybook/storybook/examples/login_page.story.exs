@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.LoginPage do
+defmodule Storybook.Examples.LoginPage do
   use PhoenixStorybook.Story, :page
   use Cognit
 

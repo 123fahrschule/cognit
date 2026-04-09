@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.DialogForm do
+defmodule Storybook.BugReproductions.DialogForm do
   use PhoenixStorybook.Story, :example
   use Cognit
 

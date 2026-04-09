@@ -1,4 +1,4 @@
-defmodule Storybook.Recipes.TabsDomPatch do
+defmodule Storybook.BugReproductions.TabsDomPatch do
   use PhoenixStorybook.Story, :example
   use Cognit
 

@@ -4,13 +4,14 @@ defmodule Storybook.Root do
   @moduledoc false
   use PhoenixStorybook.Index
 
-  def folder_icon, do: {:fa, "book-open", :light, "psb-mr-1"}
+  def folder_icon, do: {:fa, "book-open"}
   def folder_name, do: "Cognit"
 
   def entry("welcome") do
     [
       name: "Welcome",
-      icon: {:fa, "hand-wave", :thin}
+      icon: {:fa, "hand-wave"},
+      index: -100
     ]
   end
 end
