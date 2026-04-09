@@ -1,10 +1,10 @@
 defmodule Cognit do
   @moduledoc """
-  SaladUI - A comprehensive UI component library for Phoenix LiveView applications.
+  Cognit - A Phoenix LiveView UI component library providing 40+ accessible,
+  interactive components built with function components, JavaScript state machines,
+  and LiveView hooks.
 
-  SaladUI provides a collection of accessible, customizable UI components that combine
-  server-side rendering with client-side interactivity. Built specifically for Phoenix
-  LiveView, it offers seamless integration between Elixir and JavaScript.
+  Fork of [SaladUI](https://github.com/bluzky/salad_ui).
 
   ## Features
 
@@ -16,13 +16,20 @@ defmodule Cognit do
 
   ## Quick Start
 
-  Add SaladUI to your Phoenix application:
+  See `README.md` for full installation instructions. Once configured, import all
+  components in your web module:
 
-      # In your core components module
-      use SaladUI
+      # lib/my_app_web.ex
+      defp html_helpers do
+        quote do
+          # ...
+          use Cognit
+        end
+      end
 
-      # In templates
-      <.button variant="primary" phx-click="save">
+  Then use components in your templates:
+
+      <.button variant="outline" size="lg">
         Save Changes
       </.button>
 
@@ -78,7 +85,7 @@ defmodule Cognit do
 
   ## Architecture
 
-  SaladUI uses a hybrid architecture combining:
+  Cognit uses a hybrid architecture combining:
 
   - **Phoenix Function Components** - Server-side rendering with HEEx templates
   - **JavaScript State Machines** - Client-side behavior and interactivity
@@ -145,7 +152,7 @@ defmodule Cognit do
 
   ## Development
 
-  When extending SaladUI:
+  When extending Cognit:
 
   1. **Follow naming conventions** - Use `kebab-case` for data attributes
   2. **Implement state machines** - Define clear states and transitions
