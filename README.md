@@ -17,7 +17,7 @@ Fork of [SaladUI](https://github.com/bluzky/salad_ui).
 
 - Elixir ~> 1.18
 - Phoenix ~> 1.7
-- Phoenix LiveView ~> 1.0
+- Phoenix LiveView ~> 1.1
 - Tailwind CSS 3.4+
 
 ---
@@ -41,14 +41,28 @@ mix deps.get
 
 ### 2. Configuration
 
-```elixir
-# config/config.exs
-config :cognit, :error_translator_function, {MyAppWeb.ErrorHelpers, :translate_error}
-```
+Cognit ships with English and German translations for common Ecto changeset
+errors out of the box — `form_message` will translate field errors automatically
+via `Cognit.Gettext` with no extra configuration.
 
 ```elixir
 # config/test.exs
 config :cognit, :default_locale, "en"
+```
+
+Optional — provide a custom translator to handle msgids not covered by the
+bundled translations (used as a fallback):
+
+```elixir
+# config/config.exs
+config :cognit, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
+```
+
+To opt out of the bundled translations entirely and rely only on your own
+translator:
+
+```elixir
+config :cognit, :use_default_error_translator, false
 ```
 
 For fonts, add to esbuild args: `--loader:.woff2=file`
@@ -146,6 +160,28 @@ live_session :default,
   ] do
   live "/", HomeLive
 end
+```
+
+### Umbrella Projects
+
+In an umbrella, deps live at the umbrella root, so the relative paths in steps
+4 and 5 need an extra `../` segment. From `apps/my_app_web/assets/`:
+
+```css
+/* assets/css/app.css */
+@import "../../../../deps/cognit/assets/css/styles.css";
+```
+
+```javascript
+// assets/tailwind.config.js
+module.exports = {
+  presets: [require("../../../deps/cognit/assets/tailwind_preset.js")],
+  content: [
+    "../../../deps/cognit/**/*.*ex",
+    "../../../deps/cognit/assets/js/**/*.*js",
+    ...
+  ],
+};
 ```
 
 ---
