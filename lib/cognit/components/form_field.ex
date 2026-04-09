@@ -76,7 +76,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "select"} = assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} has_errors={@has_errors} class={@class}>
+    <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.select field={@form_field} multiple={@multiple}>
         <.select_trigger disabled={@disabled}>
           <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
@@ -95,7 +95,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "native-select"} = assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} has_errors={@has_errors} class={@class}>
+    <.field_wrapper layout={@layout} label={@label} class={@class}>
       <div>
         <select
           id={@id}
@@ -121,7 +121,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "textarea"} = assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} has_errors={@has_errors} class={@class}>
+    <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.textarea id={@id} name={@name} value={@value} {@rest} />
       <.form_description :if={@description}>
         {@description}
@@ -150,7 +150,7 @@ defmodule Cognit.Components.FormField do
     <div class={@class}>
       <div class="flex items-center gap-2">
         <.checkbox id={@id} name={@name} value={@value} {@rest} />
-        <.form_label :if={@label} for={@id} error={@has_errors}>
+        <.form_label :if={@label} for={@id}>
           {@label}
         </.form_label>
         <.form_message errors={@errors} />
@@ -161,7 +161,7 @@ defmodule Cognit.Components.FormField do
 
   def form_field(assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} has_errors={@has_errors} for={@id} class={@class}>
+    <.field_wrapper layout={@layout} label={@label} for={@id} class={@class}>
       <.input type={@type} id={@id} name={@name} value={@value} disabled={@disabled} {@rest} />
       <.form_description :if={@description}>
         {@description}
@@ -174,7 +174,7 @@ defmodule Cognit.Components.FormField do
   defp field_wrapper(%{layout: "horizontal"} = assigns) do
     ~H"""
     <div class={classes(["grid grid-cols-2 items-start gap-4", @class])}>
-      <.form_label :if={@label} for={assigns[:for]} error={@has_errors} class="h-9 flex items-center">
+      <.form_label :if={@label} for={assigns[:for]} class="h-9 flex items-center">
         {@label}
       </.form_label>
       <div class="flex flex-col gap-2">
@@ -187,7 +187,7 @@ defmodule Cognit.Components.FormField do
   defp field_wrapper(assigns) do
     ~H"""
     <.form_item class={@class}>
-      <.form_label :if={@label} for={assigns[:for]} error={@has_errors}>
+      <.form_label :if={@label} for={assigns[:for]}>
         {@label}
       </.form_label>
       {render_slot(@inner_block)}
