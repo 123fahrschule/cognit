@@ -123,9 +123,13 @@ class TabsComponent extends Component {
     const triggerItem = this.collection.getItemByValue(value);
     if (!triggerItem || this.collection.isValueSelected(value)) return;
 
-    // Select the tab
-    this.collection.select(triggerItem);
-    this.updateActiveTab();
+    // For controlled tabs (server drives `value`), skip the optimistic local
+    // update — the old content panel would be hidden immediately while the new
+    // one only appears after the server patch arrives, causing a visible flash.
+    if (this.options.value == null) {
+      this.collection.select(triggerItem);
+      this.updateActiveTab();
+    }
 
     // Focus the selected trigger
     triggerItem.instance.focus();
