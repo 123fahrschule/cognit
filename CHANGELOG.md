@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.9
+
+### Bug Fixes
+
+- **Tabs**: Fix content flash when switching controlled tabs — skip optimistic local update so old content stays visible until the server patch arrives
+
+### Storybook
+
+- Add `tabs_dynamic_triggers` bug reproduction story
+
 ## 0.2.8
 
 ### Bug Fixes
