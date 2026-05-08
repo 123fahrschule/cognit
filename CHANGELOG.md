@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.10
+
+### Bug Fixes
+
+- **Tooltip**: Cancel pending open timer on `mouseleave`/`blur` so tooltips no longer get stuck open after fast hover-out
+
+### Storybook
+
+- Add `tooltip_stuck_on_fast_hover` bug reproduction story
+
 ## 0.2.9
 
 ### Bug Fixes
