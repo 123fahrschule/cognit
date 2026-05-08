@@ -58,6 +58,8 @@ class TooltipComponent extends Component {
             trigger: {
               mouseenter: "delayOpen",
               focus: "delayOpen",
+              mouseleave: "clearTimers",
+              blur: "clearTimers",
             },
           },
         },
