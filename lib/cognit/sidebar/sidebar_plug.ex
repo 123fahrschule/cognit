@@ -21,6 +21,8 @@ defmodule Cognit.SidebarPlug do
   end
 
   defp set_sidebar_state(conn, state) do
-    put_session(conn, :sidebar_state, state)
+    conn
+    |> put_session(:sidebar_state, state)
+    |> assign(:sidebar_state, state)
   end
 end
