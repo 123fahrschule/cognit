@@ -27,6 +27,8 @@ defmodule Cognit.LocalePlug do
   defp set_locale(conn, locale) do
     Gettext.put_locale(locale)
 
-    put_session(conn, :locale, locale)
+    conn
+    |> put_session(:locale, locale)
+    |> assign(:locale, locale)
   end
 end
