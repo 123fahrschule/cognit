@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.11
+
+### Bug Fixes
+
+- **Sidebar**: `SidebarPlug` now assigns `:sidebar_state` on `conn`, so dead-view layouts no longer raise `KeyError` for `@sidebar_state`
+- **Locale**: `LocalePlug` now assigns `:locale` on `conn`, and `LocaleHook` assigns `:locale` on the socket (reading from params → session → default) — `@locale` is now available in both dead and live view layouts
+
 ## 0.2.10
 
 ### Bug Fixes
