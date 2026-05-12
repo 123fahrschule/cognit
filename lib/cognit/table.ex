@@ -138,6 +138,63 @@ defmodule Cognit.Table do
   end
 
   @doc """
+  Renders a sortable table column header.
+
+  The component keeps sorting state outside of Cognit. It emits a LiveView event
+  with `phx-value-field` and derives the visual state from the passed `sort` map.
+  """
+  attr :field, :string, required: true, doc: "Sortable field name sent as phx-value-field"
+  attr :sort, :map, default: %{}, doc: "Current sort map with field and direction keys"
+  attr :event, :string, default: "sort", doc: "LiveView event pushed when the header is clicked"
+  attr :target, :any, default: nil, doc: "Optional LiveView target"
+  attr :class, :any, default: nil, doc: "Additional classes for the header cell"
+  attr :button_class, :any, default: nil, doc: "Additional classes for the button"
+  attr :icon_class, :any, default: nil, doc: "Additional classes for the sort icon"
+  attr :scope, :string, default: "col"
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def sortable_table_head(assigns) do
+    active? = sort_value(assigns.sort, "field") == assigns.field
+    direction = sort_value(assigns.sort, "direction")
+
+    assigns =
+      assigns
+      |> assign(:active?, active?)
+      |> assign(:aria_sort, aria_sort(active?, direction))
+      |> assign(:icon, sort_icon(active?, direction))
+
+    ~H"""
+    <.table_head class={@class} scope={@scope} aria-sort={@aria_sort} {@rest}>
+      <button
+        type="button"
+        class={
+          classes([
+            "inline-flex items-center gap-1 text-left hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+            @button_class
+          ])
+        }
+        phx-click={@event}
+        phx-value-field={@field}
+        phx-target={@target}
+      >
+        {render_slot(@inner_block)}
+        <.icon
+          name={@icon}
+          size="xs"
+          class={
+            classes([
+              if(@active?, do: "text-foreground", else: "text-muted-foreground"),
+              @icon_class
+            ])
+          }
+        />
+      </button>
+    </.table_head>
+    """
+  end
+
+  @doc """
   Renders the table body.
   """
   attr :class, :any, default: nil
@@ -178,6 +235,20 @@ defmodule Cognit.Table do
     </td>
     """
   end
+
+  defp sort_value(sort, key) when is_map(sort) do
+    Map.get(sort, key) || Map.get(sort, String.to_existing_atom(key))
+  rescue
+    ArgumentError -> Map.get(sort, key)
+  end
+
+  defp aria_sort(true, "asc"), do: "ascending"
+  defp aria_sort(true, "desc"), do: "descending"
+  defp aria_sort(_, _), do: "none"
+
+  defp sort_icon(true, "desc"), do: "expand_more"
+  defp sort_icon(true, _direction), do: "expand_less"
+  defp sort_icon(false, _direction), do: "unfold_more"
 
   @doc """
   Renders a table footer.

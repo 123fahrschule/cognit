@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.12
+
+### Features
+
+- **Table**: Add `sortable_table_head` for LiveView-backed sortable columns with ARIA sort state and visual indicators
+
 ## 0.2.11
 
 ### Bug Fixes

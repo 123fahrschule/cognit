@@ -15,6 +15,7 @@ defmodule Storybook.CognitComponents.Table do
          table_header: 1,
          table_row: 1,
          table_head: 1,
+         sortable_table_head: 1,
          table_body: 1,
          table_cell: 1
        ]}
@@ -23,8 +24,8 @@ defmodule Storybook.CognitComponents.Table do
   def variations do
     [
       %Variation{
-        id: :tab,
-        description: "",
+        id: :basic,
+        description: "Basic table",
         template: """
         <.table>
         <.table_caption>Your task list.</.table_caption>
@@ -78,6 +79,44 @@ defmodule Storybook.CognitComponents.Table do
                 Delete
              </.link>
            </.table_cell>
+         </.table_row>
+        </.table_body>
+        </.table>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :sortable_headers,
+        description: "Sortable table headers with ARIA sort state and visual indicators.",
+        template: """
+        <.table>
+        <.table_caption>Your task list.</.table_caption>
+        <.table_header>
+         <.table_row>
+           <.sortable_table_head field="id" sort={%{"field" => "title", "direction" => "asc"}} class="w-[100px]">
+             id
+           </.sortable_table_head>
+           <.sortable_table_head field="title" sort={%{"field" => "title", "direction" => "asc"}}>
+             Title
+           </.sortable_table_head>
+           <.sortable_table_head field="status" sort={%{"field" => "title", "direction" => "asc"}}>
+             Status
+           </.sortable_table_head>
+           <.table_head class="text-right">Action</.table_head>
+         </.table_row>
+        </.table_header>
+        <.table_body>
+         <.table_row>
+           <.table_cell class="font-medium">1</.table_cell>
+           <.table_cell>Buy veg Pizzas</.table_cell>
+           <.table_cell>Green meal</.table_cell>
+           <.table_cell class="text-right">Edit</.table_cell>
+         </.table_row>
+         <.table_row>
+           <.table_cell class="font-medium">2</.table_cell>
+           <.table_cell>Buy 3 apples</.table_cell>
+           <.table_cell>Green meal</.table_cell>
+           <.table_cell class="text-right">Edit</.table_cell>
          </.table_row>
         </.table_body>
         </.table>
