@@ -107,7 +107,12 @@ defmodule Cognit.Sidebar do
         }
         side={@side}
       >
-        <div class="flex h-full w-full flex-col" id={"#{@id}-mobile-menu"} phx-hook="SidebarMenu">
+        <div
+          class="group flex h-full w-full flex-col"
+          data-collapsible="none"
+          id={"#{@id}-mobile-menu"}
+          phx-hook="SidebarMenu"
+        >
           {render_slot(@inner_block)}
         </div>
       </.sheet_content>
@@ -209,46 +214,76 @@ defmodule Cognit.Sidebar do
   attr :rest, :global
 
   def sidebar_trigger(%{is_mobile: true} = assigns) do
+    assigns =
+      assign(
+        assigns,
+        :tooltip_label,
+        pgettext("sidebar, toggle button", "Toggle Sidebar")
+      )
+
     ~H"""
-    <.dynamic
-      tag={@as}
-      data-sidebar="trigger"
-      class={
-        classes([
-          "inline-flex items-center justify-center h-7 w-7 rounded-md",
-          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-          @class
-        ])
-      }
-      phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
-      {@rest}
-    >
-      <.icon name="dock_to_left" size="xs" />
-      <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
-    </.dynamic>
+    <.tooltip class="inline-block" close-delay={0}>
+      <.tooltip_trigger>
+        <.dynamic
+          tag={@as}
+          data-sidebar="trigger"
+          aria-label={@tooltip_label}
+          class={
+            classes([
+              "inline-flex items-center justify-center h-7 w-7 rounded-md",
+              "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+              @class
+            ])
+          }
+          phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
+          {@rest}
+        >
+          <.icon name="dock_to_left" size="xs" />
+          <span class="sr-only">{@tooltip_label}</span>
+        </.dynamic>
+      </.tooltip_trigger>
+      <.tooltip_content side="right" class="pointer-events-none whitespace-nowrap">
+        {@tooltip_label}
+      </.tooltip_content>
+    </.tooltip>
     """
   end
 
   def sidebar_trigger(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :tooltip_label,
+        pgettext("sidebar, toggle button", "Toggle Sidebar")
+      )
+
     ~H"""
-    <.dynamic
-      tag={@as}
-      data-sidebar="trigger"
-      class={
-        classes([
-          "inline-flex items-center justify-center h-7 w-7 rounded-md",
-          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-          @class
-        ])
-      }
-      phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
-      {@rest}
-    >
-      <.icon name="dock_to_left" size="xs" />
-      <span class="sr-only">{pgettext("sidebar, toggle button", "Toggle Sidebar")}</span>
-    </.dynamic>
+    <.tooltip class="inline-block" close-delay={0}>
+      <.tooltip_trigger>
+        <.dynamic
+          tag={@as}
+          data-sidebar="trigger"
+          aria-label={@tooltip_label}
+          class={
+            classes([
+              "inline-flex items-center justify-center h-7 w-7 rounded-md",
+              "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+              @class
+            ])
+          }
+          phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
+          {@rest}
+        >
+          <.icon name="dock_to_left" size="xs" />
+          <span class="sr-only">{@tooltip_label}</span>
+        </.dynamic>
+      </.tooltip_trigger>
+      <.tooltip_content side="right" class="pointer-events-none whitespace-nowrap">
+        {@tooltip_label}
+      </.tooltip_content>
+    </.tooltip>
     """
   end
 
@@ -587,7 +622,7 @@ defmodule Cognit.Sidebar do
   attr :as, :any, default: &link/1
   attr :rest, :global, include: ["navigate", "patch", "href"]
   slot :inner_block, required: true
-  attr :tooltip, :string, required: false
+  attr :tooltip, :any, default: nil
 
   def sidebar_menu_button(assigns) do
     button = ~H"""
@@ -605,19 +640,34 @@ defmodule Cognit.Sidebar do
 
     assigns = assign(assigns, :button, button)
 
-    if assigns[:tooltip] do
+    if assigns[:tooltip] == false do
+      button
+    else
       ~H"""
-      <.tooltip class="block">
-        <.tooltip_trigger>
+      <.tooltip class="block" close-delay={0}>
+        <.tooltip_trigger class="block">
           {@button}
         </.tooltip_trigger>
-        <.tooltip_content side="right" hidden={@state != "collapsed" || @is_mobile}>
-          {@tooltip}
+        <.tooltip_content
+          side="right"
+          class={
+            classes([
+              "group-data-[collapsible=none]:hidden group-data-[collapsible=offcanvas]:hidden",
+              "pointer-events-none whitespace-nowrap",
+              @is_mobile && "hidden"
+            ])
+          }
+        >
+          <%= if @tooltip do %>
+            <span class="leading-none">{@tooltip}</span>
+          <% else %>
+            <span class="inline-flex items-center leading-none [&>.icon]:hidden [&>.material-icons]:hidden [&>.material-symbols-outlined]:hidden [&>.material-symbols-rounded]:hidden [&>svg]:hidden">
+              {render_slot(@inner_block)}
+            </span>
+          <% end %>
         </.tooltip_content>
       </.tooltip>
       """
-    else
-      button
     end
   end
 

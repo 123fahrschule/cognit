@@ -47,7 +47,7 @@ msgctxt "flash message, live view crashed title"
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/cognit/components/form_field.ex:84
+#: lib/cognit/components/form_field.ex:82
 #, elixir-autogen, elixir-format
 msgctxt "select placeholder"
 msgid "Select"
@@ -101,10 +101,10 @@ msgctxt "sheet, close button"
 msgid "Close"
 msgstr ""
 
-#: lib/cognit/sidebar.ex:228
-#: lib/cognit/sidebar.ex:250
-#: lib/cognit/sidebar.ex:265
-#: lib/cognit/sidebar.ex:268
+#: lib/cognit/sidebar.ex:216
+#: lib/cognit/sidebar.ex:253
+#: lib/cognit/sidebar.ex:295
+#: lib/cognit/sidebar.ex:298
 #, elixir-autogen, elixir-format
 msgctxt "sidebar, toggle button"
 msgid "Toggle Sidebar"
@@ -170,13 +170,13 @@ msgctxt "pagination"
 msgid "Rows per page"
 msgstr ""
 
-#: lib/cognit/confirmation_dialog.ex:31
+#: lib/cognit/confirmation_dialog.ex:35
 #, elixir-autogen, elixir-format
 msgctxt "confirmation dialog action"
 msgid "Cancel"
 msgstr ""
 
-#: lib/cognit/confirmation_dialog.ex:28
+#: lib/cognit/confirmation_dialog.ex:32
 #, elixir-autogen, elixir-format
 msgctxt "confirmation dialog action"
 msgid "Confirm"

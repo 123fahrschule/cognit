@@ -22,7 +22,12 @@ defmodule Cognit.Components.AppSideNav do
       <.sidebar_menu_item>
         <.dropdown_menu id={@id} class="block w-full">
           <.dropdown_menu_trigger>
-            <.sidebar_menu_button size="lg" class={@class} as="button">
+            <.sidebar_menu_button
+              size="lg"
+              class={@class}
+              as="button"
+              tooltip={side_nav_tooltip(@title, @subtitle)}
+            >
               <.side_nav_content title={@title} subtitle={@subtitle} />
               <.icon name="unfold_more" size="sm" class="ml-auto" />
             </.sidebar_menu_button>
@@ -40,7 +45,13 @@ defmodule Cognit.Components.AppSideNav do
     ~H"""
     <.sidebar_menu {@rest}>
       <.sidebar_menu_item>
-        <.sidebar_menu_button size="lg" class={@class} as="button" phx-click={@on_click}>
+        <.sidebar_menu_button
+          size="lg"
+          class={@class}
+          as="button"
+          phx-click={@on_click}
+          tooltip={side_nav_tooltip(@title, @subtitle)}
+        >
           <.side_nav_content title={@title} subtitle={@subtitle} />
         </.sidebar_menu_button>
       </.sidebar_menu_item>
@@ -52,19 +63,14 @@ defmodule Cognit.Components.AppSideNav do
     ~H"""
     <.sidebar_menu {@rest}>
       <.sidebar_menu_item>
-        <div
-          data-sidebar="menu-button"
-          data-size="lg"
-          class={
-            classes([
-              "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm",
-              "group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-0",
-              @class
-            ])
-          }
+        <.sidebar_menu_button
+          size="lg"
+          class={@class}
+          as="div"
+          tooltip={side_nav_tooltip(@title, @subtitle)}
         >
           <.side_nav_content title={@title} subtitle={@subtitle} />
-        </div>
+        </.sidebar_menu_button>
       </.sidebar_menu_item>
     </.sidebar_menu>
     """
@@ -83,4 +89,8 @@ defmodule Cognit.Components.AppSideNav do
     </div>
     """
   end
+
+  defp side_nav_tooltip(title, nil), do: title
+  defp side_nav_tooltip(title, ""), do: title
+  defp side_nav_tooltip(title, subtitle), do: "#{title} · #{subtitle}"
 end

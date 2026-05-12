@@ -23,7 +23,12 @@ defmodule Cognit.Components.UserSideNav do
       <.sidebar_menu_item>
         <.dropdown_menu id={@id} class="block w-full">
           <.dropdown_menu_trigger>
-            <.sidebar_menu_button size="lg" class={@class} as="button">
+            <.sidebar_menu_button
+              size="lg"
+              class={@class}
+              as="button"
+              tooltip={side_nav_tooltip(@user)}
+            >
               <.side_nav_content user={@user} />
               <.icon name="unfold_more" size="sm" class="ml-auto" />
             </.sidebar_menu_button>
@@ -41,7 +46,13 @@ defmodule Cognit.Components.UserSideNav do
     ~H"""
     <.sidebar_menu {@rest}>
       <.sidebar_menu_item>
-        <.sidebar_menu_button size="lg" class={@class} as="button" phx-click={@on_click}>
+        <.sidebar_menu_button
+          size="lg"
+          class={@class}
+          as="button"
+          phx-click={@on_click}
+          tooltip={side_nav_tooltip(@user)}
+        >
           <.side_nav_content user={@user} />
         </.sidebar_menu_button>
       </.sidebar_menu_item>
@@ -53,19 +64,14 @@ defmodule Cognit.Components.UserSideNav do
     ~H"""
     <.sidebar_menu {@rest}>
       <.sidebar_menu_item>
-        <div
-          data-sidebar="menu-button"
-          data-size="lg"
-          class={
-            classes([
-              "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm",
-              "group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-0",
-              @class
-            ])
-          }
+        <.sidebar_menu_button
+          size="lg"
+          class={@class}
+          as="div"
+          tooltip={side_nav_tooltip(@user)}
         >
           <.side_nav_content user={@user} />
-        </div>
+        </.sidebar_menu_button>
       </.sidebar_menu_item>
     </.sidebar_menu>
     """
@@ -87,5 +93,12 @@ defmodule Cognit.Components.UserSideNav do
 
   defp unique_id(prefix) do
     "#{prefix}-#{System.unique_integer([:positive])}"
+  end
+
+  defp side_nav_tooltip(user) do
+    [user_display_name(user), user_email(user)]
+    |> Enum.reject(&is_nil/1)
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.join(" · ")
   end
 end

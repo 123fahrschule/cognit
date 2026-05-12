@@ -26,9 +26,9 @@ class TooltipComponent extends Component {
 
     // Set config from options with fallbacks to defaults
     this.config.openDelay =
-      this.options.openDelay || DEFAULT_TIMING_CONFIG.openDelay;
+      this.options.openDelay ?? DEFAULT_TIMING_CONFIG.openDelay;
     this.config.closeDelay =
-      this.options.closeDelay || DEFAULT_TIMING_CONFIG.closeDelay;
+      this.options.closeDelay ?? DEFAULT_TIMING_CONFIG.closeDelay;
 
     // Track timer IDs for delayed open/close
     this.openTimer = null;

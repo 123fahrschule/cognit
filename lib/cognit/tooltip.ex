@@ -52,7 +52,8 @@ defmodule Cognit.Tooltip do
   slot :inner_block, required: true
 
   def tooltip(assigns) do
-    assigns = assign_new(assigns, :id, fn -> "tooltip-#{System.unique_integer()}" end)
+    assigns =
+      assign(assigns, :id, assigns[:id] || "tooltip-#{System.unique_integer([:positive])}")
 
     # Collect event mappings
     event_map =

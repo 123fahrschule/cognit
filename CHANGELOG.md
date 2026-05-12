@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.13
+
+### Bug Fixes
+
+- **Sidebar**: Add tooltips for the sidebar toggle and collapsed sidebar entries so icon-only navigation remains understandable
+- **Tooltip**: Generate a DOM id when no tooltip id is passed so SaladUI hooks can mount correctly
+- **Tooltip**: Respect zero millisecond open and close delays
+
 ## 0.2.12
 
 ### Features
