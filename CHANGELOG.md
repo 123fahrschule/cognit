@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.14
+
+### Refactoring
+
+- **Hooks**: Namespace LiveView hooks with `Cognit.` prefix (`FlashMessage` → `Cognit.FlashMessage`, `LocaleSelect` → `Cognit.LocaleSelect`, `Pagination` → `Cognit.Pagination`, `Sidebar` → `Cognit.Sidebar`, `SidebarMenu` → `Cognit.SidebarMenu`) to avoid collisions with downstream app hooks
+- **Components**: Namespace built-in component ids with `cognit-` prefix (`sidebar` → `cognit-sidebar`, `locale-select` → `cognit-locale-select`, `user-menu` → `cognit-user-menu`, `client-error`/`server-error` flash → `cognit-client-error`/`cognit-server-error`)
+
 ## 0.2.13
 
 ### Bug Fixes
