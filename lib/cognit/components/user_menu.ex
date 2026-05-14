@@ -21,7 +21,7 @@ defmodule Cognit.Components.UserMenu do
           <.icon name="account_circle" />
         </.avatar_fallback>
       </.avatar>
-      <.dropdown_menu id="user-menu">
+      <.dropdown_menu id="cognit-user-menu">
         <.dropdown_menu_trigger>
           <.button variant="ghost" class="px-3">
             {user_display_name(@user)}

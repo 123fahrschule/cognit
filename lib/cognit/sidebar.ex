@@ -56,7 +56,7 @@ defmodule Cognit.Sidebar do
   """
 
   attr :id, :string,
-    default: "sidebar",
+    default: "cognit-sidebar",
     doc: "The id of the sidebar, used for the trigger to identify the target sidebar"
 
   attr :side, :string, values: ~w(left right), default: "left"
@@ -111,7 +111,7 @@ defmodule Cognit.Sidebar do
           class="group flex h-full w-full flex-col"
           data-collapsible="none"
           id={"#{@id}-mobile-menu"}
-          phx-hook="SidebarMenu"
+          phx-hook="Cognit.SidebarMenu"
         >
           {render_slot(@inner_block)}
         </div>
@@ -130,7 +130,7 @@ defmodule Cognit.Sidebar do
       data-variant={@variant}
       data-side={@side}
       id={@id}
-      phx-hook="Sidebar"
+      phx-hook="Cognit.Sidebar"
       phx-toggle-sidebar={toggle_sidebar({"none", @collapsible})}
     >
       <div class={
@@ -162,7 +162,7 @@ defmodule Cognit.Sidebar do
           data-sidebar="sidebar"
           class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
           id={"#{@id}-menu"}
-          phx-hook="SidebarMenu"
+          phx-hook="Cognit.SidebarMenu"
         >
           {render_slot(@inner_block)}
         </div>
@@ -208,7 +208,7 @@ defmodule Cognit.Sidebar do
   Desktop version: Renders in sidebar header, toggles with context-aware arrows.
   """
   attr :class, :any, default: nil
-  attr :target, :string, default: "sidebar", doc: "The id of the target sidebar"
+  attr :target, :string, default: "cognit-sidebar", doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
   attr :is_mobile, :boolean, default: false
   attr :rest, :global

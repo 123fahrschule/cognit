@@ -55,7 +55,7 @@ defmodule Cognit.Components.Flash do
           id={"flash_" <> kind}
           kind={kind}
           title={message}
-          phx-hook="FlashMessage"
+          phx-hook="Cognit.FlashMessage"
           data-type={kind}
           phx-remove={JS.push("lv:clear-flash", value: %{key: kind}) |> hide("##{"flash_" <> kind}")}
         />
@@ -67,7 +67,7 @@ defmodule Cognit.Components.Flash do
   defp client_error_flash(assigns) do
     ~H"""
     <.flash
-      id="client-error"
+      id="cognit-client-error"
       kind="error"
       title={pgettext("flash message, live socket disconnected title", "We can't find the internet")}
       description={
@@ -76,9 +76,9 @@ defmodule Cognit.Components.Flash do
           "Attempting to reconnect"
         )
       }
-      phx-disconnected={JS.remove_attribute("hidden", to: ".phx-client-error #client-error")}
+      phx-disconnected={JS.remove_attribute("hidden", to: ".phx-client-error #cognit-client-error")}
       phx-connected={JS.set_attribute({"hidden", ""})}
-      phx-remove={JS.exec("phx-connected", to: "#client-error")}
+      phx-remove={JS.exec("phx-connected", to: "#cognit-client-error")}
       hidden
     >
       <:icon>
@@ -91,7 +91,7 @@ defmodule Cognit.Components.Flash do
   defp server_error_flash(assigns) do
     ~H"""
     <.flash
-      id="server-error"
+      id="cognit-server-error"
       kind="error"
       title={pgettext("flash message, live view crashed title", "Something went wrong!")}
       description={
@@ -100,9 +100,9 @@ defmodule Cognit.Components.Flash do
           "Hang in there while we get back on track"
         )
       }
-      phx-disconnected={JS.remove_attribute("hidden", to: ".phx-server-error #server-error")}
+      phx-disconnected={JS.remove_attribute("hidden", to: ".phx-server-error #cognit-server-error")}
       phx-connected={JS.set_attribute({"hidden", ""})}
-      phx-remove={JS.exec("phx-connected", to: "#server-error")}
+      phx-remove={JS.exec("phx-connected", to: "#cognit-server-error")}
       hidden
     >
       <:icon>

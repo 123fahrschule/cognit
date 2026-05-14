@@ -18,8 +18,8 @@ defmodule Cognit.Components.LocaleSelect do
       |> assign(:locales, @locales)
 
     ~H"""
-    <div id="locale-select" phx-hook="LocaleSelect" {@rest}>
-      <.dropdown_menu id="locale-select-dropdown-menu">
+    <div id="cognit-locale-select" phx-hook="Cognit.LocaleSelect" {@rest}>
+      <.dropdown_menu id="cognit-locale-select-dropdown-menu">
         <.dropdown_menu_trigger>
           <.button variant="secondary">
             <.flag locale={@current_locale} />
@@ -31,7 +31,7 @@ defmodule Cognit.Components.LocaleSelect do
             :for={{locale, text} <- @locales}
             on-select={
               locale != @current_locale &&
-                JS.dispatch("set-locale", to: "#locale-select", detail: %{locale: locale})
+                JS.dispatch("set-locale", to: "#cognit-locale-select", detail: %{locale: locale})
             }
             class={["w-full gap-2", locale == @current_locale && "font-semibold"]}
           >

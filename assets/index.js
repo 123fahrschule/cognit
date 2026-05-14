@@ -32,11 +32,11 @@ import { Pagination } from "./js/hooks/pagination.js";
 import { getCognitParams } from "./js/connect_params.js";
 
 export const Hooks = {
-  FlashMessage,
-  LocaleSelect,
-  Pagination,
-  Sidebar,
-  SidebarMenu,
+  "Cognit.FlashMessage": FlashMessage,
+  "Cognit.LocaleSelect": LocaleSelect,
+  "Cognit.Pagination": Pagination,
+  "Cognit.Sidebar": Sidebar,
+  "Cognit.SidebarMenu": SidebarMenu,
 
   SaladUI: SaladUIHook,
 };

@@ -76,7 +76,7 @@ defmodule Cognit.Components.Pagination do
     ~H"""
     <div
       id={@id}
-      phx-hook="Pagination"
+      phx-hook="Cognit.Pagination"
       data-on-change={@on_change}
       data-target={@target}
       class={classes(["flex items-center justify-between pt-4", @class])}
