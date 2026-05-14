@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.15
+
+### Bug Fixes
+
+- **Components**: Pass through LiveView link attributes (`navigate`, `patch`, `replace`, `method`, `csrf_token`, plus standard anchor attrs) on `breadcrumb_link`, `pagination_link`/`pagination_next`/`pagination_previous`, `dropdown_menu_link_item`, `sidebar_menu_button`, `sidebar_menu_sub_button`, and `login_card_action`
+- **Components**: Include missing element-specific attrs in `rest` globals — `rowspan` on `table_cell`; `placeholder`, `readonly`, `required`, `minlength`, `maxlength`, `autofocus`, `wrap` on `textarea`; `disabled`, `form`, `required`, `autofocus` on `checkbox`; `form` on `select_trigger`
+
 ## 0.2.14
 
 ### Refactoring
