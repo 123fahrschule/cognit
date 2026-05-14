@@ -160,7 +160,11 @@ defmodule Cognit.Breadcrumb do
   * Standard HTML link attributes (href, target, etc.) are supported
   """
   attr :class, :any, default: nil
-  attr :rest, :global, include: ~w(download href hreflang ping referrerpolicy rel target type)
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
+
   slot :inner_block, required: true
 
   def breadcrumb_link(assigns) do

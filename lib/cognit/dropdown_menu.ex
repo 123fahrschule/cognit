@@ -304,7 +304,11 @@ defmodule Cognit.DropdownMenu do
   attr :value, :string, default: nil
   attr :variant, :string, values: ~w(default destructive), default: "default"
   attr :disabled, :boolean, default: false
-  attr :rest, :global, include: ~w(navigate patch href method)
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
+
   slot :inner_block, required: true
 
   def dropdown_menu_link_item(assigns) do

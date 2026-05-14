@@ -620,7 +620,11 @@ defmodule Cognit.Sidebar do
   attr :is_mobile, :boolean, default: false
   attr :state, :string, default: "expanded"
   attr :as, :any, default: &link/1
-  attr :rest, :global, include: ["navigate", "patch", "href"]
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
+
   slot :inner_block, required: true
   attr :tooltip, :any, default: nil
 
@@ -820,7 +824,11 @@ defmodule Cognit.Sidebar do
   attr :is_active, :boolean, default: false
   attr :class, :any, default: nil
   attr :as, :any, default: &link/1
-  attr :rest, :global, include: ["navigate", "patch", "href"]
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
+
   slot :inner_block, required: true
 
   def sidebar_menu_sub_button(assigns) do

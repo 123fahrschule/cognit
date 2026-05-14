@@ -54,7 +54,8 @@ defmodule Cognit.Components.LoginLayout do
   attr :text, :string, required: true
 
   attr :rest, :global,
-    include: ~w(as href navigate patch),
+    include:
+      ~w(as download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token),
     default: %{
       as: &link/1
     }

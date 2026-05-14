@@ -111,7 +111,11 @@ defmodule Cognit.Pagination do
   attr :"is-active", :boolean, default: false
   attr :size, :string, default: "icon", values: ~w(default sm lg icon)
   attr :class, :any, default: nil
-  attr :rest, :global
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
+
   slot :inner_block, required: true
 
   def pagination_link(assigns) do
@@ -146,7 +150,10 @@ defmodule Cognit.Pagination do
   Renders a next page button.
   """
   attr :class, :any, default: nil
-  attr :rest, :global
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
 
   def pagination_next(assigns) do
     ~H"""
@@ -175,7 +182,10 @@ defmodule Cognit.Pagination do
   Renders a previous page button.
   """
   attr :class, :any, default: nil
-  attr :rest, :global
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target type navigate patch replace method csrf_token)
 
   def pagination_previous(assigns) do
     ~H"""
