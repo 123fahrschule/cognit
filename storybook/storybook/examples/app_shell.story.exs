@@ -24,7 +24,7 @@ defmodule Storybook.Examples.AppShell do
       style="transform: translateZ(0)"
     >
       <.sidebar_provider>
-        <.sidebar id="app-shell-sidebar" is_desktop collapsible="icon">
+        <.sidebar>
           <.sidebar_header>
             <.app_side_nav title="Acme Inc" subtitle="Enterprise">
               <.dropdown_menu_item><.icon name="swap_horiz" /> Switch workspace</.dropdown_menu_item>
