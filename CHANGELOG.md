@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.16
+
+### Bug Fixes
+
+- **Sidebar**: Allow multi-line labels in `sidebar_menu_button` and `sidebar_menu_sub_button` — switch fixed `h-*` to `min-h-*` so rows grow with wrapped content, with `!min-h-0` keeping collapsed icon mode at 32×32
+- **Sidebar**: Add `pointer-events-none` to `sidebar_group_label` in collapsed (icon) mode — invisible labels were intercepting hover/click on overlapping first menu items
+
+### Storybook
+
+- Add `sidebar_menu_multiline_label` bug reproduction story
+
 ## 0.2.15
 
 ### Bug Fixes
