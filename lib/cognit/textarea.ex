@@ -32,7 +32,10 @@ defmodule Cognit.Textarea do
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   attr :class, :any, default: nil
-  attr :rest, :global, include: ~w(disabled form rows cols)
+
+  attr :rest, :global,
+    include:
+      ~w(disabled form rows cols placeholder readonly required minlength maxlength autofocus wrap)
 
   def textarea(assigns) do
     assigns = prepare_assign(assigns)

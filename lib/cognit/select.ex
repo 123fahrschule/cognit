@@ -105,7 +105,7 @@ defmodule Cognit.Select do
 
   attr :class, :any, default: nil
   slot :inner_block, required: true
-  attr :rest, :global, include: ["disabled"]
+  attr :rest, :global, include: ~w(disabled form)
 
   def select_trigger(assigns) do
     ~H"""

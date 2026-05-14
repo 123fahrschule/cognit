@@ -217,7 +217,7 @@ defmodule Cognit.Table do
   * `:class` - Additional CSS classes
   """
   attr :class, :any, default: nil
-  attr :rest, :global, include: ["colspan"]
+  attr :rest, :global, include: ~w(colspan rowspan)
   slot :inner_block
 
   def table_cell(assigns) do

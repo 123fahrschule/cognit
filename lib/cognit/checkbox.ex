@@ -37,7 +37,7 @@ defmodule Cognit.Checkbox do
   attr :"default-value", :any, values: [true, false, "true", "false"], default: false
   attr :field, Phoenix.HTML.FormField
   attr :class, :any, default: nil
-  attr :rest, :global
+  attr :rest, :global, include: ~w(disabled form required autofocus)
 
   def checkbox(assigns) do
     assigns =
