@@ -11,13 +11,16 @@ defmodule Cognit.Badge do
       <.badge>New</.badge>
       <.badge variant="secondary">Beta</.badge>
       <.badge variant="destructive">Error</.badge>
+      <.badge variant="success">Approved</.badge>
       <.badge variant="outline">Version 1.0</.badge>
+      <.badge number>8</.badge>
       <.badge truncate_on="15">This is a very long badge text that will be truncated</.badge>
 
       <div class="flex gap-2">
         <.badge>Default</.badge>
         <.badge variant="secondary">Secondary</.badge>
         <.badge variant="destructive">Destructive</.badge>
+        <.badge variant="success">Success</.badge>
         <.badge variant="outline">Outline</.badge>
         <.badge truncate_on="10">Long text badge with tooltip</.badge>
       </div>
@@ -49,7 +52,9 @@ defmodule Cognit.Badge do
     * `"default"` - Primary color with white text (default)
     * `"secondary"` - Secondary color with contrasting text
     * `"destructive"` - Typically red, for warning or error states
+    * `"success"` - Green, for confirmation or positive states
     * `"outline"` - Bordered style with no background
+  * `:number` - When `true`, renders as a circular badge for displaying counts.
   * `:truncate_on` - Truncate the badge content after the specified number of characters.
     When set, long text will be truncated with "..." and the full text will be shown
     in a tooltip on hover.
@@ -58,15 +63,21 @@ defmodule Cognit.Badge do
 
       <.badge>Badge</.badge>
       <.badge variant="destructive">Warning</.badge>
+      <.badge variant="success">Approved</.badge>
       <.badge variant="outline" class="text-sm">Custom</.badge>
+      <.badge number>8</.badge>
       <.badge truncate_on="33">This is a very long badge text that will be truncated</.badge>
   """
   attr :class, :any, default: nil
 
   attr :variant, :string,
-    values: ~w(default secondary destructive outline),
+    values: ~w(default secondary destructive success outline),
     default: "default",
     doc: "the badge variant style"
+
+  attr :number, :boolean,
+    default: false,
+    doc: "render as a circular badge for displaying counts"
 
   attr :truncate_on, :integer,
     default: nil,
@@ -77,13 +88,15 @@ defmodule Cognit.Badge do
 
   def badge(assigns) do
     assigns = assign(assigns, :variant_class, variant(assigns))
+    assigns = assign(assigns, :size_class, size_class(assigns))
     assigns = assign(assigns, :tooltip_content, get_tooltip_content(assigns))
 
     ~H"""
     <div
       class={
         classes([
-          "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-[3px] focus:ring-ring/50",
+          "inline-flex items-center justify-center rounded-full border text-xs font-semibold transition-colors focus:outline-none focus:ring-[3px] focus:ring-ring/50",
+          @size_class,
           @variant_class,
           @class
         ])
@@ -108,6 +121,7 @@ defmodule Cognit.Badge do
         "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
       "destructive" =>
         "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+      "success" => "border-transparent bg-success text-success-foreground hover:bg-success/80",
       "outline" => "text-foreground"
     }
   }
@@ -117,10 +131,13 @@ defmodule Cognit.Badge do
   }
 
   defp variant(props) do
-    variants = Map.merge(@default_variants, props)
+    variants = Map.merge(@default_variants, Map.take(props, [:variant]))
 
     Enum.map_join(variants, " ", fn {key, value} -> @variants[key][value] end)
   end
+
+  defp size_class(%{number: true}), do: "h-5 min-w-5 px-1"
+  defp size_class(_), do: "px-2.5 py-0.5"
 
   defp get_tooltip_content(%{truncate_on: nil}), do: nil
 

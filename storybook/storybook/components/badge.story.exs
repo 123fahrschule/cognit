@@ -27,6 +27,13 @@ defmodule Storybook.CognitComponents.Badge do
             slots: ["Secondary"]
           },
           %Variation{
+            id: :color_outline,
+            attributes: %{
+              variant: "outline"
+            },
+            slots: ["Outline"]
+          },
+          %Variation{
             id: :color_destructive,
             attributes: %{
               variant: "destructive"
@@ -34,11 +41,56 @@ defmodule Storybook.CognitComponents.Badge do
             slots: ["Destructive"]
           },
           %Variation{
-            id: :color_outline,
+            id: :color_success,
             attributes: %{
-              variant: "outline"
+              variant: "success"
             },
-            slots: ["Outline"]
+            slots: ["Success"]
+          }
+        ]
+      },
+      %VariationGroup{
+        id: :badge_number,
+        description: "Circular badges for displaying counts via `number` attribute.",
+        variations: [
+          %Variation{
+            id: :number_default,
+            attributes: %{
+              number: true
+            },
+            slots: ["8"]
+          },
+          %Variation{
+            id: :number_secondary,
+            attributes: %{
+              variant: "secondary",
+              number: true
+            },
+            slots: ["8"]
+          },
+          %Variation{
+            id: :number_outline,
+            attributes: %{
+              variant: "outline",
+              number: true
+            },
+            slots: ["8"]
+          },
+          %Variation{
+            id: :number_destructive,
+            attributes: %{
+              variant: "destructive",
+              number: true
+            },
+            slots: ["8"]
+          },
+          %Variation{
+            id: :number_success,
+            attributes: %{
+              variant: "success",
+              number: true
+            },
+            slots: ["8"]
           }
         ]
       }
