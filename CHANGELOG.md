@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.18
+
+### Features
+
+- **`use Cognit`**: Import all shell components (`AppSideNav`, `LoginLayout`, `UserHelpers`, `UserMenu`, `UserSideNav`) so consumers no longer need to import them individually
+
+### Docs
+
+- Document `app_side_nav` and `user_side_nav` rendering modes (dropdown / button / static) and the `:user` map shape via moduledocs
+- Document `send_command` (server → client) and `dispatch_command` (client → client) in README
+- Document app shell composition in README
+
 ## 0.2.17
 
 ### Features
