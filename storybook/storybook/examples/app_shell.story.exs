@@ -3,7 +3,6 @@ defmodule Storybook.Examples.AppShell do
   use Cognit
 
   import Cognit.Components.AppSideNav
-  import Cognit.Components.LocaleSelect
   import Cognit.Components.UserSideNav
 
   @impl true
@@ -27,8 +26,12 @@ defmodule Storybook.Examples.AppShell do
         <.sidebar>
           <.sidebar_header>
             <.app_side_nav title="Acme Inc" subtitle="Enterprise">
-              <.dropdown_menu_item><.icon name="swap_horiz" /> Switch workspace</.dropdown_menu_item>
-              <.dropdown_menu_item><.icon name="settings" /> Settings</.dropdown_menu_item>
+              <.dropdown_menu_link_item href="#">
+                <.icon name="swap_horiz" /> Switch workspace
+              </.dropdown_menu_link_item>
+              <.dropdown_menu_link_item href="#">
+                <.icon name="settings" /> Settings
+              </.dropdown_menu_link_item>
             </.app_side_nav>
           </.sidebar_header>
 
@@ -102,10 +105,16 @@ defmodule Storybook.Examples.AppShell do
 
           <.sidebar_footer>
             <.user_side_nav user={@user}>
-              <.dropdown_menu_item><.icon name="account_circle" /> Profile</.dropdown_menu_item>
-              <.dropdown_menu_item><.icon name="settings" /> Settings</.dropdown_menu_item>
+              <.dropdown_menu_link_item href="#">
+                <.icon name="account_circle" /> Profile
+              </.dropdown_menu_link_item>
+              <.dropdown_menu_link_item href="#">
+                <.icon name="settings" /> Settings
+              </.dropdown_menu_link_item>
               <.dropdown_menu_separator />
-              <.dropdown_menu_item><.icon name="logout" /> Sign out</.dropdown_menu_item>
+              <.dropdown_menu_link_item href="#" method="delete">
+                <.icon name="logout" /> Sign out
+              </.dropdown_menu_link_item>
             </.user_side_nav>
           </.sidebar_footer>
         </.sidebar>

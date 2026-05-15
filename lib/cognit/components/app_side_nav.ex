@@ -1,4 +1,16 @@
 defmodule Cognit.Components.AppSideNav do
+  @moduledoc """
+  App branding entry at the top of a sidebar. Renders an avatar, title, and optional subtitle.
+
+  Three rendering modes, selected automatically by the assigns you pass:
+
+  * **Dropdown** — provide an `inner_block`. Renders as a `dropdown_menu` trigger; the
+    inner block becomes the menu content.
+  * **Button** — provide `on_click` (a `phx-click` value, e.g. a `JS` command). Renders
+    as a clickable button with no menu.
+  * **Static** — provide neither. Renders as a non-interactive label.
+  """
+
   use Cognit, :component
 
   import Cognit.Avatar

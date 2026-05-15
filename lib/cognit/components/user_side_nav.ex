@@ -1,4 +1,27 @@
 defmodule Cognit.Components.UserSideNav do
+  @moduledoc """
+  Signed-in user entry at the bottom of a sidebar. Renders an avatar, display name, and email.
+
+  Three rendering modes, selected automatically by the assigns you pass:
+
+  * **Dropdown** — provide an `inner_block`. Renders as a `dropdown_menu` trigger; the
+    inner block becomes the menu content (e.g. profile / sign-out items).
+  * **Button** — provide `on_click` (a `phx-click` value, e.g. a `JS` command). Renders
+    as a clickable button with no menu.
+  * **Static** — provide neither. Renders as a non-interactive label.
+
+  ## `:user` shape
+
+  The `user` map is read by `Cognit.Components.UserHelpers`. Atom or string keys are
+  both accepted; all fields are optional.
+
+  * `:first_name` / `"first_name"` — used in display name
+  * `:last_name` / `"last_name"` — used in display name
+  * `:email` / `"email"` — used as fallback display name and shown beneath the name
+
+  If none are present, display name falls back to the translated `"Unknown User"`.
+  """
+
   use Cognit, :component
 
   import Cognit.Avatar

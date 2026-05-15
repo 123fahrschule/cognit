@@ -186,6 +186,212 @@ module.exports = {
 
 ---
 
+## Building an app shell
+
+Most apps want the same layout: a sidebar on the left, a topbar across the
+top, and a page area below. Cognit ships the composed shell components for
+this in `Cognit.Components.*` — they are layout-scoped and not imported by
+`use Cognit`, so add them explicitly where you compose the shell (typically
+your `Layouts` module or root layout):
+
+```elixir
+defmodule MyAppWeb.Layouts do
+  use MyAppWeb, :html
+  use Cognit
+
+  import Cognit.Components.AppSideNav
+  import Cognit.Components.UserSideNav
+end
+```
+
+A complete shell looks like this:
+
+```heex
+<.sidebar_provider>
+  <.sidebar>
+    <.sidebar_header>
+      <.app_side_nav title="Acme Inc" subtitle="Enterprise">
+        <.dropdown_menu_item><.icon name="swap_horiz" /> Switch workspace</.dropdown_menu_item>
+        <.dropdown_menu_item><.icon name="settings" /> Settings</.dropdown_menu_item>
+      </.app_side_nav>
+    </.sidebar_header>
+
+    <.sidebar_content>
+      <.sidebar_group>
+        <.sidebar_group_label>Main</.sidebar_group_label>
+        <.sidebar_group_content>
+          <.sidebar_menu>
+            <.sidebar_menu_item>
+              <.sidebar_menu_button is_active href={~p"/"}>
+                <.icon name="dashboard" /> <span>Dashboard</span>
+              </.sidebar_menu_button>
+            </.sidebar_menu_item>
+          </.sidebar_menu>
+        </.sidebar_group_content>
+      </.sidebar_group>
+    </.sidebar_content>
+
+    <.sidebar_footer>
+      <.user_side_nav user={@current_user}>
+        <.dropdown_menu_item><.icon name="account_circle" /> Profile</.dropdown_menu_item>
+        <.dropdown_menu_separator />
+        <.dropdown_menu_link_item href={~p"/sign-out"} method="delete">
+          <.icon name="logout" /> Sign out
+        </.dropdown_menu_link_item>
+      </.user_side_nav>
+    </.sidebar_footer>
+  </.sidebar>
+
+  <.sidebar_inset>
+    <.topbar>
+      <.breadcrumb class="mr-auto">
+        <.breadcrumb_list>
+          <.breadcrumb_item><.breadcrumb_page>Home</.breadcrumb_page></.breadcrumb_item>
+        </.breadcrumb_list>
+      </.breadcrumb>
+      <.locale_select />
+    </.topbar>
+
+    <.page>
+      <.page_header title="Dashboard" />
+      <.page_content>{@inner_content}</.page_content>
+    </.page>
+  </.sidebar_inset>
+</.sidebar_provider>
+
+<.flash_group flash={@flash} />
+```
+
+The canonical reference is
+[`storybook/storybook/examples/app_shell.story.exs`](storybook/storybook/examples/app_shell.story.exs).
+
+### Component roles
+
+| Component                                        | Purpose                                                                                                                    |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `<.sidebar_provider>`                            | Owns sidebar open/collapsed state. Wraps the sidebar **and** the inset.                                                    |
+| `<.sidebar>`                                     | The sidebar itself. Omit `is_desktop` in production — let CSS handle viewport switching.                                   |
+| `<.app_side_nav>`                                | Branding entry at the top. Pass `inner_block` for a dropdown, `on_click` for a button, or neither for a static label.      |
+| `<.user_side_nav>`                               | Signed-in user entry at the bottom. Pass `user` as a map with `:first_name`, `:last_name`, `:email` (atom or string keys). |
+| `<.sidebar_inset>`                               | Content column to the right of the sidebar.                                                                                |
+| `<.topbar>`                                      | Sticky bar across the inset. Children are laid out flexbox-style.                                                          |
+| `<.page>` / `<.page_header>` / `<.page_content>` | Padded content region inside the inset.                                                                                    |
+| `<.flash_group>`                                 | **Must live outside `<.sidebar_provider>`** — otherwise it inherits sidebar layout and can be hidden when collapsed.       |
+
+### Sidebar state persistence
+
+Sidebar collapsed/expanded state survives reloads automatically: the JS hook
+writes a `sidebar_state` cookie on toggle, `Cognit.SidebarPlug` reads it and
+puts it in session, `Cognit.SidebarHook` propagates it into LiveView assigns.
+No host-app wiring is required beyond installing the plug and hook (step 7
+above).
+
+### Pinning a sidebar group to the bottom
+
+There is no dedicated "footer-adjacent" slot. Use `class="mt-auto"` on a
+sidebar group to push it to the bottom of `<.sidebar_content>`:
+
+```heex
+<.sidebar_group class="mt-auto">
+  <.sidebar_group_label>Dev Tools</.sidebar_group_label>
+  ...
+</.sidebar_group>
+```
+
+### Sidebar menu buttons: links vs actions
+
+`<.sidebar_menu_button>` forwards `navigate`, `patch`, `href`, plus standard
+HTML link attrs (`target`, `rel`, etc.). External links work as expected:
+
+```heex
+<.sidebar_menu_button href="https://example.com" target="_blank" rel="noopener noreferrer">
+  External
+</.sidebar_menu_button>
+```
+
+For buttons that trigger JS state instead of navigating, set `as="button"`.
+
+### Dropdown menu items: links vs actions
+
+`<.dropdown_menu_item>` is a non-navigating row — use it with `on-select` for
+an action (logout, open dialog, etc.):
+
+```heex
+<.dropdown_menu_item on-select={JS.push("sign_out")}>Sign out</.dropdown_menu_item>
+```
+
+`<.dropdown_menu_link_item>` renders an actual link — use it for navigation:
+
+```heex
+<.dropdown_menu_link_item navigate={~p"/profile"}>Profile</.dropdown_menu_link_item>
+```
+
+A `<.dropdown_menu_item>` with no `on-select` is a static row that does
+nothing on click.
+
+### Icons
+
+`<.icon name="...">` renders [Material Symbols](https://fonts.google.com/icons).
+Use the snake_case form of the icon name (e.g. `dashboard`, `account_circle`,
+`keyboard_arrow_down`).
+
+---
+
+## Configuration notes
+
+### `:default_locale` placement
+
+`Cognit.LocalePlug` reads `:default_locale` at **compile time**, so the
+placement of the config call matters:
+
+- If your app's primary language is German, leave `:default_locale` unset in
+  `config/config.exs` (Cognit defaults to `"de"`) and set it only in
+  `config/test.exs` if your tests need a fixed locale.
+- If your app's primary language is anything else, set
+  `config :cognit, :default_locale, "en"` in `config/config.exs`.
+
+### Custom error translator
+
+If you configure `:error_translator_function`, the function receives a
+`{msg, opts}` tuple — the same shape Phoenix changeset errors use — and must
+return a translated string:
+
+```elixir
+def translate_error({msg, opts}) do
+  Gettext.dgettext(MyApp.Gettext, "errors", msg, opts)
+end
+```
+
+This is only consulted as a fallback when Cognit's bundled translations
+don't cover the msgid. Set
+`config :cognit, :use_default_error_translator, false` to bypass the bundled
+translations entirely.
+
+---
+
+## Parallel adoption
+
+Adopting Cognit into an app that already uses shadcn/ui, SaladUI,
+PhoenixUiComponents, or another Tailwind-based system risks clashes —
+duplicate `@tailwind base` rules, conflicting CSS variables, conflicting
+preset configs.
+
+The safe pattern is a **parallel asset pipeline**:
+
+1. **Separate CSS entrypoint** — e.g. `assets/css/cognit.css` that imports
+   `deps/cognit/assets/css/styles.css` and emits Cognit's Tailwind layers.
+2. **Separate Tailwind config** — `assets/tailwind.cognit.config.js`
+   extending Cognit's preset, scoped to Cognit-using templates only.
+3. **Separate esbuild profile** — emit `priv/static/assets/cognit.css` and
+   `cognit.js` alongside your existing `app.*` bundle.
+4. **Separate root layout** — Cognit-rendered LiveViews use a layout that
+   includes only the Cognit bundle; legacy pages keep their existing layout.
+
+Migrate routes from the legacy layout to the Cognit layout one at a time.
+Once the last legacy page is gone, collapse the two pipelines back into one.
+
+---
+
 ## Usage
 
 See the [Storybook](storybook/) for component examples and documentation.
