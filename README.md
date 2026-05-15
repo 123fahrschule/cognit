@@ -2,7 +2,7 @@
 
 Phoenix LiveView UI component library providing 40+ accessible, interactive components built with function components, JavaScript state machines, and LiveView hooks.
 
-Fork of [SaladUI](https://github.com/bluzky/salad_ui).
+Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## Features
 
@@ -324,6 +324,69 @@ nothing on click.
 `<.icon name="...">` renders [Material Symbols](https://fonts.google.com/icons).
 Use the snake_case form of the icon name (e.g. `dashboard`, `account_circle`,
 `keyboard_arrow_down`).
+
+---
+
+## Programmatic control
+
+Interactive components (`dialog`, `sheet`, `dropdown_menu`, `popover`,
+`tooltip`, `sidebar`, etc.) are JavaScript state machines. Each component
+listens for `salad_ui:command` events keyed by its `id`, so you can drive
+state transitions from either the server or the client.
+
+### From the server: `Cognit.LiveView.send_command/4`
+
+Use this inside a LiveView `handle_event/3` when the command depends on
+server-side state — e.g. close a sheet after a successful form save.
+
+```elixir
+alias Cognit.LiveView, as: CognitLV
+
+def handle_event("save_employee", %{"employee" => params}, socket) do
+  case save(params) do
+    {:ok, _} ->
+      {:noreply,
+       socket
+       |> put_flash(:info, "Saved")
+       |> CognitLV.send_command("employee-sheet", "close")}
+
+    {:error, changeset} ->
+      {:noreply, assign(socket, form: to_form(changeset))}
+  end
+end
+```
+
+Signature: `send_command(socket, component_id, command, params \\ %{})`.
+`command` is any state-machine transition the component supports — typically
+`"open"`, `"close"`, `"toggle"` for overlays.
+
+### From the client: `Cognit.JS.dispatch_command/3`
+
+Use this for pure UI interactions that don't need a server round-trip — e.g.
+a button that opens a dialog.
+
+```heex
+<.button phx-click={Cognit.JS.dispatch_command("open", to: "#confirm-dialog")}>
+  Delete
+</.button>
+```
+
+`dispatch_command/3` returns a `Phoenix.LiveView.JS` struct, so you can chain
+it with other JS commands:
+
+```heex
+<.button phx-click={
+  %JS{}
+  |> JS.push("track_click")
+  |> Cognit.JS.dispatch_command("open", to: "#confirm-dialog")
+}>
+  Delete
+</.button>
+```
+
+**Rule of thumb:** server-side `send_command/4` when the action follows data
+(form save → close sheet); client-side `dispatch_command/3` when it's pure UI
+(button → open dialog).
 
 ---
 
