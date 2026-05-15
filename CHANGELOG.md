@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.17
+
+### Features
+
+- **Badge**: Add `success` variant (green background for confirmation/positive states)
+- **Badge**: Add `number` boolean attribute that renders a circular badge sized for count display (`h-5 min-w-5`, centered)
+
 ## 0.2.16
 
 ### Bug Fixes
