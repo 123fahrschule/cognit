@@ -227,15 +227,20 @@ defmodule Cognit do
 
       import Cognit.CoreComponents
 
+      import Cognit.Components.AppSideNav
       import Cognit.Components.CopyButton
       import Cognit.Components.Flash
       import Cognit.Components.FormField
       import Cognit.Components.LocaleSelect
+      import Cognit.Components.LoginLayout
       import Cognit.Components.Logo
       import Cognit.Components.Page
-      import Cognit.Components.Table
       import Cognit.Components.Pagination
+      import Cognit.Components.Table
       import Cognit.Components.Topbar
+      import Cognit.Components.UserHelpers
+      import Cognit.Components.UserMenu
+      import Cognit.Components.UserSideNav
 
       alias Cognit.PaginationParams
     end

@@ -2,9 +2,6 @@ defmodule Storybook.Examples.AppShell do
   use PhoenixStorybook.Story, :example
   use Cognit
 
-  import Cognit.Components.AppSideNav
-  import Cognit.Components.UserSideNav
-
   @impl true
   def mount(_params, _session, socket) do
     {:ok,

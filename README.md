@@ -190,19 +190,9 @@ module.exports = {
 
 Most apps want the same layout: a sidebar on the left, a topbar across the
 top, and a page area below. Cognit ships the composed shell components for
-this in `Cognit.Components.*` — they are layout-scoped and not imported by
-`use Cognit`, so add them explicitly where you compose the shell (typically
-your `Layouts` module or root layout):
-
-```elixir
-defmodule MyAppWeb.Layouts do
-  use MyAppWeb, :html
-  use Cognit
-
-  import Cognit.Components.AppSideNav
-  import Cognit.Components.UserSideNav
-end
-```
+this in `Cognit.Components.*` (`app_side_nav`, `user_side_nav`, `topbar`,
+`page`, `login_layout`, etc.) — all imported by `use Cognit`, so they're
+available anywhere you compose the shell (typically your `Layouts` module).
 
 A complete shell looks like this:
 

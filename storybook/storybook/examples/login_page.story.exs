@@ -2,8 +2,6 @@ defmodule Storybook.Examples.LoginPage do
   use PhoenixStorybook.Story, :page
   use Cognit
 
-  import Cognit.Components.LoginLayout
-
   def render(assigns) do
     ~H"""
     <div class="h-[600px] rounded-lg border overflow-hidden">
