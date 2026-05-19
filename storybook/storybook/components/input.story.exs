@@ -2,8 +2,6 @@ defmodule Storybook.CognitComponents.Input do
   @moduledoc false
   use PhoenixStorybook.Story, :component
 
-  alias SaladStorybookWeb.CognitComponents
-
   def function, do: &Cognit.Input.input/1
 
   def template do
@@ -17,18 +15,67 @@ defmodule Storybook.CognitComponents.Input do
   def variations do
     [
       %VariationGroup{
-        id: :basic_inputs,
+        id: :text_inputs,
+        description: "Text-based input types.",
         variations:
-          for type <- ~w(text number date color)a do
+          for type <- ~w(text email password number tel url) do
             %Variation{
-              id: type,
+              id: String.to_atom(type),
               attributes: %{
-                type: to_string(type),
-                label: String.capitalize("#{type} input"),
+                type: type,
                 placeholder: String.capitalize("#{type} input")
               }
             }
           end
+      },
+      %VariationGroup{
+        id: :date_time_inputs,
+        description: "Date and time input types.",
+        variations:
+          for type <- ~w(date datetime-local time month week) do
+            %Variation{
+              id: type |> String.replace("-", "_") |> String.to_atom(),
+              attributes: %{
+                type: type
+              }
+            }
+          end
+      },
+      %VariationGroup{
+        id: :file_input,
+        description: "File picker input.",
+        variations: [
+          %Variation{
+            id: :file,
+            attributes: %{type: "file"}
+          },
+          %Variation{
+            id: :file_accept_images,
+            attributes: %{type: "file", accept: "image/*"}
+          }
+        ]
+      },
+      %VariationGroup{
+        id: :states,
+        description: "Common input states.",
+        variations: [
+          %Variation{
+            id: :with_value,
+            attributes: %{value: "Pre-filled value"}
+          },
+          %Variation{
+            id: :disabled,
+            attributes: %{disabled: true, placeholder: "Disabled input"}
+          },
+          %Variation{
+            id: :readonly,
+            attributes: %{readonly: true, value: "Read-only value"}
+          },
+          %Variation{
+            id: :required,
+            attributes: %{required: true, placeholder: "Required input"}
+          }
+        ]
       }
     ]
   end
