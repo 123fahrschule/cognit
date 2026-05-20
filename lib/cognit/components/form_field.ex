@@ -41,7 +41,7 @@ defmodule Cognit.Components.FormField do
   attr :disabled, :boolean, default: false
   attr :options, :list, default: []
   attr :multiple, :boolean, default: false
-  attr :checked, :boolean, default: false
+  attr :checked, :boolean
   attr :errors, :list
   attr :has_errors, :boolean, default: false
   attr :description, :string, default: nil
@@ -146,10 +146,15 @@ defmodule Cognit.Components.FormField do
   end
 
   def form_field(%{type: "checkbox"} = assigns) do
+    assigns =
+      assign_new(assigns, :checked, fn ->
+        Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
+      end)
+
     ~H"""
     <div class={@class}>
       <div class="flex items-center gap-2">
-        <.checkbox id={@id} name={@name} value={@value} {@rest} />
+        <.checkbox id={@id} name={@name} value={@checked} {@rest} />
         <.form_label :if={@label} for={@id}>
           {@label}
         </.form_label>
