@@ -78,7 +78,10 @@ defmodule Cognit.Button do
   slot :inner_block, required: true
 
   def button(assigns) do
-    assigns = assign(assigns, :variant_class, button_variant(assigns))
+    assigns =
+      assigns
+      |> assign(:variant_class, button_variant(assigns))
+      |> maybe_promote_as_link()
 
     ~H"""
     <.dynamic
@@ -97,4 +100,18 @@ defmodule Cognit.Button do
     </.dynamic>
     """
   end
+
+  # When the caller passes a link attr (navigate/patch/href) but leaves `as`
+  # at its default, render an `<a>` via `Phoenix.Component.link/1` so the
+  # navigation actually takes effect. Without this, the attrs flow through
+  # `@rest` onto a `<button>` and are inert.
+  defp maybe_promote_as_link(%{as: "button", rest: rest} = assigns) do
+    if Map.has_key?(rest, :navigate) or Map.has_key?(rest, :patch) or Map.has_key?(rest, :href) do
+      assign(assigns, :as, &Phoenix.Component.link/1)
+    else
+      assigns
+    end
+  end
+
+  defp maybe_promote_as_link(assigns), do: assigns
 end
