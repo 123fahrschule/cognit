@@ -52,7 +52,9 @@ defmodule Cognit.Input do
     assigns = prepare_assign(assigns)
 
     rest =
-      Map.merge(assigns.rest, Map.take(assigns, [:id, :name, :value, :type]))
+      assigns.rest
+      |> Map.merge(Map.take(assigns, [:id, :name, :value, :type]))
+      |> maybe_set_aria_invalid(assigns[:errors])
 
     assigns = assign(assigns, :rest, rest)
 
@@ -60,7 +62,7 @@ defmodule Cognit.Input do
     <input
       class={
         classes([
-          "h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-base shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-base shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           @class
         ])
       }
@@ -68,4 +70,9 @@ defmodule Cognit.Input do
     />
     """
   end
+
+  defp maybe_set_aria_invalid(rest, [_ | _]),
+    do: Map.put_new(rest, :"aria-invalid", "true")
+
+  defp maybe_set_aria_invalid(rest, _), do: rest
 end

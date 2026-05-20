@@ -76,6 +76,16 @@ defmodule Storybook.CognitComponents.Input do
             attributes: %{required: true, placeholder: "Required input"}
           }
         ]
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"can't be blank", []}]} %>
+            <.psb-variation field={f[:field]} placeholder="Placeholder" />
+          </.form>
+        """
       }
     ]
   end
