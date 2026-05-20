@@ -3,6 +3,16 @@
     "DEFAULT": "hsl(var(--accent))",
     "foreground": "hsl(var(--accent-foreground))"
   },
+  "alert": {
+    "DEFAULT": "hsl(var(--alert))",
+    "foreground": "hsl(var(--alert-foreground))",
+    "error": "hsl(var(--alert-error))",
+    "error-foreground": "hsl(var(--alert-error-foreground))",
+    "success": "hsl(var(--alert-success))",
+    "success-foreground": "hsl(var(--alert-success-foreground))",
+    "warning": "hsl(var(--alert-warning))",
+    "warning-foreground": "hsl(var(--alert-warning-foreground))"
+  },
   "background": "hsl(var(--background))",
   "border": "hsl(var(--border))",
   "card": {

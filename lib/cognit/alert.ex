@@ -13,7 +13,7 @@ defmodule Cognit.Alert do
         <.alert_description>This is a standard informational alert.</.alert_description>
       </.alert>
 
-      <.alert variant="destructive">
+      <.alert variant="error">
         <.alert_title>Error</.alert_title>
         <.alert_description>
           There was a problem with your request. Please try again.
@@ -42,7 +42,12 @@ defmodule Cognit.Alert do
 
   * `:variant` - The visual style of the alert. Available variants:
     * `"default"` - Standard alert styling (default)
-    * `"destructive"` - Red-tinted styling for errors and warnings
+    * `"info"` - Alias for standard alert styling
+    * `"error"` - Red-tinted styling for errors
+    * `"alert"` - Alias for error styling
+    * `"destructive"` - Alias for error styling
+    * `"success"` - Green-tinted styling for successful actions
+    * `"warning"` - Orange-tinted styling for warnings
   * `:class` - Additional CSS classes to apply to the alert container.
 
   ## Examples
@@ -52,12 +57,15 @@ defmodule Cognit.Alert do
         <.alert_description>This is an informational message.</.alert_description>
       </.alert>
 
-      <.alert variant="destructive" class="mt-4">
+      <.alert variant="warning" class="mt-4">
         <.alert_title>Warning</.alert_title>
         <.alert_description>This action cannot be undone.</.alert_description>
       </.alert>
   """
-  attr :variant, :string, default: "default", values: ~w(default destructive)
+  attr :variant, :string,
+    default: "default",
+    values: ~w(default info error alert destructive success warning)
+
   attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global, default: %{}
@@ -156,8 +164,17 @@ defmodule Cognit.Alert do
   @variants %{
     variant: %{
       "default" => "bg-background text-foreground",
+      "info" => "bg-background text-foreground",
+      "error" =>
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
+      "alert" =>
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
       "destructive" =>
-        "bg-background border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive [&>.icon]:text-destructive"
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
+      "success" =>
+        "bg-alert-success text-alert-success-foreground [&>svg]:text-alert-success-foreground [&>.icon]:text-alert-success-foreground",
+      "warning" =>
+        "bg-alert-warning text-alert-warning-foreground [&>svg]:text-alert-warning-foreground [&>.icon]:text-alert-warning-foreground"
     }
   }
 

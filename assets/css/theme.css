@@ -17,6 +17,14 @@
     --accent-foreground: 199 48% 22%;
     --destructive: 357 100% 45%;
     --destructive-foreground: 0 0% 98%;
+    --alert: 0 100% 96%;
+    --alert-foreground: 357 100% 45%;
+    --alert-error: 0 100% 96%;
+    --alert-error-foreground: 357 100% 45%;
+    --alert-success: 152 39% 94%;
+    --alert-success-foreground: 142 72% 29%;
+    --alert-warning: 35 100% 96%;
+    --alert-warning-foreground: 36 86% 50%;
     --border: 240 6% 90%;
     --input: 0 0% 90%;
     --ring: 0 0% 64%;
