@@ -72,6 +72,12 @@ defmodule Cognit.Components.Pagination do
     |> pagination()
   end
 
+  def pagination(%{pagination: page} = assigns) when is_struct(page, Scrivener.Page) do
+    assigns
+    |> assign(:pagination, PaginationParams.from(page))
+    |> pagination()
+  end
+
   def pagination(assigns) do
     ~H"""
     <div
