@@ -146,6 +146,30 @@ defmodule Storybook.CognitComponents.RadioGroup do
           value: "option-one",
           on_value_changed: "handle_radio_group_change"
         }
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"can't be blank", []}]} %>
+            <.psb-variation field={f[:field]} />
+          </.form>
+        """,
+        slots: [
+          """
+          <div class="flex flex-col space-y-2">
+            <div class="flex items-center space-x-2">
+              <.radio_group_item value="option-one" id="option-one-error" />
+              <.label for="option-one-error">Option One</.label>
+            </div>
+            <div class="flex items-center space-x-2">
+              <.radio_group_item value="option-two" id="option-two-error" />
+              <.label for="option-two-error">Option Two</.label>
+            </div>
+          </div>
+          """
+        ]
       }
     ]
   end

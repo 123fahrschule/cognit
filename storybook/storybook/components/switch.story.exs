@@ -52,6 +52,16 @@ defmodule Storybook.CognitComponents.Switch do
           checked: true,
           "on-checked-changed": "on_checked"
         }
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"must be enabled", []}]} %>
+            <.psb-variation id="switch-error" field={f[:field]} />
+          </.form>
+        """
       }
     ]
   end

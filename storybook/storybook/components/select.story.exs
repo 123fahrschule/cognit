@@ -146,6 +146,32 @@ defmodule Storybook.CognitComponents.Select do
             </.select_content>
           """
         ]
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        attributes: %{
+          id: "error-select",
+          "use-portal": false
+        },
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"can't be blank", []}]} %>
+            <.psb-variation field={f[:field]} />
+          </.form>
+        """,
+        let: :select,
+        slots: [
+          """
+            <.select_trigger class="w-[180px]">
+              <.select_value placeholder="Select a fruit" />
+            </.select_trigger>
+            <.select_content>
+              <.select_item value="apple">Apple</.select_item>
+              <.select_item value="banana">Banana</.select_item>
+            </.select_content>
+          """
+        ]
       }
     ]
   end

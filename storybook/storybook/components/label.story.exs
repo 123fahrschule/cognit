@@ -12,6 +12,15 @@ defmodule Storybook.CognitComponents.Label do
           "html-for" => "some_id"
         },
         slots: ["I'm a label"]
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        attributes: %{
+          "html-for" => "some_id",
+          class: "text-destructive"
+        },
+        slots: ["I'm a label"]
       }
     ]
   end

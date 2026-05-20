@@ -27,6 +27,19 @@ defmodule Storybook.CognitComponents.Checkbox do
         <.label for="unchecked">I'm a label</.label>
         </div>
         """
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"must be accepted", []}]} %>
+            <div class="flex items-center space-x-2">
+              <.psb-variation field={f[:field]} />
+              <.label for={f[:field].id}>I'm a label</.label>
+            </div>
+          </.form>
+        """
       }
     ]
   end

@@ -20,6 +20,16 @@ defmodule Storybook.CognitComponents.Textarea do
           disabled: true,
           placeholder: "I'm disabled"
         }
+      },
+      %Variation{
+        id: :error,
+        description: "Error",
+        template: """
+          <.form for={%{}} as={:story} :let={f} class="w-full">
+            <% f = %{f | params: %{"field" => ""}, errors: [field: {"can't be blank", []}]} %>
+            <.psb-variation field={f[:field]} placeholder="Placeholder" />
+          </.form>
+        """
       }
     ]
   end
