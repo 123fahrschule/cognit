@@ -70,9 +70,4 @@ defmodule Cognit.Input do
     />
     """
   end
-
-  defp maybe_set_aria_invalid(rest, [_ | _]),
-    do: Map.put_new(rest, :"aria-invalid", "true")
-
-  defp maybe_set_aria_invalid(rest, _), do: rest
 end

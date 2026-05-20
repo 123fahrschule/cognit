@@ -32,6 +32,15 @@ defmodule Cognit.Helpers do
   end
 
   @doc """
+  Set `aria-invalid="true"` on a `:global` rest map when the given errors list is non-empty.
+  Respects an explicit caller-supplied `aria-invalid`.
+  """
+  def maybe_set_aria_invalid(rest, [_ | _]),
+    do: Map.put_new(rest, :"aria-invalid", "true")
+
+  def maybe_set_aria_invalid(rest, _), do: rest
+
+  @doc """
   Return the list of error messages from a form field.
 
   ## Options
