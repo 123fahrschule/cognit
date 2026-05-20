@@ -5,7 +5,13 @@ defmodule Cognit.Dialog do
   use Cognit, :component
 
   @doc """
-  Dialog component
+  Dialog component.
+
+  > #### `id` is required {: .info}
+  >
+  > The `id` attribute is consumed by the JS hook for command targeting and
+  > state management — omitting it raises a runtime error rather than a
+  > compile-time warning.
 
   ## Examples:
 
