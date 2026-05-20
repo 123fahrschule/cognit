@@ -43,8 +43,11 @@ defmodule Cognit.RadioGroup do
     event_map =
       add_event_mapping(%{}, assigns, "value-changed", :"on-value-changed")
 
+    rest = maybe_set_aria_invalid(assigns.rest, assigns[:errors])
+
     assigns =
       assigns
+      |> assign(:rest, rest)
       |> assign(:event_map, Jason.encode!(event_map))
       |> assign(
         :options,
@@ -56,7 +59,7 @@ defmodule Cognit.RadioGroup do
     ~H"""
     <div
       id={@id}
-      class={classes(["grid gap-2", @class])}
+      class={classes(["group/field grid gap-2", @class])}
       data-component="radio-group"
       data-state="idle"
       data-options={@options}
@@ -104,7 +107,7 @@ defmodule Cognit.RadioGroup do
       class={
         classes([
           "group/item",
-          "aspect-square h-4 w-4 rounded-full border border-primary text-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
+          "aspect-square h-4 w-4 rounded-full border border-primary text-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
           @class
         ])
       }

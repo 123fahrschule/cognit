@@ -48,13 +48,16 @@ defmodule Cognit.Checkbox do
         Phoenix.HTML.Form.normalize_value("checkbox", assigns.value)
       end)
 
+    rest = maybe_set_aria_invalid(assigns.rest, assigns[:errors])
+    assigns = assign(assigns, :rest, rest)
+
     ~H"""
     <input type="hidden" name={@name} value="false" />
     <input
       type="checkbox"
       class={
         classes([
-          "peer h-4 w-4 shrink-0 appearance-none rounded border border-input shadow-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 checked:border-primary checked:bg-primary",
+          "peer h-4 w-4 shrink-0 appearance-none rounded border border-input shadow-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 checked:border-primary checked:bg-primary",
           @class
         ])
       }

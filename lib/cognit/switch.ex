@@ -43,8 +43,11 @@ defmodule Cognit.Switch do
     event_map =
       add_event_mapping(%{}, assigns, "checked-changed", :"on-checked-changed")
 
+    rest = maybe_set_aria_invalid(assigns.rest, assigns[:errors])
+
     assigns =
       assigns
+      |> assign(:rest, rest)
       |> assign(:event_map, json(event_map))
       |> assign(:initial_state, if(assigns.checked, do: "checked", else: "unchecked"))
       |> assign(
@@ -67,7 +70,7 @@ defmodule Cognit.Switch do
       data-disabled={@disabled}
       class={
         classes([
-          "peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+          "peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
           @class
         ])
       }
