@@ -163,10 +163,8 @@ defmodule Cognit.Alert do
 
   @variants %{
     variant: %{
-      "default" =>
-        "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
-      "info" =>
-        "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
+      "default" => "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
+      "info" => "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
       "error" =>
         "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
       "alert" =>
