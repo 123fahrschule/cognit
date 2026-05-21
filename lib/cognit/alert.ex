@@ -79,7 +79,7 @@ defmodule Cognit.Alert do
       data-part="root"
       class={
         classes([
-          "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>.icon~*]:pl-7 [&>.icon+div]:translate-y-[-3px] [&>.icon]:absolute [&>.icon]:left-4 [&>.icon]:top-4 [&>.icon]:text-foreground",
+          "relative w-full rounded-sm border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>.icon~*]:pl-7 [&>.icon+div]:translate-y-[-3px] [&>.icon]:absolute [&>.icon]:left-4 [&>.icon]:top-4 [&>.icon]:text-foreground",
           @variant_class,
           @class
         ])
@@ -114,7 +114,7 @@ defmodule Cognit.Alert do
     <h5
       class={
         classes([
-          "mb-1 font-medium leading-none tracking-tight",
+          "mb-1 text-sm font-medium leading-5",
           @class
         ])
       }
@@ -150,7 +150,7 @@ defmodule Cognit.Alert do
     <div
       class={
         classes([
-          "text-sm [&_p]:leading-relaxed",
+          "alert-description text-sm leading-5",
           @class
         ])
       }
@@ -163,18 +163,20 @@ defmodule Cognit.Alert do
 
   @variants %{
     variant: %{
-      "default" => "bg-background text-foreground",
-      "info" => "bg-background text-foreground",
+      "default" =>
+        "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
+      "info" =>
+        "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
       "error" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
       "alert" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
       "destructive" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground",
+        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
       "success" =>
-        "bg-alert-success text-alert-success-foreground [&>svg]:text-alert-success-foreground [&>.icon]:text-alert-success-foreground",
+        "bg-alert-success text-alert-success-foreground [&>svg]:text-alert-success-foreground [&>.icon]:text-alert-success-foreground [&_h5]:font-semibold",
       "warning" =>
-        "bg-alert-warning text-alert-warning-foreground [&>svg]:text-alert-warning-foreground [&>.icon]:text-alert-warning-foreground"
+        "bg-alert-warning text-alert-warning-foreground [&>svg]:text-alert-warning-foreground [&>.icon]:text-alert-warning-foreground [&_h5]:font-semibold"
     }
   }
 
