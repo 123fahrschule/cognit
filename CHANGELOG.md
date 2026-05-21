@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- **Alert**: Add error, success, warning, info, alert, and destructive variants with alert-specific color tokens
+- **Flash**: Style flash message kinds through the matching Alert variants
+- **Tooltip**: Restyle tooltip with dark background and lighter text
+
 ## 0.2.18
 
 ### Features

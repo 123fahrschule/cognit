@@ -29,9 +29,74 @@ defmodule Storybook.CognitComponents.Alert do
         attributes: %{}
       },
       %Variation{
-        id: :destructive,
+        id: :info_alias,
+        template: """
+        <.alert variant="info">
+          <.icon name="info" size="xs" />
+          <.alert_title>Heads up!</.alert_title>
+          <.alert_description>
+            You can add components to your app using the cli
+          </.alert_description>
+        </.alert>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :error,
+        template: """
+        <.alert variant="error">
+          <.icon name="error" size="xs" />
+          <.alert_title>Heads up!</.alert_title>
+          <.alert_description>
+            You can add components to your app using the cli
+          </.alert_description>
+        </.alert>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :alert_alias,
+        template: """
+        <.alert variant="alert">
+          <.icon name="warning" size="xs" />
+          <.alert_title>Heads up!</.alert_title>
+          <.alert_description>
+            You can add components to your app using the cli
+          </.alert_description>
+        </.alert>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :destructive_alias,
         template: """
         <.alert variant="destructive">
+          <.icon name="warning" size="xs" />
+          <.alert_title>Heads up!</.alert_title>
+          <.alert_description>
+            You can add components to your app using the cli
+          </.alert_description>
+        </.alert>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :success,
+        template: """
+        <.alert variant="success">
+          <.icon name="check_circle" size="xs" />
+          <.alert_title>Heads up!</.alert_title>
+          <.alert_description>
+            You can add components to your app using the cli
+          </.alert_description>
+        </.alert>
+        """,
+        attributes: %{}
+      },
+      %Variation{
+        id: :warning,
+        template: """
+        <.alert variant="warning">
           <.icon name="warning" size="xs" />
           <.alert_title>Heads up!</.alert_title>
           <.alert_description>

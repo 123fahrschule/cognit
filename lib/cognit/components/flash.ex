@@ -15,6 +15,8 @@ defmodule Cognit.Components.Flash do
   slot :icon
 
   def flash(assigns) do
+    assigns = update(assigns, :kind, &to_string/1)
+
     ~H"""
     <.alert id={@id} variant={alert_variant(@kind)} {@rest}>
       <%= if @icon != [] do %>
@@ -52,12 +54,15 @@ defmodule Cognit.Components.Flash do
         <.server_error_flash />
         <.flash
           :for={{kind, message} <- @flash}
-          id={"flash_" <> kind}
-          kind={kind}
+          id={"flash_" <> to_string(kind)}
+          kind={to_string(kind)}
           title={message}
           phx-hook="Cognit.FlashMessage"
-          data-type={kind}
-          phx-remove={JS.push("lv:clear-flash", value: %{key: kind}) |> hide("##{"flash_" <> kind}")}
+          data-type={to_string(kind)}
+          phx-remove={
+            JS.push("lv:clear-flash", value: %{key: kind})
+            |> hide("##{"flash_" <> to_string(kind)}")
+          }
         />
       </div>
     </div>
@@ -112,11 +117,19 @@ defmodule Cognit.Components.Flash do
     """
   end
 
-  defp alert_variant("error"), do: "destructive"
-  defp alert_variant(_), do: "default"
+  defp alert_variant("error"), do: "error"
+  defp alert_variant("alert"), do: "alert"
+  defp alert_variant("destructive"), do: "destructive"
+  defp alert_variant("success"), do: "success"
+  defp alert_variant("warning"), do: "warning"
+  defp alert_variant(_kind), do: "info"
 
+  defp alert_icon("alert"), do: "error"
+  defp alert_icon("destructive"), do: "error"
   defp alert_icon("error"), do: "error"
-  defp alert_icon(_), do: "info"
+  defp alert_icon("success"), do: "check_circle"
+  defp alert_icon("warning"), do: "warning"
+  defp alert_icon(_kind), do: "info"
 
   defp hide(js, selector) do
     JS.hide(js,
