@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.20
+
+### Features
+
+- **Forms**: Add `aria-invalid` error state styling to `input`, `checkbox`, `radio_group`, `select`, `switch`, and `textarea` — propagated via `maybe_set_aria_invalid` helper and styled through the Tailwind preset
+- **Button**: Auto-promote to a `Phoenix.Component.link/1` when `navigate`, `patch`, or `href` is passed without an explicit `as` — previously these attrs flowed through `@rest` onto a `<button>` and were inert
+- **Pagination**: Accept `%Scrivener.Page{}` directly — no need to construct `PaginationParams` manually
+
+### Bug Fixes
+
+- **FormField**: Propagate `checked` through the checkbox branch — switch from a hardcoded `false` default to `Phoenix.HTML.Form.normalize_value/2` so form-bound checkboxes render with the correct state
+- **Input**: Align the date/time picker icon to the right edge
+
+### Storybook
+
+- Add error variations for `checkbox`, `input`, `label`, `radio_group`, `select`, `switch`, and `textarea`
+
+### Docs
+
+- **Dialog**: Note that `id` is required by the JS hook
+
 ## 0.2.19
 
 ### Features
