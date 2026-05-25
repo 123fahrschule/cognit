@@ -65,16 +65,12 @@ class Collection {
         : this.options.defaultValue
           ? [this.options.defaultValue]
           : [];
-      return;
-    }
-
-    if (this.options.type === "single") {
+    } else if (this.options.type === "single") {
       this.values = Array.isArray(values) ? [values[0]] : [values];
     } else {
       this.values = Array.isArray(values) ? [...values] : [values];
     }
 
-    // Update selected state for all items
     this.updateSelectedStates();
   }
 

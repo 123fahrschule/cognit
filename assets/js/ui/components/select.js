@@ -499,12 +499,12 @@ class SelectComponent extends Component {
     // Sync value from server if provided
     const raw = this.options.value;
     if (raw !== undefined) {
-      const toStr = (v) => v == null || v === "" ? null : v.toString();
-      const normalized = raw == null || raw === ""
+      const toStr = (v) => (v == null ? null : v.toString());
+      const normalized = raw == null
         ? []
         : Array.isArray(raw)
-          ? raw.map((v) => toStr(v)).filter(Boolean)
-          : [toStr(raw)].filter(Boolean);
+          ? raw.map((v) => toStr(v)).filter((v) => v !== null)
+          : [toStr(raw)].filter((v) => v !== null);
       const current = this.collection.getValue(true);
       if (JSON.stringify(normalized.sort()) !== JSON.stringify(current.sort())) {
         this.collection.setValues(normalized.length ? normalized : null);
@@ -538,6 +538,9 @@ class SelectComponent extends Component {
       this.el.querySelectorAll("[data-part='item']"),
     );
     itemElements.forEach((element) => {
+      // Clear stale runtime state so the new SelectItem honors the initialState below
+      element.removeAttribute("data-state");
+
       const value = element.dataset.value;
       const isSelected = selectedValues.includes(value);
       const initialState = isSelected ? "checked" : "unchecked";

@@ -22,7 +22,7 @@ defmodule Cognit.Helpers do
   # use default value if value is not provided or empty
   def prepare_assign(assigns) do
     value =
-      if assigns[:value] in [nil, "", []] do
+      if assigns[:value] in [nil, []] do
         assigns[:"default-value"]
       else
         assigns[:value]
