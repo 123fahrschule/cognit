@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.21
+
+### Bug Fixes
+
+- **Select**: Keep an empty-string option value (e.g. an "Any" choice) through a `phx-change` form round-trip — previously selecting it and then another value left two items checked and flashed the trigger back to the placeholder
+
+### Storybook
+
+- Add a bug-reproduction story for the select empty-string value round-trip
+
 ## 0.2.20
 
 ### Features
