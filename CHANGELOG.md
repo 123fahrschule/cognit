@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.22
+
+### Storybook
+
+- **Copy Button**: Replace the Stripe-style fake API key in the example story with a non-secret placeholder so secret scanners don't flag it
+
 ## 0.2.21
 
 ### Bug Fixes

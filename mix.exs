@@ -1,7 +1,7 @@
 defmodule Cognit.MixProject do
   use Mix.Project
 
-  @version "0.2.21"
+  @version "0.2.22"
 
   def project do
     [
