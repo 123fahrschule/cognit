@@ -49,8 +49,8 @@ defmodule Storybook.CognitComponents.CopyButton do
           </.card_header>
           <.card_content>
             <div class="flex items-center justify-between gap-4 p-3 bg-muted rounded-lg">
-              <code class="text-sm font-mono flex-1 truncate">sk_live_51234567890abcdef</code>
-              <.copy_button value="sk_live_51234567890abcdef" />
+              <code class="text-sm font-mono flex-1 truncate">demo_api_key_0000000000000000</code>
+              <.copy_button value="demo_api_key_0000000000000000" />
             </div>
             <p class="text-sm text-muted-foreground mt-2">
               Keep your API key secure. Click to copy.
