@@ -47,6 +47,7 @@ defmodule Cognit do
   - `checkbox/1` - Binary choice inputs
   - `radio_group/1` - Single choice from multiple options
   - `select/1` - Dropdown selection menus
+  - `combobox/1` - Searchable select with single/multiple selection
   - `slider/1` - Range value selection
   - `switch/1` - Toggle controls
   - `form/1`, `form_item/1`, `form_label/1` - Form structure and validation
@@ -196,6 +197,7 @@ defmodule Cognit do
       import Cognit.Chart
       import Cognit.Checkbox
       import Cognit.Collapsible
+      import Cognit.Combobox
       import Cognit.ConfirmationDialog
       import Cognit.Dialog
       import Cognit.DropdownMenu

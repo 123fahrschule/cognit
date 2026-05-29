@@ -7,6 +7,7 @@ import "./css/material_symbols.css";
 /* SaladUI components */
 import "./js/ui/components/dialog.js";
 import "./js/ui/components/select.js";
+import "./js/ui/components/combobox.js";
 import "./js/ui/components/tabs.js";
 import "./js/ui/components/radio_group.js";
 import "./js/ui/components/popover.js";
