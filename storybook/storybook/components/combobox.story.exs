@@ -126,6 +126,42 @@ defmodule Storybook.CognitComponents.Combobox do
         ]
       },
       %Variation{
+        id: :selectable_groups,
+        description:
+          "Multiple-select with `selectable` groups. Click a group heading to " <>
+            "toggle all of its items at once (tri-state checkbox).",
+        attributes: %{
+          id: "grouped-combobox",
+          name: "stack[]",
+          multiple: true,
+          "use-portal": false
+        },
+        slots: [
+          """
+            <.combobox_trigger class="w-full">
+              <.combobox_value placeholder="Select your stack" />
+            </.combobox_trigger>
+            <.combobox_content>
+              <.combobox_input placeholder="Search..." />
+              <.combobox_empty>No match.</.combobox_empty>
+              <.combobox_list>
+                <.combobox_group selectable label="Backend">
+                  <.combobox_item value="elixir">Elixir</.combobox_item>
+                  <.combobox_item value="phoenix">Phoenix</.combobox_item>
+                  <.combobox_item value="ecto">Ecto</.combobox_item>
+                </.combobox_group>
+                <.combobox_separator />
+                <.combobox_group selectable label="Frontend">
+                  <.combobox_item value="liveview">LiveView</.combobox_item>
+                  <.combobox_item value="react">React</.combobox_item>
+                  <.combobox_item value="tailwind">Tailwind CSS</.combobox_item>
+                </.combobox_group>
+              </.combobox_list>
+            </.combobox_content>
+          """
+        ]
+      },
+      %Variation{
         id: :with_field,
         description:
           "Bound to a form field via `field={@form[:fruit]}`. " <>

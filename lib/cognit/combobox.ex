@@ -263,13 +263,71 @@ defmodule Cognit.Combobox do
     """
   end
 
+  attr :selectable, :boolean,
+    default: false,
+    doc:
+      "When true (multiple-select only), renders the `label` as a clickable row " <>
+        "that toggles all visible items in the group. Single-select ignores it."
+
+  attr :label, :string,
+    default: nil,
+    doc: "Group heading. Required to render the select-all row when `selectable` is set."
+
   attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
 
   def combobox_group(assigns) do
     ~H"""
-    <div data-part="group" class={classes(["data-[visible=false]:hidden", @class])} {@rest}>
+    <div
+      data-part="group"
+      data-selectable={@selectable}
+      class={classes(["data-[visible=false]:hidden", @class])}
+      {@rest}
+    >
+      <div
+        :if={@selectable and @label}
+        data-part="group-trigger"
+        role="button"
+        tabindex="0"
+        class="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none hover:bg-accent hover:text-accent-foreground"
+      >
+        <span
+          data-part="group-indicator"
+          data-group-state="unchecked"
+          class="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-input text-primary-foreground data-[group-state=checked]:border-primary data-[group-state=checked]:bg-primary data-[group-state=indeterminate]:border-primary data-[group-state=indeterminate]:bg-primary"
+        >
+          <svg
+            data-part="group-check"
+            hidden
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-3 w-3"
+          >
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
+          <svg
+            data-part="group-minus"
+            hidden
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-3 w-3"
+          >
+            <path d="M5 12h14"></path>
+          </svg>
+        </span>
+        {@label}
+      </div>
       {render_slot(@inner_block)}
     </div>
     """
