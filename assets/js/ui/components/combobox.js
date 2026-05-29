@@ -187,6 +187,27 @@ class ComboboxComponent extends SelectComponent {
     this.updateGroupIndicators();
   }
 
+  // Override only the multi-selection summary so its text comes from the
+  // server (translatable via the `selected-label` option). Placeholder and
+  // single-item label are left to Select's implementation.
+  updateValueDisplay() {
+    if (!this.valueDisplay) return;
+
+    const selectedValues = this.collection
+      .getValue(true)
+      .filter((v) => v !== "");
+
+    if (this.multiple && selectedValues.length > 1) {
+      const template = this.options.selectedLabel || "%{count} items selected";
+      this.valueDisplay.replaceChildren(
+        template.replace("%{count}", selectedValues.length),
+      );
+      return;
+    }
+
+    super.updateValueDisplay();
+  }
+
   // Collect the enabled, currently-visible items of a group.
   groupItems(group) {
     return Array.from(group.querySelectorAll('[data-part="item"]'))

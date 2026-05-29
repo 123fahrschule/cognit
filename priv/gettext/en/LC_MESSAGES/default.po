@@ -23,25 +23,25 @@ msgctxt "copy button, success feedback"
 msgid "Copied!"
 msgstr "Copied!"
 
-#: lib/cognit/components/flash.ex:74
+#: lib/cognit/components/flash.ex:79
 #, elixir-autogen, elixir-format
 msgctxt "flash message, live socket disconnected description"
 msgid "Attempting to reconnect"
 msgstr "Attempting to reconnect"
 
-#: lib/cognit/components/flash.ex:72
+#: lib/cognit/components/flash.ex:77
 #, elixir-autogen, elixir-format
 msgctxt "flash message, live socket disconnected title"
 msgid "We can't find the internet"
 msgstr "We can't find the internet"
 
-#: lib/cognit/components/flash.ex:98
+#: lib/cognit/components/flash.ex:103
 #, elixir-autogen, elixir-format
 msgctxt "flash message, live view crashed description"
 msgid "Hang in there while we get back on track"
 msgstr "Hang in there while we get back on track"
 
-#: lib/cognit/components/flash.ex:96
+#: lib/cognit/components/flash.ex:101
 #, elixir-autogen, elixir-format
 msgctxt "flash message, live view crashed title"
 msgid "Something went wrong!"
@@ -59,37 +59,37 @@ msgctxt "alert dialog, close button"
 msgid "Close"
 msgstr "Close"
 
-#: lib/cognit/dialog.ex:152
+#: lib/cognit/dialog.ex:158
 #, elixir-autogen, elixir-format
 msgctxt "dialog, close button"
 msgid "Close"
 msgstr "Close"
 
-#: lib/cognit/pagination.ex:235
+#: lib/cognit/pagination.ex:245
 #, elixir-autogen, elixir-format
 msgctxt "pagination, ellipsis aria label"
 msgid "More pages"
 msgstr "More pages"
 
-#: lib/cognit/pagination.ex:159
+#: lib/cognit/pagination.ex:166
 #, elixir-autogen, elixir-format
 msgctxt "pagination, next button text"
 msgid "Next"
 msgstr "Next"
 
-#: lib/cognit/pagination.ex:154
+#: lib/cognit/pagination.ex:161
 #, elixir-autogen, elixir-format
 msgctxt "pagination, next page aria label"
 msgid "Go to next page"
 msgstr "Go to next page"
 
-#: lib/cognit/pagination.ex:198
+#: lib/cognit/pagination.ex:208
 #, elixir-autogen, elixir-format
 msgctxt "pagination, previous button text"
 msgid "Previous"
 msgstr "Previous"
 
-#: lib/cognit/pagination.ex:183
+#: lib/cognit/pagination.ex:193
 #, elixir-autogen, elixir-format
 msgctxt "pagination, previous page aria label"
 msgid "Go to previous page"
@@ -101,10 +101,10 @@ msgctxt "sheet, close button"
 msgid "Close"
 msgstr "Close"
 
-#: lib/cognit/sidebar.ex:216
-#: lib/cognit/sidebar.ex:253
-#: lib/cognit/sidebar.ex:295
-#: lib/cognit/sidebar.ex:298
+#: lib/cognit/sidebar.ex:221
+#: lib/cognit/sidebar.ex:258
+#: lib/cognit/sidebar.ex:300
+#: lib/cognit/sidebar.ex:303
 #, elixir-autogen, elixir-format
 msgctxt "sidebar, toggle button"
 msgid "Toggle Sidebar"
@@ -116,55 +116,55 @@ msgctxt "user menu, fallback username"
 msgid "Unknown User"
 msgstr "Unknown User"
 
-#: lib/cognit/components/pagination.ex:86
+#: lib/cognit/components/pagination.ex:92
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "%{count} out of %{total} rows"
 msgstr "%{count} out of %{total} rows"
 
-#: lib/cognit/components/pagination.ex:151
+#: lib/cognit/components/pagination.ex:157
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "First page"
 msgstr "First page"
 
-#: lib/cognit/components/pagination.ex:181
+#: lib/cognit/components/pagination.ex:187
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Last page"
 msgstr "Last page"
 
-#: lib/cognit/components/pagination.ex:110
+#: lib/cognit/components/pagination.ex:116
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Next"
 msgstr "Next"
 
-#: lib/cognit/components/pagination.ex:171
+#: lib/cognit/components/pagination.ex:177
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Next page"
 msgstr "Next page"
 
-#: lib/cognit/components/pagination.ex:138
+#: lib/cognit/components/pagination.ex:144
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Page %{page} of %{total}"
 msgstr "Page %{page} of %{total}"
 
-#: lib/cognit/components/pagination.ex:101
+#: lib/cognit/components/pagination.ex:107
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Previous"
 msgstr "Previous"
 
-#: lib/cognit/components/pagination.ex:161
+#: lib/cognit/components/pagination.ex:167
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Previous page"
 msgstr "Previous page"
 
-#: lib/cognit/components/pagination.ex:118
+#: lib/cognit/components/pagination.ex:124
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Rows per page"
@@ -181,3 +181,9 @@ msgstr "Cancel"
 msgctxt "confirmation dialog action"
 msgid "Confirm"
 msgstr "Confirm"
+
+#: lib/cognit/combobox.ex:94
+#, elixir-autogen, elixir-format
+msgctxt "combobox"
+msgid "%{count} items selected"
+msgstr "%{count} items selected"
