@@ -53,7 +53,13 @@ class DropdownMenuComponent extends Component {
           },
           mouseMap: {
             trigger: {
-              click: (_e) => {
+              click: (e) => {
+                // Both the closed- and open-state trigger handlers are bound to
+                // the same element (each guarded by current state). Opening here
+                // flips the state to "open" synchronously, so without stopping
+                // immediate propagation the open-state handler below would fire
+                // on this very same click and instantly close the menu again.
+                e?.stopImmediatePropagation?.();
                 this.transition("open");
               },
             },
@@ -66,7 +72,8 @@ class DropdownMenuComponent extends Component {
           mouseMap: {
             // Clicking the trigger again while open toggles the menu closed.
             trigger: {
-              click: (_e) => {
+              click: (e) => {
+                e?.stopImmediatePropagation?.();
                 this.transition("close");
               },
             },
