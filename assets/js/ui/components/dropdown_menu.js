@@ -63,6 +63,14 @@ class DropdownMenuComponent extends Component {
           keyMap: {
             Escape: "close",
           },
+          mouseMap: {
+            // Clicking the trigger again while open toggles the menu closed.
+            trigger: {
+              click: (_e) => {
+                this.transition("close");
+              },
+            },
+          },
         },
       },
       hiddenConfig: {
