@@ -22,8 +22,9 @@ class ComboboxComponent extends SelectComponent {
     this.searchTimer = null;
     this.highlightedItem = null;
 
-    // Chips: render each selected value as a removable pill in the trigger.
-    this.chips = !!this.options.chips && this.multiple;
+    // Chips: an optional <.combobox_chips> container rendered below the trigger
+    // holds a removable pill per selected value. Multiple-select only.
+    this.chips = !!this.getPart("chips") && this.multiple;
     this.chipTemplate = this.getPart("chip-template");
     // value -> label text, used so chips can show a label even when the option
     // isn't currently rendered (server filtering with preselected values).
@@ -36,7 +37,7 @@ class ComboboxComponent extends SelectComponent {
         this.labelTextByValue.set(key, entry.label ?? key);
       }
     });
-    if (this.chips) this.updateValueDisplay();
+    if (this.chips) this.renderChips();
 
     if (this.input) {
       this.onInput = this.handleSearch.bind(this);
@@ -209,6 +210,7 @@ class ComboboxComponent extends SelectComponent {
   selectValue(value) {
     super.selectValue(value);
     this.updateGroupIndicators();
+    this.renderChips();
   }
 
   // Remember each rendered item's label by value. In server-filter mode a
@@ -253,11 +255,6 @@ class ComboboxComponent extends SelectComponent {
     const placeholder =
       this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
 
-    if (this.chips) {
-      this.renderChips(selectedValues, placeholder);
-      return;
-    }
-
     if (selectedValues.length === 0) {
       this.valueDisplay.replaceChildren(placeholder);
       return;
@@ -276,19 +273,15 @@ class ComboboxComponent extends SelectComponent {
     );
   }
 
-  renderChips(values, placeholder) {
-    if (!values.length) {
-      this.setChipsLayout(false);
-      this.valueDisplay.replaceChildren(placeholder);
-      return;
-    }
-    this.setChipsLayout(true);
-    this.valueDisplay.replaceChildren(...values.map((v) => this.buildChip(v)));
-  }
+  // Populate the optional <.combobox_chips> container with a removable chip per
+  // selected value. Labels come from labelTextByValue, so values whose option
+  // isn't rendered (server filtering) still show a proper label.
+  renderChips() {
+    const container = this.getPart("chips");
+    if (!container || !this.multiple) return;
 
-  setChipsLayout(on) {
-    this.valueDisplay.toggleAttribute("data-chips", on);
-    this.trigger?.toggleAttribute("data-chips", on);
+    const values = this.collection.getValue(true).filter((v) => v !== "");
+    container.replaceChildren(...values.map((v) => this.buildChip(v)));
   }
 
   buildChip(value) {
@@ -301,7 +294,7 @@ class ComboboxComponent extends SelectComponent {
 
     const remove = node.querySelector('[data-part="chip-remove"]');
     remove?.addEventListener("click", (e) => {
-      // Don't let the click reach the trigger button (which would open/close).
+      // Don't let the click bubble to an open dropdown / outside-click handler.
       e.stopPropagation();
       e.preventDefault();
       this.deselectValue(value);
@@ -322,6 +315,7 @@ class ComboboxComponent extends SelectComponent {
       .filter((v) => v !== value && v !== "");
     this.collection.setValues(next);
     this.updateValueDisplay();
+    this.renderChips();
     this.syncHiddenInputs();
     this.updateGroupIndicators();
     this.pushEvent("value-changed", { value: this.collection.getValue() });
@@ -352,6 +346,7 @@ class ComboboxComponent extends SelectComponent {
     });
 
     this.updateValueDisplay();
+    this.renderChips();
     this.syncHiddenInputs();
     this.updateGroupIndicators();
     this.pushEvent("value-changed", { value: this.collection.getValue() });
@@ -490,6 +485,9 @@ class ComboboxComponent extends SelectComponent {
         this.highlightItem(restored);
       }
     }
+
+    // Server may have patched the chips container away or sent fresh labels.
+    this.renderChips();
   }
 
   beforeDestroy() {

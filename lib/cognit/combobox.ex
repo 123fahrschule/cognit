@@ -36,15 +36,11 @@ defmodule Cognit.Combobox do
   attr :"default-value", :any, default: nil, doc: "The default value of the combobox"
   attr :multiple, :boolean, default: false, doc: "Allow multiple selection"
 
-  attr :chips, :boolean,
-    default: false,
-    doc: "Render each selected value as a removable chip in the trigger. Requires `multiple`."
-
   attr :selected, :list,
     default: [],
     doc:
-      "Labels for selected values, as a list of `%{value:, label:}` maps. Lets chips show a " <>
-        "label for values whose option isn't in the currently rendered list (e.g. server " <>
+      "Labels for selected values, as a list of `%{value:, label:}` maps. Lets `<.combobox_chips>` " <>
+        "show a label for values whose option isn't in the currently rendered list (e.g. server " <>
         "filtering with preselected values not yet loaded)."
 
   attr :filter, :string,
@@ -104,7 +100,6 @@ defmodule Cognit.Combobox do
           value: assigns.value,
           name: assigns.name,
           multiple: assigns.multiple,
-          chips: assigns.chips,
           selected: assigns.selected,
           filter: assigns.filter,
           debounce: assigns.debounce,
@@ -120,7 +115,7 @@ defmodule Cognit.Combobox do
     ~H"""
     <div
       id={@id}
-      class={classes(["relative inline-flex w-full", @class])}
+      class={classes(["relative inline-flex w-full flex-wrap", @class])}
       data-part="root"
       data-component="combobox"
       data-state="closed"
@@ -133,22 +128,45 @@ defmodule Cognit.Combobox do
       {render_slot(@inner_block)}
       <input name={@name} value="" data-input class="hidden" />
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore"></div>
-      <template :if={@chips} data-part="chip-template">
-        <span
-          data-part="chip"
-          class="inline-flex max-w-full items-center gap-1 rounded bg-secondary py-0.5 pl-2 pr-1 text-xs font-medium text-secondary-foreground"
-        >
-          <span data-part="chip-label" class="truncate"></span>
-          <.icon
-            name="close"
-            size="xs"
-            data-part="chip-remove"
-            label={pgettext("combobox", "Remove")}
-            class="pointer-events-auto shrink-0 cursor-pointer rounded-sm opacity-60 hover:opacity-100"
-          />
-        </span>
-      </template>
     </div>
+    """
+  end
+
+  @doc """
+  Renders selected items as removable chips outside the trigger (multiple-select).
+
+  Place it inside `<.combobox>`, next to the trigger; it stays empty until items
+  are selected and the trigger keeps its compact count summary. Chips for values
+  not in the rendered list (e.g. server filtering) show the label supplied via
+  the combobox `selected` attr, falling back to the raw value.
+  """
+  attr :class, :any, default: nil
+  attr :rest, :global
+
+  def combobox_chips(assigns) do
+    ~H"""
+    <div
+      data-part="chips"
+      class={classes(["flex w-full flex-wrap gap-1 empty:hidden", @class])}
+      {@rest}
+    >
+    </div>
+    <template data-part="chip-template">
+      <span
+        data-part="chip"
+        class="inline-flex max-w-full items-center gap-1 rounded bg-secondary py-0.5 pl-2 pr-1 text-xs font-medium text-secondary-foreground"
+      >
+        <span data-part="chip-label" class="truncate"></span>
+        <button
+          type="button"
+          data-part="chip-remove"
+          aria-label={pgettext("combobox", "Remove")}
+          class="flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm opacity-70 hover:bg-secondary-foreground/10 hover:opacity-100"
+        >
+          <.icon name="close" size="xs" decorative />
+        </button>
+      </span>
+    </template>
     """
   end
 
@@ -163,7 +181,7 @@ defmodule Cognit.Combobox do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[chips]:h-auto data-[chips]:min-h-[2.25rem] data-[chips]:py-1.5",
+          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           @class
         ])
       }
@@ -198,12 +216,7 @@ defmodule Cognit.Combobox do
     ~H"""
     <span
       data-part="value"
-      class={
-        classes([
-          "combobox-value pointer-events-none line-clamp-1 text-start data-[chips]:flex data-[chips]:flex-1 data-[chips]:flex-wrap data-[chips]:items-center data-[chips]:gap-1",
-          @class
-        ])
-      }
+      class={classes(["combobox-value pointer-events-none text-start", @class])}
       data-placeholder={@placeholder}
       {@rest}
     >

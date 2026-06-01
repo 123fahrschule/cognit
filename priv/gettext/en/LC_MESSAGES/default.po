@@ -182,13 +182,13 @@ msgctxt "confirmation dialog action"
 msgid "Confirm"
 msgstr "Confirm"
 
-#: lib/cognit/combobox.ex:115
+#: lib/cognit/combobox.ex:110
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "%{count} items selected"
 msgstr "%{count} items selected"
 
-#: lib/cognit/combobox.ex:146
+#: lib/cognit/combobox.ex:163
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "Remove"

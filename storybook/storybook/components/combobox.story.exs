@@ -17,6 +17,7 @@ defmodule Storybook.CognitComponents.Combobox do
          combobox_content: 1,
          combobox_input: 1,
          combobox_empty: 1,
+         combobox_chips: 1,
          combobox_list: 1,
          combobox_group: 1,
          combobox_label: 1,
@@ -120,6 +121,36 @@ defmodule Storybook.CognitComponents.Combobox do
                   <.combobox_item value="orange">Orange</.combobox_item>
                   <.combobox_item value="pineapple">Pineapple</.combobox_item>
                 </.combobox_group>
+              </.combobox_list>
+            </.combobox_content>
+          """
+        ]
+      },
+      %Variation{
+        id: :multiple_chips,
+        description: "Multiple selection with removable chips rendered below the trigger",
+        attributes: %{
+          id: "chips-combobox",
+          name: "fruits[]",
+          multiple: true,
+          value: ["apple", "banana"],
+          "use-portal": false
+        },
+        slots: [
+          """
+            <.combobox_trigger class="w-full">
+              <.combobox_value placeholder="Select fruits" />
+            </.combobox_trigger>
+            <.combobox_chips class="mt-1.5" />
+            <.combobox_content>
+              <.combobox_input placeholder="Search fruits..." />
+              <.combobox_empty>No fruit found.</.combobox_empty>
+              <.combobox_list>
+                <.combobox_item value="apple">Apple</.combobox_item>
+                <.combobox_item value="banana">Banana</.combobox_item>
+                <.combobox_item value="blueberry">Blueberry</.combobox_item>
+                <.combobox_item value="orange">Orange</.combobox_item>
+                <.combobox_item value="pineapple">Pineapple</.combobox_item>
               </.combobox_list>
             </.combobox_content>
           """

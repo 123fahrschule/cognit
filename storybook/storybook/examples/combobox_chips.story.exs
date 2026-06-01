@@ -89,7 +89,6 @@ defmodule Storybook.Examples.ComboboxChips do
         <.combobox
           field={@form[:countries]}
           multiple
-          chips
           filter="server"
           on-search="search"
           selected={@selected}
@@ -97,6 +96,7 @@ defmodule Storybook.Examples.ComboboxChips do
           <.combobox_trigger class="w-full">
             <.combobox_value placeholder="Select countries" />
           </.combobox_trigger>
+          <.combobox_chips class="mt-1.5" />
           <.combobox_content>
             <.combobox_input placeholder="Search country..." />
             <.combobox_empty>No country found.</.combobox_empty>
