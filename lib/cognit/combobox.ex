@@ -215,7 +215,7 @@ defmodule Cognit.Combobox do
   def combobox_input(assigns) do
     ~H"""
     <div data-part="input-wrapper" class="flex shrink-0 items-center border-b px-3">
-      <.icon name="search" class="mr-2 h-4 w-4 shrink-0 opacity-50" />
+      <.icon name="search" size="xs" class="mr-2 shrink-0 opacity-50" />
       <input
         type="text"
         data-part="input"
