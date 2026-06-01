@@ -342,7 +342,10 @@ class ComboboxComponent extends SelectComponent {
     items.forEach((el) => {
       const textEl = el.querySelector('[data-part="item-text"]') || el;
       const text = textEl.textContent.trim().toLowerCase();
-      const visible = query === "" || text.includes(query);
+      // In server mode the rendered items ARE the match set, so never hide them
+      // client-side — doing so would filter the stale list against a newer query
+      // (e.g. on each phx-change re-render) before the debounced server result.
+      const visible = this.serverFilter || query === "" || text.includes(query);
       el.setAttribute("data-visible", visible ? "true" : "false");
       if (visible) visibleCount++;
     });
