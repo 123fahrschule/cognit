@@ -280,7 +280,16 @@ class ComboboxComponent extends SelectComponent {
     const container = this.getPart("chips");
     if (!container || !this.multiple) return;
 
-    const values = this.collection.getValue(true).filter((v) => v !== "");
+    const values = this.collection
+      .getValue(true)
+      .filter((v) => v !== "")
+      // Sort by visible label so chip order is stable regardless of when each
+      // value was selected. Resolved labels work for unloaded values too.
+      .sort((a, b) =>
+        this.chipLabel(a).localeCompare(this.chipLabel(b), undefined, {
+          sensitivity: "base",
+        }),
+      );
     container.replaceChildren(...values.map((v) => this.buildChip(v)));
   }
 
