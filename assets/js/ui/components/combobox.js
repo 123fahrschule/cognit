@@ -26,15 +26,18 @@ class ComboboxComponent extends SelectComponent {
     // holds a removable pill per selected value. Multiple-select only.
     this.chips = !!this.getPart("chips") && this.multiple;
     this.chipTemplate = this.getPart("chip-template");
-    // value -> label text, used so chips can show a label even when the option
-    // isn't currently rendered (server filtering with preselected values).
+    // value -> label, used so the trigger value and chips can show a label even
+    // when the option isn't currently rendered (server filtering / preselected).
+    this.labelCache ??= new Map();
     this.labelTextByValue ??= new Map();
     (this.options.selected || []).forEach((entry) => {
       if (!entry || entry.value == null) return;
       const key = String(entry.value);
+      const label = entry.label ?? key;
       // Don't clobber a label already captured from a rendered item.
-      if (!this.labelTextByValue.has(key)) {
-        this.labelTextByValue.set(key, entry.label ?? key);
+      if (!this.labelTextByValue.has(key)) this.labelTextByValue.set(key, label);
+      if (!this.labelCache.has(key)) {
+        this.labelCache.set(key, document.createTextNode(label));
       }
     });
     if (this.chips) this.renderChips();
@@ -222,6 +225,14 @@ class ComboboxComponent extends SelectComponent {
     this.el.querySelectorAll('[data-part="item"]').forEach((el) => {
       const value = el.dataset.value;
       if (value == null) return;
+      // An explicit data-label wins, so items with rich content can still expose
+      // a plain label for the trigger value and chips.
+      const explicit = el.dataset.label;
+      if (explicit != null) {
+        this.labelCache.set(value, document.createTextNode(explicit));
+        this.labelTextByValue.set(value, explicit);
+        return;
+      }
       const text = el.querySelector('[data-part="item-text"]');
       if (text) {
         this.labelCache.set(value, text.cloneNode(true));
@@ -232,10 +243,14 @@ class ComboboxComponent extends SelectComponent {
 
   // Resolve a value's label node from the live collection, then the cache.
   labelFor(value) {
-    const live = this.collection
-      .getItemByValue(value)
-      ?.instance.el.querySelector('[data-part="item-text"]');
-    if (live) return live.cloneNode(true);
+    const item = this.collection.getItemByValue(value)?.instance.el;
+    if (item) {
+      if (item.dataset.label != null) {
+        return document.createTextNode(item.dataset.label);
+      }
+      const text = item.querySelector('[data-part="item-text"]');
+      if (text) return text.cloneNode(true);
+    }
     const cached = (this.labelCache ??= new Map()).get(value);
     return cached ? cached.cloneNode(true) : null;
   }

@@ -413,6 +413,13 @@ defmodule Cognit.Combobox do
 
   attr :value, :string, required: true
   attr :disabled, :boolean, default: false
+
+  attr :label, :string,
+    default: nil,
+    doc:
+      "Plain-text label used for the trigger value and chips. Defaults to the item's text " <>
+        "content; set it when the item renders rich/custom content."
+
   attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
@@ -422,6 +429,7 @@ defmodule Cognit.Combobox do
     <div
       data-part="item"
       data-value={@value}
+      data-label={@label}
       data-disabled={@disabled}
       class={
         classes([

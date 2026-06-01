@@ -157,6 +157,50 @@ defmodule Storybook.CognitComponents.Combobox do
         ]
       },
       %Variation{
+        id: :custom_item_content,
+        description:
+          "Rich item content with a plain `label` used for the trigger value and chips",
+        attributes: %{
+          id: "custom-content-combobox",
+          name: "people[]",
+          multiple: true,
+          value: ["ada"],
+          "use-portal": false
+        },
+        slots: [
+          """
+            <.combobox_trigger class="w-full">
+              <.combobox_value placeholder="Assign people" />
+            </.combobox_trigger>
+            <.combobox_chips class="mt-1.5" />
+            <.combobox_content>
+              <.combobox_input placeholder="Search people..." />
+              <.combobox_empty>No match.</.combobox_empty>
+              <.combobox_list>
+                <.combobox_item value="ada" label="Ada Lovelace">
+                  <div class="flex flex-col">
+                    <span class="font-medium">Ada Lovelace</span>
+                    <span class="text-xs text-muted-foreground">ada@example.com</span>
+                  </div>
+                </.combobox_item>
+                <.combobox_item value="alan" label="Alan Turing">
+                  <div class="flex flex-col">
+                    <span class="font-medium">Alan Turing</span>
+                    <span class="text-xs text-muted-foreground">alan@example.com</span>
+                  </div>
+                </.combobox_item>
+                <.combobox_item value="grace" label="Grace Hopper">
+                  <div class="flex flex-col">
+                    <span class="font-medium">Grace Hopper</span>
+                    <span class="text-xs text-muted-foreground">grace@example.com</span>
+                  </div>
+                </.combobox_item>
+              </.combobox_list>
+            </.combobox_content>
+          """
+        ]
+      },
+      %Variation{
         id: :selectable_groups,
         description:
           "Multiple-select with `selectable` groups. Click a group heading to " <>
