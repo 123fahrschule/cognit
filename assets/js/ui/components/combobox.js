@@ -22,6 +22,22 @@ class ComboboxComponent extends SelectComponent {
     this.searchTimer = null;
     this.highlightedItem = null;
 
+    // Chips: render each selected value as a removable pill in the trigger.
+    this.chips = !!this.options.chips && this.multiple;
+    this.chipTemplate = this.getPart("chip-template");
+    // value -> label text, used so chips can show a label even when the option
+    // isn't currently rendered (server filtering with preselected values).
+    this.labelTextByValue ??= new Map();
+    (this.options.selected || []).forEach((entry) => {
+      if (!entry || entry.value == null) return;
+      const key = String(entry.value);
+      // Don't clobber a label already captured from a rendered item.
+      if (!this.labelTextByValue.has(key)) {
+        this.labelTextByValue.set(key, entry.label ?? key);
+      }
+    });
+    if (this.chips) this.updateValueDisplay();
+
     if (this.input) {
       this.onInput = this.handleSearch.bind(this);
       this.input.addEventListener("input", this.onInput);
@@ -200,11 +216,15 @@ class ComboboxComponent extends SelectComponent {
   // so the live collection can't resolve its label — fall back to this cache.
   cacheItemLabels() {
     this.labelCache ??= new Map();
+    this.labelTextByValue ??= new Map();
     this.el.querySelectorAll('[data-part="item"]').forEach((el) => {
       const value = el.dataset.value;
       if (value == null) return;
       const text = el.querySelector('[data-part="item-text"]');
-      if (text) this.labelCache.set(value, text.cloneNode(true));
+      if (text) {
+        this.labelCache.set(value, text.cloneNode(true));
+        this.labelTextByValue.set(value, text.textContent.trim());
+      }
     });
   }
 
@@ -233,6 +253,11 @@ class ComboboxComponent extends SelectComponent {
     const placeholder =
       this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
 
+    if (this.chips) {
+      this.renderChips(selectedValues, placeholder);
+      return;
+    }
+
     if (selectedValues.length === 0) {
       this.valueDisplay.replaceChildren(placeholder);
       return;
@@ -249,6 +274,57 @@ class ComboboxComponent extends SelectComponent {
     this.valueDisplay.replaceChildren(
       this.labelFor(selectedValues[0]) || placeholder,
     );
+  }
+
+  renderChips(values, placeholder) {
+    if (!values.length) {
+      this.setChipsLayout(false);
+      this.valueDisplay.replaceChildren(placeholder);
+      return;
+    }
+    this.setChipsLayout(true);
+    this.valueDisplay.replaceChildren(...values.map((v) => this.buildChip(v)));
+  }
+
+  setChipsLayout(on) {
+    this.valueDisplay.toggleAttribute("data-chips", on);
+    this.trigger?.toggleAttribute("data-chips", on);
+  }
+
+  buildChip(value) {
+    const node = this.chipTemplate?.content?.firstElementChild?.cloneNode(true);
+    if (!node) return document.createTextNode(this.chipLabel(value));
+
+    node.dataset.value = value;
+    const label = node.querySelector('[data-part="chip-label"]');
+    if (label) label.textContent = this.chipLabel(value);
+
+    const remove = node.querySelector('[data-part="chip-remove"]');
+    remove?.addEventListener("click", (e) => {
+      // Don't let the click reach the trigger button (which would open/close).
+      e.stopPropagation();
+      e.preventDefault();
+      this.deselectValue(value);
+    });
+
+    return node;
+  }
+
+  chipLabel(value) {
+    return this.labelTextByValue?.get(value) ?? value;
+  }
+
+  // Remove a value whether or not its option is currently rendered: the
+  // collection tracks selected values independently of the loaded item set.
+  deselectValue(value) {
+    const next = this.collection
+      .getValue(true)
+      .filter((v) => v !== value && v !== "");
+    this.collection.setValues(next);
+    this.updateValueDisplay();
+    this.syncHiddenInputs();
+    this.updateGroupIndicators();
+    this.pushEvent("value-changed", { value: this.collection.getValue() });
   }
 
   // Collect the enabled, currently-visible items of a group.

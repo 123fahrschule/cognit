@@ -36,6 +36,17 @@ defmodule Cognit.Combobox do
   attr :"default-value", :any, default: nil, doc: "The default value of the combobox"
   attr :multiple, :boolean, default: false, doc: "Allow multiple selection"
 
+  attr :chips, :boolean,
+    default: false,
+    doc: "Render each selected value as a removable chip in the trigger. Requires `multiple`."
+
+  attr :selected, :list,
+    default: [],
+    doc:
+      "Labels for selected values, as a list of `%{value:, label:}` maps. Lets chips show a " <>
+        "label for values whose option isn't in the currently rendered list (e.g. server " <>
+        "filtering with preselected values not yet loaded)."
+
   attr :filter, :string,
     values: ~w(client server),
     default: "client",
@@ -93,6 +104,8 @@ defmodule Cognit.Combobox do
           value: assigns.value,
           name: assigns.name,
           multiple: assigns.multiple,
+          chips: assigns.chips,
+          selected: assigns.selected,
           filter: assigns.filter,
           debounce: assigns.debounce,
           usePortal: assigns[:"use-portal"],
@@ -120,6 +133,21 @@ defmodule Cognit.Combobox do
       {render_slot(@inner_block)}
       <input name={@name} value="" data-input class="hidden" />
       <div hidden id={@id <> "_inputs_container"} data-inputs-container phx-update="ignore"></div>
+      <template :if={@chips} data-part="chip-template">
+        <span
+          data-part="chip"
+          class="inline-flex max-w-full items-center gap-1 rounded bg-secondary py-0.5 pl-2 pr-1 text-xs font-medium text-secondary-foreground"
+        >
+          <span data-part="chip-label" class="truncate"></span>
+          <.icon
+            name="close"
+            size="xs"
+            data-part="chip-remove"
+            label={pgettext("combobox", "Remove")}
+            class="pointer-events-auto shrink-0 cursor-pointer rounded-sm opacity-60 hover:opacity-100"
+          />
+        </span>
+      </template>
     </div>
     """
   end
@@ -135,7 +163,7 @@ defmodule Cognit.Combobox do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[chips]:h-auto data-[chips]:min-h-[2.25rem] data-[chips]:py-1.5",
           @class
         ])
       }
@@ -170,7 +198,12 @@ defmodule Cognit.Combobox do
     ~H"""
     <span
       data-part="value"
-      class={classes(["combobox-value pointer-events-none text-start", @class])}
+      class={
+        classes([
+          "combobox-value pointer-events-none line-clamp-1 text-start data-[chips]:flex data-[chips]:flex-1 data-[chips]:flex-wrap data-[chips]:items-center data-[chips]:gap-1",
+          @class
+        ])
+      }
       data-placeholder={@placeholder}
       {@rest}
     >
