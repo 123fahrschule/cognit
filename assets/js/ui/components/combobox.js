@@ -18,6 +18,8 @@ class ComboboxComponent extends SelectComponent {
     this.input = this.getPart("input");
     this.empty = this.getPart("empty");
     this.serverFilter = this.options.filter === "server";
+    this.searchDebounce = this.options.debounce || 0;
+    this.searchTimer = null;
     this.highlightedItem = null;
 
     if (this.input) {
@@ -312,9 +314,22 @@ class ComboboxComponent extends SelectComponent {
   handleSearch() {
     const query = this.input.value.trim().toLowerCase();
     if (this.serverFilter) {
-      this.pushEvent("search", { query });
+      this.dispatchSearch(query);
     } else {
       this.applyFilter(query);
+    }
+  }
+
+  // Debounce the server round-trip so we don't fire a search per keystroke.
+  dispatchSearch(query) {
+    if (this.searchTimer) clearTimeout(this.searchTimer);
+    if (this.searchDebounce > 0) {
+      this.searchTimer = setTimeout(() => {
+        this.searchTimer = null;
+        this.pushEvent("search", { query });
+      }, this.searchDebounce);
+    } else {
+      this.pushEvent("search", { query });
     }
   }
 
@@ -399,6 +414,7 @@ class ComboboxComponent extends SelectComponent {
   }
 
   beforeDestroy() {
+    if (this.searchTimer) clearTimeout(this.searchTimer);
     if (this.input && this.onInput) {
       this.input.removeEventListener("input", this.onInput);
     }

@@ -43,6 +43,12 @@ defmodule Cognit.Combobox do
       "Filtering mode. `client` filters rendered items by substring on the client. " <>
         "`server` skips local filtering and only dispatches the `on-search` event."
 
+  attr :debounce, :integer,
+    default: 0,
+    doc:
+      "Milliseconds to debounce the search query before dispatching `on-search`. " <>
+        "0 (default) dispatches on every keystroke. Only applies to `server` filtering."
+
   attr :"use-portal", :boolean, default: false, doc: "Whether to render the content in a portal"
   attr :"portal-container", :string, default: nil, doc: "CSS selector for the portal container"
   attr :"on-value-changed", :any, default: nil, doc: "Handler for value changed event"
@@ -88,6 +94,7 @@ defmodule Cognit.Combobox do
           name: assigns.name,
           multiple: assigns.multiple,
           filter: assigns.filter,
+          debounce: assigns.debounce,
           usePortal: assigns[:"use-portal"],
           portalContainer: assigns[:"portal-container"],
           selectedLabel:

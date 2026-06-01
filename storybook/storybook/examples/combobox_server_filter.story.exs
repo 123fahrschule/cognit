@@ -259,7 +259,7 @@ defmodule Storybook.Examples.ComboboxServerFilter do
 
       <.form for={@form} phx-change="validate" phx-submit="save" class="space-y-4">
         <div class="space-y-1.5">
-          <.combobox field={@form[:country]} filter="server" on-search="search">
+          <.combobox field={@form[:country]} filter="server" on-search="search" debounce={300}>
             <.combobox_trigger class="w-full">
               <.combobox_value placeholder="Select a country" />
             </.combobox_trigger>
