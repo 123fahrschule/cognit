@@ -89,9 +89,15 @@ class ComboboxComponent extends SelectComponent {
     }
 
     if (this.input) {
-      this.input.value = "";
-      this.applyFilter("");
-      queueMicrotask(() => this.input?.focus());
+      // Preserve any prior query across close/open. Re-applying the current
+      // value refreshes visibility/highlight/empty state; in server mode the
+      // rendered items are already the server-filtered subset for this query.
+      this.applyFilter(this.input.value.trim().toLowerCase());
+      queueMicrotask(() => {
+        this.input?.focus();
+        const len = this.input.value.length;
+        this.input.setSelectionRange?.(len, len);
+      });
     } else {
       this.highlightFirstSelectedOrVisible();
     }
@@ -187,15 +193,48 @@ class ComboboxComponent extends SelectComponent {
     this.updateGroupIndicators();
   }
 
-  // Override only the multi-selection summary so its text comes from the
-  // server (translatable via the `selected-label` option). Placeholder and
-  // single-item label are left to Select's implementation.
+  // Remember each rendered item's label by value. In server-filter mode a
+  // selected option drops out of the DOM once the query no longer matches it,
+  // so the live collection can't resolve its label — fall back to this cache.
+  cacheItemLabels() {
+    this.labelCache ??= new Map();
+    this.el.querySelectorAll('[data-part="item"]').forEach((el) => {
+      const value = el.dataset.value;
+      if (value == null) return;
+      const text = el.querySelector('[data-part="item-text"]');
+      if (text) this.labelCache.set(value, text.cloneNode(true));
+    });
+  }
+
+  // Resolve a value's label node from the live collection, then the cache.
+  labelFor(value) {
+    const live = this.collection
+      .getItemByValue(value)
+      ?.instance.el.querySelector('[data-part="item-text"]');
+    if (live) return live.cloneNode(true);
+    const cached = (this.labelCache ??= new Map()).get(value);
+    return cached ? cached.cloneNode(true) : null;
+  }
+
+  // Override the whole display so the single-item label survives the selected
+  // option being filtered out of the rendered list (server-filter mode). The
+  // multi-selection summary is translatable via the `selected-label` option.
   updateValueDisplay() {
     if (!this.valueDisplay) return;
+
+    this.cacheItemLabels();
 
     const selectedValues = this.collection
       .getValue(true)
       .filter((v) => v !== "");
+
+    const placeholder =
+      this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
+
+    if (selectedValues.length === 0) {
+      this.valueDisplay.replaceChildren(placeholder);
+      return;
+    }
 
     if (this.multiple && selectedValues.length > 1) {
       const template = this.options.selectedLabel || "%{count} items selected";
@@ -205,7 +244,9 @@ class ComboboxComponent extends SelectComponent {
       return;
     }
 
-    super.updateValueDisplay();
+    this.valueDisplay.replaceChildren(
+      this.labelFor(selectedValues[0]) || placeholder,
+    );
   }
 
   // Collect the enabled, currently-visible items of a group.
