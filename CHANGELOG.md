@@ -17,6 +17,18 @@
 
 - Add combobox example stories (chips, multi-select, server filtering, form field)
 
+## 0.2.24
+
+### Bug Fixes
+
+- **Dropdown Menu**: Fix a single trigger click toggling the menu open then immediately shut — click-to-open and click-again-to-close now each take one click
+
+## 0.2.23
+
+### Features
+
+- **Dropdown Menu**: Clicking the trigger again closes the menu (previously only an outside click or Escape did)
+
 ## 0.2.22
 
 ### Storybook
