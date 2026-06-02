@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.3.0
+
+### Features
+
+- **Combobox**: New searchable select component
+  - Single and multiple selection with keyboard navigation
+  - Client- or server-side filtering (`filter="server"` + `on-search`, with an optional `debounce`)
+  - Selectable groups — toggle a whole group from its heading
+  - Removable chips for selected values (`<.combobox_chips>`), including labels for preselected values not yet loaded (e.g. under server filtering)
+  - Rich item content with a plain `label` used for the trigger value and chips
+  - Translatable labels
+- **FormField**: New `type="combobox"`, reusing the `select_content` slot for the dropdown items
+
+### Storybook
+
+- Add combobox example stories (chips, multi-select, server filtering, form field)
+
 ## 0.2.22
 
 ### Storybook
