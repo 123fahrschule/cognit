@@ -47,7 +47,8 @@ msgctxt "flash message, live view crashed title"
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/cognit/components/form_field.ex:82
+#: lib/cognit/components/form_field.ex:83
+#: lib/cognit/components/form_field.ex:102
 #, elixir-autogen, elixir-format
 msgctxt "select placeholder"
 msgid "Select"
@@ -192,4 +193,16 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "Remove"
+msgstr ""
+
+#: lib/cognit/components/form_field.ex:106
+#, elixir-autogen, elixir-format
+msgctxt "combobox"
+msgid "No results found."
+msgstr ""
+
+#: lib/cognit/components/form_field.ex:105
+#, elixir-autogen, elixir-format
+msgctxt "combobox"
+msgid "Search..."
 msgstr ""

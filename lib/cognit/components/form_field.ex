@@ -2,6 +2,7 @@ defmodule Cognit.Components.FormField do
   use Cognit, :component
 
   import Cognit.Checkbox
+  import Cognit.Combobox
   import Cognit.Form
   import Cognit.Input
   import Cognit.Label
@@ -85,6 +86,31 @@ defmodule Cognit.Components.FormField do
           {render_slot(@select_content)}
         </.select_content>
       </.select>
+      <.form_description :if={@description}>
+        {@description}
+      </.form_description>
+      <.form_message errors={@errors} />
+    </.field_wrapper>
+    """
+  end
+
+  def form_field(%{type: "combobox"} = assigns) do
+    ~H"""
+    <.field_wrapper layout={@layout} label={@label} class={@class}>
+      <.combobox field={@form_field} multiple={@multiple}>
+        <.combobox_trigger disabled={@disabled}>
+          <.combobox_value placeholder={
+            @rest[:placeholder] || pgettext("select placeholder", "Select")
+          } />
+        </.combobox_trigger>
+        <.combobox_content>
+          <.combobox_input placeholder={pgettext("combobox", "Search...")} />
+          <.combobox_empty>{pgettext("combobox", "No results found.")}</.combobox_empty>
+          <.combobox_list>
+            {render_slot(@select_content)}
+          </.combobox_list>
+        </.combobox_content>
+      </.combobox>
       <.form_description :if={@description}>
         {@description}
       </.form_description>
