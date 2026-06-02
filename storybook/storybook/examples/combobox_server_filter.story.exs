@@ -197,6 +197,7 @@ defmodule Storybook.Examples.ComboboxServerFilter do
 
   @max_results 20
 
+  @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
@@ -208,6 +209,7 @@ defmodule Storybook.Examples.ComboboxServerFilter do
      |> assign_form(Booking.changeset())}
   end
 
+  @impl true
   def handle_event("search", %{"query" => query}, socket) do
     q = String.downcase(query)
 
@@ -243,6 +245,7 @@ defmodule Storybook.Examples.ComboboxServerFilter do
     end
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-md space-y-4 p-8">

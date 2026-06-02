@@ -42,6 +42,7 @@ defmodule Storybook.Examples.ComboboxChips do
   # Preselected from the tail of the list — not present in the initial page.
   @preselected ~w(Vietnam Zambia Zimbabwe)
 
+  @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
@@ -53,6 +54,7 @@ defmodule Storybook.Examples.ComboboxChips do
      |> assign_form(Trip.changeset(%Trip{countries: @preselected}))}
   end
 
+  @impl true
   def handle_event("search", %{"query" => query}, socket) do
     q = String.downcase(query)
 
@@ -73,6 +75,7 @@ defmodule Storybook.Examples.ComboboxChips do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-md space-y-4 p-8">

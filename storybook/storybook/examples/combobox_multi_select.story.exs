@@ -53,6 +53,7 @@ defmodule Storybook.Examples.ComboboxMultiSelect do
     "Go"
   ]
 
+  @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
@@ -61,6 +62,7 @@ defmodule Storybook.Examples.ComboboxMultiSelect do
      |> assign_form(Profile.changeset(%Profile{}, %{"skills" => ["Elixir", "Phoenix"]}))}
   end
 
+  @impl true
   def handle_event("validate", %{"profile" => params}, socket) do
     changeset =
       %Profile{}
@@ -85,6 +87,7 @@ defmodule Storybook.Examples.ComboboxMultiSelect do
     end
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-md space-y-4 p-8">
