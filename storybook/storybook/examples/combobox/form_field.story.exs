@@ -1,4 +1,4 @@
-defmodule Storybook.Examples.ComboboxFormField.Booking do
+defmodule Storybook.Examples.Combobox.FormField.Booking do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,7 +14,7 @@ defmodule Storybook.Examples.ComboboxFormField.Booking do
   end
 end
 
-defmodule Storybook.Examples.ComboboxFormField do
+defmodule Storybook.Examples.Combobox.FormField do
   @moduledoc """
   Example: a combobox rendered through `form_field` with `type="combobox"`.
 
@@ -25,7 +25,7 @@ defmodule Storybook.Examples.ComboboxFormField do
   use PhoenixStorybook.Story, :example
   use Cognit
 
-  alias Storybook.Examples.ComboboxFormField.Booking
+  alias Storybook.Examples.Combobox.FormField.Booking
 
   @fruits ~w(Apple Banana Blueberry Orange Pineapple Strawberry Watermelon)
 

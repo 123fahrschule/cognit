@@ -1,4 +1,4 @@
-defmodule Storybook.Examples.ComboboxChips.Trip do
+defmodule Storybook.Examples.Combobox.Chips.Trip do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,7 +14,7 @@ defmodule Storybook.Examples.ComboboxChips.Trip do
   end
 end
 
-defmodule Storybook.Examples.ComboboxChips do
+defmodule Storybook.Examples.Combobox.Chips do
   @moduledoc """
   Example: multi-select combobox rendering chips, with server-side filtering.
 
@@ -26,7 +26,7 @@ defmodule Storybook.Examples.ComboboxChips do
   use PhoenixStorybook.Story, :example
   use Cognit
 
-  alias Storybook.Examples.ComboboxChips.Trip
+  alias Storybook.Examples.Combobox.Chips.Trip
 
   @countries ~w(
     Afghanistan Albania Algeria Andorra Angola Argentina Armenia Australia Austria

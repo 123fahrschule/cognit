@@ -1,4 +1,4 @@
-defmodule Storybook.Examples.ComboboxServerFilter.Booking do
+defmodule Storybook.Examples.Combobox.ServerFilter.Booking do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,7 +14,7 @@ defmodule Storybook.Examples.ComboboxServerFilter.Booking do
   end
 end
 
-defmodule Storybook.Examples.ComboboxServerFilter do
+defmodule Storybook.Examples.Combobox.ServerFilter do
   @moduledoc """
   Example: combobox with server-side filtering, bound to a form.
 
@@ -26,7 +26,7 @@ defmodule Storybook.Examples.ComboboxServerFilter do
   use PhoenixStorybook.Story, :example
   use Cognit
 
-  alias Storybook.Examples.ComboboxServerFilter.Booking
+  alias Storybook.Examples.Combobox.ServerFilter.Booking
 
   @countries [
     "Afghanistan",

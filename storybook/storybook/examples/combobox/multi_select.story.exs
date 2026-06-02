@@ -1,4 +1,4 @@
-defmodule Storybook.Examples.ComboboxMultiSelect.Profile do
+defmodule Storybook.Examples.Combobox.MultiSelect.Profile do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -15,7 +15,7 @@ defmodule Storybook.Examples.ComboboxMultiSelect.Profile do
   end
 end
 
-defmodule Storybook.Examples.ComboboxMultiSelect do
+defmodule Storybook.Examples.Combobox.MultiSelect do
   @moduledoc """
   Example: multi-select combobox bound to a form.
 
@@ -26,7 +26,7 @@ defmodule Storybook.Examples.ComboboxMultiSelect do
   use PhoenixStorybook.Story, :example
   use Cognit
 
-  alias Storybook.Examples.ComboboxMultiSelect.Profile
+  alias Storybook.Examples.Combobox.MultiSelect.Profile
 
   @skills [
     "Elixir",
