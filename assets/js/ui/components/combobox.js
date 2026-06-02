@@ -21,6 +21,7 @@ class ComboboxComponent extends SelectComponent {
     this.searchDebounce = this.options.debounce || 0;
     this.searchTimer = null;
     this.highlightedItem = null;
+    this.suppressHighlightScroll = false;
 
     // Chips: an optional <.combobox_chips> container rendered below the trigger
     // holds a removable pill per selected value. Multiple-select only.
@@ -187,7 +188,12 @@ class ComboboxComponent extends SelectComponent {
     this.highlightedItem = collectionItem;
     if (collectionItem) {
       collectionItem.instance.el.setAttribute("data-highlighted", "true");
-      collectionItem.instance.el.scrollIntoView({ block: "nearest" });
+      // Skip scrolling during a server-driven DOM update: selecting an item
+      // re-renders the list, and re-highlighting must not yank the scroll
+      // position back to the top. Keyboard navigation still scrolls normally.
+      if (!this.suppressHighlightScroll) {
+        collectionItem.instance.el.scrollIntoView({ block: "nearest" });
+      }
     }
   }
 
@@ -484,34 +490,42 @@ class ComboboxComponent extends SelectComponent {
       this.highlightedItem?.instance?.value ?? null;
     this.highlightedItem = null;
 
-    super.onDomUpdate();
+    // Any re-highlighting below (here and inside applyFilter) must not scroll the
+    // list — otherwise selecting an item, which triggers this server re-render,
+    // would jump the scroll position back to the top.
+    this.suppressHighlightScroll = true;
+    try {
+      super.onDomUpdate();
 
-    if (this.input) {
-      this.applyFilter(this.input.value.trim().toLowerCase());
-    }
-
-    // If the dropdown is closed, strip any lingering highlight attributes so
-    // they don't show on next open. When open, restore the prior highlight
-    // (or leave whatever applyFilter chose as the first visible item).
-    if (this.state !== "open") {
-      this.el
-        .querySelectorAll('[data-part="item"][data-highlighted]')
-        .forEach((el) => el.removeAttribute("data-highlighted"));
-      this.highlightedItem = null;
-    } else if (prevHighlightedValue !== null) {
-      const restored = this.collection.getItemByValue(prevHighlightedValue);
-      if (
-        restored &&
-        this.isItemVisible(restored.instance.el) &&
-        !restored.instance.disabled &&
-        restored !== this.highlightedItem
-      ) {
-        this.highlightItem(restored);
+      if (this.input) {
+        this.applyFilter(this.input.value.trim().toLowerCase());
       }
-    }
 
-    // Server may have patched the chips container away or sent fresh labels.
-    this.renderChips();
+      // If the dropdown is closed, strip any lingering highlight attributes so
+      // they don't show on next open. When open, restore the prior highlight
+      // (or leave whatever applyFilter chose as the first visible item).
+      if (this.state !== "open") {
+        this.el
+          .querySelectorAll('[data-part="item"][data-highlighted]')
+          .forEach((el) => el.removeAttribute("data-highlighted"));
+        this.highlightedItem = null;
+      } else if (prevHighlightedValue !== null) {
+        const restored = this.collection.getItemByValue(prevHighlightedValue);
+        if (
+          restored &&
+          this.isItemVisible(restored.instance.el) &&
+          !restored.instance.disabled &&
+          restored !== this.highlightedItem
+        ) {
+          this.highlightItem(restored);
+        }
+      }
+
+      // Server may have patched the chips container away or sent fresh labels.
+      this.renderChips();
+    } finally {
+      this.suppressHighlightScroll = false;
+    }
   }
 
   beforeDestroy() {
