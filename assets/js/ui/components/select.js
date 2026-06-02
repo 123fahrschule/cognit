@@ -288,6 +288,13 @@ class SelectComponent extends Component {
     }
   }
 
+  // Element the content is positioned against. Defaults to the root; combobox
+  // overrides this to the trigger so chips rendered below the trigger don't push
+  // the menu down to the bottom of the control.
+  getPositionReference() {
+    return this.el;
+  }
+
   initializePositionedElement() {
     if (this.content && this.trigger && !this.positionedElement) {
       // Extract position config from content attributes
@@ -300,7 +307,7 @@ class SelectComponent extends Component {
       }
 
       // Create positioned element with modular architecture
-      this.positionedElement = new PositionedElement(this.content, this.el, {
+      this.positionedElement = new PositionedElement(this.content, this.getPositionReference(), {
         placement: side,
         alignment: "start",
         sideOffset: 4,

@@ -71,6 +71,12 @@ class ComboboxComponent extends SelectComponent {
     }
   }
 
+  // Anchor the dropdown to the trigger, not the root: chips render below the
+  // trigger and would otherwise push the menu to the bottom of the control.
+  getPositionReference() {
+    return this.trigger || this.el;
+  }
+
   getComponentConfig() {
     const base = super.getComponentConfig();
 
