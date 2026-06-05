@@ -279,6 +279,12 @@ class ComboboxComponent extends SelectComponent {
       .getValue(true)
       .filter((v) => v !== "");
 
+    // Activates the trigger's data-[placeholder]:text-muted-foreground styling
+    this.trigger?.toggleAttribute(
+      "data-placeholder",
+      selectedValues.length === 0,
+    );
+
     const placeholder =
       this.valueDisplay.getAttribute("data-placeholder") || "Select an option";
 
