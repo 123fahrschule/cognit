@@ -117,7 +117,7 @@ defmodule Cognit.Select do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           @class
         ])
       }
