@@ -258,11 +258,6 @@ class Collection {
 
     const isMultiple = this.options.type === "multiple";
 
-    // If it's already selected in single mode, do nothing
-    if (!isMultiple && item.selected && this.values.length === 1) {
-      return true;
-    }
-
     // For single selection, clear all other selections
     if (!isMultiple) {
       this.items.forEach((existingItem) => {
