@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.1
+
+### Features
+
+- **Select, Combobox**: Selecting the already-selected option in single-select mode deselects it and restores the placeholder
+
+### Bug Fixes
+
+- **Select, Combobox**: Placeholder text in the trigger now renders muted, matching input placeholders
+- **Input, Textarea, Select, Combobox**: Field border darkens on focus to match the design
+- **Select, Combobox, Switch**: Restore the subtle resting shadow (a `shadow-xs` class that doesn't exist in Tailwind v3 rendered none)
+
 ## 0.3.0
 
 ### Features
