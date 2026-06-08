@@ -46,6 +46,13 @@ defmodule Storybook.CognitComponents.Badge do
               variant: "success"
             },
             slots: ["Success"]
+          },
+          %Variation{
+            id: :color_warning,
+            attributes: %{
+              variant: "warning"
+            },
+            slots: ["Warning"]
           }
         ]
       },
@@ -88,6 +95,14 @@ defmodule Storybook.CognitComponents.Badge do
             id: :number_success,
             attributes: %{
               variant: "success",
+              number: true
+            },
+            slots: ["8"]
+          },
+          %Variation{
+            id: :number_warning,
+            attributes: %{
+              variant: "warning",
               number: true
             },
             slots: ["8"]

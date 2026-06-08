@@ -53,6 +53,7 @@ defmodule Cognit.Badge do
     * `"secondary"` - Secondary color with contrasting text
     * `"destructive"` - Typically red, for warning or error states
     * `"success"` - Green, for confirmation or positive states
+    * `"warning"` - Orange, for cautionary states
     * `"outline"` - Bordered style with no background
   * `:number` - When `true`, renders as a circular badge for displaying counts.
   * `:truncate_on` - Truncate the badge content after the specified number of characters.
@@ -71,7 +72,7 @@ defmodule Cognit.Badge do
   attr :class, :any, default: nil
 
   attr :variant, :string,
-    values: ~w(default secondary destructive success outline),
+    values: ~w(default secondary destructive success warning outline),
     default: "default",
     doc: "the badge variant style"
 
@@ -122,6 +123,7 @@ defmodule Cognit.Badge do
       "destructive" =>
         "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
       "success" => "border-transparent bg-success text-success-foreground hover:bg-success/80",
+      "warning" => "border-transparent bg-warning text-warning-foreground hover:bg-warning/80",
       "outline" => "text-foreground"
     }
   }
