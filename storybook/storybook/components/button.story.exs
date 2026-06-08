@@ -5,6 +5,8 @@ defmodule Storybook.CognitComponents.Button do
   # def function, do: &SaladStorybookWeb.CognitComponents.button/1
   def function, do: &Cognit.Button.button/1
 
+  def imports, do: [{Cognit.Icon, [icon: 1]}]
+
   def variations do
     [
       %VariationGroup{
@@ -65,6 +67,50 @@ defmodule Storybook.CognitComponents.Button do
             slots: ["Link"]
           }
         ]
+      },
+      %VariationGroup{
+        id: :sizes,
+        description: "Text size variations with `size` attribute.",
+        variations: [
+          %Variation{
+            id: :size_default,
+            slots: ["Default"]
+          },
+          %Variation{
+            id: :size_sm,
+            attributes: %{size: "sm"},
+            slots: ["Small"]
+          },
+          %Variation{
+            id: :size_lg,
+            attributes: %{size: "lg"},
+            slots: ["Large"]
+          }
+        ]
+      },
+      %Variation{
+        id: :size_icon,
+        template: """
+        <.button size="icon">
+          <.icon name="settings" size="xs" />
+        </.button>
+        """
+      },
+      %Variation{
+        id: :size_icon_sm,
+        template: """
+        <.button size="icon-sm">
+          <.icon name="settings" size="xs" />
+        </.button>
+        """
+      },
+      %Variation{
+        id: :size_icon_lg,
+        template: """
+        <.button size="icon-lg">
+          <.icon name="settings" size="xs" />
+        </.button>
+        """
       },
       %Variation{
         id: :custom_class,

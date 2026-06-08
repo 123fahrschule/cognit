@@ -28,6 +28,8 @@ defmodule Cognit.Button do
       * `"sm"` - Small size
       * `"lg"` - Large size
       * `"icon"` - Square button optimized for icons
+      * `"icon-sm"` - Small square icon button
+      * `"icon-lg"` - Large square icon button
   * `:rest` - Additional HTML attributes including `disabled`, `form`, `name`, `value`
 
   ## Examples
@@ -73,7 +75,7 @@ defmodule Cognit.Button do
     default: "default",
     doc: "the button variant style"
 
-  attr :size, :string, values: ~w(default sm lg icon), default: "default"
+  attr :size, :string, values: ~w(default sm lg icon icon-sm icon-lg), default: "default"
   attr :rest, :global, include: @rest_attributes
 
   slot :inner_block, required: true
