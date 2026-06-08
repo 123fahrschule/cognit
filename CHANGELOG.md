@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0
+
+### Features
+
+- **Theme**: New soft semantic colors — `primary`, `secondary`, `destructive`, `success`, `warning`, and `info` each gain a `*-soft` / `*-soft-foreground` token pair (tinted background with solid-color text) for low-emphasis status surfaces, with light and dark mode values
+- **Theme**: `info` is now a full semantic color with a solid `--info` / `--info-foreground` token (previously only a palette scale)
+- **Badge**: New `info` variant, plus soft tone variants — `primary-soft`, `secondary-soft`, `destructive-soft`, `success-soft`, `warning-soft`, and `info-soft`
+- **Alert**: The `info` variant now uses a soft blue tint instead of a plain background, and all variants now render correctly in dark mode
+
+### Storybook
+
+- **Foundation**: Document the soft semantic color tokens and the `info` semantic color
+- **Badge**: Add stories for the soft tone variants
+
 ## 0.4.0
 
 ### Features
