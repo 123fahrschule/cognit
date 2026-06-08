@@ -492,7 +492,7 @@ defmodule Storybook.Examples.EmployeeCrud do
                   </.table_cell>
                   <.table_cell>{emp.department}</.table_cell>
                   <.table_cell>
-                    <.badge variant={if emp.active, do: "default", else: "secondary"}>
+                    <.badge variant={if emp.active, do: "success", else: "secondary"}>
                       {if emp.active, do: "Active", else: "Inactive"}
                     </.badge>
                   </.table_cell>
