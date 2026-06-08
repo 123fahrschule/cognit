@@ -23,7 +23,7 @@ defmodule Storybook.CognitComponents.EmptyState do
       %Variation{
         id: :with_icon,
         attributes: %{
-          icon: "users",
+          icon: "group",
           title: "No users",
           description: "Add users to get started."
         }

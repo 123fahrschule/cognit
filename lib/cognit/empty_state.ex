@@ -16,7 +16,7 @@ defmodule Cognit.EmptyState do
 
       <.empty_state title="No messages" description="Your inbox is empty." />
 
-      <.empty_state icon="users" title="No users">
+      <.empty_state icon="group" title="No users">
         <.button>Add User</.button>
       </.empty_state>
   """
