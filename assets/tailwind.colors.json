@@ -13,6 +13,30 @@
     "warning": "hsl(var(--alert-warning))",
     "warning-foreground": "hsl(var(--alert-warning-foreground))"
   },
+  "primary-soft": {
+    "DEFAULT": "hsl(var(--primary-soft))",
+    "foreground": "hsl(var(--primary-soft-foreground))"
+  },
+  "secondary-soft": {
+    "DEFAULT": "hsl(var(--secondary-soft))",
+    "foreground": "hsl(var(--secondary-soft-foreground))"
+  },
+  "destructive-soft": {
+    "DEFAULT": "hsl(var(--destructive-soft))",
+    "foreground": "hsl(var(--destructive-soft-foreground))"
+  },
+  "success-soft": {
+    "DEFAULT": "hsl(var(--success-soft))",
+    "foreground": "hsl(var(--success-soft-foreground))"
+  },
+  "warning-soft": {
+    "DEFAULT": "hsl(var(--warning-soft))",
+    "foreground": "hsl(var(--warning-soft-foreground))"
+  },
+  "info-soft": {
+    "DEFAULT": "hsl(var(--info-soft))",
+    "foreground": "hsl(var(--info-soft-foreground))"
+  },
   "background": "hsl(var(--background))",
   "border": "hsl(var(--border))",
   "card": {
@@ -100,7 +124,9 @@
     "200": "hsl(var(--info-200))",
     "300": "hsl(var(--info-300))",
     "400": "hsl(var(--info-400))",
-    "500": "hsl(var(--info-500))"
+    "500": "hsl(var(--info-500))",
+    "DEFAULT": "hsl(var(--info))",
+    "foreground": "hsl(var(--info-foreground))"
   },
   "driving": {
     "50": "hsl(var(--driving-50))",

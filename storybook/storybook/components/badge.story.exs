@@ -53,6 +53,49 @@ defmodule Storybook.CognitComponents.Badge do
               variant: "warning"
             },
             slots: ["Warning"]
+          },
+          %Variation{
+            id: :color_info,
+            attributes: %{
+              variant: "info"
+            },
+            slots: ["Info"]
+          }
+        ]
+      },
+      %VariationGroup{
+        id: :badge_soft_variants,
+        description: "Soft tones: tinted background with solid color text.",
+        variations: [
+          %Variation{
+            id: :soft_primary,
+            attributes: %{variant: "primary-soft"},
+            slots: ["Primary"]
+          },
+          %Variation{
+            id: :soft_secondary,
+            attributes: %{variant: "secondary-soft"},
+            slots: ["Secondary"]
+          },
+          %Variation{
+            id: :soft_destructive,
+            attributes: %{variant: "destructive-soft"},
+            slots: ["Destructive"]
+          },
+          %Variation{
+            id: :soft_success,
+            attributes: %{variant: "success-soft"},
+            slots: ["Success"]
+          },
+          %Variation{
+            id: :soft_warning,
+            attributes: %{variant: "warning-soft"},
+            slots: ["Warning"]
+          },
+          %Variation{
+            id: :soft_info,
+            attributes: %{variant: "info-soft"},
+            slots: ["Info"]
           }
         ]
       },

@@ -54,6 +54,9 @@ defmodule Cognit.Badge do
     * `"destructive"` - Typically red, for warning or error states
     * `"success"` - Green, for confirmation or positive states
     * `"warning"` - Orange, for cautionary states
+    * `"info"` - Blue, for informational states
+    * `"*-soft"` - Tinted background with solid color text, e.g. `"destructive-soft"`,
+      `"success-soft"`, `"warning-soft"`, `"primary-soft"`, `"secondary-soft"`, `"info-soft"`
     * `"outline"` - Bordered style with no background
   * `:number` - When `true`, renders as a circular badge for displaying counts.
   * `:truncate_on` - Truncate the badge content after the specified number of characters.
@@ -72,7 +75,8 @@ defmodule Cognit.Badge do
   attr :class, :any, default: nil
 
   attr :variant, :string,
-    values: ~w(default secondary destructive success warning outline),
+    values:
+      ~w(default secondary destructive success warning info primary-soft secondary-soft destructive-soft success-soft warning-soft info-soft outline),
     default: "default",
     doc: "the badge variant style"
 
@@ -124,6 +128,19 @@ defmodule Cognit.Badge do
         "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
       "success" => "border-transparent bg-success text-success-foreground hover:bg-success/80",
       "warning" => "border-transparent bg-warning text-warning-foreground hover:bg-warning/80",
+      "info" => "border-transparent bg-info text-info-foreground hover:bg-info/80",
+      "primary-soft" =>
+        "border-transparent bg-primary-soft text-primary-soft-foreground hover:bg-primary-soft/80",
+      "secondary-soft" =>
+        "border-transparent bg-secondary-soft text-secondary-soft-foreground hover:bg-secondary-soft/80",
+      "destructive-soft" =>
+        "border-transparent bg-destructive-soft text-destructive-soft-foreground hover:bg-destructive-soft/80",
+      "success-soft" =>
+        "border-transparent bg-success-soft text-success-soft-foreground hover:bg-success-soft/80",
+      "warning-soft" =>
+        "border-transparent bg-warning-soft text-warning-soft-foreground hover:bg-warning-soft/80",
+      "info-soft" =>
+        "border-transparent bg-info-soft text-info-soft-foreground hover:bg-info-soft/80",
       "outline" => "text-foreground"
     }
   }

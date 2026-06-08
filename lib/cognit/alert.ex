@@ -164,17 +164,18 @@ defmodule Cognit.Alert do
   @variants %{
     variant: %{
       "default" => "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
-      "info" => "bg-background text-foreground [&_.alert-description]:text-muted-foreground",
+      "info" =>
+        "bg-info-soft text-info-soft-foreground [&>svg]:text-info-soft-foreground [&>.icon]:text-info-soft-foreground [&_h5]:font-semibold",
       "error" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
+        "bg-destructive-soft text-destructive-soft-foreground [&>svg]:text-destructive-soft-foreground [&>.icon]:text-destructive-soft-foreground [&_h5]:font-semibold",
       "alert" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
+        "bg-destructive-soft text-destructive-soft-foreground [&>svg]:text-destructive-soft-foreground [&>.icon]:text-destructive-soft-foreground [&_h5]:font-semibold",
       "destructive" =>
-        "bg-alert-error text-alert-error-foreground [&>svg]:text-alert-error-foreground [&>.icon]:text-alert-error-foreground [&_h5]:font-semibold",
+        "bg-destructive-soft text-destructive-soft-foreground [&>svg]:text-destructive-soft-foreground [&>.icon]:text-destructive-soft-foreground [&_h5]:font-semibold",
       "success" =>
-        "bg-alert-success text-alert-success-foreground [&>svg]:text-alert-success-foreground [&>.icon]:text-alert-success-foreground [&_h5]:font-semibold",
+        "bg-success-soft text-success-soft-foreground [&>svg]:text-success-soft-foreground [&>.icon]:text-success-soft-foreground [&_h5]:font-semibold",
       "warning" =>
-        "bg-alert-warning text-alert-warning-foreground [&>svg]:text-alert-warning-foreground [&>.icon]:text-alert-warning-foreground [&_h5]:font-semibold"
+        "bg-warning-soft text-warning-soft-foreground [&>svg]:text-warning-soft-foreground [&>.icon]:text-warning-soft-foreground [&_h5]:font-semibold"
     }
   }
 

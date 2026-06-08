@@ -233,6 +233,48 @@ defmodule Storybook.Foundation.Colors do
             class="bg-warning text-warning-foreground"
             var_name="--warning"
           />
+          <.semantic_color_card name="Info" class="bg-info text-info-foreground" var_name="--info" />
+        </div>
+      </.section>
+
+      <.section title="Soft Semantic Colors">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Tinted background paired with the solid color as foreground. Use for low-emphasis
+          status surfaces such as alerts and badges. Each tone exposes
+          <span class="font-mono">--*-soft</span>
+          and <span class="font-mono">--*-soft-foreground</span>.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <.semantic_color_card
+            name="Primary"
+            class="bg-primary-soft text-primary-soft-foreground"
+            var_name="--primary-soft"
+          />
+          <.semantic_color_card
+            name="Secondary"
+            class="bg-secondary-soft text-secondary-soft-foreground"
+            var_name="--secondary-soft"
+          />
+          <.semantic_color_card
+            name="Destructive"
+            class="bg-destructive-soft text-destructive-soft-foreground"
+            var_name="--destructive-soft"
+          />
+          <.semantic_color_card
+            name="Success"
+            class="bg-success-soft text-success-soft-foreground"
+            var_name="--success-soft"
+          />
+          <.semantic_color_card
+            name="Warning"
+            class="bg-warning-soft text-warning-soft-foreground"
+            var_name="--warning-soft"
+          />
+          <.semantic_color_card
+            name="Info"
+            class="bg-info-soft text-info-soft-foreground"
+            var_name="--info-soft"
+          />
         </div>
       </.section>
     </main>
