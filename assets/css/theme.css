@@ -25,6 +25,10 @@
     --alert-success-foreground: 142 72% 29%;
     --alert-warning: 35 100% 96%;
     --alert-warning-foreground: 36 86% 50%;
+    --success: 142 72% 29%;
+    --success-foreground: 0 0% 98%;
+    --warning: 36 86% 50%;
+    --warning-foreground: 0 0% 98%;
     --border: 240 6% 90%;
     --input: 0 0% 90%;
     --ring: 0 0% 64%;

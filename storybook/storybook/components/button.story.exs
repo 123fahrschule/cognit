@@ -37,6 +37,13 @@ defmodule Storybook.CognitComponents.Button do
             slots: ["Success"]
           },
           %Variation{
+            id: :color_warning,
+            attributes: %{
+              variant: "warning"
+            },
+            slots: ["Warning"]
+          },
+          %Variation{
             id: :color_outline,
             attributes: %{
               variant: "outline"
@@ -58,11 +65,6 @@ defmodule Storybook.CognitComponents.Button do
             slots: ["Link"]
           }
         ]
-      },
-      %VariationGroup{
-        id: :colors,
-        description: "Color variations with `variant` attribute.",
-        variations: []
       },
       %Variation{
         id: :custom_class,

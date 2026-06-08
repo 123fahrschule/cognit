@@ -72,7 +72,9 @@
     "200": "hsl(var(--warning-200))",
     "300": "hsl(var(--warning-300))",
     "400": "hsl(var(--warning-400))",
-    "500": "hsl(var(--warning-500))"
+    "500": "hsl(var(--warning-500))",
+    "DEFAULT": "hsl(var(--warning))",
+    "foreground": "hsl(var(--warning-foreground))"
   },
   "success": {
     "50": "hsl(var(--success-50))",
@@ -81,8 +83,8 @@
     "300": "hsl(var(--success-300))",
     "400": "hsl(var(--success-400))",
     "500": "hsl(var(--success-500))",
-    "DEFAULT": "hsl(var(--success-400))",
-    "foreground": "hsl(var(--neutral-100))"
+    "DEFAULT": "hsl(var(--success))",
+    "foreground": "hsl(var(--success-foreground))"
   },
   "error": {
     "50": "hsl(var(--error-50))",
