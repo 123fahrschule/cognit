@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.4.0
+
+### Features
+
+- **Button**: New `warning` variant, plus a subtle resting shadow on the solid variants
+- **Button**: New `icon-sm` and `icon-lg` icon-button sizes; the size scale now matches the design system (default 36px, small 32px, large 40px, with smaller text on small)
+- **Badge**: New `warning` variant
+- **Button, Badge**: The `success` variant now uses the brand green instead of the previous teal
+- **Badge**: Text badges are now rounded rectangles with medium-weight labels; number badges stay circular
+
+### Bug Fixes
+
+- **Sidebar**: Only the most specific matching nav item is highlighted as active
+- **Empty State**: Fix the blank icon in the icon example (used an invalid icon name)
+
+### Storybook
+
+- **Button, Badge**: Add stories for the new variants and sizes
+- **Foundation**: Document the `--success` and `--warning` semantic color tokens
+- **Employee CRUD**: Showcase the warning button, icon-button sizes, and a success status badge
+
 ## 0.3.1
 
 ### Features
