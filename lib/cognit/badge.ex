@@ -95,7 +95,7 @@ defmodule Cognit.Badge do
     <div
       class={
         classes([
-          "inline-flex items-center justify-center rounded-full border text-xs font-semibold transition-colors focus:outline-none focus:ring-[3px] focus:ring-ring/50",
+          "inline-flex items-center justify-center border text-xs font-medium transition-colors focus:outline-none focus:ring-[3px] focus:ring-ring/50",
           @size_class,
           @variant_class,
           @class
@@ -136,8 +136,8 @@ defmodule Cognit.Badge do
     Enum.map_join(variants, " ", fn {key, value} -> @variants[key][value] end)
   end
 
-  defp size_class(%{number: true}), do: "h-5 min-w-5 px-1"
-  defp size_class(_), do: "px-2.5 py-0.5"
+  defp size_class(%{number: true}), do: "h-5 min-w-5 px-1 rounded-full"
+  defp size_class(_), do: "px-2 py-0.5 rounded-md"
 
   defp get_tooltip_content(%{truncate_on: nil}), do: nil
 
