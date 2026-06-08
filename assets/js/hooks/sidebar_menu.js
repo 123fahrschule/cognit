@@ -9,17 +9,31 @@ export const SidebarMenu = {
       '[data-sidebar="menu-button"], [data-sidebar="menu-sub-button"]',
     );
 
+    // Only the most specific (longest) matching href stays active, so a parent
+    // like /admin doesn't light up on /admin/foo, and /admin/foo doesn't light
+    // up on /admin/foo/baz when baz is its own nav item.
+    let bestLength = -1;
     allButtons.forEach((button) => {
       const href = button.getAttribute("href");
-
-      if (href && (currentPath === href || currentPath.startsWith(href + "/"))) {
-        button.setAttribute("data-active", "true");
-      } else {
-        button.setAttribute("data-active", "false");
+      if (href && this.matchesPath(currentPath, href)) {
+        bestLength = Math.max(bestLength, href.length);
       }
     });
 
+    allButtons.forEach((button) => {
+      const href = button.getAttribute("href");
+      const active =
+        href &&
+        href.length === bestLength &&
+        this.matchesPath(currentPath, href);
+      button.setAttribute("data-active", active ? "true" : "false");
+    });
+
     this.openActiveCollapsibles();
+  },
+
+  matchesPath(currentPath, href) {
+    return currentPath === href || currentPath.startsWith(href + "/");
   },
 
   openActiveCollapsibles() {
