@@ -223,6 +223,16 @@ defmodule Storybook.Foundation.Colors do
             class="bg-destructive text-destructive-foreground"
             var_name="--destructive"
           />
+          <.semantic_color_card
+            name="Success"
+            class="bg-success text-success-foreground"
+            var_name="--success"
+          />
+          <.semantic_color_card
+            name="Warning"
+            class="bg-warning text-warning-foreground"
+            var_name="--warning"
+          />
         </div>
       </.section>
     </main>
