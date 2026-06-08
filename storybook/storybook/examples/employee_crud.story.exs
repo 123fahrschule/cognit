@@ -333,6 +333,7 @@ defmodule Storybook.Examples.EmployeeCrud do
      |> assign(:editing_id, id)
      |> assign(:form_sheet_title, "Edit Employee")
      |> assign_form(changeset)
+     |> push_command("details-sheet", "close")
      |> push_command("form-sheet", "open")}
   end
 
@@ -382,6 +383,18 @@ defmodule Storybook.Examples.EmployeeCrud do
      |> assign(:deleting_employee, nil)
      |> apply_filters()
      |> push_command("delete-dialog", "close")}
+  end
+
+  def handle_event("toggle_active", _, socket) do
+    %{all_employees: all, selected_employee: emp} = socket.assigns
+    updated = Enum.map(all, fn e -> if e.id == emp.id, do: %{e | active: !e.active}, else: e end)
+
+    {:noreply,
+     socket
+     |> assign(:all_employees, updated)
+     |> assign(:selected_employee, %{emp | active: !emp.active})
+     |> apply_filters()
+     |> push_command("details-sheet", "close")}
   end
 
   def render(assigns) do
@@ -457,8 +470,8 @@ defmodule Storybook.Examples.EmployeeCrud do
             </.select_content>
           </.select>
 
-          <.button variant="ghost" size="sm" phx-click="reset_filters">
-            <.icon name="close" size="sm" class="mr-1" /> Reset
+          <.button variant="ghost" size="icon" phx-click="reset_filters">
+            <.icon name="close" label="Reset filters" />
           </.button>
         </div>
 
@@ -740,10 +753,24 @@ defmodule Storybook.Examples.EmployeeCrud do
             </.tabs>
           </div>
 
-          <.sheet_footer class="border-t pt-4">
-            <.sheet_close>
-              <.button variant="outline">Close</.button>
-            </.sheet_close>
+          <.sheet_footer class="border-t pt-4 sm:justify-between">
+            <.button :if={@selected_employee.active} variant="warning" phx-click="toggle_active">
+              <.icon name="block" size="sm" class="mr-1" /> Deactivate
+            </.button>
+            <.button :if={!@selected_employee.active} variant="success" phx-click="toggle_active">
+              <.icon name="check" size="sm" class="mr-1" /> Activate
+            </.button>
+            <div class="flex items-center gap-2">
+              <.button
+                size="icon-lg"
+                phx-click={JS.push("edit_employee", value: %{id: @selected_employee.id})}
+              >
+                <.icon name="edit" label="Edit employee" />
+              </.button>
+              <.sheet_close>
+                <.button variant="outline">Close</.button>
+              </.sheet_close>
+            </div>
           </.sheet_footer>
         <% end %>
       </.sheet_content>
