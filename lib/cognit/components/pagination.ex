@@ -60,25 +60,9 @@ defmodule Cognit.Components.Pagination do
   attr :class, :any, default: nil
   attr :rest, :global
 
-  def pagination(%{pagination: %PaginationParams{} = p} = assigns) do
-    assigns
-    |> assign(
-      page: p.page,
-      total_pages: p.total_pages,
-      total_entries: p.total_entries,
-      page_size: p.page_size,
-      pagination: nil
-    )
-    |> pagination()
-  end
-
-  def pagination(%{pagination: page} = assigns) when is_struct(page, Scrivener.Page) do
-    assigns
-    |> assign(:pagination, PaginationParams.from(page))
-    |> pagination()
-  end
-
   def pagination(assigns) do
+    assigns = normalize_pagination(assigns)
+
     ~H"""
     <div
       id={@id}
@@ -192,6 +176,24 @@ defmodule Cognit.Components.Pagination do
       </div>
     </div>
     """
+  end
+
+  # Normalization happens inside the single pagination/1 clause rather than via
+  # recursive clauses: re-entering pagination/1 re-runs the compiled attr wrapper,
+  # which resets __given__, so assign/2 with a value equal to an attr default is
+  # treated as unchanged and stale dynamics are never re-rendered.
+  defp normalize_pagination(%{pagination: nil} = assigns), do: assigns
+
+  defp normalize_pagination(%{pagination: pagination} = assigns) do
+    p = PaginationParams.from(pagination)
+
+    assign(assigns,
+      page: p.page,
+      total_pages: p.total_pages,
+      total_entries: p.total_entries,
+      page_size: p.page_size,
+      pagination: nil
+    )
   end
 
   defp click_js(nil, _target, page, page_size),
