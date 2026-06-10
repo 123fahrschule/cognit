@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1
+
+### Bug Fixes
+
+- **Sidebar**: The active nav item now stays highlighted when the URL has a query string or hash, and updates correctly during live navigation
+
 ## 0.5.0
 
 ### Features
