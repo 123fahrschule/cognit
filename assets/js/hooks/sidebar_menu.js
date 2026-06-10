@@ -3,6 +3,10 @@ export const SidebarMenu = {
     this.updateActiveItems();
   },
 
+  updated() {
+    this.updateActiveItems();
+  },
+
   updateActiveItems() {
     const currentPath = window.location.pathname;
     const allButtons = this.el.querySelectorAll(
@@ -16,7 +20,7 @@ export const SidebarMenu = {
     allButtons.forEach((button) => {
       const href = button.getAttribute("href");
       if (href && this.matchesPath(currentPath, href)) {
-        bestLength = Math.max(bestLength, href.length);
+        bestLength = Math.max(bestLength, this.pathOf(href).length);
       }
     });
 
@@ -24,7 +28,7 @@ export const SidebarMenu = {
       const href = button.getAttribute("href");
       const active =
         href &&
-        href.length === bestLength &&
+        this.pathOf(href).length === bestLength &&
         this.matchesPath(currentPath, href);
       button.setAttribute("data-active", active ? "true" : "false");
     });
@@ -33,7 +37,12 @@ export const SidebarMenu = {
   },
 
   matchesPath(currentPath, href) {
-    return currentPath === href || currentPath.startsWith(href + "/");
+    const path = this.pathOf(href);
+    return currentPath === path || currentPath.startsWith(path + "/");
+  },
+
+  pathOf(href) {
+    return href.split(/[?#]/)[0];
   },
 
   openActiveCollapsibles() {
