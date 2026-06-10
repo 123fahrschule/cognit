@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.2
+
+### Bug Fixes
+
+- **Pagination**: The pager no longer shows stale page numbers when a value goes back to its default (e.g. navigating back to page 1)
+
 ## 0.5.1
 
 ### Bug Fixes
