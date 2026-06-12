@@ -65,8 +65,12 @@ defmodule Cognit.JS do
   end
 end
 
-defimpl Jason.Encoder, for: Phoenix.LiveView.JS do
-  def encode(value, opts) do
-    Jason.Encode.list(value.ops, opts)
+# Phoenix LiveView 1.2+ ships its own (identical) Jason.Encoder for
+# Phoenix.LiveView.JS; only define ours when an older version lacks it.
+unless Code.ensure_loaded?(Jason.Encoder.Phoenix.LiveView.JS) do
+  defimpl Jason.Encoder, for: Phoenix.LiveView.JS do
+    def encode(value, opts) do
+      Jason.Encode.list(value.ops, opts)
+    end
   end
 end
