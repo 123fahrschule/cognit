@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.3
+
+### Compatibility
+
+- Now compatible with Phoenix LiveView 1.2 (Phoenix LiveView 1.1 remains supported)
+
 ## 0.5.2
 
 ### Bug Fixes
