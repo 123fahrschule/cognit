@@ -90,8 +90,11 @@ defmodule Cognit.Combobox do
       |> add_event_mapping(assigns, "closed", :"on-close")
       |> add_event_mapping(assigns, "search", :"on-search")
 
+    rest = maybe_set_aria_invalid(assigns.rest, assigns[:errors])
+
     assigns =
       assigns
+      |> assign(:rest, rest)
       |> assign(:event_map, json(event_map))
       |> assign(
         :options,
@@ -115,7 +118,7 @@ defmodule Cognit.Combobox do
     ~H"""
     <div
       id={@id}
-      class={classes(["relative inline-flex w-full flex-wrap", @class])}
+      class={classes(["group/field relative inline-flex w-full flex-wrap", @class])}
       data-part="root"
       data-component="combobox"
       data-state="closed"
@@ -181,7 +184,7 @@ defmodule Cognit.Combobox do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           @class
         ])
       }

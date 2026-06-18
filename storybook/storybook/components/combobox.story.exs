@@ -262,6 +262,36 @@ defmodule Storybook.CognitComponents.Combobox do
             </.combobox_content>
           """
         ]
+      },
+      %Variation{
+        id: :error,
+        description: "Invalid state — red ring when the bound field has errors",
+        attributes: %{
+          id: "error-combobox",
+          "use-portal": false
+        },
+        template: """
+        <.form for={%{}} as={:story} :let={f} class="w-full max-w-sm">
+          <% f = %{f | params: %{"fruit" => ""}, errors: [fruit: {"can't be blank", []}]} %>
+          <.psb-variation field={f[:fruit]} />
+        </.form>
+        """,
+        slots: [
+          """
+            <.combobox_trigger class="w-full min-w-64">
+              <.combobox_value placeholder="Choose a fruit" />
+            </.combobox_trigger>
+            <.combobox_content>
+              <.combobox_input placeholder="Search fruit..." />
+              <.combobox_empty>No fruit found.</.combobox_empty>
+              <.combobox_list>
+                <.combobox_item value="apple">Apple</.combobox_item>
+                <.combobox_item value="banana">Banana</.combobox_item>
+                <.combobox_item value="blueberry">Blueberry</.combobox_item>
+              </.combobox_list>
+            </.combobox_content>
+          """
+        ]
       }
     ]
   end
