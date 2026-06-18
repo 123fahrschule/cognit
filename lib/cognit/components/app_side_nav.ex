@@ -2,13 +2,16 @@ defmodule Cognit.Components.AppSideNav do
   @moduledoc """
   App branding entry at the top of a sidebar. Renders an avatar, title, and optional subtitle.
 
-  Three rendering modes, selected automatically by the assigns you pass:
+  Four rendering modes, selected automatically by the assigns you pass:
 
   * **Dropdown** — provide an `inner_block`. Renders as a `dropdown_menu` trigger; the
     inner block becomes the menu content.
+  * **Link** — provide a navigation attr (`navigate`, `patch`, or `href`). Renders as an
+    `<a>` that performs the navigation.
   * **Button** — provide `on_click` (a `phx-click` value, e.g. a `JS` command). Renders
     as a clickable button with no menu.
-  * **Static** — provide neither. Renders as a non-interactive label.
+  * **Static** — provide none of the above. Renders as a non-interactive label with no
+    hover/active/focus styling.
   """
 
   use Cognit, :component
@@ -24,7 +27,10 @@ defmodule Cognit.Components.AppSideNav do
   attr :title, :string, required: true
   attr :subtitle, :string, default: "123Fahrschule"
   attr :on_click, :any, default: nil
-  attr :rest, :global
+
+  attr :rest, :global,
+    include:
+      ~w(download href hreflang ping referrerpolicy rel target navigate patch replace method csrf_token)
 
   slot :inner_block
 
@@ -53,16 +59,29 @@ defmodule Cognit.Components.AppSideNav do
     """
   end
 
-  def app_side_nav(%{on_click: on_click} = assigns) when on_click != nil do
+  def app_side_nav(assigns) do
+    link? = link_nav?(assigns.rest)
+    interactive? = link? or assigns.on_click != nil
+
+    as =
+      cond do
+        link? -> &link/1
+        assigns.on_click != nil -> "button"
+        true -> "div"
+      end
+
+    assigns = assign(assigns, as: as, interactive?: interactive?)
+
     ~H"""
-    <.sidebar_menu {@rest}>
+    <.sidebar_menu>
       <.sidebar_menu_item>
         <.sidebar_menu_button
           size="lg"
-          class={@class}
-          as="button"
+          as={@as}
           phx-click={@on_click}
+          class={classes([!@interactive? && "pointer-events-none", @class])}
           tooltip={side_nav_tooltip(@title, @subtitle)}
+          {@rest}
         >
           <.side_nav_content title={@title} subtitle={@subtitle} />
         </.sidebar_menu_button>
@@ -71,21 +90,8 @@ defmodule Cognit.Components.AppSideNav do
     """
   end
 
-  def app_side_nav(assigns) do
-    ~H"""
-    <.sidebar_menu {@rest}>
-      <.sidebar_menu_item>
-        <.sidebar_menu_button
-          size="lg"
-          class={@class}
-          as="div"
-          tooltip={side_nav_tooltip(@title, @subtitle)}
-        >
-          <.side_nav_content title={@title} subtitle={@subtitle} />
-        </.sidebar_menu_button>
-      </.sidebar_menu_item>
-    </.sidebar_menu>
-    """
+  defp link_nav?(rest) do
+    Map.has_key?(rest, :navigate) or Map.has_key?(rest, :patch) or Map.has_key?(rest, :href)
   end
 
   defp side_nav_content(assigns) do
