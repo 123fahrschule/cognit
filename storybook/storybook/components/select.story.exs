@@ -20,7 +20,8 @@ defmodule Storybook.CognitComponents.Select do
          select_value: 1,
          select_separator: 1
        ]},
-      {Cognit.Button, [button: 1]}
+      {Cognit.Button, [button: 1]},
+      {Cognit.Icon, [icon: 1]}
     ]
 
   def description do
@@ -57,6 +58,29 @@ defmodule Storybook.CognitComponents.Select do
                 <.select_item disabled value="grapes">Grapes</.select_item>
                 <.select_item value="pineapple">Pineapple</.select_item>
               </.select_group>
+            </.select_content>
+          """
+        ]
+      },
+      %Variation{
+        id: :with_leading_icon,
+        description: "A select with a leading icon before the value",
+        attributes: %{
+          id: "location-select",
+          name: "location",
+          "use-portal": false
+        },
+        let: :select,
+        slots: [
+          """
+            <.select_trigger class="w-[220px]">
+              <:leading><.icon name="location_on" size="xs" decorative /></:leading>
+              <.select_value placeholder="Location" />
+            </.select_trigger>
+            <.select_content>
+              <.select_item value="berlin">Berlin</.select_item>
+              <.select_item value="hamburg">Hamburg</.select_item>
+              <.select_item value="munich">Munich</.select_item>
             </.select_content>
           """
         ]

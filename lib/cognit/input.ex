@@ -48,6 +48,8 @@ defmodule Cognit.Input do
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
 
+  slot :leading, doc: "optional leading icon rendered inside the input"
+
   def input(assigns) do
     assigns = prepare_assign(assigns)
 
@@ -56,18 +58,22 @@ defmodule Cognit.Input do
       |> Map.merge(Map.take(assigns, [:id, :name, :value, :type]))
       |> maybe_set_aria_invalid(assigns[:errors])
 
-    assigns = assign(assigns, :rest, rest)
+    assigns =
+      assigns
+      |> assign(:rest, rest)
+      |> assign(
+        :base_class,
+        "h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-base shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+      )
 
     ~H"""
-    <input
-      class={
-        classes([
-          "h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-base shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          @class
-        ])
-      }
-      {@rest}
-    />
+    <div :if={@leading != []} class="relative">
+      <span class="pointer-events-none absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center text-muted-foreground">
+        {render_slot(@leading)}
+      </span>
+      <input class={classes([@base_class, "pl-9", @class])} {@rest} />
+    </div>
+    <input :if={@leading == []} class={classes([@base_class, @class])} {@rest} />
     """
   end
 end

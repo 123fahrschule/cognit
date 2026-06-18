@@ -175,6 +175,7 @@ defmodule Cognit.Combobox do
 
   attr :class, :any, default: nil
   slot :inner_block, required: true
+  slot :leading, doc: "optional leading icon rendered before the value"
   attr :rest, :global, include: ["disabled"]
 
   def combobox_trigger(assigns) do
@@ -184,12 +185,19 @@ defmodule Cognit.Combobox do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          "flex h-9 w-full items-center justify-between gap-2 whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           @class
         ])
       }
       {@rest}
     >
+      <span
+        :if={@leading != []}
+        data-part="leading"
+        class="!flex size-4 shrink-0 items-center justify-center"
+      >
+        {render_slot(@leading)}
+      </span>
       {render_slot(@inner_block)}
       <span class="h-4 w-4 opacity-50">
         <svg
@@ -219,7 +227,7 @@ defmodule Cognit.Combobox do
     ~H"""
     <span
       data-part="value"
-      class={classes(["combobox-value pointer-events-none text-start", @class])}
+      class={classes(["combobox-value pointer-events-none min-w-0 flex-1 text-start", @class])}
       data-placeholder={@placeholder}
       {@rest}
     >

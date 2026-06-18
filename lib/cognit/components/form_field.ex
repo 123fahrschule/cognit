@@ -51,6 +51,9 @@ defmodule Cognit.Components.FormField do
 
   slot :select_content
 
+  slot :leading,
+    doc: "optional leading icon rendered inside the input (select, combobox, text input)"
+
   def form_field(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(:field, nil)
@@ -80,6 +83,7 @@ defmodule Cognit.Components.FormField do
     <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.select field={@form_field} multiple={@multiple}>
         <.select_trigger disabled={@disabled}>
+          <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
           <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
         </.select_trigger>
         <.select_content>
@@ -99,6 +103,7 @@ defmodule Cognit.Components.FormField do
     <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.combobox field={@form_field} multiple={@multiple}>
         <.combobox_trigger disabled={@disabled}>
+          <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
           <.combobox_value placeholder={
             @rest[:placeholder] || pgettext("select placeholder", "Select")
           } />
@@ -193,7 +198,9 @@ defmodule Cognit.Components.FormField do
   def form_field(assigns) do
     ~H"""
     <.field_wrapper layout={@layout} label={@label} for={@id} class={@class}>
-      <.input type={@type} id={@id} name={@name} value={@value} disabled={@disabled} {@rest} />
+      <.input type={@type} id={@id} name={@name} value={@value} disabled={@disabled} {@rest}>
+        <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
+      </.input>
       <.form_description :if={@description}>
         {@description}
       </.form_description>

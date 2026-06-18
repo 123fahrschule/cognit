@@ -23,7 +23,8 @@ defmodule Storybook.CognitComponents.Combobox do
          combobox_label: 1,
          combobox_item: 1,
          combobox_separator: 1
-       ]}
+       ]},
+      {Cognit.Icon, [icon: 1]}
     ]
 
   def description do
@@ -64,6 +65,32 @@ defmodule Storybook.CognitComponents.Combobox do
                   <.combobox_item value="strawberry">Strawberry</.combobox_item>
                   <.combobox_item value="watermelon">Watermelon</.combobox_item>
                 </.combobox_group>
+              </.combobox_list>
+            </.combobox_content>
+          """
+        ]
+      },
+      %Variation{
+        id: :with_leading_icon,
+        description: "Combobox with a leading icon before the value",
+        attributes: %{
+          id: "location-combobox",
+          name: "location",
+          "use-portal": false
+        },
+        slots: [
+          """
+            <.combobox_trigger class="w-full">
+              <:leading><.icon name="location_on" size="xs" decorative /></:leading>
+              <.combobox_value placeholder="Location" />
+            </.combobox_trigger>
+            <.combobox_content>
+              <.combobox_input placeholder="Search location..." />
+              <.combobox_empty>No location found.</.combobox_empty>
+              <.combobox_list>
+                <.combobox_item value="berlin">Berlin</.combobox_item>
+                <.combobox_item value="hamburg">Hamburg</.combobox_item>
+                <.combobox_item value="munich">Munich</.combobox_item>
               </.combobox_list>
             </.combobox_content>
           """

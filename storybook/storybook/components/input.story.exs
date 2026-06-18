@@ -4,6 +4,8 @@ defmodule Storybook.CognitComponents.Input do
 
   def function, do: &Cognit.Input.input/1
 
+  def imports, do: [{Cognit.Icon, [icon: 1]}]
+
   def template do
     """
     <.form :let={f} for={%{}} as={:story} class="w-full flex flex-col gap-8">
@@ -74,6 +76,22 @@ defmodule Storybook.CognitComponents.Input do
           %Variation{
             id: :required,
             attributes: %{required: true, placeholder: "Required input"}
+          }
+        ]
+      },
+      %VariationGroup{
+        id: :leading_icon,
+        description: "Input with a leading icon.",
+        variations: [
+          %Variation{
+            id: :search,
+            attributes: %{type: "text", placeholder: "Search"},
+            slots: ["<:leading><.icon name=\"search\" size=\"xs\" decorative /></:leading>"]
+          },
+          %Variation{
+            id: :email,
+            attributes: %{type: "email", placeholder: "Email"},
+            slots: ["<:leading><.icon name=\"mail\" size=\"xs\" decorative /></:leading>"]
           }
         ]
       },
