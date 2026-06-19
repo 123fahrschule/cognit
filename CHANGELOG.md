@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0
+
+### Features
+
+- **Input, Select, Combobox**: New `leading` slot renders an icon inside the field, before the value (also available through `form_field`)
+- **App Side Nav**: New link mode — pass `navigate`, `patch`, or `href` to render the branding entry as a navigation link. The static (non-interactive) mode now drops hover, active, and focus styling
+
+### Bug Fixes
+
+- **Combobox**: The trigger now shows the red validation ring when the field is invalid, matching the other inputs
+
 ## 0.5.3
 
 ### Compatibility
