@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+### Features
+
+- **Stepper**: New `stepper` and `step` components for multi-step flows. Steps show a numbered badge with default, current, and completed states, and gain hover styling only when made interactive via `navigate`/`patch`/`href` or `on_click`
+
 ## 0.6.0
 
 ### Features
