@@ -219,6 +219,7 @@ defmodule Cognit do
       import Cognit.Sidebar
       import Cognit.Skeleton
       import Cognit.Slider
+      import Cognit.Stepper
       import Cognit.Switch
       import Cognit.Table
       import Cognit.Tabs
