@@ -49,7 +49,13 @@ defmodule Cognit.Components.FormField do
   attr :form_field, :any, default: nil, doc: "internal assign for use in SaladUI components"
   attr :rest, :global, include: @rest_attributes
 
-  slot :select_content
+  slot :select_content do
+    attr :id, :string, doc: "id of the options list (required for `phx-update`/viewport hooks)"
+    attr :"phx-update", :string, doc: "e.g. `\"stream\"` for streamed options"
+
+    attr :"phx-viewport-top", :any, doc: "event for loading earlier options on scroll"
+    attr :"phx-viewport-bottom", :any, doc: "event for loading more options on scroll"
+  end
 
   slot :leading,
     doc: "optional leading icon rendered inside the input (select, combobox, text input)"
@@ -79,6 +85,8 @@ defmodule Cognit.Components.FormField do
   end
 
   def form_field(%{type: "select"} = assigns) do
+    assigns = assign(assigns, :list_attrs, content_attrs(assigns.select_content))
+
     ~H"""
     <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.select field={@form_field} multiple={@multiple}>
@@ -86,7 +94,7 @@ defmodule Cognit.Components.FormField do
           <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
           <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
         </.select_trigger>
-        <.select_content>
+        <.select_content {@list_attrs}>
           {render_slot(@select_content)}
         </.select_content>
       </.select>
@@ -99,6 +107,8 @@ defmodule Cognit.Components.FormField do
   end
 
   def form_field(%{type: "combobox"} = assigns) do
+    assigns = assign(assigns, :list_attrs, content_attrs(assigns.select_content))
+
     ~H"""
     <.field_wrapper layout={@layout} label={@label} class={@class}>
       <.combobox field={@form_field} multiple={@multiple}>
@@ -111,7 +121,7 @@ defmodule Cognit.Components.FormField do
         <.combobox_content>
           <.combobox_input placeholder={pgettext("combobox", "Search...")} />
           <.combobox_empty>{pgettext("combobox", "No results found.")}</.combobox_empty>
-          <.combobox_list>
+          <.combobox_list {@list_attrs}>
             {render_slot(@select_content)}
           </.combobox_list>
         </.combobox_content>
@@ -232,6 +242,12 @@ defmodule Cognit.Components.FormField do
     </.form_item>
     """
   end
+
+  # Attributes set on the `:select_content` slot (id, phx-update, viewport
+  # bindings, ...) are forwarded onto the internal options list, so consumers can
+  # stream options or wire up infinite scrolling.
+  defp content_attrs([entry | _]), do: Map.drop(entry, [:__slot__, :inner_block])
+  defp content_attrs(_), do: %{}
 
   defp assign_errors(assigns, field) do
     errors =
