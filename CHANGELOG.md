@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+### Features
+
+- **Select, Combobox**: Attributes on `select_content`/`combobox_list` are forwarded to the element holding the options, so passing Phoenix bindings such as `phx-viewport-top`/`phx-viewport-bottom` (infinite scroll) or `phx-update` (streamed options) through them now reaches the options list
+- **Form Field**: The `select_content` slot forwards attributes to the underlying `select`/`combobox` options list, so the same bindings enable infinite scrolling and streamed options on form fields
+
 ## 0.7.0
 
 ### Features
