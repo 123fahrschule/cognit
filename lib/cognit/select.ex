@@ -168,6 +168,21 @@ defmodule Cognit.Select do
     """
   end
 
+  @doc """
+  The scrollable options panel.
+
+  For infinite scrolling, put Phoenix's `phx-viewport-top`/`phx-viewport-bottom`
+  bindings directly on this component — they are forwarded to the element that
+  holds the items, so paginating works out of the box:
+
+      <.select_content id="my-options" phx-viewport-bottom={!@end? && "load-more"}>
+        <.select_item :for={opt <- @options} value={opt}>{opt}</.select_item>
+      </.select_content>
+
+  Pass a unique `id` (the viewport hook requires one) and render the items as
+  direct children (no `<.select_group>` wrapper) so the bindings track the items
+  rather than a single wrapping node.
+  """
   attr :class, :any, default: nil
   attr :side, :string, values: ~w(top bottom), default: "bottom"
   slot :inner_block, required: true
@@ -198,9 +213,8 @@ defmodule Cognit.Select do
           @class
         ])
       }
-      {@rest}
     >
-      <div class="relative w-full p-1">
+      <div class="relative w-full p-1" {@rest}>
         {render_slot(@inner_block)}
       </div>
     </div>

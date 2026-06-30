@@ -320,6 +320,21 @@ defmodule Cognit.Combobox do
     """
   end
 
+  @doc """
+  The scrollable list that holds the items.
+
+  For infinite scrolling, put Phoenix's `phx-viewport-top`/`phx-viewport-bottom`
+  bindings on this component to paginate as the user scrolls:
+
+      <.combobox_list id="my-options" phx-viewport-bottom={!@end? && "load-more"}>
+        <.combobox_item :for={opt <- @options} value={opt}>{opt}</.combobox_item>
+      </.combobox_list>
+
+  Pass a unique `id` (the viewport hook requires one) and render the items as
+  direct children (no `<.combobox_group>` wrapper) so the bindings track the
+  items rather than a single wrapping node. Pair it with `filter="server"` when
+  combining search and pagination.
+  """
   attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
