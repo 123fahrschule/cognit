@@ -143,8 +143,9 @@ defmodule Cognit.Components.FormField do
           name={@name}
           value={@value}
           multiple={@multiple}
+          aria-invalid={@has_errors && "true"}
           class={[
-            "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+            "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
             "relative"
           ]}
           {@rest}
@@ -163,7 +164,7 @@ defmodule Cognit.Components.FormField do
   def form_field(%{type: "textarea"} = assigns) do
     ~H"""
     <.field_wrapper layout={@layout} label={@label} class={@class}>
-      <.textarea id={@id} name={@name} value={@value} {@rest} />
+      <.textarea id={@id} name={@name} value={@value} aria-invalid={@has_errors && "true"} {@rest} />
       <.form_description :if={@description}>
         {@description}
       </.form_description>
@@ -195,7 +196,13 @@ defmodule Cognit.Components.FormField do
     ~H"""
     <div class={@class}>
       <div class="flex items-center gap-2">
-        <.checkbox id={@id} name={@name} value={@checked} {@rest} />
+        <.checkbox
+          id={@id}
+          name={@name}
+          value={@checked}
+          aria-invalid={@has_errors && "true"}
+          {@rest}
+        />
         <.form_label :if={@label} for={@id}>
           {@label}
         </.form_label>
@@ -208,7 +215,15 @@ defmodule Cognit.Components.FormField do
   def form_field(assigns) do
     ~H"""
     <.field_wrapper layout={@layout} label={@label} for={@id} class={@class}>
-      <.input type={@type} id={@id} name={@name} value={@value} disabled={@disabled} {@rest}>
+      <.input
+        type={@type}
+        id={@id}
+        name={@name}
+        value={@value}
+        disabled={@disabled}
+        aria-invalid={@has_errors && "true"}
+        {@rest}
+      >
         <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
       </.input>
       <.form_description :if={@description}>

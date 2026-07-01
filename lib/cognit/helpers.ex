@@ -10,7 +10,7 @@ defmodule Cognit.Helpers do
   def prepare_assign(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(field: nil, id: assigns[:id] || field.id)
-    |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
+    |> assign(:errors, field_errors(field))
     |> assign(
       :name,
       assigns[:name] || if(assigns[:multiple], do: field.name <> "[]", else: field.name)
@@ -43,6 +43,10 @@ defmodule Cognit.Helpers do
   @doc """
   Return the list of error messages from a form field.
 
+  Returns `[]` for fields the user has not interacted with yet
+  (`Phoenix.Component.used_input?/1`), so validation errors only surface once a
+  field is touched or the form is submitted.
+
   ## Options
 
     * `:translate` (boolean, default `true`) — when `false`, skips
@@ -53,20 +57,25 @@ defmodule Cognit.Helpers do
   def field_errors(field, opts \\ [])
 
   def field_errors(%Phoenix.HTML.FormField{} = field, opts) do
-    if Keyword.get(opts, :translate, true) do
-      Enum.map(field.errors, &translate_error/1)
-    else
-      Enum.map(field.errors, fn {msg, o} -> interpolate(msg, o) end)
+    cond do
+      not Phoenix.Component.used_input?(field) ->
+        []
+
+      Keyword.get(opts, :translate, true) ->
+        Enum.map(field.errors, &translate_error/1)
+
+      true ->
+        Enum.map(field.errors, fn {msg, o} -> interpolate(msg, o) end)
     end
   end
 
   def field_errors(_, _), do: []
 
   @doc """
-  This function return true if the field has error
+  Return `true` when a touched field (`Phoenix.Component.used_input?/1`) has errors.
   """
   def has_error?(%Phoenix.HTML.FormField{} = field) do
-    not Enum.empty?(field.errors)
+    Phoenix.Component.used_input?(field) and not Enum.empty?(field.errors)
   end
 
   def has_error?(_field), do: false
