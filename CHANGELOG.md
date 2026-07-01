@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0
+
+### Features
+
+- **Page Header**: New `badge`, `details`, and `footer` slots plus a `description` attribute. The badge sits next to the title, the description below it, details render as a wrap-around row of labelled items (via the new `page_header_detail` component, with optional icon), and the footer spans the full width below
+
+### Bug Fixes
+
+- **Form Field**: Validation errors now stay hidden until a field is touched or the form is submitted, instead of showing immediately on render
+- **Form Field**: `select`, `textarea`, and `checkbox` fields now show the red validation ring when invalid, matching text inputs
+
 ## 0.8.0
 
 ### Features
