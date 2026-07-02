@@ -30,6 +30,7 @@ import { LocaleSelect } from "./js/hooks/locale_select.js";
 import { Sidebar } from "./js/hooks/sidebar.js";
 import { SidebarMenu } from "./js/hooks/sidebar_menu.js";
 import { Pagination } from "./js/hooks/pagination.js";
+import { Toaster } from "./js/hooks/toaster.js";
 import { getCognitParams } from "./js/connect_params.js";
 
 export const Hooks = {
@@ -38,6 +39,7 @@ export const Hooks = {
   "Cognit.Pagination": Pagination,
   "Cognit.Sidebar": Sidebar,
   "Cognit.SidebarMenu": SidebarMenu,
+  "Cognit.Toaster": Toaster,
 
   SaladUI: SaladUIHook,
 };
