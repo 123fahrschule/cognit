@@ -224,6 +224,13 @@ defmodule Cognit.Combobox do
   attr :rest, :global
 
   def combobox_value(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :placeholder,
+        assigns.placeholder || pgettext("select placeholder", "Select")
+      )
+
     ~H"""
     <span
       data-part="value"

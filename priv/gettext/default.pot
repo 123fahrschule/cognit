@@ -47,8 +47,10 @@ msgctxt "flash message, live view crashed title"
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/cognit/components/form_field.ex:83
-#: lib/cognit/components/form_field.ex:102
+#: lib/cognit/combobox.ex:231
+#: lib/cognit/components/form_field.ex:95
+#: lib/cognit/components/form_field.ex:118
+#: lib/cognit/select.ex:173
 #, elixir-autogen, elixir-format
 msgctxt "select placeholder"
 msgid "Select"
@@ -117,55 +119,55 @@ msgctxt "user menu, fallback username"
 msgid "Unknown User"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:92
+#: lib/cognit/components/pagination.ex:76
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "%{count} out of %{total} rows"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:157
+#: lib/cognit/components/pagination.ex:141
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "First page"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:187
+#: lib/cognit/components/pagination.ex:171
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Last page"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:116
+#: lib/cognit/components/pagination.ex:100
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Next"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:177
+#: lib/cognit/components/pagination.ex:161
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Next page"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:144
+#: lib/cognit/components/pagination.ex:128
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Page %{page} of %{total}"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:107
+#: lib/cognit/components/pagination.ex:91
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Previous"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:167
+#: lib/cognit/components/pagination.ex:151
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Previous page"
 msgstr ""
 
-#: lib/cognit/components/pagination.ex:124
+#: lib/cognit/components/pagination.ex:108
 #, elixir-autogen, elixir-format
 msgctxt "pagination"
 msgid "Rows per page"
@@ -183,26 +185,32 @@ msgctxt "confirmation dialog action"
 msgid "Confirm"
 msgstr ""
 
-#: lib/cognit/combobox.ex:110
+#: lib/cognit/combobox.ex:113
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "%{count} items selected"
 msgstr ""
 
-#: lib/cognit/combobox.ex:163
+#: lib/cognit/combobox.ex:166
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "Remove"
 msgstr ""
 
-#: lib/cognit/components/form_field.ex:106
+#: lib/cognit/components/form_field.ex:123
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "No results found."
 msgstr ""
 
-#: lib/cognit/components/form_field.ex:105
+#: lib/cognit/components/form_field.ex:122
 #, elixir-autogen, elixir-format
 msgctxt "combobox"
 msgid "Search..."
+msgstr ""
+
+#: lib/cognit/select.ex:93
+#, elixir-autogen, elixir-format
+msgctxt "select"
+msgid "%{count} items selected"
 msgstr ""

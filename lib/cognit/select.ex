@@ -53,6 +53,12 @@ defmodule Cognit.Select do
     default: nil,
     doc: "The placeholder text when no value is selected."
 
+  attr :"selected-label", :string,
+    default: nil,
+    doc:
+      "Trigger text when multiple items are selected. `%{count}` is replaced with the " <>
+        "number selected. Defaults to a translated \"%{count} items selected\"."
+
   attr :class, :any, default: nil
   slot :inner_block, required: true
   attr :rest, :global
@@ -82,6 +88,9 @@ defmodule Cognit.Select do
           multiple: assigns.multiple,
           usePortal: assigns[:"use-portal"],
           portalContainer: assigns[:"portal-container"],
+          selectedLabel:
+            assigns[:"selected-label"] ||
+              pgettext("select", "%{count} items selected", count: "%{count}"),
           animations: get_animation_config()
         })
       )
@@ -157,6 +166,13 @@ defmodule Cognit.Select do
   attr :rest, :global
 
   def select_value(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :placeholder,
+        assigns.placeholder || pgettext("select placeholder", "Select")
+      )
+
     ~H"""
     <span
       data-part="value"

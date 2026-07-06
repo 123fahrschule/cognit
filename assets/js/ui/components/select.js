@@ -412,8 +412,10 @@ class SelectComponent extends Component {
         this.valueDisplay.replaceChildren(content);
       } else {
         // Show count for multiple selections
+        const template =
+          this.options.selectedLabel || "%{count} items selected";
         this.valueDisplay.replaceChildren(
-          `${selectedValues.length} items selected`,
+          template.replace("%{count}", selectedValues.length),
         );
       }
     } else {
