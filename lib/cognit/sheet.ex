@@ -170,7 +170,7 @@ defmodule Cognit.Sheet do
           type="button"
           data-part="close-trigger"
           data-action="close"
-          class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none data-[state=open]:bg-secondary"
+          class="absolute right-4 top-4 rounded-xl border border-input bg-background p-2.5 text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +229,7 @@ defmodule Cognit.Sheet do
 
   def sheet_description(assigns) do
     ~H"""
-    <p class={classes(["text-sm text-muted-foreground", @class])} {@rest}>
+    <p class={classes(["text-base text-muted-foreground", @class])} {@rest}>
       {render_slot(@inner_block)}
     </p>
     """
