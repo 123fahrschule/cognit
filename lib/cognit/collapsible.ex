@@ -63,7 +63,7 @@ defmodule Cognit.Collapsible do
     ~H"""
     <div
       id={@id}
-      class={classes(["relative", @class])}
+      class={classes(["group/collapsible relative", @class])}
       data-component="collapsible"
       data-state={@initial_state}
       data-event-mappings={@event_map}
@@ -102,6 +102,12 @@ defmodule Cognit.Collapsible do
 
   @doc """
   The collapsible content that appears when triggered.
+
+  Initial visibility is derived from the parent's server-rendered `data-state`
+  (via the `group/collapsible` variant), so an initially-open collapsible shows
+  its content at first paint. Once the JS hook stamps `data-state` on this part,
+  it takes over visibility (including animations); the `:not([data-state])` guard
+  scopes the CSS rule to first paint only.
   """
   attr :class, :any, default: nil
   attr :rest, :global
@@ -111,10 +117,10 @@ defmodule Cognit.Collapsible do
     ~H"""
     <div
       data-part="content"
-      hidden
       class={
         classes([
           "transition-all duration-200 ease-in-out",
+          "group-data-[state=closed]/collapsible:[&:not([data-state])]:hidden",
           @class
         ])
       }

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.1
+
+### Bug Fixes
+
+- **Collapsible**: An initially-open collapsible now shows its content immediately on load, instead of staying blank until the first interaction
+
+## 0.10.0
+
+### Features
+
+- **Select, Combobox**: The default placeholder and multi-select summary text (e.g. "3 items selected") are now translated automatically, instead of falling back to hardcoded English when not passed explicitly
+
 ## 0.9.0
 
 ### Features
