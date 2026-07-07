@@ -224,6 +224,7 @@ defmodule Cognit do
       import Cognit.Table
       import Cognit.Tabs
       import Cognit.Textarea
+      import Cognit.Toast
       import Cognit.Toggle
       import Cognit.ToggleGroup
       import Cognit.Tooltip

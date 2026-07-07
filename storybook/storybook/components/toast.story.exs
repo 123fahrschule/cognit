@@ -12,6 +12,7 @@ defmodule Storybook.Examples.Toast do
   import Cognit.Button
 
   alias Cognit.Toast
+  alias Phoenix.LiveView.JS
 
   def doc, do: "Sonner-style toasts pushed from the server with send_toast/3."
 
@@ -73,7 +74,7 @@ defmodule Storybook.Examples.Toast do
      Toast.send_toast(socket, :info,
        title: "Update available",
        description: "A new version of the schedule was published.",
-       action: %{label: "Undo", event: "toast-undo"}
+       action: %{label: "Undo", command: JS.push("toast-undo")}
      )}
   end
 
