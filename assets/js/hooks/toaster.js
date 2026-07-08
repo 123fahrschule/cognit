@@ -7,8 +7,14 @@ export const Toaster = {
   mounted() {
     this.defaultDuration = parseInt(this.el.dataset.duration || "4000", 10);
     this.fromTop = this.el.dataset.position?.startsWith("top");
+    this.fromLeft = this.el.dataset.position?.endsWith("left");
     this.stack = [];
     this.expanded = false;
+
+    // Inherited by each card so it doesn't sit flush against the viewport
+    // edge — absolutely positioned children ignore their container's own
+    // padding, so the gap has to live on the card itself.
+    this.el.style.setProperty("--salad-toast-gap", "clamp(1rem, 4vw, 2rem)");
 
     this.el.addEventListener("mouseenter", () => this.setExpanded(true));
     this.el.addEventListener("mouseleave", () => this.setExpanded(false));
@@ -25,10 +31,12 @@ export const Toaster = {
     if (!card) return;
 
     card.style.position = "absolute";
-    card.style.left = "0";
-    card.style.right = "0";
-    card.style[this.fromTop ? "top" : "bottom"] = "0";
-    card.style.transformOrigin = this.fromTop ? "top center" : "bottom center";
+    card.style.width = "min(24rem, calc(100vw - 2 * var(--salad-toast-gap)))";
+    card.style[this.fromLeft ? "left" : "right"] = "var(--salad-toast-gap)";
+    card.style[this.fromTop ? "top" : "bottom"] = "var(--salad-toast-gap)";
+    card.style.transformOrigin = `${this.fromTop ? "top" : "bottom"} ${
+      this.fromLeft ? "left" : "right"
+    }`;
     card.style.opacity = "0";
     card.style.transform = `translateY(${this.fromTop ? -8 : 8}px) scale(1)`;
 

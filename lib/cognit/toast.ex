@@ -58,13 +58,7 @@ defmodule Cognit.Toast do
       phx-update="ignore"
       data-position={@position}
       data-duration={@duration}
-      class={
-        classes([
-          "fixed z-[100] w-full p-4 sm:max-w-sm sm:p-8 pointer-events-none",
-          toaster_position(@position),
-          @class
-        ])
-      }
+      class={classes(["fixed inset-0 z-[100] pointer-events-none", @class])}
       {@rest}
     >
     </div>
@@ -159,9 +153,4 @@ defmodule Cognit.Toast do
   defp toast_color(:warning), do: "text-warning"
   defp toast_color(:error), do: "text-destructive"
   defp toast_color(_kind), do: nil
-
-  defp toaster_position("bottom-right"), do: "bottom-0 right-0"
-  defp toaster_position("bottom-left"), do: "bottom-0 left-0"
-  defp toaster_position("top-right"), do: "top-0 right-0"
-  defp toaster_position("top-left"), do: "top-0 left-0"
 end
