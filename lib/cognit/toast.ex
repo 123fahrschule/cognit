@@ -60,7 +60,7 @@ defmodule Cognit.Toast do
       data-duration={@duration}
       class={
         classes([
-          "fixed z-[100] flex w-full flex-col gap-3.5 p-4 sm:max-w-sm sm:p-8 pointer-events-none",
+          "fixed z-[100] w-full p-4 sm:max-w-sm sm:p-8 pointer-events-none",
           toaster_position(@position),
           @class
         ])
@@ -160,8 +160,8 @@ defmodule Cognit.Toast do
   defp toast_color(:error), do: "text-destructive"
   defp toast_color(_kind), do: nil
 
-  defp toaster_position("bottom-right"), do: "bottom-0 right-0 items-end"
-  defp toaster_position("bottom-left"), do: "bottom-0 left-0 items-start"
-  defp toaster_position("top-right"), do: "top-0 right-0 items-end"
-  defp toaster_position("top-left"), do: "top-0 left-0 items-start"
+  defp toaster_position("bottom-right"), do: "bottom-0 right-0"
+  defp toaster_position("bottom-left"), do: "bottom-0 left-0"
+  defp toaster_position("top-right"), do: "top-0 right-0"
+  defp toaster_position("top-left"), do: "top-0 left-0"
 end
