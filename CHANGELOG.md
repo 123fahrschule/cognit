@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.0
+
+### Features
+
+- **Toast**: New Sonner-style toast notification component. Push toasts from any LiveView with `send_toast/3` — default, success, error, warning, and info kinds, an optional description and action button, configurable position and duration, and automatic stacking with hover-to-expand when several toasts are shown at once
+- **Sheet**: Close button restyled as a bordered icon button; description text is now larger for readability
+
 ## 0.10.1
 
 ### Bug Fixes
