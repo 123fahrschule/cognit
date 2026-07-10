@@ -18,9 +18,6 @@ defmodule Storybook.Foundation.Colors do
               Use primary/secondary for brand identity, main actions, and emphasis
             </li>
             <li>
-              <strong>Neutral:</strong> Use for text, borders, backgrounds, and subtle UI elements
-            </li>
-            <li>
               <strong>Semantic:</strong>
               Use warning/success/error/info to communicate status and feedback
             </li>
@@ -65,23 +62,6 @@ defmodule Storybook.Foundation.Colors do
             ]} />
           </div>
         </div>
-      </.section>
-
-      <.section title="Neutral Colors">
-        <p class="text-body-sm text-neutral-600 mb-4">
-          Grayscale palette for text, borders, backgrounds, and general UI elements.
-        </p>
-        <.color_palette colors={[
-          {"neutral-100", "bg-neutral-100"},
-          {"neutral-200", "bg-neutral-200"},
-          {"neutral-300", "bg-neutral-300"},
-          {"neutral-400", "bg-neutral-400"},
-          {"neutral-500", "bg-neutral-500"},
-          {"neutral-600", "bg-neutral-600"},
-          {"neutral-700", "bg-neutral-700"},
-          {"neutral-800", "bg-neutral-800"},
-          {"neutral-900", "bg-neutral-900"}
-        ]} />
       </.section>
 
       <.section title="Semantic Colors">
@@ -237,6 +217,17 @@ defmodule Storybook.Foundation.Colors do
         </div>
       </.section>
 
+      <.section title="Border, Input & Ring">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Single-tone colors used for borders, input outlines, and focus rings.
+        </p>
+        <.color_palette colors={[
+          {"border", "bg-border"},
+          {"input", "bg-input"},
+          {"ring", "bg-ring"}
+        ]} />
+      </.section>
+
       <.section title="Soft Semantic Colors">
         <p class="text-body-sm text-neutral-600 mb-4">
           Tinted background paired with the solid color as foreground. Use for low-emphasis
@@ -276,6 +267,47 @@ defmodule Storybook.Foundation.Colors do
             var_name="--info-soft"
           />
         </div>
+      </.section>
+
+      <.section title="Sidebar Colors">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Dedicated palette for the sidebar navigation component, independent from the main
+          background/foreground colors.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <.semantic_color_card
+            name="Background"
+            class="bg-sidebar text-sidebar-foreground"
+            var_name="--sidebar-background / --sidebar-foreground"
+          />
+          <.semantic_color_card
+            name="Primary"
+            class="bg-sidebar-primary text-sidebar-primary-foreground"
+            var_name="--sidebar-primary"
+          />
+          <.semantic_color_card
+            name="Accent"
+            class="bg-sidebar-accent text-sidebar-accent-foreground"
+            var_name="--sidebar-accent"
+          />
+        </div>
+        <.color_palette colors={[
+          {"sidebar-border", "bg-sidebar-border"},
+          {"sidebar-ring", "bg-sidebar-ring"}
+        ]} />
+      </.section>
+
+      <.section title="Chart Colors">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Palette used for data visualization in the <span class="font-mono">chart</span> component.
+        </p>
+        <.color_palette colors={[
+          {"chart-1", "bg-chart-1"},
+          {"chart-2", "bg-chart-2"},
+          {"chart-3", "bg-chart-3"},
+          {"chart-4", "bg-chart-4"},
+          {"chart-5", "bg-chart-5"}
+        ]} />
       </.section>
     </main>
     """
