@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.12.0
+
+### Features
+
+- **Theme**: Full shadow scale wired to design tokens — `shadow-2xs`, `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`, and `shadow-2xl` now render the design system's shadows, with distinct light and dark mode values
+- **Theme**: New utility color tokens available as classes — `input-30`/`input-50`/`input-80` (layered input surfaces), `focus` and `destructive-focus` (focus-ring tints), `primary-10` (faint primary tint), and `overlay` (modal backdrop)
+
+### Bug Fixes
+
+- **Theme**: Dark mode styles now apply reliably — the `.dark` variant was previously stripped from the stylesheet, so dark mode could render with light-mode colors
+- **Skeleton**: Uses the accent surface color and the design-system corner radius
+- **Button**: Outline variant background and icon vertical alignment corrected
+- **Combobox**: The selected-item checkmark now sits on the trailing edge of the option, aligned with the design
+
+### Compatibility
+
+- **Theme**: Color tokens are re-synced with the current design spec, so several surfaces shift appearance — light mode adjusts the accent, chart, and sidebar colors; dark mode adjusts the popover, destructive, chart, sidebar, and border/input/ring colors and gains `success` and `warning` tokens
+- **Theme**: `shadow-*` classes (`shadow-sm`, `shadow-md`, …) now resolve to the design system's shadow values rather than Tailwind's stock shadows, so existing shadow usages in your own markup change appearance
+
 ## 0.11.0
 
 ### Features
