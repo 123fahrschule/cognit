@@ -60,7 +60,7 @@
     --bg-primary-10: 198 71.4% 97.3% / 55%;
     --bg-overlay: 0 0% 0% / 65%;
 
-    /* shadow scale: usage via arbitrary value, e.g. shadow-[var(--shadow-md)] */
+    /* shadow scale: registered in tailwind_preset.js boxShadow, e.g. shadow-md */
     --shadow-2xs: 0 1px 2px 0 rgba(26, 26, 26, 0.05);
     --shadow-xs: 0 1px 2px 0 rgba(26, 26, 26, 0.05);
     --shadow-sm: 0 1px 4px -1px rgba(26, 26, 26, 0.05), 0 1px 2px -1px rgba(26, 26, 26, 0.05);
