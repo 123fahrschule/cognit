@@ -466,14 +466,15 @@ defmodule Cognit.Combobox do
       data-disabled={@disabled}
       class={
         classes([
-          "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none data-[visible=false]:hidden data-[highlighted=true]:bg-accent data-[highlighted=true]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "flex w-full cursor-default select-none items-center justify-between gap-2 rounded-sm py-1.5 px-2 text-sm outline-none data-[visible=false]:hidden data-[highlighted=true]:bg-accent data-[highlighted=true]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
           @class
         ])
       }
       tabindex={(@disabled && "-1") || "0"}
       {@rest}
     >
-      <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span data-part="item-text">{render_slot(@inner_block)}</span>
+      <span class="flex h-3.5 w-3.5 shrink-0 items-center justify-center">
         <span data-part="item-indicator" hidden>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -491,8 +492,6 @@ defmodule Cognit.Combobox do
           </svg>
         </span>
       </span>
-
-      <span data-part="item-text">{render_slot(@inner_block)}</span>
     </div>
     """
   end
