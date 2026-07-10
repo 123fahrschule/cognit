@@ -49,6 +49,13 @@
   },
   "foreground": "hsl(var(--foreground))",
   "input": "hsl(var(--input))",
+  "input-30": "hsl(var(--bg-input-30))",
+  "input-50": "hsl(var(--bg-input-50))",
+  "input-80": "hsl(var(--bg-input-80))",
+  "focus": "hsl(var(--focus))",
+  "destructive-focus": "hsl(var(--destructive-focus))",
+  "primary-10": "hsl(var(--bg-primary-10))",
+  "overlay": "hsl(var(--bg-overlay))",
   "muted": {
     "DEFAULT": "hsl(var(--muted))",
     "foreground": "hsl(var(--muted-foreground))"

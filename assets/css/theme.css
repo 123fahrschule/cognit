@@ -50,6 +50,25 @@
     --input: 0 0% 90%;
     --ring: 0 0% 64%;
     --radius: 0.75rem;
+
+    /* custom utility tokens: exposed as Tailwind classes via tailwind.colors.json, e.g. bg-overlay */
+    --focus: 0 0% 64% / 50%;
+    --destructive-focus: 0 72% 51% / 40%;
+    --bg-input-30: 0 0% 100%;
+    --bg-input-50: 0 0% 96%;
+    --bg-input-80: 0 0% 89.8%;
+    --bg-primary-10: 198 71.4% 97.3% / 55%;
+    --bg-overlay: 0 0% 0% / 65%;
+
+    /* shadow scale: usage via arbitrary value, e.g. shadow-[var(--shadow-md)] */
+    --shadow-2xs: 0 1px 2px 0 rgba(26, 26, 26, 0.05);
+    --shadow-xs: 0 1px 2px 0 rgba(26, 26, 26, 0.05);
+    --shadow-sm: 0 1px 4px -1px rgba(26, 26, 26, 0.05), 0 1px 2px -1px rgba(26, 26, 26, 0.05);
+    --shadow-md: 0 2px 4px -2px rgba(26, 26, 26, 0.05), 0 4px 6px -1px rgba(26, 26, 26, 0.05);
+    --shadow-lg: 0 4px 6px -4px rgba(26, 26, 26, 0.05), 0 10px 15px -3px rgba(26, 26, 26, 0.05);
+    --shadow-xl: 0 4px 6px -4px rgba(26, 26, 26, 0.05), 0 8px 10px -1px rgba(26, 26, 26, 0.05);
+    --shadow-2xl: 0 1px 2px 0 rgba(26, 26, 26, 0.45);
+
     --chart-1: 210.5 100% 78%;
     --chart-2: 216 100% 58%;
     --chart-3: 221.3 97.5% 53.5%;
@@ -179,6 +198,20 @@
     --border: 0 0% 100% / 10%;
     --input: 0 0% 100% / 15%;
     --ring: 0 0% 45%;
+
+    --focus: 240 5% 84% / 50%;
+    --destructive-focus: 0 62.8% 30.6% / 40%;
+    --bg-input-30: 0 0% 100% / 4.5%;
+    --bg-input-50: 0 0% 100% / 9%;
+    --bg-input-80: 0 0% 100% / 13.5%;
+    --bg-primary-10: 198 71.4% 97.3% / 10%;
+    --bg-overlay: 0 0% 0% / 65%;
+
+    --shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.07), 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 4px 6px -4px rgba(0, 0, 0, 0.07), 0 10px 15px -3px rgba(0, 0, 0, 0.07);
+    --shadow-xl: 0 4px 6px -4px rgba(0, 0, 0, 0.07), 0 8px 10px -1px rgba(0, 0, 0, 0.07);
+    --shadow-2xl: 0 1px 2px 0 rgba(0, 0, 0, 1);
+
     --chart-1: 210.5 100% 78%;
     --chart-2: 216 100% 58%;
     --chart-3: 221.3 97.5% 53.5%;

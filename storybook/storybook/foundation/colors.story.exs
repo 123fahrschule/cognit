@@ -228,6 +228,26 @@ defmodule Storybook.Foundation.Colors do
         ]} />
       </.section>
 
+      <.section title="Custom Utility Colors">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Design-system tokens registered in <span class="font-mono">tailwind.colors.json</span>.
+          <span class="font-mono">overlay</span>
+          is used by Dialog/Sheet/Alert Dialog's backdrop (<span class="font-mono">bg-overlay</span>).
+          <span class="font-mono">input-30</span>
+          is used by Button's outline variant background (<span class="font-mono">bg-input-30</span>).
+          The rest have no current component consumer yet.
+        </p>
+        <.color_palette colors={[
+          {"focus", "bg-focus"},
+          {"destructive-focus", "bg-destructive-focus"},
+          {"input-30", "bg-input-30"},
+          {"input-50", "bg-input-50"},
+          {"input-80", "bg-input-80"},
+          {"primary-10", "bg-primary-10"},
+          {"overlay", "bg-overlay"}
+        ]} />
+      </.section>
+
       <.section title="Soft Semantic Colors">
         <p class="text-body-sm text-neutral-600 mb-4">
           Tinted background paired with the solid color as foreground. Use for low-emphasis
@@ -265,6 +285,35 @@ defmodule Storybook.Foundation.Colors do
             name="Info"
             class="bg-info-soft text-info-soft-foreground"
             var_name="--info-soft"
+          />
+        </div>
+      </.section>
+
+      <.section title="Legacy Alert Colors (Deprecated)">
+        <p class="text-body-sm text-neutral-600 mb-4">
+          Kept for backward compatibility only — superseded by the Soft Semantic Colors above.
+          Don't use these in new work.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <.semantic_color_card
+            name="Alert"
+            class="bg-alert text-alert-foreground"
+            var_name="--alert"
+          />
+          <.semantic_color_card
+            name="Alert Error"
+            class="bg-alert-error text-alert-error-foreground"
+            var_name="--alert-error"
+          />
+          <.semantic_color_card
+            name="Alert Success"
+            class="bg-alert-success text-alert-success-foreground"
+            var_name="--alert-success"
+          />
+          <.semantic_color_card
+            name="Alert Warning"
+            class="bg-alert-warning text-alert-warning-foreground"
+            var_name="--alert-warning"
           />
         </div>
       </.section>
