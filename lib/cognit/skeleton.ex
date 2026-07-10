@@ -50,7 +50,7 @@ defmodule Cognit.Skeleton do
     <div
       class={
         classes([
-          "animate-pulse rounded-md bg-muted",
+          "animate-pulse rounded-sm bg-accent",
           @class
         ])
       }
