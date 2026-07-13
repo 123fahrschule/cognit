@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.13.0
+
+### Features
+
+- **Button Group**: New `button_group/1` component — joins related buttons into a single segmented control, laid out horizontally (default) or vertically. Render your own `button` children; the group merges adjacent borders and collapses inner corners so they read as one control
+- **Avatar**: New `size` attribute (`2xs` at 20px up to `6xl` at 128px, default `md`/40px) and `shape` attribute (`circle` default, or `rounded` square). Images now cover their frame without distortion
+- **Checkbox**: New `indeterminate` attribute that renders the mixed state (a minus mark) and sets `aria-checked="mixed"`
+- **Theme**: The corner-radius scale gained `rounded-none`, `rounded-xl`, and `rounded-full` classes alongside the existing `xs`/`sm`/`md`/`lg`
+
+### Compatibility
+
+- **Components restyled to match the updated design system** — a broad visual refresh. Notable shifts: form controls (input, textarea, select, combobox, radio) now sit on a subtle layered surface with lighter shadows; dialogs and sheets use a softer shadow and a plain close (×) icon; sliders, switches, and progress bars are slimmer; tabs, cards, tables, breadcrumbs, dropdown menus, and the command palette have updated sizing, spacing, and typography
+- **Alert Dialog**: The built-in close (×) button was removed — dismiss the dialog through your own footer actions instead
+- **Theme**: `rounded-sm` and `rounded-md` now resolve to slightly smaller radii (6px and 8px, was 8px and 10px), so existing uses of these classes in your own markup shift a little
+
 ## 0.12.0
 
 ### Features
