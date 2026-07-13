@@ -42,6 +42,7 @@ defmodule Cognit do
 
   ### Forms & Input
   - `button/1` - Interactive buttons with multiple variants
+  - `button_group/1` - Joins related buttons into a segmented control
   - `input/1` - Text inputs with validation support
   - `textarea/1` - Multi-line text input areas
   - `checkbox/1` - Binary choice inputs
@@ -193,6 +194,7 @@ defmodule Cognit do
       import Cognit.Badge
       import Cognit.Breadcrumb
       import Cognit.Button
+      import Cognit.ButtonGroup
       import Cognit.Card
       import Cognit.Chart
       import Cognit.Checkbox
