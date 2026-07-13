@@ -236,7 +236,7 @@ defmodule Cognit.Components.FormField do
 
   defp field_wrapper(%{layout: "horizontal"} = assigns) do
     ~H"""
-    <div class={classes(["grid grid-cols-2 items-start gap-4", @class])}>
+    <div class={classes(["grid grid-cols-2 items-start gap-3", @class])}>
       <.form_label :if={@label} for={assigns[:for]} class="h-9 flex items-center">
         {@label}
       </.form_label>

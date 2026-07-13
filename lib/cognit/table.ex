@@ -124,7 +124,7 @@ defmodule Cognit.Table do
     <th
       class={
         classes([
-          "h-10 px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+          "px-2 py-2.5 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
           @class
         ])
       }
@@ -225,7 +225,7 @@ defmodule Cognit.Table do
     <td
       class={
         classes([
-          "px-2 py-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+          "px-2 py-4 align-middle text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
           @class
         ])
       }

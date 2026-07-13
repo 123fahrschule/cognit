@@ -38,11 +38,11 @@ defmodule Cognit.EmptyState do
       class={classes(["flex flex-col items-center justify-center py-12 text-center", @class])}
       {@rest}
     >
-      <div :if={@icon} class="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
+      <div :if={@icon} class="mb-4 flex size-12 items-center justify-center rounded-md bg-muted">
         <.icon name={@icon} class="size-6 text-muted-foreground" />
       </div>
       <.empty_state_illustration :if={!@icon} />
-      <h3 class="text-lg font-semibold text-foreground">{@title}</h3>
+      <h3 class="text-lg font-medium text-foreground">{@title}</h3>
       <p :if={@description} class="mt-1 text-sm text-muted-foreground">{@description}</p>
       <div :if={@inner_block != []} class="mt-4">
         {render_slot(@inner_block)}

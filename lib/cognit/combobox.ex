@@ -164,7 +164,7 @@ defmodule Cognit.Combobox do
           type="button"
           data-part="chip-remove"
           aria-label={pgettext("combobox", "Remove")}
-          class="flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm opacity-70 hover:bg-secondary-foreground/10 hover:opacity-100"
+          class="flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-md opacity-70 hover:bg-secondary-foreground/10 hover:opacity-100"
         >
           <.icon name="close" size="xs" decorative />
         </button>
@@ -185,7 +185,7 @@ defmodule Cognit.Combobox do
       data-part="trigger"
       class={
         classes([
-          "flex h-9 w-full items-center justify-between gap-2 whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          "flex h-9 w-full items-center justify-between gap-2 whitespace-nowrap rounded-md border border-input bg-input-30 px-4 py-2 text-sm text-foreground shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           @class
         ])
       }
@@ -210,9 +210,10 @@ defmodule Cognit.Combobox do
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-chevron-down h-4 w-4"
+          class="lucide lucide-chevrons-up-down h-4 w-4"
         >
-          <path d="M6 9l6 6 6-6"></path>
+          <path d="m7 15 5 5 5-5"></path>
+          <path d="m7 9 5-5 5 5"></path>
         </svg>
       </span>
     </button>
@@ -385,7 +386,7 @@ defmodule Cognit.Combobox do
         data-part="group-trigger"
         role="button"
         tabindex="0"
-        class="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none hover:bg-accent hover:text-accent-foreground"
+        class="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none hover:bg-accent hover:text-accent-foreground"
       >
         <span
           data-part="group-indicator"
@@ -466,7 +467,7 @@ defmodule Cognit.Combobox do
       data-disabled={@disabled}
       class={
         classes([
-          "flex w-full cursor-default select-none items-center justify-between gap-2 rounded-sm py-1.5 px-2 text-sm outline-none data-[visible=false]:hidden data-[highlighted=true]:bg-accent data-[highlighted=true]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "flex w-full cursor-default select-none items-center justify-between gap-2 rounded-md py-1.5 px-2 text-sm outline-none data-[visible=false]:hidden data-[highlighted=true]:bg-accent data-[highlighted=true]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
           @class
         ])
       }

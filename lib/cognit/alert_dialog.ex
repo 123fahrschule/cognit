@@ -118,33 +118,13 @@ defmodule Cognit.AlertDialog do
         data-part="content-panel"
         class={
           classes([
-            "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+            "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-input-30 p-6 shadow-md duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
             @class
           ])
         }
         {@rest}
       >
         {render_slot(@inner_block)}
-
-        <button
-          type="button"
-          data-part="close-trigger"
-          data-action="close"
-          class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none data-[state=open]/dialog:bg-accent data-[state=open]/dialog:text-muted-foreground"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
-          <span class="sr-only">{pgettext("alert dialog, close button", "Close")}</span>
-        </button>
       </div>
     </div>
     """
@@ -162,7 +142,7 @@ defmodule Cognit.AlertDialog do
     <div
       class={
         classes([
-          "flex flex-col space-y-2 text-center sm:text-left",
+          "flex flex-col space-y-1.5 text-center sm:text-left",
           @class
         ])
       }
@@ -186,7 +166,7 @@ defmodule Cognit.AlertDialog do
       data-part="title"
       class={
         classes([
-          "text-lg font-semibold",
+          "text-lg font-semibold leading-none tracking-tight text-foreground",
           @class
         ])
       }

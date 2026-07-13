@@ -107,7 +107,7 @@ defmodule Cognit.RadioGroup do
       class={
         classes([
           "group/item",
-          "aspect-square h-4 w-4 rounded-full border border-primary text-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
+          "aspect-square h-4 w-4 rounded-full border bg-input-30 shadow-xs has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50 group-aria-invalid/field:border-destructive group-aria-invalid/field:ring-[3px] group-aria-invalid/field:ring-destructive/40 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 inline-grid",
           @class
         ])
       }
@@ -124,20 +124,7 @@ defmodule Cognit.RadioGroup do
         checked={@checked}
       />
       <span class="hidden group-data-[state=checked]/item:flex items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-circle h-2.5 w-2.5 fill-current text-current"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-        </svg>
+        <span class="size-2 rounded-full bg-primary"></span>
       </span>
     </div>
     """

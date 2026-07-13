@@ -44,7 +44,7 @@ defmodule Cognit.Progress do
       aria-valuemin="0"
       aria-valuemax={@max || 100}
       aria-valuenow={if @indeterminate, do: nil, else: @value}
-      class={classes(["relative h-4 w-full overflow-hidden rounded-full bg-secondary", @class])}
+      class={classes(["relative h-2 w-full overflow-hidden rounded-full bg-secondary", @class])}
       data-indeterminate={to_string(@indeterminate)}
       {@rest}
     >

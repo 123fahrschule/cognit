@@ -79,7 +79,7 @@ defmodule Cognit.Alert do
       data-part="root"
       class={
         classes([
-          "relative w-full rounded-sm border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>.icon~*]:pl-7 [&>.icon+div]:translate-y-[-3px] [&>.icon]:absolute [&>.icon]:left-4 [&>.icon]:top-4 [&>.icon]:text-foreground",
+          "relative w-full rounded-md border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>.icon~*]:pl-7 [&>.icon+div]:translate-y-[-3px] [&>.icon]:absolute [&>.icon]:left-4 [&>.icon]:top-4 [&>.icon]:text-foreground",
           @variant_class,
           @class
         ])

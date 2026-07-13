@@ -29,12 +29,14 @@ defmodule Cognit.Checkbox do
   * `:value` - The current value of the checkbox
   * `:default-value` - The default value of the checkbox, either `true`, `false`, "true", "false"
   * `:disabled` - Whether the checkbox is disabled
+  * `:indeterminate` - Whether to show the mixed/indeterminate state
   * `:field` - A Phoenix form field
   * `:class` - Additional classes to add to the checkbox
   """
   attr :name, :any, default: nil
   attr :value, :any, default: nil
   attr :"default-value", :any, values: [true, false, "true", "false"], default: false
+  attr :indeterminate, :boolean, default: false, doc: "Show the mixed/indeterminate state"
   attr :field, Phoenix.HTML.FormField
   attr :class, :any, default: nil
   attr :rest, :global, include: ~w(disabled form required autofocus)
@@ -57,13 +59,15 @@ defmodule Cognit.Checkbox do
       type="checkbox"
       class={
         classes([
-          "peer h-4 w-4 shrink-0 appearance-none rounded border border-input shadow-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 checked:border-primary checked:bg-primary",
+          "peer h-4 w-4 shrink-0 appearance-none rounded border border-input bg-background shadow-2xs focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 checked:border-primary checked:bg-primary data-[indeterminate=true]:border-primary data-[indeterminate=true]:bg-primary",
           @class
         ])
       }
       name={@name}
       value="true"
       checked={@checked}
+      data-indeterminate={to_string(@indeterminate)}
+      aria-checked={@indeterminate && "mixed"}
       {@rest}
     />
     """

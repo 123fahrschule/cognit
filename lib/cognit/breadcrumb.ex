@@ -78,7 +78,7 @@ defmodule Cognit.Breadcrumb do
       arial-label="breadcrumb"
       class={
         classes([
-          "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+          "flex flex-wrap items-center gap-2.5 break-words text-sm text-muted-foreground",
           @class
         ])
       }
@@ -107,7 +107,7 @@ defmodule Cognit.Breadcrumb do
     <ol
       class={
         classes([
-          "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+          "flex flex-wrap items-center gap-2.5 break-words text-sm text-muted-foreground",
           @class
         ])
       }
@@ -170,7 +170,7 @@ defmodule Cognit.Breadcrumb do
     <.link
       class={
         classes([
-          "transition-colors hover:text-foreground",
+          "text-muted-foreground transition-colors hover:text-foreground",
           @class
         ])
       }
@@ -231,7 +231,7 @@ defmodule Cognit.Breadcrumb do
       role="presentation"
       class={
         classes([
-          "[&>svg]:size-3.5 [&>.icon]:text-[14px]",
+          "[&>svg]:size-4 [&>.icon]:text-[16px]",
           @class
         ])
       }
@@ -243,7 +243,7 @@ defmodule Cognit.Breadcrumb do
         viewBox="0 0 24 24"
         stroke-width="2"
         stroke="currentColor"
-        class="size-6 w-3"
+        class="size-4"
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
       </svg>
@@ -269,7 +269,7 @@ defmodule Cognit.Breadcrumb do
     <div
       class={
         classes([
-          "flex h-9 w-9 items-center justify-center",
+          "flex items-center justify-center [&>svg]:size-4",
           @class
         ])
       }

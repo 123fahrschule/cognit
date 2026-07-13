@@ -148,7 +148,7 @@ defmodule Cognit.Accordion do
       class={
         classes([
           "flex w-full justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-          "text-sm",
+          "text-base text-foreground",
           @class
         ])
       }
@@ -193,7 +193,7 @@ defmodule Cognit.Accordion do
       data-state="closed"
       class={
         classes([
-          "overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+          "overflow-hidden text-sm text-foreground data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
           @class
         ])
       }

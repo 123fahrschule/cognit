@@ -275,7 +275,7 @@ defmodule Cognit.DropdownMenu do
       data-event-mappings={@event_map}
       class={
         classes([
-          "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
+          "relative flex cursor-default select-none items-center rounded-md px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
           "[&_.icon]:text-[16px] [&_.icon]:shrink-0 [&_.icon]:mr-1",
           @variant == "destructive" &&
             "text-destructive focus:bg-destructive/10 focus:text-destructive dark:focus:bg-destructive/20",
@@ -321,7 +321,7 @@ defmodule Cognit.DropdownMenu do
       data-disabled={@disabled}
       class={
         classes([
-          "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
+          "relative flex cursor-default select-none items-center rounded-md px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:mr-2",
           "[&_.icon]:text-[16px] [&_.icon]:shrink-0 [&_.icon]:mr-1",
           @variant == "destructive" &&
             "text-destructive focus:bg-destructive/10 focus:text-destructive dark:focus:bg-destructive/20",
@@ -377,14 +377,14 @@ defmodule Cognit.DropdownMenu do
       data-event-mappings={@event_map}
       class={
         classes([
-          "relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-2 pl-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "relative flex cursor-default select-none items-center rounded-md py-1.5 pr-2 pl-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
           @class
         ])
       }
       tabindex={if @disabled, do: "-1", else: "0"}
       {@rest}
     >
-      <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span class="absolute left-2 flex h-4 w-4 items-center justify-center">
         <span
           data-part="item-indicator"
           data-state={(@checked && "checked") || "unchecked"}
@@ -427,7 +427,7 @@ defmodule Cognit.DropdownMenu do
     <div
       data-part="separator"
       role="separator"
-      class={classes(["-mx-1 my-1 h-px bg-muted", @class])}
+      class={classes(["-mx-1 my-1 h-px bg-border", @class])}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -450,7 +450,7 @@ defmodule Cognit.DropdownMenu do
     ~H"""
     <span
       data-part="shortcut"
-      class={classes(["ml-auto text-xs tracking-widest opacity-60", @class])}
+      class={classes(["ml-auto text-sm tracking-widest text-muted-foreground", @class])}
       {@rest}
     >
       {render_slot(@inner_block)}

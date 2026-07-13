@@ -31,6 +31,8 @@ defmodule Cognit.Avatar do
 
   ## Options
 
+  * `:size` - The avatar dimensions, from `"2xs"` (20px) up to `"6xl"` (128px). Defaults to `"md"` (40px).
+  * `:shape` - `"circle"` (default) or `"rounded"` for a rounded-square avatar.
   * `:class` - Additional CSS classes to apply to the avatar container.
 
   ## Examples
@@ -40,22 +42,55 @@ defmodule Cognit.Avatar do
         <.avatar_fallback>JD</.avatar_fallback>
       </.avatar>
 
-      <.avatar class="h-16 w-16">...</.avatar>
+      <.avatar size="lg" shape="rounded">...</.avatar>
   """
   attr :class, :any, default: nil
+
+  attr :size, :string,
+    values: ~w(2xs xs sm md lg xl 2xl 3xl 4xl 5xl 6xl),
+    default: "md",
+    doc: "the avatar dimensions"
+
+  attr :shape, :string,
+    values: ~w(circle rounded),
+    default: "circle",
+    doc: "the avatar outline shape"
+
   attr :rest, :global
   slot :inner_block, required: false
 
   def avatar(assigns) do
+    assigns =
+      assigns
+      |> assign(:size_class, avatar_size_class(assigns.size))
+      |> assign(:shape_class, avatar_shape_class(assigns.shape, assigns.size))
+
     ~H"""
     <span
-      class={classes(["relative h-10 w-10 shrink-0 overflow-hidden rounded-full", @class])}
+      class={classes(["relative shrink-0 overflow-hidden", @size_class, @shape_class, @class])}
       {@rest}
     >
       {render_slot(@inner_block)}
     </span>
     """
   end
+
+  defp avatar_size_class("2xs"), do: "size-5"
+  defp avatar_size_class("xs"), do: "size-6"
+  defp avatar_size_class("sm"), do: "size-8"
+  defp avatar_size_class("md"), do: "size-10"
+  defp avatar_size_class("lg"), do: "size-12"
+  defp avatar_size_class("xl"), do: "size-14"
+  defp avatar_size_class("2xl"), do: "size-16"
+  defp avatar_size_class("3xl"), do: "size-20"
+  defp avatar_size_class("4xl"), do: "size-24"
+  defp avatar_size_class("5xl"), do: "size-28"
+  defp avatar_size_class("6xl"), do: "size-32"
+
+  defp avatar_shape_class("circle", _size), do: "rounded-full"
+  defp avatar_shape_class("rounded", "2xs"), do: "rounded-sm"
+  defp avatar_shape_class("rounded", size) when size in ~w(xs sm), do: "rounded-md"
+  defp avatar_shape_class("rounded", _size), do: "rounded-lg"
 
   @doc """
   Renders an avatar image.
@@ -80,7 +115,7 @@ defmodule Cognit.Avatar do
   def avatar_image(assigns) do
     ~H"""
     <img
-      class={classes(["aspect-square h-full w-full", @class])}
+      class={classes(["aspect-square h-full w-full object-cover", @class])}
       {@rest}
       phx-update="ignore"
       style="display:none"
@@ -115,7 +150,10 @@ defmodule Cognit.Avatar do
     ~H"""
     <span
       class={
-        classes(["flex h-full w-full items-center justify-center rounded-full bg-muted", @class])
+        classes([
+          "flex h-full w-full items-center justify-center rounded-[inherit] bg-muted text-sm text-foreground",
+          @class
+        ])
       }
       {@rest}
     >

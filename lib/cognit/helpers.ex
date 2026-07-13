@@ -134,9 +134,9 @@ defmodule Cognit.Helpers do
       "success" => "bg-success text-success-foreground shadow-2xs hover:bg-success/90",
       "warning" => "bg-warning text-warning-foreground shadow-2xs hover:bg-warning/90",
       "outline" =>
-        "border border-input bg-input-30 shadow-2xs hover:bg-accent hover:text-accent-foreground",
+        "border border-input bg-input-30 text-foreground shadow-2xs hover:bg-accent hover:text-accent-foreground",
       "secondary" => "bg-secondary text-secondary-foreground shadow-2xs hover:bg-secondary/80",
-      "ghost" => "hover:bg-accent hover:text-accent-foreground",
+      "ghost" => "text-foreground hover:bg-accent hover:text-accent-foreground",
       "link" => "text-primary underline-offset-4 hover:underline"
     },
     size: %{

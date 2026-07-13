@@ -29,6 +29,15 @@ defmodule Storybook.CognitComponents.Checkbox do
         """
       },
       %Variation{
+        id: :indeterminate,
+        template: """
+        <div class="flex items-center space-x-2">
+        <.checkbox id="indeterminate" indeterminate/>
+        <.label for="indeterminate">I'm a label</.label>
+        </div>
+        """
+      },
+      %Variation{
         id: :error,
         description: "Error",
         template: """

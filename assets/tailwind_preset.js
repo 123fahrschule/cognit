@@ -21,10 +21,13 @@ module.exports = {
         "2xl": "var(--shadow-2xl)",
       },
       borderRadius: {
+        none: "0px",
+        xs: "calc(var(--radius) - 10px)",
+        sm: "calc(var(--radius) - 6px)",
+        md: "calc(var(--radius) - 4px)",
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        xs: "2px",
+        xl: "calc(var(--radius) + 4px)",
+        full: "9999px",
       },
       aria: {
         invalid: 'invalid="true"',

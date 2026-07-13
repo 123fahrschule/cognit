@@ -154,7 +154,7 @@ defmodule Cognit.Sheet do
         data-side={@side}
         class={
           classes([
-            "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+            "fixed z-50 gap-4 bg-background p-6 shadow-md transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
             "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
             @variant_class,
             @class
@@ -170,15 +170,19 @@ defmodule Cognit.Sheet do
           type="button"
           data-part="close-trigger"
           data-action="close"
-          class="absolute right-4 top-4 rounded-xl border border-input bg-background p-2.5 text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none"
+          class="absolute right-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            fill="none"
             stroke="currentColor"
-            class="w-5 h-5"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-x h-4 w-4"
           >
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
@@ -214,7 +218,10 @@ defmodule Cognit.Sheet do
 
   def sheet_title(assigns) do
     ~H"""
-    <h3 class={classes(["flex flex-col space-y-2 text-center sm:text-left", @class])} {@rest}>
+    <h3
+      class={classes(["text-lg font-semibold leading-none tracking-tight text-foreground", @class])}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </h3>
     """
@@ -229,7 +236,7 @@ defmodule Cognit.Sheet do
 
   def sheet_description(assigns) do
     ~H"""
-    <p class={classes(["text-base text-muted-foreground", @class])} {@rest}>
+    <p class={classes(["text-sm text-muted-foreground", @class])} {@rest}>
       {render_slot(@inner_block)}
     </p>
     """

@@ -101,13 +101,13 @@ defmodule Cognit.Slider do
         class="relative flex w-full touch-none select-none items-center"
         data-part="root"
       >
-        <div data-part="track" class="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+        <div data-part="track" class="relative h-1.5 w-full grow overflow-hidden rounded-full bg-secondary">
           <div data-part="range" class="absolute h-full bg-primary" />
         </div>
         <div
           disabled={@disabled}
           data-part="thumb"
-          class="block h-5 w-5 rounded-full border-2 border-primary bg-background transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 absolute"
+          class="block h-4 w-4 rounded-full border border-primary bg-background shadow-md transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 absolute"
         />
       </div>
       <input type="hidden" name={@name} value={@value} />
