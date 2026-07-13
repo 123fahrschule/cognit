@@ -8,7 +8,8 @@ defmodule Cognit.Components.UserSideNav do
     inner block becomes the menu content (e.g. profile / sign-out items).
   * **Button** — provide `on_click` (a `phx-click` value, e.g. a `JS` command). Renders
     as a clickable button with no menu.
-  * **Static** — provide neither. Renders as a non-interactive label.
+  * **Static** — provide neither. Renders as a non-interactive label with no
+    hover/active/focus styling.
 
   ## `:user` shape
 
@@ -89,7 +90,7 @@ defmodule Cognit.Components.UserSideNav do
       <.sidebar_menu_item>
         <.sidebar_menu_button
           size="lg"
-          class={@class}
+          class={classes(["pointer-events-none", @class])}
           as="div"
           tooltip={side_nav_tooltip(@user)}
         >
