@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0
+
+### Bug Fixes
+
+- **Button**: Outline variant now darkens its own surface on hover instead of switching to the accent color, and buttons dim briefly while pressed, matching the design system
+- **Sheet**: The close (×) button is now rendered as an outline icon button, and the header keeps its title clear of the button
+- **User Side Nav**: The static (non-interactive) mode now drops hover, active, and focus styling
+
 ## 0.13.0
 
 ### Features
