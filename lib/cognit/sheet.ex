@@ -32,6 +32,8 @@ defmodule Cognit.Sheet do
   """
   use Cognit, :component
 
+  import Cognit.Button
+
   @doc """
   The main sheet component that manages state and positioning.
 
@@ -166,11 +168,13 @@ defmodule Cognit.Sheet do
           {render_slot(@inner_block)}
         </div>
 
-        <button
+        <.button
           type="button"
+          variant="outline"
+          size="icon"
           data-part="close-trigger"
           data-action="close"
-          class="absolute right-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-[3px] focus:ring-ring/50 disabled:pointer-events-none"
+          class="absolute right-4 top-4"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -182,13 +186,13 @@ defmodule Cognit.Sheet do
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-x h-4 w-4"
+            class="lucide lucide-x"
           >
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
           </svg>
           <span class="sr-only">{pgettext("sheet, close button", "Close")}</span>
-        </button>
+        </.button>
       </div>
     </div>
     """
@@ -203,7 +207,7 @@ defmodule Cognit.Sheet do
 
   def sheet_header(assigns) do
     ~H"""
-    <div class={classes(["flex flex-col space-y-1.5 text-center sm:text-left", @class])} {@rest}>
+    <div class={classes(["flex flex-col space-y-1.5 pr-8 text-center sm:text-left", @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
