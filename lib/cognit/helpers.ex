@@ -133,8 +133,7 @@ defmodule Cognit.Helpers do
         "bg-destructive text-destructive-foreground shadow-2xs hover:bg-destructive/90",
       "success" => "bg-success text-success-foreground shadow-2xs hover:bg-success/90",
       "warning" => "bg-warning text-warning-foreground shadow-2xs hover:bg-warning/90",
-      "outline" =>
-        "border border-input bg-input-30 text-foreground shadow-2xs hover:bg-accent hover:text-accent-foreground",
+      "outline" => "border border-input bg-input-30 text-foreground shadow-2xs hover:bg-input-50",
       "secondary" => "bg-secondary text-secondary-foreground shadow-2xs hover:bg-secondary/80",
       "ghost" => "text-foreground hover:bg-accent hover:text-accent-foreground",
       "link" => "text-primary underline-offset-4 hover:underline"
@@ -166,7 +165,7 @@ defmodule Cognit.Helpers do
     variation_classes = Enum.map_join(variants, " ", fn {key, value} -> @variants[key][value] end)
 
     shared_classes =
-      "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_.icon]:pointer-events-none [&_.icon]:text-[16px] [&_.icon]:leading-none [&_.icon]:shrink-0"
+      "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_.icon]:pointer-events-none [&_.icon]:text-[16px] [&_.icon]:leading-none [&_.icon]:shrink-0"
 
     "#{shared_classes} #{variation_classes}"
   end
