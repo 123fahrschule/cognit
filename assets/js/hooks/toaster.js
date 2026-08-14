@@ -8,6 +8,7 @@ export const Toaster = {
     this.defaultDuration = parseInt(this.el.dataset.duration || "4000", 10);
     this.fromTop = this.el.dataset.position?.startsWith("top");
     this.fromLeft = this.el.dataset.position?.endsWith("left");
+    this.centered = this.el.dataset.position?.endsWith("center");
     this.stack = [];
     this.expanded = false;
 
@@ -32,13 +33,19 @@ export const Toaster = {
 
     card.style.position = "absolute";
     card.style.width = "min(24rem, calc(100vw - 2 * var(--salad-toast-gap)))";
-    card.style[this.fromLeft ? "left" : "right"] = "var(--salad-toast-gap)";
+    // Centered cards anchor to the viewport middle and shift back half their
+    // width through the translate in cardTransform.
+    if (this.centered) {
+      card.style.left = "50%";
+    } else {
+      card.style[this.fromLeft ? "left" : "right"] = "var(--salad-toast-gap)";
+    }
     card.style[this.fromTop ? "top" : "bottom"] = "var(--salad-toast-gap)";
     card.style.transformOrigin = `${this.fromTop ? "top" : "bottom"} ${
-      this.fromLeft ? "left" : "right"
+      this.centered ? "center" : this.fromLeft ? "left" : "right"
     }`;
     card.style.opacity = "0";
-    card.style.transform = `translateY(${this.fromTop ? -8 : 8}px) scale(1)`;
+    card.style.transform = this.cardTransform(this.fromTop ? -8 : 8, 1);
 
     // The action button already carries a real `phx-click` binding (rendered
     // server-side), so LiveView's own delegated click handling runs it. We
@@ -100,7 +107,7 @@ export const Toaster = {
 
       if (this.expanded) {
         const y = (this.fromTop ? 1 : -1) * offset;
-        card.style.transform = `translateY(${y}px) scale(1)`;
+        card.style.transform = this.cardTransform(y, 1);
         card.style.opacity = "1";
         card.style.pointerEvents = "auto";
         offset += card.offsetHeight + EXPANDED_GAP;
@@ -108,7 +115,7 @@ export const Toaster = {
         const depth = Math.min(index, PEEK_COUNT - 1);
         const y = (this.fromTop ? 1 : -1) * depth * COLLAPSED_GAP;
         const scale = 1 - depth * SCALE_STEP;
-        card.style.transform = `translateY(${y}px) scale(${scale})`;
+        card.style.transform = this.cardTransform(y, scale);
         card.style.opacity = index < PEEK_COUNT ? "1" : "0";
         card.style.pointerEvents = index === 0 ? "auto" : "none";
       }
@@ -124,10 +131,15 @@ export const Toaster = {
     this.layout();
 
     card.style.opacity = "0";
-    card.style.transform = this.fromTop
-      ? "translateY(-8px)"
-      : "translateY(8px)";
+    card.style.transform = this.cardTransform(this.fromTop ? -8 : 8, 1);
     setTimeout(() => card.remove(), 300);
+  },
+
+  // Centered positions carry the -50% horizontal shift inside the transform,
+  // so every transform update has to go through here to keep it.
+  cardTransform(y, scale) {
+    const x = this.centered ? "-50%" : "0px";
+    return `translate(${x}, ${y}px) scale(${scale})`;
   },
 
   destroyed() {

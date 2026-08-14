@@ -37,13 +37,13 @@ defmodule Cognit.Toast do
   ## Options
 
   * `:id` - DOM id. Defaults to `"toaster"`.
-  * `:position` - Corner to render toasts in. Defaults to `"bottom-right"`.
+  * `:position` - Edge to render toasts in. Defaults to `"bottom-right"`.
   * `:duration` - Default auto-dismiss in ms. Defaults to `4000`.
   """
   attr :id, :string, default: "toaster"
 
   attr :position, :string,
-    values: ~w(top-left top-right bottom-left bottom-right),
+    values: ~w(top-left top-center top-right bottom-left bottom-center bottom-right),
     default: "bottom-right"
 
   attr :duration, :integer, default: 4000
@@ -75,6 +75,8 @@ defmodule Cognit.Toast do
   - `opts`:
     * `:title` - Toast title (required unless `:description` given).
     * `:description` - Secondary line.
+    * `:icon` - Icon name overriding the kind's default icon, e.g. to give a
+      `:default` toast a neutral check mark.
     * `:duration` - Override auto-dismiss in ms. `0` disables auto-dismiss.
     * `:action` - `%{label: "...", command: %Phoenix.LiveView.JS{}}` — clicking
       the button runs `command`, exactly like a `phx-click={JS...}` binding
@@ -82,7 +84,13 @@ defmodule Cognit.Toast do
   """
   def send_toast(socket, kind \\ :default, opts) when kind in @kinds do
     html =
-      %{kind: kind, title: opts[:title], description: opts[:description], action: opts[:action]}
+      %{
+        kind: kind,
+        icon: opts[:icon],
+        title: opts[:title],
+        description: opts[:description],
+        action: opts[:action]
+      }
       |> toast()
       |> Phoenix.HTML.Safe.to_iodata()
       |> IO.iodata_to_binary()
@@ -102,6 +110,7 @@ defmodule Cognit.Toast do
   attr :kind, :atom, default: :default, values: @kinds
   attr :title, :string, default: nil
   attr :description, :string, default: nil
+  attr :icon, :string, default: nil, doc: "icon name overriding the kind's default icon"
 
   attr :action, :map,
     default: nil,
@@ -110,7 +119,7 @@ defmodule Cognit.Toast do
   def toast(assigns) do
     assigns =
       Map.merge(assigns, %{
-        icon: toast_icon(assigns.kind),
+        icon: assigns[:icon] || toast_icon(assigns.kind),
         color_class: toast_color(assigns.kind)
       })
 
