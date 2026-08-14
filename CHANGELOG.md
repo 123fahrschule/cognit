@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0
+
+### Features
+
+- **Toast**: New `top-center` and `bottom-center` positions — toasts anchor to the middle of the top or bottom edge and stay centered as the stack collapses behind the newest one
+- **Toast**: New `:icon` option on `send_toast/3` (and `icon` attribute on `toast/1`) overrides the icon a kind picks by default, so a `:default` toast can carry a neutral check mark
+
 ## 0.14.0
 
 ### Bug Fixes
