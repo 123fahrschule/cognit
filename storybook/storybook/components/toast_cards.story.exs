@@ -20,6 +20,14 @@ defmodule Storybook.CognitComponents.ToastCards do
         }
       },
       %Variation{
+        id: :custom_icon,
+        attributes: %{
+          icon: "check_circle",
+          title: "Event has been created",
+          description: "Monday, January 3rd at 6:00pm"
+        }
+      },
+      %Variation{
         id: :success,
         attributes: %{
           kind: :success,

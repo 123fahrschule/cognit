@@ -14,7 +14,14 @@ defmodule Storybook.Examples.Toast do
   alias Cognit.Toast
   alias Phoenix.LiveView.JS
 
+  @positions ~w(top-left top-center top-right bottom-left bottom-center bottom-right)
+
   def doc, do: "Sonner-style toasts pushed from the server with send_toast/3."
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, position: "bottom-right", positions: @positions)}
+  end
 
   @impl true
   def render(assigns) do
@@ -35,7 +42,20 @@ defmodule Storybook.Examples.Toast do
         <.button variant="ghost" phx-click="toast-sticky">Sticky (no auto-dismiss)</.button>
       </div>
 
-      <.toaster />
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-muted-foreground">Position:</span>
+        <.button
+          :for={position <- @positions}
+          size="sm"
+          variant={if position == @position, do: "default", else: "outline"}
+          phx-click="set-position"
+          phx-value-position={position}
+        >
+          {position}
+        </.button>
+      </div>
+
+      <.toaster :if={@position} id={"toaster-#{@position}"} position={@position} />
     </div>
     """
   end
@@ -88,5 +108,19 @@ defmodule Storybook.Examples.Toast do
 
   def handle_event("toast-undo", _params, socket) do
     {:noreply, Toast.send_toast(socket, :success, title: "Action undone")}
+  end
+
+  # The toaster is phx-update="ignore" and the hook reads data-position once in
+  # mounted(), so patching the attribute in place never reaches it. Rendering
+  # nothing for one frame removes the element outright; the follow-up message
+  # brings it back and the hook mounts fresh against the new position.
+  def handle_event("set-position", %{"position" => position}, socket) do
+    send(self(), {:mount_toaster, position})
+    {:noreply, assign(socket, position: nil)}
+  end
+
+  @impl true
+  def handle_info({:mount_toaster, position}, socket) do
+    {:noreply, assign(socket, position: position)}
   end
 end
