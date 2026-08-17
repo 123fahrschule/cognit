@@ -2,6 +2,7 @@ const COLLAPSED_GAP = 14;
 const EXPANDED_GAP = 14;
 const SCALE_STEP = 0.05;
 const PEEK_COUNT = 3;
+const STORAGE_KEY = "cognit:toasts";
 
 export const Toaster = {
   mounted() {
@@ -22,15 +23,81 @@ export const Toaster = {
     this.el.addEventListener("focusin", () => this.setExpanded(true));
     this.el.addEventListener("focusout", () => this.setExpanded(false));
 
-    this.handleEvent("cognit:toast", (payload) => this.addToast(payload));
+    this.handleEvent("cognit:toast", (payload) => {
+      const entry = this.persistToast(payload);
+      this.addToast(payload, entry.id);
+    });
+
+    this.replayPersistedToasts();
   },
 
-  addToast({ html, duration }) {
+  // A toast pushed right before a live navigation dies with the page: the
+  // event still arrives, but the toaster element is torn down while the view
+  // is swapped. Every pushed toast is therefore mirrored into sessionStorage
+  // and replayed with its remaining lifetime by the next toaster instance,
+  // so toasts survive live navigation. Entries are dropped once dismissed or
+  // expired.
+  persistToast({ html, duration }) {
+    const entry = {
+      id: self.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`,
+      html,
+      duration: duration ?? this.defaultDuration,
+      addedAt: Date.now(),
+    };
+
+    this.writePersistedToasts([...this.readPersistedToasts(), entry]);
+    return entry;
+  },
+
+  unpersistToast(id) {
+    if (!id) return;
+
+    this.writePersistedToasts(
+      this.readPersistedToasts().filter((entry) => entry.id !== id)
+    );
+  },
+
+  replayPersistedToasts() {
+    const now = Date.now();
+    const alive = [];
+
+    this.readPersistedToasts().forEach((entry) => {
+      const remaining = entry.duration - (now - entry.addedAt);
+      if (entry.duration > 0 && remaining <= 0) return;
+
+      alive.push(entry);
+      this.addToast(
+        { html: entry.html, duration: entry.duration > 0 ? remaining : 0 },
+        entry.id
+      );
+    });
+
+    this.writePersistedToasts(alive);
+  },
+
+  readPersistedToasts() {
+    try {
+      return JSON.parse(sessionStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  },
+
+  writePersistedToasts(entries) {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    } catch {
+      // Unavailable storage only costs navigation survival.
+    }
+  },
+
+  addToast({ html, duration }, storageId) {
     const wrapper = document.createElement("div");
     wrapper.innerHTML = html.trim();
     const card = wrapper.firstElementChild;
     if (!card) return;
 
+    card._cognitStorageId = storageId;
     card.style.position = "absolute";
     card.style.width = "min(24rem, calc(100vw - 2 * var(--salad-toast-gap)))";
     // Centered cards anchor to the viewport middle and shift back half their
@@ -126,6 +193,7 @@ export const Toaster = {
     if (card._cognitDismissed) return;
     card._cognitDismissed = true;
     clearTimeout(card._cognitTimer);
+    this.unpersistToast(card._cognitStorageId);
 
     this.stack = this.stack.filter((c) => c !== card);
     this.layout();

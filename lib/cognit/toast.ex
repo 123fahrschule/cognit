@@ -6,6 +6,10 @@ defmodule Cognit.Toast do
   `<.toaster />` to your root layout, then push toasts from any LiveView with
   `send_toast/3`.
 
+  Toasts survive live navigation: the hook mirrors every pushed toast into
+  `sessionStorage` and replays it with its remaining lifetime after the next
+  page mounts, so `send_toast/3` also works right before `push_navigate`.
+
   ## Examples:
 
       # root layout (outside .sidebar_provider, like flash_group)
