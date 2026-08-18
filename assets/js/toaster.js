@@ -3,29 +3,44 @@ const EXPANDED_GAP = 14;
 const SCALE_STEP = 0.05;
 const PEEK_COUNT = 3;
 
+// The toaster lives in the root layout, so live navigation never patches it
+// and visible toasts survive page changes. Out there it cannot be a phx-hook,
+// hence attach() from app.js plus the global `phx:` window event.
 export const Toaster = {
-  mounted() {
-    this.defaultDuration = parseInt(this.el.dataset.duration || "4000", 10);
-    this.fromTop = this.el.dataset.position?.startsWith("top");
-    this.fromLeft = this.el.dataset.position?.endsWith("left");
-    this.centered = this.el.dataset.position?.endsWith("center");
+  attach() {
+    window.addEventListener("phx:cognit:toast", (event) =>
+      this.addToast(event.detail),
+    );
+  },
+
+  // Resolved lazily on the first toast, so attach() can run before the
+  // element exists.
+  ensureViewport() {
+    if (this.el?.isConnected) return true;
+
+    const el = document.querySelector("[data-cognit-toaster]");
+    if (!el) return false;
+
+    this.el = el;
+    this.defaultDuration = parseInt(el.dataset.duration || "4000", 10);
     this.stack = [];
     this.expanded = false;
 
-    // Inherited by each card so it doesn't sit flush against the viewport
-    // edge — absolutely positioned children ignore their container's own
-    // padding, so the gap has to live on the card itself.
-    this.el.style.setProperty("--salad-toast-gap", "clamp(1rem, 4vw, 2rem)");
+    // Absolutely positioned cards ignore the container's padding, so the
+    // edge gap lives on each card.
+    el.style.setProperty("--salad-toast-gap", "clamp(1rem, 4vw, 2rem)");
 
-    this.el.addEventListener("mouseenter", () => this.setExpanded(true));
-    this.el.addEventListener("mouseleave", () => this.setExpanded(false));
-    this.el.addEventListener("focusin", () => this.setExpanded(true));
-    this.el.addEventListener("focusout", () => this.setExpanded(false));
+    el.addEventListener("mouseenter", () => this.setExpanded(true));
+    el.addEventListener("mouseleave", () => this.setExpanded(false));
+    el.addEventListener("focusin", () => this.setExpanded(true));
+    el.addEventListener("focusout", () => this.setExpanded(false));
 
-    this.handleEvent("cognit:toast", (payload) => this.addToast(payload));
+    return true;
   },
 
   addToast({ html, duration }) {
+    if (!this.ensureViewport()) return;
+
     const wrapper = document.createElement("div");
     wrapper.innerHTML = html.trim();
     const card = wrapper.firstElementChild;
@@ -33,23 +48,15 @@ export const Toaster = {
 
     card.style.position = "absolute";
     card.style.width = "min(24rem, calc(100vw - 2 * var(--salad-toast-gap)))";
-    // Centered cards anchor to the viewport middle and shift back half their
-    // width through the translate in cardTransform.
-    if (this.centered) {
-      card.style.left = "50%";
-    } else {
-      card.style[this.fromLeft ? "left" : "right"] = "var(--salad-toast-gap)";
-    }
-    card.style[this.fromTop ? "top" : "bottom"] = "var(--salad-toast-gap)";
-    card.style.transformOrigin = `${this.fromTop ? "top" : "bottom"} ${
-      this.centered ? "center" : this.fromLeft ? "left" : "right"
-    }`;
+    // Centered via left 50% plus the -50% shift in cardTransform.
+    card.style.left = "50%";
+    card.style.top = "var(--salad-toast-gap)";
+    card.style.transformOrigin = "top center";
     card.style.opacity = "0";
-    card.style.transform = this.cardTransform(this.fromTop ? -8 : 8, 1);
+    card.style.transform = this.cardTransform(-8, 1);
 
-    // The action button already carries a real `phx-click` binding (rendered
-    // server-side), so LiveView's own delegated click handling runs it. We
-    // only need to dismiss the card afterwards.
+    // The action button's `phx-click` runs through LiveView's delegated
+    // handling; we only dismiss the card afterwards.
     card
       .querySelector("button[phx-click]")
       ?.addEventListener("click", () => this.dismiss(card));
@@ -63,8 +70,7 @@ export const Toaster = {
     this.el.appendChild(card);
     this.stack.unshift(card);
 
-    // Force a style flush so the enter animation transitions from the
-    // values set above instead of jumping straight to the layout below.
+    // Style flush so the enter animation starts from the values above.
     card.offsetWidth;
     requestAnimationFrame(() => this.layout());
 
@@ -93,7 +99,7 @@ export const Toaster = {
       timing.startedAt = Date.now();
       card._cognitTimer = setTimeout(
         () => this.dismiss(card),
-        Math.max(timing.remaining, 1000)
+        Math.max(timing.remaining, 1000),
       );
     }
   },
@@ -106,16 +112,14 @@ export const Toaster = {
       card.style.zIndex = z;
 
       if (this.expanded) {
-        const y = (this.fromTop ? 1 : -1) * offset;
-        card.style.transform = this.cardTransform(y, 1);
+        card.style.transform = this.cardTransform(offset, 1);
         card.style.opacity = "1";
         card.style.pointerEvents = "auto";
         offset += card.offsetHeight + EXPANDED_GAP;
       } else {
         const depth = Math.min(index, PEEK_COUNT - 1);
-        const y = (this.fromTop ? 1 : -1) * depth * COLLAPSED_GAP;
         const scale = 1 - depth * SCALE_STEP;
-        card.style.transform = this.cardTransform(y, scale);
+        card.style.transform = this.cardTransform(depth * COLLAPSED_GAP, scale);
         card.style.opacity = index < PEEK_COUNT ? "1" : "0";
         card.style.pointerEvents = index === 0 ? "auto" : "none";
       }
@@ -131,18 +135,12 @@ export const Toaster = {
     this.layout();
 
     card.style.opacity = "0";
-    card.style.transform = this.cardTransform(this.fromTop ? -8 : 8, 1);
+    card.style.transform = this.cardTransform(-8, 1);
     setTimeout(() => card.remove(), 300);
   },
 
-  // Centered positions carry the -50% horizontal shift inside the transform,
-  // so every transform update has to go through here to keep it.
+  // Every transform update must keep the -50% centering shift.
   cardTransform(y, scale) {
-    const x = this.centered ? "-50%" : "0px";
-    return `translate(${x}, ${y}px) scale(${scale})`;
-  },
-
-  destroyed() {
-    this.stack.forEach((card) => clearTimeout(card._cognitTimer));
+    return `translate(-50%, ${y}px) scale(${scale})`;
   },
 };

@@ -2,14 +2,24 @@ defmodule Cognit.Toast do
   @moduledoc """
   Sonner-style toast notifications.
 
-  Toasts are rendered client-side by the `Cognit.Toaster` hook. Add a single
-  `<.toaster />` to your root layout, then push toasts from any LiveView with
-  `send_toast/3`.
+  Toasts are rendered client-side by the `Cognit.Toaster` module, top-center
+  of the viewport. Add a single `<.toaster />` to your root layout, attach it
+  once from app.js, then push toasts from any LiveView with `send_toast/3`.
+
+  Toasts survive live navigation: the root layout is never patched while
+  live navigating, so visible toasts simply stay on screen. Because the root
+  layout is outside any LiveView, the toaster is attached from app.js instead
+  of being a phx-hook and receives toasts through the global `phx:` window
+  event.
 
   ## Examples:
 
-      # root layout (outside .sidebar_provider, like flash_group)
+      # root layout (outside the LiveView render, like flash_group)
       <.toaster />
+
+      # app.js
+      import Cognit from "cognit";
+      Cognit.Toaster.attach();
 
       # any LiveView
       socket
@@ -37,15 +47,9 @@ defmodule Cognit.Toast do
   ## Options
 
   * `:id` - DOM id. Defaults to `"toaster"`.
-  * `:position` - Edge to render toasts in. Defaults to `"bottom-right"`.
   * `:duration` - Default auto-dismiss in ms. Defaults to `4000`.
   """
   attr :id, :string, default: "toaster"
-
-  attr :position, :string,
-    values: ~w(top-left top-center top-right bottom-left bottom-center bottom-right),
-    default: "bottom-right"
-
   attr :duration, :integer, default: 4000
   attr :class, :any, default: nil
   attr :rest, :global
@@ -54,9 +58,7 @@ defmodule Cognit.Toast do
     ~H"""
     <div
       id={@id}
-      phx-hook="Cognit.Toaster"
-      phx-update="ignore"
-      data-position={@position}
+      data-cognit-toaster
       data-duration={@duration}
       class={classes(["fixed inset-0 z-[100] pointer-events-none", @class])}
       {@rest}
