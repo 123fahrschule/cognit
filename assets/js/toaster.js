@@ -7,7 +7,9 @@ const PEEK_COUNT = 3;
 // and visible toasts survive page changes. Out there it cannot be a phx-hook,
 // hence attach() from app.js plus the global `phx:` window event.
 export const Toaster = {
-  attach() {
+  attach(liveSocket) {
+    this.liveSocket = liveSocket;
+
     window.addEventListener("phx:cognit:toast", (event) =>
       this.addToast(event.detail),
     );
@@ -55,11 +57,15 @@ export const Toaster = {
     card.style.opacity = "0";
     card.style.transform = this.cardTransform(-8, 1);
 
-    // The action button's `phx-click` runs through LiveView's delegated
-    // handling; we only dismiss the card afterwards.
-    card
-      .querySelector("button[phx-click]")
-      ?.addEventListener("click", () => this.dismiss(card));
+    // Cards live outside any LiveView, so LiveView's delegated click
+    // handling ignores the action button; its command is executed against
+    // the main LiveView instead.
+    const actionButton = card.querySelector("button[phx-click]");
+
+    actionButton?.addEventListener("click", () => {
+      this.executeAction(actionButton);
+      this.dismiss(card);
+    });
 
     // Click anywhere on the card (outside the action) dismisses
     card.addEventListener("click", (e) => {
@@ -137,6 +143,13 @@ export const Toaster = {
     card.style.opacity = "0";
     card.style.transform = this.cardTransform(-8, 1);
     setTimeout(() => card.remove(), 300);
+  },
+
+  executeAction(actionButton) {
+    const mainView = document.querySelector("[data-phx-main]");
+    if (!this.liveSocket || !mainView) return;
+
+    this.liveSocket.execJS(mainView, actionButton.getAttribute("phx-click"));
   },
 
   // Every transform update must keep the -50% centering shift.

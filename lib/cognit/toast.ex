@@ -19,7 +19,7 @@ defmodule Cognit.Toast do
 
       # app.js
       import Cognit from "cognit";
-      Cognit.Toaster.attach();
+      Cognit.Toaster.attach(liveSocket);
 
       # any LiveView
       socket
@@ -81,8 +81,8 @@ defmodule Cognit.Toast do
       `:default` toast a neutral check mark.
     * `:duration` - Override auto-dismiss in ms. `0` disables auto-dismiss.
     * `:action` - `%{label: "...", command: %Phoenix.LiveView.JS{}}` — clicking
-      the button runs `command`, exactly like a `phx-click={JS...}` binding
-      anywhere else (push an event, navigate, exec another command, ...).
+      the button runs `command` against the main LiveView (push an event,
+      navigate, exec another command, ...).
   """
   def send_toast(socket, kind \\ :default, opts) when kind in @kinds do
     html =
