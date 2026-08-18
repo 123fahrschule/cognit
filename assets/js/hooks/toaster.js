@@ -4,6 +4,12 @@ const SCALE_STEP = 0.05;
 const PEEK_COUNT = 3;
 const STORAGE_KEY = "cognit:toasts";
 
+// A fresh page load (e.g. logging out and back in) must not replay toasts
+// persisted by the previous page session, only live navigation within the
+// same loaded page may. Module state survives live navigation but not a full
+// page load, which makes it the discriminator between the two.
+let withinLoadedPage = false;
+
 export const Toaster = {
   mounted() {
     this.defaultDuration = parseInt(this.el.dataset.duration || "4000", 10);
@@ -28,7 +34,12 @@ export const Toaster = {
       this.addToast(payload, entry.id);
     });
 
-    this.replayPersistedToasts();
+    if (withinLoadedPage) {
+      this.replayPersistedToasts();
+    } else {
+      withinLoadedPage = true;
+      this.writePersistedToasts([]);
+    }
   },
 
   // A toast pushed right before a live navigation dies with the page: the
@@ -53,7 +64,7 @@ export const Toaster = {
     if (!id) return;
 
     this.writePersistedToasts(
-      this.readPersistedToasts().filter((entry) => entry.id !== id)
+      this.readPersistedToasts().filter((entry) => entry.id !== id),
     );
   },
 
@@ -68,7 +79,7 @@ export const Toaster = {
       alive.push(entry);
       this.addToast(
         { html: entry.html, duration: entry.duration > 0 ? remaining : 0 },
-        entry.id
+        entry.id,
       );
     });
 
@@ -160,7 +171,7 @@ export const Toaster = {
       timing.startedAt = Date.now();
       card._cognitTimer = setTimeout(
         () => this.dismiss(card),
-        Math.max(timing.remaining, 1000)
+        Math.max(timing.remaining, 1000),
       );
     }
   },
@@ -211,6 +222,31 @@ export const Toaster = {
   },
 
   destroyed() {
-    this.stack.forEach((card) => clearTimeout(card._cognitTimer));
+    this.stack.forEach((card) => {
+      clearTimeout(card._cognitTimer);
+      this.persistRemainingLifetime(card);
+    });
+  },
+
+  // Rewrites a surviving card's storage entry with its pause-adjusted
+  // remaining lifetime, so time spent paused (hovered or focused) is not
+  // counted against the toast when it is replayed after a live navigation.
+  persistRemainingLifetime(card) {
+    const timing = card._cognitTiming;
+    if (!card._cognitStorageId || !timing) return;
+
+    const remaining = this.expanded
+      ? timing.remaining
+      : timing.remaining - (Date.now() - timing.startedAt);
+
+    if (remaining <= 0) return this.unpersistToast(card._cognitStorageId);
+
+    this.writePersistedToasts(
+      this.readPersistedToasts().map((entry) =>
+        entry.id === card._cognitStorageId
+          ? { ...entry, duration: remaining, addedAt: Date.now() }
+          : entry,
+      ),
+    );
   },
 };

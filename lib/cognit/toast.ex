@@ -9,6 +9,10 @@ defmodule Cognit.Toast do
   Toasts survive live navigation: the hook mirrors every pushed toast into
   `sessionStorage` and replays it with its remaining lifetime after the next
   page mounts, so `send_toast/3` also works right before `push_navigate`.
+  This relies on `sessionStorage` being available and writable, when it is
+  not, a toast pushed right before `push_navigate` is lost together with the
+  page it was pushed on. A full page load (e.g. logging out and back in)
+  starts fresh and discards any persisted toasts.
 
   ## Examples:
 
