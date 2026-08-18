@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.0
+
+### Compatibility
+
+- **Toast**: Toasts always appear at the top center of the viewport. The `position` attribute on `toaster/1` was removed — drop it from your layout if you set it
+
 ## 0.15.0
 
 ### Features
