@@ -2,24 +2,14 @@ defmodule Cognit.Toast do
   @moduledoc """
   Sonner-style toast notifications.
 
-  Toasts are rendered client-side by the `Cognit.Toaster` module, top-center
-  of the viewport. Add a single `<.toaster />` to your root layout, attach it
-  once from app.js, then push toasts from any LiveView with `send_toast/3`.
-
-  Toasts survive live navigation: the root layout is never patched while
-  live navigating, so visible toasts simply stay on screen. Because the root
-  layout is outside any LiveView, the toaster is attached from app.js instead
-  of being a phx-hook and receives toasts through the global `phx:` window
-  event.
+  Toasts are rendered client-side by the `Cognit.Toaster` hook, top-center
+  of the viewport. Add a single `<.toaster />` to your layout, then push
+  toasts from any LiveView with `send_toast/3`.
 
   ## Examples:
 
-      # root layout (outside the LiveView render, like flash_group)
+      # layout
       <.toaster />
-
-      # app.js
-      import Cognit from "cognit";
-      Cognit.Toaster.attach(liveSocket);
 
       # any LiveView
       socket
@@ -58,7 +48,8 @@ defmodule Cognit.Toast do
     ~H"""
     <div
       id={@id}
-      data-cognit-toaster
+      phx-hook="Cognit.Toaster"
+      phx-update="ignore"
       data-duration={@duration}
       class={classes(["fixed inset-0 z-[100] pointer-events-none", @class])}
       {@rest}
@@ -81,8 +72,8 @@ defmodule Cognit.Toast do
       `:default` toast a neutral check mark.
     * `:duration` - Override auto-dismiss in ms. `0` disables auto-dismiss.
     * `:action` - `%{label: "...", command: %Phoenix.LiveView.JS{}}` — clicking
-      the button runs `command` against the main LiveView (push an event,
-      navigate, exec another command, ...).
+      the button runs `command`, exactly like a `phx-click={JS...}` binding
+      anywhere else (push an event, navigate, exec another command, ...).
   """
   def send_toast(socket, kind \\ :default, opts) when kind in @kinds do
     html =

@@ -3,46 +3,25 @@ const EXPANDED_GAP = 14;
 const SCALE_STEP = 0.05;
 const PEEK_COUNT = 3;
 
-// The toaster lives in the root layout, so live navigation never patches it
-// and visible toasts survive page changes. Out there it cannot be a phx-hook,
-// hence attach() from app.js plus the global `phx:` window event.
 export const Toaster = {
-  attach(liveSocket) {
-    this.liveSocket = liveSocket;
-
-    window.addEventListener("phx:cognit:toast", (event) =>
-      this.addToast(event.detail),
-    );
-  },
-
-  // Resolved lazily on the first toast, so attach() can run before the
-  // element exists.
-  ensureViewport() {
-    if (this.el?.isConnected) return true;
-
-    const el = document.querySelector("[data-cognit-toaster]");
-    if (!el) return false;
-
-    this.el = el;
-    this.defaultDuration = parseInt(el.dataset.duration || "4000", 10);
+  mounted() {
+    this.defaultDuration = parseInt(this.el.dataset.duration || "4000", 10);
     this.stack = [];
     this.expanded = false;
 
     // Absolutely positioned cards ignore the container's padding, so the
     // edge gap lives on each card.
-    el.style.setProperty("--salad-toast-gap", "clamp(1rem, 4vw, 2rem)");
+    this.el.style.setProperty("--salad-toast-gap", "clamp(1rem, 4vw, 2rem)");
 
-    el.addEventListener("mouseenter", () => this.setExpanded(true));
-    el.addEventListener("mouseleave", () => this.setExpanded(false));
-    el.addEventListener("focusin", () => this.setExpanded(true));
-    el.addEventListener("focusout", () => this.setExpanded(false));
+    this.el.addEventListener("mouseenter", () => this.setExpanded(true));
+    this.el.addEventListener("mouseleave", () => this.setExpanded(false));
+    this.el.addEventListener("focusin", () => this.setExpanded(true));
+    this.el.addEventListener("focusout", () => this.setExpanded(false));
 
-    return true;
+    this.handleEvent("cognit:toast", (payload) => this.addToast(payload));
   },
 
   addToast({ html, duration }) {
-    if (!this.ensureViewport()) return;
-
     const wrapper = document.createElement("div");
     wrapper.innerHTML = html.trim();
     const card = wrapper.firstElementChild;
@@ -57,15 +36,11 @@ export const Toaster = {
     card.style.opacity = "0";
     card.style.transform = this.cardTransform(-8, 1);
 
-    // Cards live outside any LiveView, so LiveView's delegated click
-    // handling ignores the action button; its command is executed against
-    // the main LiveView instead.
-    const actionButton = card.querySelector("button[phx-click]");
-
-    actionButton?.addEventListener("click", () => {
-      this.executeAction(actionButton);
-      this.dismiss(card);
-    });
+    // The action button's `phx-click` runs through LiveView's delegated
+    // handling; we only dismiss the card afterwards.
+    card
+      .querySelector("button[phx-click]")
+      ?.addEventListener("click", () => this.dismiss(card));
 
     // Click anywhere on the card (outside the action) dismisses
     card.addEventListener("click", (e) => {
@@ -145,15 +120,12 @@ export const Toaster = {
     setTimeout(() => card.remove(), 300);
   },
 
-  executeAction(actionButton) {
-    const mainView = document.querySelector("[data-phx-main]");
-    if (!this.liveSocket || !mainView) return;
-
-    this.liveSocket.execJS(mainView, actionButton.getAttribute("phx-click"));
-  },
-
   // Every transform update must keep the -50% centering shift.
   cardTransform(y, scale) {
     return `translate(-50%, ${y}px) scale(${scale})`;
+  },
+
+  destroyed() {
+    this.stack.forEach((card) => clearTimeout(card._cognitTimer));
   },
 };
