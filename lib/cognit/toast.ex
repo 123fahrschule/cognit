@@ -2,9 +2,9 @@ defmodule Cognit.Toast do
   @moduledoc """
   Sonner-style toast notifications.
 
-  Toasts are rendered client-side by the `Cognit.Toaster` hook. Add a single
-  `<.toaster />` to your root layout, then push toasts from any LiveView with
-  `send_toast/3`.
+  Toasts are rendered client-side by the `Cognit.Toaster` hook, top-center
+  of the viewport. Add a single `<.toaster />` to your root layout, then push
+  toasts from any LiveView with `send_toast/3`.
 
   ## Examples:
 
@@ -37,15 +37,9 @@ defmodule Cognit.Toast do
   ## Options
 
   * `:id` - DOM id. Defaults to `"toaster"`.
-  * `:position` - Edge to render toasts in. Defaults to `"bottom-right"`.
   * `:duration` - Default auto-dismiss in ms. Defaults to `4000`.
   """
   attr :id, :string, default: "toaster"
-
-  attr :position, :string,
-    values: ~w(top-left top-center top-right bottom-left bottom-center bottom-right),
-    default: "bottom-right"
-
   attr :duration, :integer, default: 4000
   attr :class, :any, default: nil
   attr :rest, :global
@@ -56,7 +50,6 @@ defmodule Cognit.Toast do
       id={@id}
       phx-hook="Cognit.Toaster"
       phx-update="ignore"
-      data-position={@position}
       data-duration={@duration}
       class={classes(["fixed inset-0 z-[100] pointer-events-none", @class])}
       {@rest}
