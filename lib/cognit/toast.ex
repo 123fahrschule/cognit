@@ -3,12 +3,12 @@ defmodule Cognit.Toast do
   Sonner-style toast notifications.
 
   Toasts are rendered client-side by the `Cognit.Toaster` hook, top-center
-  of the viewport. Add a single `<.toaster />` to your layout, then push
+  of the viewport. Add a single `<.toaster />` to your root layout, then push
   toasts from any LiveView with `send_toast/3`.
 
   ## Examples:
 
-      # layout
+      # root layout (outside .sidebar_provider, like flash_group)
       <.toaster />
 
       # any LiveView

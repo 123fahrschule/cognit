@@ -3,7 +3,7 @@ defmodule Storybook.Examples.Toast do
   Example story for the Sonner-style toast component.
 
   Toasts are pushed from the server via `Cognit.Toast.send_toast/3` and
-  rendered client-side by the `Cognit.Toaster` module, so a live example
+  rendered client-side by the `Cognit.Toaster` hook, so a live example
   (rather than a plain component story) is required to demo them.
   """
   use PhoenixStorybook.Story, :example
