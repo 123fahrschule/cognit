@@ -37,6 +37,7 @@ defmodule Cognit do
 
   ### Layout & Structure
   - `card/1` - Content containers with headers and footers
+  - `item/1` - Rows of media, text, and actions, stackable with `item_group/1`
   - `separator/1` - Visual dividers between content sections
   - `scroll_area/1` - Custom scrollable containers
 
@@ -209,6 +210,7 @@ defmodule Cognit do
       import Cognit.HoverCard
       import Cognit.Icon
       import Cognit.Input
+      import Cognit.Item
       import Cognit.Label
       import Cognit.Menu
       import Cognit.Popover
