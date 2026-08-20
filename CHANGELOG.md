@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0
+
+### Features
+
+- **Item**: New `item/1` component — a row that pairs leading media with a title and description and trailing actions. Build it from `item_media/1`, `item_content/1`, `item_title/1`, `item_description/1`, and `item_actions/1`; add `item_header/1` or `item_footer/1` for a full-width row above or below the body, such as a cover image or a progress bar. Comes in a default and a compact `small` size, with or without a border
+- **Item**: `item_media/1` shapes the leading slot for a bare icon, an icon on a bordered tile, an avatar, a row of overlapping avatars, or a cropped image
+- **Item**: Stack rows with `item_group/1`, dividing them with `separator/1`. Passing `href`, `navigate`, or `patch` (or setting `as="button"`) turns the whole row into a single click target with hover and focus styling
+
 ## 0.16.0
 
 ### Compatibility
