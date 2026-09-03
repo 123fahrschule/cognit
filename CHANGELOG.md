@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.0
+
+### Features
+
+- **Table**: `table_empty/1` accepts a `colspan` attribute so the placeholder row can span an exact number of columns. The default still stretches across the whole row, which is what auto-layout tables need; `table-fixed` tables should pass their own column count, otherwise the real columns are squeezed by phantom ones
+
 ## 0.17.0
 
 ### Features
