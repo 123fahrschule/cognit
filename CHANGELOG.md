@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.18.1
+
+### Bug Fixes
+
+- **Form Field**: `disabled` now reaches every control type — checkbox, switch, textarea, and native select ignored it before. Switch, select, and combobox fields also forward extra attributes (`phx-*`, `data-*`, `aria-*`, `required`, `form`) to the control, and `multiple` is passed on to text inputs such as `type="file"`. Textarea and native-select labels are linked to their control via `for`
+- **Sidebar**: The app and user side-nav buttons no longer light up as the active item when their `href` matches the current page, so a dashboard link at the root does not stay highlighted everywhere
+
 ## 0.18.0
 
 ### Features
