@@ -86,10 +86,11 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "select"} = assigns) do
     assigns = assign(assigns, :list_attrs, content_attrs(assigns.select_content))
+    assigns = assign(assigns, :root_rest, Map.delete(assigns.rest, :placeholder))
 
     ~H"""
     <.field_wrapper layout={@layout} label={@label} class={@class}>
-      <.select field={@form_field} multiple={@multiple}>
+      <.select field={@form_field} multiple={@multiple} {@root_rest}>
         <.select_trigger disabled={@disabled}>
           <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
           <.select_value placeholder={@rest[:placeholder] || pgettext("select placeholder", "Select")} />
@@ -108,10 +109,11 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "combobox"} = assigns) do
     assigns = assign(assigns, :list_attrs, content_attrs(assigns.select_content))
+    assigns = assign(assigns, :root_rest, Map.delete(assigns.rest, :placeholder))
 
     ~H"""
     <.field_wrapper layout={@layout} label={@label} class={@class}>
-      <.combobox field={@form_field} multiple={@multiple}>
+      <.combobox field={@form_field} multiple={@multiple} {@root_rest}>
         <.combobox_trigger disabled={@disabled}>
           <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
           <.combobox_value placeholder={
@@ -136,13 +138,14 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "native-select"} = assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} class={@class}>
+    <.field_wrapper layout={@layout} label={@label} for={@id} class={@class}>
       <div>
         <select
           id={@id}
           name={@name}
           value={@value}
           multiple={@multiple}
+          disabled={@disabled}
           aria-invalid={@has_errors && "true"}
           class={[
             "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm data-[placeholder]:text-muted-foreground focus:outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/40 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
@@ -163,8 +166,15 @@ defmodule Cognit.Components.FormField do
 
   def form_field(%{type: "textarea"} = assigns) do
     ~H"""
-    <.field_wrapper layout={@layout} label={@label} class={@class}>
-      <.textarea id={@id} name={@name} value={@value} aria-invalid={@has_errors && "true"} {@rest} />
+    <.field_wrapper layout={@layout} label={@label} for={@id} class={@class}>
+      <.textarea
+        id={@id}
+        name={@name}
+        value={@value}
+        disabled={@disabled}
+        aria-invalid={@has_errors && "true"}
+        {@rest}
+      />
       <.form_description :if={@description}>
         {@description}
       </.form_description>
@@ -177,8 +187,8 @@ defmodule Cognit.Components.FormField do
     ~H"""
     <div class={@class}>
       <div class="flex items-center gap-2">
-        <.switch field={@form_field} />
-        <.label :if={@label} for={@form_field.id <> "-input"}>
+        <.switch field={@form_field} disabled={@disabled} {@rest} />
+        <.label :if={@label} for={@id <> "-input"}>
           {@label}
         </.label>
       </div>
@@ -200,6 +210,7 @@ defmodule Cognit.Components.FormField do
           id={@id}
           name={@name}
           value={@checked}
+          disabled={@disabled}
           aria-invalid={@has_errors && "true"}
           {@rest}
         />
@@ -221,6 +232,7 @@ defmodule Cognit.Components.FormField do
         name={@name}
         value={@value}
         disabled={@disabled}
+        multiple={@multiple}
         aria-invalid={@has_errors && "true"}
         {@rest}
       >
