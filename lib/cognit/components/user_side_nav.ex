@@ -50,6 +50,7 @@ defmodule Cognit.Components.UserSideNav do
             <.sidebar_menu_button
               size="lg"
               class={@class}
+              data-track-active="false"
               as="button"
               tooltip={side_nav_tooltip(@user)}
             >
@@ -73,6 +74,7 @@ defmodule Cognit.Components.UserSideNav do
         <.sidebar_menu_button
           size="lg"
           class={@class}
+          data-track-active="false"
           as="button"
           phx-click={@on_click}
           tooltip={side_nav_tooltip(@user)}

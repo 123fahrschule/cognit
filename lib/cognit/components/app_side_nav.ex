@@ -43,6 +43,7 @@ defmodule Cognit.Components.AppSideNav do
             <.sidebar_menu_button
               size="lg"
               class={@class}
+              data-track-active="false"
               as="button"
               tooltip={side_nav_tooltip(@title, @subtitle)}
             >
@@ -79,6 +80,7 @@ defmodule Cognit.Components.AppSideNav do
           size="lg"
           as={@as}
           phx-click={@on_click}
+          data-track-active="false"
           class={classes([!@interactive? && "pointer-events-none", @class])}
           tooltip={side_nav_tooltip(@title, @subtitle)}
           {@rest}

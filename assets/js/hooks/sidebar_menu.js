@@ -9,8 +9,10 @@ export const SidebarMenu = {
 
   updateActiveItems() {
     const currentPath = window.location.pathname;
+    // App/user side-nav entries opt out via data-track-active="false":
+    // their href (e.g. the dashboard root) is not a nav location.
     const allButtons = this.el.querySelectorAll(
-      '[data-sidebar="menu-button"], [data-sidebar="menu-sub-button"]',
+      '[data-sidebar="menu-button"]:not([data-track-active="false"]), [data-sidebar="menu-sub-button"]:not([data-track-active="false"])',
     );
 
     // Only the most specific (longest) matching href stays active, so a parent
