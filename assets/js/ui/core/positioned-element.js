@@ -35,6 +35,8 @@ class PositionedElement {
       trapFocus: false,
       focusableSelector:
         'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      // Optional function returning the element to focus on activation
+      initialFocus: null,
 
       // Event handlers
       onOutsideClick: null,
@@ -57,6 +59,7 @@ class PositionedElement {
     // Focus trap for keyboard navigation
     this.focusTrap = new FocusTrap(this.element, {
       focusableSelector: this.options.focusableSelector,
+      initialFocus: this.options.initialFocus,
     });
 
     // Click outside detection

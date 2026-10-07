@@ -50,6 +50,9 @@ defmodule Cognit do
   - `radio_group/1` - Single choice from multiple options
   - `select/1` - Dropdown selection menus
   - `combobox/1` - Searchable select with single/multiple selection
+  - `date_picker/1` - Date or date range selection from a calendar popover
+  - `calendar/1` - Inline month calendar for picking a date or a date range
+  - `time_picker/1` - 24-hour time input with hour and minute fields
   - `slider/1` - Range value selection
   - `switch/1` - Toggle controls
   - `form/1`, `form_item/1`, `form_label/1` - Form structure and validation
@@ -196,12 +199,14 @@ defmodule Cognit do
       import Cognit.Breadcrumb
       import Cognit.Button
       import Cognit.ButtonGroup
+      import Cognit.Calendar
       import Cognit.Card
       import Cognit.Chart
       import Cognit.Checkbox
       import Cognit.Collapsible
       import Cognit.Combobox
       import Cognit.ConfirmationDialog
+      import Cognit.DatePicker
       import Cognit.Dialog
       import Cognit.DropdownMenu
       import Cognit.EmptyState
@@ -228,6 +233,7 @@ defmodule Cognit do
       import Cognit.Table
       import Cognit.Tabs
       import Cognit.Textarea
+      import Cognit.TimePicker
       import Cognit.Toast
       import Cognit.Toggle
       import Cognit.ToggleGroup

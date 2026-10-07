@@ -77,7 +77,8 @@ class FocusTrap {
       if (focusableElements.length > 0) {
         // Look for an element with autofocus attribute first
         const autoFocusEl = this.element.querySelector("[autofocus]");
-        const initialFocusEl = autoFocusEl || focusableElements[0];
+        const initialFocusEl =
+          this.options.initialFocus?.() || autoFocusEl || focusableElements[0];
         initialFocusEl.focus();
       } else {
         // If no focusable elements, make the element itself focusable

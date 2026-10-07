@@ -141,6 +141,50 @@ defmodule Storybook.CognitComponents.FormField do
         """
       },
       %Variation{
+        id: :date_picker,
+        description: "Calendar popover via type=\"date-picker\"; submits an ISO 8601 date.",
+        attributes: %{type: "date-picker", label: "Due date", min: "2026-01-01"},
+        template: """
+        <.form :let={f} for={%{"due_on" => "2026-08-06"}} as={:demo} class="w-full max-w-sm">
+          <.psb-variation field={f[:due_on]} />
+        </.form>
+        """
+      },
+      %Variation{
+        id: :date_picker_range,
+        description:
+          "Date range via mode=\"range\"; the end of the range binds to its own field through end-field.",
+        # Written out in full: the storybook can't pass hyphenated attributes
+        # such as end-field through <.psb-variation>.
+        template: """
+        <.form :let={f} for={%{"starts_on" => "2026-08-10", "ends_on" => "2026-08-14"}} as={:demo} class="w-full max-w-sm">
+          <.form_field
+            type="date-picker"
+            mode="range"
+            label="Vacation"
+            field={f[:starts_on]}
+            end-field={f[:ends_on]}
+          />
+        </.form>
+        """
+      },
+      %Variation{
+        id: :time_picker,
+        description: "Typed 24-hour time via type=\"time-picker\"; submits hh:mm.",
+        attributes: %{
+          type: "time-picker",
+          label: "Start time",
+          min: "07:00",
+          max: "20:00",
+          step: 15
+        },
+        template: """
+        <.form :let={f} for={%{"starts_at" => "09:30"}} as={:demo} class="w-full max-w-sm">
+          <.psb-variation field={f[:starts_at]} />
+        </.form>
+        """
+      },
+      %Variation{
         id: :switch,
         description: "Boolean toggle via type=\"switch\" with an inline label.",
         attributes: %{type: "switch", label: "Enable notifications"},

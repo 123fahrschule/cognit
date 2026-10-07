@@ -3,11 +3,13 @@ defmodule Cognit.Components.FormField do
 
   import Cognit.Checkbox
   import Cognit.Combobox
+  import Cognit.DatePicker
   import Cognit.Form
   import Cognit.Input
   import Cognit.Label
   import Cognit.Switch
   import Cognit.Textarea
+  import Cognit.TimePicker
   import Cognit.Select
 
   @rest_attributes [
@@ -15,12 +17,15 @@ defmodule Cognit.Components.FormField do
     "autocomplete",
     "capture",
     "cols",
+    "disabled-dates",
+    "end-field",
     "form",
     "list",
     "max",
     "maxlength",
     "min",
     "minlength",
+    "mode",
     "multiple",
     "pattern",
     "placeholder",
@@ -128,6 +133,75 @@ defmodule Cognit.Components.FormField do
           </.combobox_list>
         </.combobox_content>
       </.combobox>
+      <.form_description :if={@description}>
+        {@description}
+      </.form_description>
+      <.form_message errors={@errors} />
+    </.field_wrapper>
+    """
+  end
+
+  def form_field(%{type: "date-picker"} = assigns) do
+    # In range mode the end of the range has its own field; show its errors too
+    end_field = assigns.rest[:"end-field"]
+    errors = assigns[:errors] || []
+
+    errors =
+      if end_field && Phoenix.Component.used_input?(end_field),
+        do: Enum.uniq(errors ++ end_field.errors),
+        else: errors
+
+    assigns =
+      assigns
+      |> assign(:root_rest, Map.delete(assigns.rest, :placeholder))
+      |> assign(:errors, errors)
+      |> assign(:has_errors, errors != [])
+
+    ~H"""
+    <.field_wrapper layout={@layout} label={@label} class={@class}>
+      <.date_picker
+        id={assigns[:id]}
+        name={assigns[:name]}
+        value={assigns[:value]}
+        field={@form_field}
+        aria-invalid={@has_errors && "true"}
+        {@root_rest}
+      >
+        <.date_picker_trigger disabled={@disabled}>
+          <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
+          <.date_picker_value placeholder={@rest[:placeholder]} />
+        </.date_picker_trigger>
+        <.date_picker_content />
+      </.date_picker>
+      <.form_description :if={@description}>
+        {@description}
+      </.form_description>
+      <.form_message errors={@errors} />
+    </.field_wrapper>
+    """
+  end
+
+  def form_field(%{type: "time-picker"} = assigns) do
+    assigns = assign(assigns, :root_rest, Map.delete(assigns.rest, :placeholder))
+
+    ~H"""
+    <.field_wrapper
+      layout={@layout}
+      label={@label}
+      for={assigns[:id] && assigns[:id] <> "-hours"}
+      class={@class}
+    >
+      <.time_picker
+        id={assigns[:id]}
+        name={assigns[:name]}
+        value={assigns[:value]}
+        disabled={@disabled}
+        aria-invalid={@has_errors && "true"}
+        placeholder={@rest[:placeholder]}
+        {@root_rest}
+      >
+        <:leading :if={@leading != []}>{render_slot(@leading)}</:leading>
+      </.time_picker>
       <.form_description :if={@description}>
         {@description}
       </.form_description>
