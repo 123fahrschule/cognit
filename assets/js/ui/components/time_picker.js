@@ -80,6 +80,7 @@ class TimePickerComponent extends Component {
     this.readConstraints();
     this.readServerInvalid();
     this.render();
+    this.renderInvalid();
 
     this.handleFocusIn = this.handleFocusIn.bind(this);
     this.handleFocusOut = this.handleFocusOut.bind(this);
