@@ -10,20 +10,40 @@ defmodule Storybook.Examples.FormField.Registration.Account do
     field :plan, :string
     field :country, :string
     field :role, :string
+    field :start_on, :date
+    field :start_at, :time
     field :notifications, :boolean, default: true
     field :terms, :boolean, default: false
   end
 
   def changeset(account \\ %__MODULE__{}, attrs \\ %{}) do
     account
-    |> cast(attrs, [:name, :email, :bio, :plan, :country, :role, :notifications, :terms])
-    |> validate_required([:name, :email, :plan, :country, :role],
+    |> cast(attrs, [
+      :name,
+      :email,
+      :bio,
+      :plan,
+      :country,
+      :role,
+      :start_on,
+      :start_at,
+      :notifications,
+      :terms
+    ])
+    |> validate_required([:name, :email, :plan, :country, :role, :start_on],
       message: "can't be blank"
     )
     |> validate_length(:name, min: 2)
     |> validate_length(:bio, min: 10, message: "add at least 10 characters")
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must be a valid email address")
     |> validate_acceptance(:terms, message: "you must accept the terms")
+    |> validate_change(:start_at, fn :start_at, time ->
+      if Time.compare(time, ~T[07:00:00]) == :lt or Time.compare(time, ~T[20:00:00]) == :gt do
+        [start_at: "must be between 07:00 and 20:00"]
+      else
+        []
+      end
+    end)
   end
 end
 
@@ -32,8 +52,9 @@ defmodule Storybook.Examples.FormField.Registration do
   Example: a complete account form driven entirely by `form_field`.
 
   One `form_field` per row covers every supported type — text, email, textarea,
-  select, combobox, native-select, switch, and checkbox — all bound to a single
-  Ecto changeset with `phx-change` validation and `phx-submit` handling.
+  select, combobox, native-select, date-picker, time-picker, switch, and
+  checkbox — all bound to a single Ecto changeset with `phx-change` validation
+  and `phx-submit` handling.
   """
   use PhoenixStorybook.Story, :example
   use Cognit
@@ -130,6 +151,28 @@ defmodule Storybook.Examples.FormField.Registration do
           <:select_content>
             <.combobox_item :for={{label, value} <- @countries} value={value}>{label}</.combobox_item>
           </:select_content>
+        </.form_field>
+
+        <.form_field
+          field={@form[:start_on]}
+          type="date-picker"
+          label="Preferred start date"
+          min={Date.utc_today()}
+          description="Can't be in the past."
+        >
+          <:leading><.icon name="calendar_today" size="xs" decorative /></:leading>
+        </.form_field>
+
+        <.form_field
+          field={@form[:start_at]}
+          type="time-picker"
+          label="Preferred start time"
+          min="07:00"
+          max="20:00"
+          step={15}
+          description="Between 07:00 and 20:00."
+        >
+          <:leading><.icon name="schedule" size="xs" decorative /></:leading>
         </.form_field>
 
         <.separator />

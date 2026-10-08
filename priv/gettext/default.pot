@@ -214,3 +214,51 @@ msgstr ""
 msgctxt "select"
 msgid "%{count} items selected"
 msgstr ""
+
+#: lib/cognit/calendar/calendar_view.ex:28
+#, elixir-autogen, elixir-format
+msgctxt "calendar"
+msgid "Next month"
+msgstr ""
+
+#: lib/cognit/calendar/calendar_view.ex:19
+#, elixir-autogen, elixir-format
+msgctxt "calendar"
+msgid "Previous month"
+msgstr ""
+
+#: lib/cognit/date_picker.ex:300
+#, elixir-autogen, elixir-format
+msgctxt "date picker"
+msgid "Choose date"
+msgstr ""
+
+#: lib/cognit/date_picker.ex:261
+#, elixir-autogen, elixir-format
+msgctxt "date picker placeholder"
+msgid "Set date"
+msgstr ""
+
+#: lib/cognit/time_picker.ex:161
+#, elixir-autogen, elixir-format
+msgctxt "time picker"
+msgid "Hours"
+msgstr ""
+
+#: lib/cognit/time_picker.ex:176
+#, elixir-autogen, elixir-format
+msgctxt "time picker"
+msgid "Minutes"
+msgstr ""
+
+#: lib/cognit/time_picker.ex:162
+#, elixir-autogen, elixir-format
+msgctxt "time picker placeholder"
+msgid "hh"
+msgstr ""
+
+#: lib/cognit/time_picker.ex:177
+#, elixir-autogen, elixir-format
+msgctxt "time picker placeholder"
+msgid "mm"
+msgstr ""
