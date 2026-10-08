@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.19.0
+
+### Features
+
+- **Calendar**: New `calendar/1` component — an inline month grid for picking a single date or, with `mode="range"`, a start and end date. Weeks start on Monday, month and weekday names follow the current locale, and `min`, `max`, and `disabled-dates` limit what can be picked. Full keyboard navigation: arrows move by day or week, `Home`/`End` jump within the week, `PageUp`/`PageDown` switch months (with `Shift`, years)
+- **Date Picker**: New `date_picker/1` — an input-styled trigger that opens the calendar in a popover and shows the pick as `dd.mm.yyyy`. Compose it from `date_picker_trigger/1`, `date_picker_value/1`, and `date_picker_content/1`; `side` and `align` position the popover and `use-portal` renders it outside the parent. In range mode the value only changes once both ends are picked, so closing halfway keeps the previous range
+- **Time Picker**: New `time_picker/1` — a 24-hour `hh:mm` input with separate hour and minute fields that behaves like a native time input in every browser. Digits fill the focused field and move on automatically, arrows step by `step` minutes, pasted times such as `14.30` or `1430` are understood, and `min`/`max` mark times outside the window invalid
+- **Form Field**: New `type="date-picker"` and `type="time-picker"`. Both bind to `field` like any other type; a range picker binds its end date through `end-field` and shows errors from both fields. Dates submit as ISO 8601 and times as `hh:mm`, so Ecto `:date` and `:time` fields cast them directly
+
 ## 0.18.1
 
 ### Bug Fixes
