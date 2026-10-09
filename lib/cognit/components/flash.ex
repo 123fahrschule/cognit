@@ -46,6 +46,12 @@ defmodule Cognit.Components.Flash do
 
   attr :flash, :map
 
+  attr :error_duration, :integer,
+    default: nil,
+    doc:
+      "auto-dismiss error flashes after this many milliseconds. " <>
+        "Nil keeps them on screen until closed."
+
   def flash_group(assigns) do
     ~H"""
     <div class="fixed inset-x-0 top-8 z-[60] px-4 pointer-events-none">
@@ -59,6 +65,7 @@ defmodule Cognit.Components.Flash do
           title={message}
           phx-hook="Cognit.FlashMessage"
           data-type={to_string(kind)}
+          data-duration={error_duration(kind, @error_duration)}
           phx-remove={
             JS.push("lv:clear-flash", value: %{key: kind})
             |> hide("##{"flash_" <> to_string(kind)}")
@@ -68,6 +75,9 @@ defmodule Cognit.Components.Flash do
     </div>
     """
   end
+
+  defp error_duration(kind, ms) when kind in [:error, "error"] and is_integer(ms), do: ms
+  defp error_duration(_kind, _ms), do: nil
 
   defp client_error_flash(assigns) do
     ~H"""

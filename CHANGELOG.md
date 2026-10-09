@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- **Flash**: `flash_group/1` accepts `error_duration` (milliseconds). When set, error flashes auto-dismiss after that delay. The default stays unchanged: errors remain until closed, and other flashes still dismiss after 5 seconds. Connection and crash flashes are unaffected
+
 ## 0.19.0
 
 ### Features
