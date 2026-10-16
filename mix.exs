@@ -40,6 +40,7 @@ defmodule Cognit.MixProject do
         "compile --force --warnings-as-errors"
       ],
       "icons.update": ["cmd assets/fonts/material_symbols/update.sh"],
+      "fonts.update": ["cmd assets/fonts/open_sans/update.sh"],
       release: [
         "check",
         "cmd git tag #{@version}",

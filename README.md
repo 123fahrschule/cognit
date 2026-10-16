@@ -330,6 +330,12 @@ grade and optical size are fixed. To pull the latest upstream release, run
 `mix icons.update` (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The
 installed version is recorded in `assets/fonts/material_symbols/VERSION`.
 
+### Fonts
+
+Open Sans ships as static latin-subset files per weight, built from the
+upstream variable font. `mix fonts.update` rebuilds them; the version is
+recorded in `assets/fonts/open_sans/VERSION`.
+
 ---
 
 ## Programmatic control
