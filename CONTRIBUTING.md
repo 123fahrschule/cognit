@@ -71,4 +71,6 @@ Maintainers only, from an up-to-date `main`:
 2. Commit as `X.Y.Z` with nothing else in the commit.
 3. Run `mix release`. It runs `mix check`, tags `X.Y.Z`, and pushes `main` and the tag.
 
+An agent may do steps 1–2 when a maintainer asks for a release on `main`; step 3 stays manual.
+
 Semver: breaking change to a public component or attr → minor while we are on `0.x` (and note it under *Compatibility*); everything else → patch or minor by scope.
