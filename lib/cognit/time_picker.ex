@@ -232,7 +232,7 @@ defmodule Cognit.TimePicker do
         aria-valuemax={@max}
         aria-valuenow={@value && String.to_integer(@value)}
         data-part={@part}
-        class="col-start-1 row-start-1 w-0 min-w-full rounded-sm bg-transparent px-0.5 text-center caret-transparent outline-none placeholder:text-muted-foreground focus:bg-accent focus:text-accent-foreground disabled:cursor-not-allowed"
+        class="col-start-1 row-start-1 w-0 min-w-full rounded-sm border-0 bg-transparent px-0.5 py-0 text-center text-[length:inherit] leading-[inherit] tabular-nums caret-transparent shadow-none outline-none placeholder:text-muted-foreground focus:bg-accent focus:text-accent-foreground focus:shadow-none focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed"
         {@rest}
       />
     </span>
