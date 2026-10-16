@@ -2,7 +2,7 @@
 
 Phoenix LiveView UI component library providing 40+ accessible, interactive components built with function components, JavaScript state machines, and LiveView hooks.
 
-Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGELOG.md) for release notes.
+Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGELOG.md) for release notes and [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## Features
 
