@@ -37,7 +37,7 @@ Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then r
 @tailwind utilities;
 ```
 
-`styles.css` holds the component styles, theme tokens and typography. The bundled Open Sans and Material Symbols fonts are loaded by the JavaScript entry (step 4), not by `styles.css`: `import Cognit from "cognit"` pulls in `open_sans.css` and `material_symbols.css`, so esbuild emits a stylesheet next to your JS bundle and needs `--loader:.woff2=file` in its args in `config/config.exs`.
+`styles.css` holds the component styles, theme tokens and typography. The bundled Open Sans and Material Symbols fonts are loaded by the JavaScript entry (step 4), not by `styles.css`: `import Cognit from "cognit"` pulls in `open_sans.css` and `material_symbols.css`, so esbuild emits a stylesheet next to your JS bundle and needs `--loader:.woff2=file` in its args in `config/config.exs`. Keep the font CSS on this route: the Tailwind CLI inlines an `@import` but leaves `url()` alone, so importing `open_sans.css` from your Tailwind input requests font files nothing serves.
 
 That emitted stylesheet lands at `priv/static/assets/app.css` for `js/app.js`, the same path Tailwind writes to in a stock Phoenix app, and one overwrites the other. Give the Tailwind output its own name and link both files:
 
@@ -193,13 +193,13 @@ Deps live at the umbrella root, so every relative `deps/cognit/...` path in step
 
 ### Using Cognit from a library
 
-A library that renders Cognit components inside a host app should not ship the preset, the CSS or its own JS bundle; the host's step 2 to 4 cover them. Declare the dep without a pin that would force `override: true` onto hosts on a newer tag, and leave the rest to the host:
+A library that renders Cognit components inside a host app should not ship the preset, the CSS or its own JS bundle; the host's step 2 to 4 cover them. Declare the dep `optional: true` so the host's pin wins instead of forcing `override: true` onto hosts on a newer tag:
 
 ```elixir
 {:cognit, github: "123fahrschule/cognit", tag: "X.Y.Z", optional: true}
 ```
 
-The host's Tailwind content globs need to include the library's templates, and the host imports JS through the index so hooks the library relies on arrive with the host's upgrade.
+On the host side, add the library's templates to the Tailwind content globs (`"../deps/my_lib/lib/**/*.*ex"`) and import Cognit JS through the index so hooks the library relies on arrive with the host's upgrade.
 
 ### Upgrading
 
