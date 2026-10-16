@@ -189,6 +189,10 @@ class TimePickerComponent extends Component {
       if (!field) return;
       const value = this[name];
       field.value = value === null ? "" : pad(value);
+      if (field === document.activeElement) {
+        field.setSelectionRange(0, 0);
+        field.scrollLeft = 0;
+      }
       if (this.sizers[name]) {
         this.sizers[name].textContent = field.value || field.placeholder;
       }
@@ -241,12 +245,31 @@ class TimePickerComponent extends Component {
   }
 
   focusSegment(name) {
-    this.fields[name]?.focus();
+    const field = this.fields[name];
+    if (!field) return;
+    if (this.handlingBeforeInput) {
+      setTimeout(() => {
+        if (!field.isConnected || !this.el.contains(document.activeElement)) {
+          return;
+        }
+        this.keepTyped = true;
+        try {
+          field.focus();
+        } finally {
+          this.keepTyped = false;
+        }
+      }, 0);
+    } else {
+      field.focus();
+    }
   }
 
   handleFocusIn(event) {
     // Typing into a newly focused field replaces its value
-    if (this.segmentOf(event.target)) this.typed = "";
+    if (!this.segmentOf(event.target)) return;
+    if (!this.keepTyped) this.typed = "";
+    event.target.setSelectionRange(0, 0);
+    event.target.scrollLeft = 0;
   }
 
   handleFocusOut(event) {
@@ -290,7 +313,12 @@ class TimePickerComponent extends Component {
     if (!name || event.inputType === "insertLineBreak") return;
     event.preventDefault();
     if (!this.isEditable(name)) return;
-    this.applyInput(name, event.inputType, event.data);
+    this.handlingBeforeInput = true;
+    try {
+      this.applyInput(name, event.inputType, event.data);
+    } finally {
+      this.handlingBeforeInput = false;
+    }
   }
 
   // Only reached for input that beforeinput couldn't cancel, e.g. from an
@@ -336,9 +364,7 @@ class TimePickerComponent extends Component {
 
     for (const char of text) {
       if (/\d/.test(char)) {
-        this.typeDigit(name, char);
-        // Later digits go to the field that's focused now
-        name = this.segmentOf(document.activeElement) || name;
+        name = this.typeDigit(name, char);
       } else if (/[:.,hH\s]/.test(char) && name === "hours") {
         if (this.hours === null) continue;
         this.focusSegment("minutes");
@@ -360,7 +386,11 @@ class TimePickerComponent extends Component {
     this.typed = done ? "" : typed;
     this.render();
 
-    if (done && name === "hours") this.focusSegment("minutes");
+    if (done && name === "hours") {
+      this.focusSegment("minutes");
+      return "minutes";
+    }
+    return name;
   }
 
   deleteDigit(name) {
@@ -387,6 +417,17 @@ class TimePickerComponent extends Component {
     if (event.isComposing) return;
     const name = this.segmentOf(event.target);
     if (!name) return;
+
+    if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
+      event.preventDefault();
+      if (this.isEditable(name)) this.applyInput(name, "insertText", event.key);
+      return;
+    }
 
     switch (event.key) {
       case "Enter":
