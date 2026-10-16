@@ -248,7 +248,17 @@ class TimePickerComponent extends Component {
     const field = this.fields[name];
     if (!field) return;
     if (this.handlingBeforeInput) {
-      setTimeout(() => field.isConnected && field.focus(), 0);
+      setTimeout(() => {
+        if (!field.isConnected || !this.el.contains(document.activeElement)) {
+          return;
+        }
+        this.keepTyped = true;
+        try {
+          field.focus();
+        } finally {
+          this.keepTyped = false;
+        }
+      }, 0);
     } else {
       field.focus();
     }
@@ -257,7 +267,7 @@ class TimePickerComponent extends Component {
   handleFocusIn(event) {
     // Typing into a newly focused field replaces its value
     if (!this.segmentOf(event.target)) return;
-    this.typed = "";
+    if (!this.keepTyped) this.typed = "";
     event.target.setSelectionRange(0, 0);
     event.target.scrollLeft = 0;
   }
