@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.20.0
+
+### Features
+
+- **Icon**: The bundled Material Symbols font shrinks from 3.7 MB to 0.5 MB by keeping only the `FILL` axis, so the page loads noticeably less font data. `mix icons.update` pulls the latest upstream release
+- **Fonts**: Open Sans ships as static latin-subset files per weight, built from the upstream variable font. `mix fonts.update` rebuilds them
+
+### Compatibility
+
+- **Icon**: Weight, grade and optical size are now fixed at 400, 0 and 24, so overriding the `wght`, `GRAD` or `opsz` variation settings on `.material-symbols-outlined` no longer has any effect. Outlined and `filled` icons render as before
+- **Fonts**: The Open Sans files were renamed from `open-sans-v43-latin-*.woff2` to `open-sans-*.woff2`. If you copy or reference them directly rather than importing `open_sans.css`, update the paths
+
 ## 0.19.0
 
 ### Features
