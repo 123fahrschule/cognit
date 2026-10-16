@@ -24,7 +24,7 @@ defp deps do
 end
 ```
 
-Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then run `mix deps.get`.
+Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then run `mix deps.get`. Moving up several releases at once: see [Upgrading](#upgrading).
 
 ### 2. CSS
 
@@ -37,7 +37,23 @@ Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then r
 @tailwind utilities;
 ```
 
-`styles.css` loads the bundled Open Sans and Material Symbols fonts, so esbuild needs a loader for them. Add `--loader:.woff2=file` to the esbuild args in `config/config.exs`.
+`styles.css` holds the component styles, theme tokens and typography. The bundled Open Sans and Material Symbols fonts are loaded by the JavaScript entry (step 4), not by `styles.css`: `import Cognit from "cognit"` pulls in `open_sans.css` and `material_symbols.css`, so esbuild emits a stylesheet next to your JS bundle and needs `--loader:.woff2=file` in its args in `config/config.exs`.
+
+That emitted stylesheet lands at `priv/static/assets/app.css` for `js/app.js`, the same path Tailwind writes to in a stock Phoenix app, and one overwrites the other. Give the Tailwind output its own name and link both files:
+
+```elixir
+# config/config.exs
+config :tailwind,
+  my_app: [
+    args: ~w(--config=tailwind.config.js --input=css/app.css --output=../priv/static/assets/app_main.css)
+  ]
+```
+
+```heex
+<%!-- lib/my_app_web/components/layouts/root.html.heex --%>
+<link phx-track-static rel="stylesheet" href={~p"/assets/app_main.css"} />
+<link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+```
 
 ### 3. Tailwind
 
@@ -47,7 +63,7 @@ module.exports = {
   presets: [require("../deps/cognit/assets/tailwind_preset.js")],
   content: [
     // your app's existing globs, then:
-    "../deps/cognit/**/*.*ex",
+    "../deps/cognit/lib/**/*.*ex",
     "../deps/cognit/assets/js/**/*.*js",
   ],
 };
@@ -80,6 +96,8 @@ liveSocket.connect();
 window.liveSocket = liveSocket;
 ```
 
+The bare `"cognit"` specifier resolves through `deps/cognit/package.json` because the esbuild config Phoenix generates sets `NODE_PATH` to the deps directory. If your esbuild args drop that `env`, add a `"cognit": "file:../deps/cognit"` entry to `assets/package.json` instead. Import through the index rather than by file path; deep imports miss hooks added in later releases.
+
 ### 5. Import components
 
 `use Cognit` imports every component. The catalogue is in the `Cognit` module doc (`h Cognit` in IEx) and in the [storybook](storybook/).
@@ -101,6 +119,8 @@ import Cognit.Button
 import Cognit.Dialog
 ```
 
+`use Cognit, :component` is for authoring your own components in the same style: it brings in `Phoenix.Component`, the Cognit Gettext backend, `Cognit.Helpers` and a `classes/1` helper that merges Tailwind classes, without importing the components.
+
 ### 6. Router
 
 ```elixir
@@ -121,7 +141,25 @@ live_session :default,
 end
 ```
 
-The locale plug and hook put the current locale into the session and LiveView assigns. The sidebar plug and hook carry the collapsed/expanded state across reloads.
+`Cognit.LocalePlug` resolves the locale from the `locale` query param or the `app_locale` cookie and sets `@locale` on the conn and in the session. `Cognit.SidebarPlug` reads the `sidebar_state` cookie and sets `@sidebar_state` (`"expanded"` or `"collapsed"`) the same way. The two hooks set the same assigns on the socket, from connect params first and the session second.
+
+Both plugs are needed even in an all-LiveView app: a layout that reads `@sidebar_state` or `@locale` raises `KeyError` the first time a controller renders it without them.
+
+The hooks can also live in your `live_view/0` helper instead of `live_session`, which covers every LiveView without listing it in the router:
+
+```elixir
+# lib/my_app_web.ex
+def live_view do
+  quote do
+    use Phoenix.LiveView
+    on_mount Cognit.LocaleHook
+    on_mount Cognit.SidebarHook
+    # ...
+  end
+end
+```
+
+`Cognit.Toast.send_toast/3` renders nothing until a `<.toaster />` is in the layout; step 8 places it.
 
 ### 7. Configuration
 
@@ -131,19 +169,47 @@ All keys are optional.
 # config/config.exs
 config :cognit,
   default_locale: "en",
-  locales: ["de", "en", "fr"]
+  locales: ["de", "en", "fr"],
+  error_translator_function: {MyAppWeb.CoreComponents, :translate_error}
 
 # config/test.exs
 config :cognit, :default_locale, "en"
 ```
 
-Both keys are read at **compile time**, so they belong in `config/config.exs` or a file it imports, never in `runtime.exs`, and a change needs `mix deps.compile cognit --force`. Pinning the locale in `test.exs` keeps assertions on rendered text independent of the app default.
+| Key                             | Read at      | Default        | Purpose                                                                   |
+| ------------------------------- | ------------ | -------------- | ------------------------------------------------------------------------- |
+| `default_locale`                | compile time | `"de"`         | Locale when neither query param nor cookie sets one                       |
+| `locales`                       | compile time | `["de", "en"]` | Accepted locales; also the list `locale_select` offers                    |
+| `error_translator_function`     | runtime      | none           | `{module, function}` taking `{msg, opts}` for changeset errors            |
+| `use_default_error_translator`  | runtime      | `true`         | Try Cognit's bundled `errors` translations (EN, DE) before your function |
 
-Defaults and accepted values are documented in `Cognit.LocalePlug`; the changeset error translator hooks in `Cognit.Helpers.translate_error/1`.
+The compile-time keys belong in `config/config.exs` or a file it imports, never in `runtime.exs`, and a change needs `mix deps.compile cognit --force`. Pinning the locale in `test.exs` keeps assertions on rendered text independent of the app default; without it tests render in German.
+
+Form errors resolve in this order: the bundled `errors` domain (when `use_default_error_translator` is on), then `error_translator_function`, then the raw message with `%{key}` interpolated. See `Cognit.Helpers.translate_error/1`.
 
 ### Umbrella projects
 
-Deps live at the umbrella root, so every relative `deps/cognit/...` path in steps 2 and 3 needs one more `../` segment when written from `apps/my_app_web/assets/`.
+Deps live at the umbrella root, so every relative `deps/cognit/...` path in steps 2 and 3 needs one more `../` segment when written from `apps/my_app_web/assets/`. The `file:` entry from step 4 becomes `"cognit": "file:../../../deps/cognit"`.
+
+### Using Cognit from a library
+
+A library that renders Cognit components inside a host app should not ship the preset, the CSS or its own JS bundle; the host's step 2 to 4 cover them. Declare the dep without a pin that would force `override: true` onto hosts on a newer tag, and leave the rest to the host:
+
+```elixir
+{:cognit, github: "123fahrschule/cognit", tag: "X.Y.Z", optional: true}
+```
+
+The host's Tailwind content globs need to include the library's templates, and the host imports JS through the index so hooks the library relies on arrive with the host's upgrade.
+
+### Upgrading
+
+Each release with a *Compatibility* section in [CHANGELOG.md](CHANGELOG.md) needs a manual edit. Coming from an older tag, check every one between it and the target:
+
+- **0.2.14**: LiveView hook names gained the `Cognit.` prefix (`Cognit.Sidebar`, `Cognit.Pagination`, …) and built-in component ids the `cognit-` prefix (`cognit-sidebar`, `cognit-locale-select`, …). Update JS and tests that reference them.
+- **0.12.0**: Color tokens re-synced and `shadow-*` classes now resolve to the design system's shadows, so your own markup using them changes appearance.
+- **0.13.0**: Broad visual refresh of form controls, dialogs, sheets, tabs, tables and menus. `alert_dialog` lost its built-in close button; `rounded-sm`/`rounded-md` shrank by 2px.
+- **0.16.0**: `toaster` lost the `position` attribute; toasts always render top center.
+- **0.20.0**: Open Sans files renamed to `open-sans-*.woff2`; Material Symbols weight, grade and optical size are fixed, so `wght`/`GRAD`/`opsz` overrides no longer apply.
 
 ## Scaffolding an app
 
