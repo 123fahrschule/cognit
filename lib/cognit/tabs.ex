@@ -24,6 +24,32 @@ defmodule Cognit.Tabs do
           </.card>
         </.tabs_content>
       </.tabs>
+
+  ## Ids on triggers and content
+
+  Triggers and content panels without an `id` get one on the client:
+  `"<tabs id>-trigger-<value>"` and `"<tabs id>-content-<value>"`. LiveView
+  patches elements by `id`, so once the client has added one, any later
+  re-render of that trigger or panel (a badge count in the trigger, a panel
+  rendered conditionally, a list of triggers built from assigns) no longer
+  matches the server HTML. The patch replaces the element and the active
+  state is lost, which shows up as the selected content disappearing.
+
+  Whenever a trigger or content panel can re-render after mount, give it the
+  same `id` the client would generate so the patch matches in place:
+
+      <.tabs id="course" value={@active_tab} on-tab-changed="tab-changed">
+        <.tabs_list>
+          <.tabs_trigger :for={tab <- @tabs} id={"course-trigger-\#{tab.value}"} value={tab.value}>
+            {tab.label} <.badge>{tab.count}</.badge>
+          </.tabs_trigger>
+        </.tabs_list>
+        <.tabs_content id={"course-content-\#{@active_tab}"} value={@active_tab}>
+          ...
+        </.tabs_content>
+      </.tabs>
+
+  Static tabs rendered once need no ids.
   """
   use Cognit, :component
 
@@ -98,6 +124,9 @@ defmodule Cognit.Tabs do
 
   @doc """
   Individual tab button that activates its corresponding content panel.
+
+  Pass `id="<tabs id>-trigger-<value>"` when the trigger can re-render after
+  mount; see the module docs.
   """
   attr :value, :string, required: true, doc: "Unique value that identifies this tab"
   attr :class, :any, default: nil
@@ -129,6 +158,9 @@ defmodule Cognit.Tabs do
 
   @doc """
   Content panel that corresponds to a tab trigger.
+
+  Pass `id="<tabs id>-content-<value>"` when the panel can re-render after
+  mount; see the module docs.
   """
   attr :value, :string, required: true, doc: "Value that matches a tab trigger"
   attr :class, :any, default: nil
