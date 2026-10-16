@@ -47,7 +47,11 @@ defmodule Cognit.Icon do
 
   ## Finding Icons
 
-  Search and browse available icons at: https://fonts.google.com/icons
+  Search and browse available icons at: https://fonts.google.com/icons and
+  pass the snake_case name (`dashboard`, `account_circle`, `keyboard_arrow_down`).
+
+  The bundled font carries the full glyph set but only the `FILL` axis; weight,
+  grade and optical size are fixed.
 
   ## Sizing
 

@@ -63,6 +63,11 @@ Interactive components (anything with open/close, selection, or keyboard state) 
 
 Form-capable components accept either `field` (a `Phoenix.HTML.FormField`) or `name`/`value`; `Cognit.Helpers.prepare_assign/1` normalises both. Variants go through `Cognit.Helpers.variant_class/2`; button-like things reuse `button_variant/1`.
 
+## Updating bundled assets
+
+- **Icons**: `mix icons.update` pulls the latest Material Symbols release (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The font keeps the full glyph set and only the `FILL` axis. Installed version: `assets/fonts/material_symbols/VERSION`.
+- **Fonts**: `mix fonts.update` rebuilds the static latin-subset Open Sans files per weight from the upstream variable font. Installed version: `assets/fonts/open_sans/VERSION`.
+
 ## Releasing
 
 Maintainers only, from an up-to-date `main`:

@@ -2,6 +2,11 @@ defmodule Cognit.Sidebar do
   @moduledoc """
   Collapsible app sidebar. The README shows a full shell composed from it.
 
+  `sidebar_provider/1` owns the open/collapsed state and wraps both the sidebar
+  and `sidebar_inset/1`. The state survives reloads: the JS hook writes a
+  `sidebar_state` cookie on toggle, `Cognit.SidebarPlug` reads it into the
+  session and `Cognit.SidebarHook` puts it into assigns.
+
   ## Menu buttons: links vs actions
 
   `sidebar_menu_button/1` forwards `navigate`, `patch`, `href` and the standard
@@ -86,7 +91,11 @@ defmodule Cognit.Sidebar do
   attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
   attr :collapsible, :string, values: ~w(offcanvas icon none), default: "icon"
   attr :is_mobile, :boolean, default: false
-  attr :is_desktop, :boolean, default: false
+
+  attr :is_desktop, :boolean,
+    default: false,
+    doc: "forces the desktop layout; leave unset in production and let CSS switch by viewport"
+
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
   attr :class, :any, default: nil
   attr :style, :map, default: %{}

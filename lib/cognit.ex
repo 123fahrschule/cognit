@@ -6,14 +6,6 @@ defmodule Cognit do
 
   Fork of [SaladUI](https://github.com/bluzky/salad_ui).
 
-  ## Features
-
-  - **40+ UI Components** - Buttons, forms, overlays, navigation, and data display
-  - **Accessibility First** - ARIA compliant with keyboard navigation and screen reader support
-  - **LiveView Integration** - Two-way communication between server and client
-  - **Customizable** - Tailwind CSS based with variant support
-  - **Type Safe** - Full attribute validation and documentation
-
   ## Quick Start
 
   See `README.md` for full installation instructions. Once configured, import all
@@ -33,70 +25,82 @@ defmodule Cognit do
         Save Changes
       </.button>
 
-  ## Component Categories
+  ## Components
 
-  ### Layout & Structure
-  - `card/1` - Content containers with headers and footers
-  - `item/1` - Rows of media, text, and actions, stackable with `item_group/1`
-  - `separator/1` - Visual dividers between content sections
-  - `scroll_area/1` - Custom scrollable containers
+  Every component below is imported by `use Cognit` and has a story under
+  `storybook/storybook/components/`. Attributes and slots are documented in
+  the owning module.
 
-  ### Forms & Input
-  - `button/1` - Interactive buttons with multiple variants
-  - `button_group/1` - Joins related buttons into a segmented control
-  - `input/1` - Text inputs with validation support
-  - `textarea/1` - Multi-line text input areas
-  - `checkbox/1` - Binary choice inputs
-  - `radio_group/1` - Single choice from multiple options
-  - `select/1` - Dropdown selection menus
-  - `combobox/1` - Searchable select with single/multiple selection
-  - `date_picker/1` - Date or date range selection from a calendar popover
-  - `calendar/1` - Inline month calendar for picking a date or a date range
-  - `time_picker/1` - 24-hour time input with hour and minute fields
-  - `slider/1` - Range value selection
-  - `switch/1` - Toggle controls
-  - `form/1`, `form_item/1`, `form_label/1` - Form structure and validation
+  ### Forms and input
 
-  ### Navigation
-  - `tabs/1` - Tabbed content navigation
-  - `breadcrumb/1` - Hierarchical navigation paths
-  - `pagination/1` - Page navigation controls
-  - `sidebar/1` - Application navigation sidebars
+  - `button`, `button_group` (`Cognit.Button`, `Cognit.ButtonGroup`) - actions
+    in several variants and sizes; the group joins buttons into one segmented control
+  - `input`, `textarea`, `label` (`Cognit.Input`, `Cognit.Textarea`, `Cognit.Label`) -
+    text entry bound to a form `field` or plain `name`/`value`
+  - `checkbox`, `switch`, `radio_group`, `slider` (`Cognit.Checkbox`, `Cognit.Switch`,
+    `Cognit.RadioGroup`, `Cognit.Slider`) - boolean and range controls
+  - `select`, `combobox` (`Cognit.Select`, `Cognit.Combobox`) - dropdown choice;
+    combobox adds search, multiple selection and server-side filtering
+  - `calendar`, `date_picker`, `time_picker` (`Cognit.Calendar`, `Cognit.DatePicker`,
+    `Cognit.TimePicker`) - date, date range and 24-hour time entry
+  - `toggle`, `toggle_group` (`Cognit.Toggle`, `Cognit.ToggleGroup`) - pressed-state
+    buttons, single or multiple
+  - `form`, `form_item`, `form_label`, `form_control`, `form_message` (`Cognit.Form`) -
+    low-level form structure and error display
+  - `form_field` (`Cognit.Components.FormField`) - one-liner wrapper: label,
+    control of any `type`, description and errors
 
-  ### Overlays & Dialogs
-  - `dialog/1` - Modal dialogs and confirmations
-  - `alert_dialog/1` - Alert and confirmation dialogs
-  - `sheet/1` - Slide-out panels
-  - `popover/1` - Contextual popup content
-  - `tooltip/1` - Hover information displays
-  - `hover_card/1` - Rich hover content
-  - `dropdown_menu/1` - Contextual action menus
+  ### Overlays
 
-  ### Feedback & Status
-  - `alert/1` - Status messages and notifications
-  - `badge/1` - Labels and status indicators
-  - `progress/1` - Progress bars and loading states
-  - `skeleton/1` - Loading placeholder content
+  - `dialog`, `alert_dialog`, `confirmation_dialog` (`Cognit.Dialog`, `Cognit.AlertDialog`,
+    `Cognit.ConfirmationDialog`) - modal dialogs; the confirmation variant is a
+    ready-made yes/no with destructive styling
+  - `sheet` (`Cognit.Sheet`) - panel sliding in from a screen edge
+  - `popover`, `hover_card`, `tooltip` (`Cognit.Popover`, `Cognit.HoverCard`,
+    `Cognit.Tooltip`) - anchored floating content on click, hover with delay, and hover
+  - `dropdown_menu`, `menu` (`Cognit.DropdownMenu`, `Cognit.Menu`) - action menus
+    with items, link items, separators and shortcuts
+  - `command`, `command_dialog` (`Cognit.Command`) - command palette with filtering
+  - `toaster`, `send_toast/3` (`Cognit.Toast`) - toast notifications pushed from any LiveView
 
-  ### Data Display
-  - `table/1` - Data tables with sorting and selection
-  - `chart/1` - Data visualization charts
-  - `avatar/1` - User profile images
-  - `accordion/1` - Collapsible content sections
+  ### Navigation and layout
 
-  ### Utility
-  - `toggle/1`, `toggle_group/1` - Toggle controls and groups
-  - `collapsible/1` - Expandable content areas
-  - `command/1` - Command palette interfaces
+  - `sidebar_*` (`Cognit.Sidebar`) - collapsible app sidebar with groups, menus,
+    sub-menus, rail and inset
+  - `app_side_nav`, `user_side_nav` (`Cognit.Components.AppSideNav`,
+    `Cognit.Components.UserSideNav`) - branding entry at the top and signed-in
+    user entry at the bottom of the sidebar
+  - `topbar`, `page`, `page_header`, `page_content`, `page_footer`
+    (`Cognit.Components.Topbar`, `Cognit.Components.Page`) - content column
+    structure inside the sidebar inset
+  - `login_layout`, `logo` (`Cognit.Components.LoginLayout`, `Cognit.Components.Logo`) -
+    centered auth page frame and the brand mark
+  - `tabs`, `breadcrumb`, `stepper` (`Cognit.Tabs`, `Cognit.Breadcrumb`, `Cognit.Stepper`) -
+    tabbed content, location trail, multi-step progress
+  - `pagination` with `Cognit.PaginationParams` (`Cognit.Components.Pagination`) -
+    page controls driven by a normalized params struct (Scrivener pages, maps or keyword lists)
+  - `locale_select`, `user_menu` (`Cognit.Components.LocaleSelect`,
+    `Cognit.Components.UserMenu`) - topbar widgets for switching locale and
+    showing the current user
+  - `accordion`, `collapsible`, `scroll_area`, `separator` (`Cognit.Accordion`,
+    `Cognit.Collapsible`, `Cognit.ScrollArea`, `Cognit.Separator`) - expand and
+    collapse, custom scrollbars, dividers
 
-  ## Architecture
+  ### Data display and feedback
 
-  Cognit uses a hybrid architecture combining:
-
-  - **Phoenix Function Components** - Server-side rendering with HEEx templates
-  - **JavaScript State Machines** - Client-side behavior and interactivity
-  - **LiveView Hooks** - Seamless server-client communication
-  - **Automatic ARIA** - Accessibility attributes managed by the framework
+  - `table`, `table_container`, `table_empty` (`Cognit.Table`, `Cognit.Components.Table`) -
+    data tables with a scroll container and an empty-row placeholder
+  - `card`, `item`, `item_group`, `list` (`Cognit.Card`, `Cognit.Item`,
+    `Cognit.CoreComponents`) - content containers, media-title-actions rows,
+    title/value lists
+  - `avatar`, `badge`, `icon`, `copy_button` (`Cognit.Avatar`, `Cognit.Badge`,
+    `Cognit.Icon`, `Cognit.Components.CopyButton`) - profile images with fallback,
+    status labels, Material Symbols, copy-to-clipboard
+  - `alert`, `flash`, `flash_group`, `empty_state`, `progress`, `skeleton`
+    (`Cognit.Alert`, `Cognit.Components.Flash`, `Cognit.EmptyState`, `Cognit.Progress`,
+    `Cognit.Skeleton`) - status messages, LiveView flash, no-data placeholder,
+    progress bars, loading placeholders
+  - `chart` (`Cognit.Chart`) - Chart.js wrapper fed by data and config attrs
 
   ## Usage Patterns
 
@@ -137,34 +141,8 @@ defmodule Cognit do
         {:noreply, socket}
       end
 
-  ## Customization
-
-  Components support extensive customization through:
-
-  - **Variants** - Pre-defined style variations (e.g., `variant="destructive"`)
-  - **Classes** - Custom CSS classes via the `class` attribute
-  - **Slots** - Flexible content areas within components
-  - **Attributes** - Comprehensive configuration options
-
-  ## Accessibility
-
-  All components include:
-
-  - Proper ARIA attributes and roles
-  - Keyboard navigation support
-  - Focus management for overlays
-  - Screen reader announcements
-  - High contrast support
-
-  ## Development
-
-  When extending Cognit:
-
-  1. **Follow naming conventions** - Use `kebab-case` for data attributes
-  2. **Implement state machines** - Define clear states and transitions
-  3. **Handle accessibility** - Include ARIA configuration
-  4. **Test thoroughly** - Verify keyboard and screen reader usage
-  5. **Document examples** - Provide clear usage examples
+  See `Cognit.LiveView` and `Cognit.JS` for driving components from the
+  server and the client.
   """
 
   def component do

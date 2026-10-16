@@ -338,18 +338,24 @@ defmodule Cognit.Helpers do
   @doc """
   Translate a changeset error tuple into a localized string.
 
-  Lookup order:
+  Used by `form_message` and `form_field`, so field errors translate with no
+  extra setup. Lookup order:
 
-    1. `Cognit.Gettext` "errors" domain — ships translations for the common
-       Ecto changeset errors out of the box. Can be disabled with:
+    1. `Cognit.Gettext` "errors" domain — ships English and German for the
+       common Ecto changeset errors. Can be disabled with:
 
            config :cognit, :use_default_error_translator, false
 
-    2. Consumer-configured translator (when the Cognit backend has no
-       translation for the given msgid, or when the default lookup is
-       disabled). Configure with:
+    2. Consumer-configured `{module, function}`, called with the `{msg, opts}`
+       tuple Phoenix changeset errors use and expected to return a string.
+       Consulted when the bundled catalog has no match, or always when the
+       default lookup is disabled:
 
            config :cognit, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
+
+           def translate_error({msg, opts}) do
+             Gettext.dgettext(MyApp.Gettext, "errors", msg, opts)
+           end
 
     3. Manual `%{key}` interpolation of the original msgid as a last resort.
   """
