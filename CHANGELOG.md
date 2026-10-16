@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.20.1
+
+### Bug Fixes
+
+- **Time Picker**: The hour and minute fields no longer show a box around them or clip their digits; the fields inherit the surrounding font size and line height. In Safari, typing two hour digits now moves on to the minutes, and the first typed digit is no longer scrolled out of view
+
+### Documentation
+
+- **Tabs**: `tabs_trigger/1` and `tabs_content/1` that can re-render after mount (a badge count in a trigger, a conditionally rendered panel) should be given the id the client would generate — `"<tabs id>-trigger-<value>"` and `"<tabs id>-content-<value>"` — so LiveView patches them in place instead of replacing them and losing the active tab. The module docs explain the rule with an example
+
 ## 0.20.0
 
 ### Features
