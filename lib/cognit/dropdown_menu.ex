@@ -1,9 +1,18 @@
 defmodule Cognit.DropdownMenu do
   @moduledoc """
-  Implementation of dropdown menu component for SaladUI framework.
-
   Dropdown menus display a list of options when a trigger element is clicked.
-  They provide a way to select from multiple options while conserving screen space.
+
+  ## Items vs link items
+
+  `dropdown_menu_item/1` is a non-navigating row; give it `on-select` for an
+  action such as sign-out or opening a dialog. Without `on-select` it is a static
+  row that does nothing on click.
+
+      <.dropdown_menu_item on-select={JS.push("sign_out")}>Sign out</.dropdown_menu_item>
+
+  `dropdown_menu_link_item/1` renders a real link; use it for navigation.
+
+      <.dropdown_menu_link_item navigate={~p"/profile"}>Profile</.dropdown_menu_link_item>
 
   ## Examples:
 

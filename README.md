@@ -1,17 +1,8 @@
 # Cognit
 
-Phoenix LiveView UI component library providing 40+ accessible, interactive components built with function components, JavaScript state machines, and LiveView hooks.
+Phoenix LiveView UI component library: 40+ accessible, interactive components built with function components, client-side state machines, LiveView hooks, Tailwind CSS and Gettext.
 
 Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGELOG.md) for release notes and [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
-
-## Features
-
-- 40+ accessible, interactive components
-- Phoenix function components with HEEx templates
-- Client-side state machines for interactivity
-- Tailwind CSS styling with TwMerge
-- Internationalization with Gettext
-- Material Symbols icons ([browse icons](https://fonts.google.com/icons))
 
 ## Requirements
 
@@ -24,7 +15,7 @@ Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGE
 
 ## Installation
 
-### 1. Add Dependency
+### 1. Dependency
 
 ```elixir
 # mix.exs
@@ -35,41 +26,36 @@ defp deps do
 end
 ```
 
-Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md).
+Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then run `mix deps.get`.
 
-```bash
-mix deps.get
+### 2. CSS
+
+```css
+/* assets/css/app.css */
+@import "../../deps/cognit/assets/css/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
 
-### 2. Configuration
+`styles.css` loads the bundled Open Sans and Material Symbols fonts, so esbuild needs a loader for them. Add `--loader:.woff2=file` to the esbuild args in `config/config.exs`.
 
-Cognit ships with English and German translations for common Ecto changeset
-errors out of the box — `form_message` will translate field errors automatically
-via `Cognit.Gettext` with no extra configuration.
+### 3. Tailwind
 
-```elixir
-# config/test.exs
-config :cognit, :default_locale, "en"
+```javascript
+// assets/tailwind.config.js
+module.exports = {
+  presets: [require("../deps/cognit/assets/tailwind_preset.js")],
+  content: [
+    "../deps/cognit/**/*.*ex",
+    "../deps/cognit/assets/js/**/*.*js",
+    ...
+  ],
+};
 ```
 
-Optional — provide a custom translator to handle msgids not covered by the
-bundled translations (used as a fallback):
-
-```elixir
-# config/config.exs
-config :cognit, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
-```
-
-To opt out of the bundled translations entirely and rely only on your own
-translator:
-
-```elixir
-config :cognit, :use_default_error_translator, false
-```
-
-For fonts, add to esbuild args: `--loader:.woff2=file`
-
-### 3. JavaScript
+### 4. JavaScript
 
 ```javascript
 // assets/js/app.js
@@ -96,34 +82,9 @@ liveSocket.connect();
 window.liveSocket = liveSocket;
 ```
 
-### 4. CSS
+### 5. Import components
 
-```css
-/* assets/css/app.css */
-@import "../../deps/cognit/assets/css/styles.css";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-### 5. Tailwind
-
-```javascript
-// assets/tailwind.config.js
-module.exports = {
-  presets: [require("../deps/cognit/assets/tailwind_preset.js")],
-  content: [
-    "../deps/cognit/**/*.*ex",
-    "../deps/cognit/assets/js/**/*.*js",
-    ...
-  ],
-};
-```
-
-### 6. Import Components
-
-`use Cognit` imports all components:
+`use Cognit` imports every component listed under [Components](#components):
 
 ```elixir
 # lib/my_app_web.ex
@@ -135,26 +96,24 @@ defp html_helpers do
 end
 ```
 
-For custom components that need only specific imports:
+A module that needs only a few can import them directly:
 
 ```elixir
 import Cognit.Button
 import Cognit.Dialog
 ```
 
-### 7. Router
+### 6. Router
 
 ```elixir
 # lib/my_app_web/router.ex
 
-# Add plugs to browser pipeline
 pipeline :browser do
   # ...
   plug Cognit.LocalePlug
   plug Cognit.SidebarPlug
 end
 
-# Add hooks to live_session
 live_session :default,
   on_mount: [
     Cognit.LocaleHook,
@@ -164,80 +123,101 @@ live_session :default,
 end
 ```
 
-### Umbrella Projects
+The locale plug and hook put the current locale into the session and LiveView assigns. The sidebar plug and hook carry the collapsed/expanded state across reloads: the JS hook writes a `sidebar_state` cookie on toggle, the plug reads it into the session, the hook propagates it into assigns.
 
-In an umbrella, deps live at the umbrella root, so the relative paths in steps
-4 and 5 need an extra `../` segment. From `apps/my_app_web/assets/`:
+### 7. Configuration
 
-```css
-/* assets/css/app.css */
-@import "../../../../deps/cognit/assets/css/styles.css";
+All keys are optional.
+
+```elixir
+# config/config.exs
+config :cognit,
+  default_locale: "en",
+  locales: ["de", "en", "fr"]
 ```
 
-```javascript
-// assets/tailwind.config.js
-module.exports = {
-  presets: [require("../../../deps/cognit/assets/tailwind_preset.js")],
-  content: [
-    "../../../deps/cognit/**/*.*ex",
-    "../../../deps/cognit/assets/js/**/*.*js",
-    ...
-  ],
-};
+- `:default_locale` — locale used when the request carries none. Defaults to `"de"`. Read at **compile time** by `Cognit.LocalePlug` and `Cognit.LocaleHook`, so it belongs in `config/config.exs` or an env file it imports, never in `runtime.exs`, and a change needs `mix deps.compile cognit --force`.
+- `:locales` — locales the plug and `locale_select` accept. Defaults to `["de", "en"]`. Compile time as well.
+
+Pin the locale for tests so assertions on rendered text do not depend on the default. A German app leaves `:default_locale` unset elsewhere and sets only this:
+
+```elixir
+# config/test.exs
+config :cognit, :default_locale, "en"
 ```
+
+Cognit ships English and German translations for the common Ecto changeset errors, so `form_message` translates field errors with no extra setup. Two keys control what happens for a message it does not know:
+
+```elixir
+config :cognit, :error_translator_function, {MyAppWeb.CoreComponents, :translate_error}
+config :cognit, :use_default_error_translator, false
+```
+
+- `:error_translator_function` — `{module, function}` called with the `{msg, opts}` tuple Phoenix changeset errors use; must return a string. Consulted only when the bundled translations have no match.
+- `:use_default_error_translator` — set to `false` to skip the bundled translations and use only your translator.
+
+```elixir
+def translate_error({msg, opts}) do
+  Gettext.dgettext(MyApp.Gettext, "errors", msg, opts)
+end
+```
+
+### Umbrella projects
+
+Deps live at the umbrella root, so every relative `deps/cognit/...` path in steps 2 and 3 needs one more `../` segment when written from `apps/my_app_web/assets/`.
 
 ---
 
 ## Components
 
-Everything below is imported by `use Cognit`. Each has a story under `storybook/storybook/components/`.
+Everything below is imported by `use Cognit`. Each has a story under `storybook/storybook/components/`; attributes and slots are documented in the module.
 
 ### Forms and input
 
-| Component | Purpose |
-| --- | --- |
-| `button`, `button_group` | Actions; variants `default`, `destructive`, `success`, `outline`, `secondary`, `ghost`, `link`. The group joins buttons into one segmented control |
-| `input`, `textarea`, `label` | Text entry bound to a form `field` or plain `name`/`value` |
-| `checkbox`, `switch`, `radio_group`, `slider` | Boolean and range controls |
-| `select`, `combobox` | Dropdown choice; combobox adds search, multiple selection and server-side filtering |
-| `calendar`, `date_picker`, `time_picker` | Date, date range and 24-hour time entry |
-| `toggle`, `toggle_group` | Pressed-state buttons, single or multiple |
-| `form`, `form_item`, `form_label`, `form_control`, `form_message` | Low-level form structure and error display |
-| `form_field` | One-liner wrapper: label, control of any `type`, description and errors |
+| Component | Module | Purpose |
+| --- | --- | --- |
+| `button`, `button_group` | `Cognit.Button`, `Cognit.ButtonGroup` | Actions in several variants and sizes. The group joins buttons into one segmented control |
+| `input`, `textarea`, `label` | `Cognit.Input`, `Cognit.Textarea`, `Cognit.Label` | Text entry bound to a form `field` or plain `name`/`value` |
+| `checkbox`, `switch`, `radio_group`, `slider` | `Cognit.Checkbox`, `Cognit.Switch`, `Cognit.RadioGroup`, `Cognit.Slider` | Boolean and range controls |
+| `select`, `combobox` | `Cognit.Select`, `Cognit.Combobox` | Dropdown choice; combobox adds search, multiple selection and server-side filtering |
+| `calendar`, `date_picker`, `time_picker` | `Cognit.Calendar`, `Cognit.DatePicker`, `Cognit.TimePicker` | Date, date range and 24-hour time entry |
+| `toggle`, `toggle_group` | `Cognit.Toggle`, `Cognit.ToggleGroup` | Pressed-state buttons, single or multiple |
+| `form`, `form_item`, `form_label`, `form_control`, `form_message` | `Cognit.Form` | Low-level form structure and error display |
+| `form_field` | `Cognit.Components.FormField` | One-liner wrapper: label, control of any `type`, description and errors |
 
 ### Overlays
 
-| Component | Purpose |
-| --- | --- |
-| `dialog`, `alert_dialog`, `confirmation_dialog` | Modal dialogs; the confirmation variant is a ready-made yes/no with destructive styling |
-| `sheet` | Panel sliding in from a screen edge |
-| `popover`, `hover_card`, `tooltip` | Anchored floating content on click, hover with delay, and hover |
-| `dropdown_menu`, `menu` | Action menus with items, link items, separators and shortcuts |
-| `command`, `command_dialog` | Command palette with filtering |
-| `toaster`, `send_toast/3` | Toast notifications pushed from any LiveView |
+| Component | Module | Purpose |
+| --- | --- | --- |
+| `dialog`, `alert_dialog`, `confirmation_dialog` | `Cognit.Dialog`, `Cognit.AlertDialog`, `Cognit.ConfirmationDialog` | Modal dialogs; the confirmation variant is a ready-made yes/no with destructive styling |
+| `sheet` | `Cognit.Sheet` | Panel sliding in from a screen edge |
+| `popover`, `hover_card`, `tooltip` | `Cognit.Popover`, `Cognit.HoverCard`, `Cognit.Tooltip` | Anchored floating content on click, hover with delay, and hover |
+| `dropdown_menu`, `menu` | `Cognit.DropdownMenu`, `Cognit.Menu` | Action menus with items, link items, separators and shortcuts |
+| `command`, `command_dialog` | `Cognit.Command` | Command palette with filtering |
+| `toaster`, `send_toast/3` | `Cognit.Toast` | Toast notifications pushed from any LiveView |
 
 ### Navigation and layout
 
-| Component | Purpose |
-| --- | --- |
-| `sidebar_*` | Collapsible app sidebar with groups, menus, sub-menus, rail and inset |
-| `app_side_nav`, `user_side_nav` | Branding entry at the top and signed-in user entry at the bottom of the sidebar |
-| `topbar`, `page`, `page_header`, `page_content`, `page_footer` | Content column structure inside the sidebar inset |
-| `login_layout`, `logo` | Centered auth page frame and the brand mark |
-| `tabs`, `breadcrumb`, `stepper`, `pagination` | Tabbed content, location trail, multi-step progress, page links |
-| `locale_select`, `user_menu` | Topbar widgets for switching locale and showing the current user |
-| `accordion`, `collapsible`, `scroll_area`, `separator` | Expand and collapse, custom scrollbars, dividers |
+| Component | Module | Purpose |
+| --- | --- | --- |
+| `sidebar_*` | `Cognit.Sidebar` | Collapsible app sidebar with groups, menus, sub-menus, rail and inset |
+| `app_side_nav`, `user_side_nav` | `Cognit.Components.AppSideNav`, `Cognit.Components.UserSideNav` | Branding entry at the top and signed-in user entry at the bottom of the sidebar |
+| `topbar`, `page`, `page_header`, `page_content`, `page_footer` | `Cognit.Components.Topbar`, `Cognit.Components.Page` | Content column structure inside the sidebar inset |
+| `login_layout`, `logo` | `Cognit.Components.LoginLayout`, `Cognit.Components.Logo` | Centered auth page frame and the brand mark |
+| `tabs`, `breadcrumb`, `stepper` | `Cognit.Tabs`, `Cognit.Breadcrumb`, `Cognit.Stepper` | Tabbed content, location trail, multi-step progress |
+| `pagination` with `Cognit.PaginationParams` | `Cognit.Components.Pagination` | Page controls driven by a normalized params struct (Scrivener pages, maps or keyword lists) |
+| `locale_select`, `user_menu` | `Cognit.Components.LocaleSelect`, `Cognit.Components.UserMenu` | Topbar widgets for switching locale and showing the current user |
+| `accordion`, `collapsible`, `scroll_area`, `separator` | `Cognit.Accordion`, `Cognit.Collapsible`, `Cognit.ScrollArea`, `Cognit.Separator` | Expand and collapse, custom scrollbars, dividers |
 
 ### Data display and feedback
 
-| Component | Purpose |
-| --- | --- |
-| `table`, `table_container`, `table_empty` | Data tables with a scroll container and an empty-row placeholder |
-| `pagination` with `Cognit.PaginationParams` | Page controls driven by a normalized params struct (Scrivener pages, maps or keyword lists) |
-| `card`, `item`, `item_group` | Content containers and media-title-actions rows |
-| `avatar`, `badge`, `icon`, `copy_button` | Profile images with fallback, status labels, Material Symbols, copy-to-clipboard |
-| `alert`, `flash_group`, `empty_state`, `progress`, `skeleton` | Status messages, LiveView flash, no-data placeholder, progress bars, loading placeholders |
-| `chart` | Chart.js wrapper fed by data and config attrs |
+| Component | Module | Purpose |
+| --- | --- | --- |
+| `table`, `table_container`, `table_empty` | `Cognit.Table`, `Cognit.Components.Table` | Data tables with a scroll container and an empty-row placeholder |
+| `card`, `item`, `item_group`, `list` | `Cognit.Card`, `Cognit.Item`, `Cognit.CoreComponents` | Content containers, media-title-actions rows, title/value lists |
+| `avatar`, `badge`, `icon`, `copy_button` | `Cognit.Avatar`, `Cognit.Badge`, `Cognit.Icon`, `Cognit.Components.CopyButton` | Profile images with fallback, status labels, Material Symbols, copy-to-clipboard |
+| `alert`, `flash`, `flash_group`, `empty_state`, `progress`, `skeleton` | `Cognit.Alert`, `Cognit.Components.Flash`, `Cognit.EmptyState`, `Cognit.Progress`, `Cognit.Skeleton` | Status messages, LiveView flash, no-data placeholder, progress bars, loading placeholders |
+| `chart` | `Cognit.Chart` | Chart.js wrapper fed by data and config attrs |
 
 ---
 
@@ -249,10 +229,10 @@ Token families:
 
 - **Surface and text**: `background`, `foreground`, `card`, `popover`, `muted`, `accent`, `border`, `input`, `ring`
 - **Semantic**: `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, each with a `-foreground` and a tinted `-soft` / `-soft-foreground` pair for badges and alerts
-- **Shape and depth**: `--radius` drives `rounded-xs` through `rounded-xl`; `--shadow-2xs` through `--shadow-2xl` replace Tailwind's stock `shadow-*` scale
+- **Shape and depth**: the whole `rounded-xs` … `rounded-xl` scale is derived from `--radius` with fixed offsets, so changing that one variable moves every corner in step; `--shadow-2xs` through `--shadow-2xl` replace Tailwind's stock `shadow-*` scale
 - **Type**: `font-sans` is Open Sans, loaded from `assets/css/open_sans.css`
 
-To rebrand, override the variables after importing `styles.css`:
+To rebrand, override the variables after importing `styles.css`, once for light and once for dark:
 
 ```css
 @import "../../deps/cognit/assets/css/styles.css";
@@ -262,6 +242,11 @@ To rebrand, override the variables after importing `styles.css`:
   --primary-foreground: 0 0% 100%;
   --radius: 0.5rem;
 }
+
+.dark {
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 47% 11%;
+}
 ```
 
 Dark mode is class-based (`darkMode: ["class"]` in the preset). Add `class="dark"` to `<html>` to switch; there is no media-query fallback, so wire the toggle yourself.
@@ -270,15 +255,25 @@ Adding a token of your own takes two steps: declare the variable in CSS, then re
 
 ---
 
+## Assets
+
+### Icons
+
+`<.icon name="...">` renders [Material Symbols](https://fonts.google.com/icons). Use the snake_case form of the icon name (e.g. `dashboard`, `account_circle`, `keyboard_arrow_down`).
+
+The bundled font carries the full glyph set but only the `FILL` axis; weight, grade and optical size are fixed. To pull the latest upstream release, run `mix icons.update` (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The installed version is recorded in `assets/fonts/material_symbols/VERSION`.
+
+### Fonts
+
+Open Sans ships as static latin-subset files per weight, built from the upstream variable font. `mix fonts.update` rebuilds them; the version is recorded in `assets/fonts/open_sans/VERSION`.
+
+---
+
 ## Building an app shell
 
-Most apps want the same layout: a sidebar on the left, a topbar across the
-top, and a page area below. Cognit ships the composed shell components for
-this in `Cognit.Components.*` (`app_side_nav`, `user_side_nav`, `topbar`,
-`page`, `login_layout`, etc.) — all imported by `use Cognit`, so they're
-available anywhere you compose the shell (typically your `Layouts` module).
+Most apps want the same layout: a sidebar on the left, a topbar across the top, and a page area below. The composed shell components (`app_side_nav`, `user_side_nav`, `topbar`, `page`, `login_layout`) are imported by `use Cognit`, so they are available wherever you compose the shell, typically your `Layouts` module.
 
-A complete shell looks like this:
+A complete shell:
 
 ```heex
 <.sidebar_provider>
@@ -336,10 +331,7 @@ A complete shell looks like this:
 <.flash_group flash={@flash} />
 ```
 
-The canonical reference is
-[`storybook/storybook/examples/app_shell.story.exs`](storybook/storybook/examples/app_shell.story.exs).
-
-### Component roles
+The canonical reference is [`storybook/storybook/examples/app_shell.story.exs`](storybook/storybook/examples/app_shell.story.exs).
 
 | Component                                        | Purpose                                                                                                                    |
 | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
@@ -352,87 +344,17 @@ The canonical reference is
 | `<.page>` / `<.page_header>` / `<.page_content>` | Padded content region inside the inset.                                                                                    |
 | `<.flash_group>`                                 | **Must live outside `<.sidebar_provider>`** — otherwise it inherits sidebar layout and can be hidden when collapsed.       |
 
-### Sidebar state persistence
-
-Sidebar collapsed/expanded state survives reloads automatically: the JS hook
-writes a `sidebar_state` cookie on toggle, `Cognit.SidebarPlug` reads it and
-puts it in session, `Cognit.SidebarHook` propagates it into LiveView assigns.
-No host-app wiring is required beyond installing the plug and hook (step 7
-above).
-
-### Pinning a sidebar group to the bottom
-
-There is no dedicated "footer-adjacent" slot. Use `class="mt-auto"` on a
-sidebar group to push it to the bottom of `<.sidebar_content>`:
-
-```heex
-<.sidebar_group class="mt-auto">
-  <.sidebar_group_label>Dev Tools</.sidebar_group_label>
-  ...
-</.sidebar_group>
-```
-
-### Sidebar menu buttons: links vs actions
-
-`<.sidebar_menu_button>` forwards `navigate`, `patch`, `href`, plus standard
-HTML link attrs (`target`, `rel`, etc.). External links work as expected:
-
-```heex
-<.sidebar_menu_button href="https://example.com" target="_blank" rel="noopener noreferrer">
-  External
-</.sidebar_menu_button>
-```
-
-For buttons that trigger JS state instead of navigating, set `as="button"`.
-
-### Dropdown menu items: links vs actions
-
-`<.dropdown_menu_item>` is a non-navigating row — use it with `on-select` for
-an action (logout, open dialog, etc.):
-
-```heex
-<.dropdown_menu_item on-select={JS.push("sign_out")}>Sign out</.dropdown_menu_item>
-```
-
-`<.dropdown_menu_link_item>` renders an actual link — use it for navigation:
-
-```heex
-<.dropdown_menu_link_item navigate={~p"/profile"}>Profile</.dropdown_menu_link_item>
-```
-
-A `<.dropdown_menu_item>` with no `on-select` is a static row that does
-nothing on click.
-
-### Icons
-
-`<.icon name="...">` renders [Material Symbols](https://fonts.google.com/icons).
-Use the snake_case form of the icon name (e.g. `dashboard`, `account_circle`,
-`keyboard_arrow_down`).
-
-The bundled font carries the full glyph set but only the `FILL` axis; weight,
-grade and optical size are fixed. To pull the latest upstream release, run
-`mix icons.update` (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The
-installed version is recorded in `assets/fonts/material_symbols/VERSION`.
-
-### Fonts
-
-Open Sans ships as static latin-subset files per weight, built from the
-upstream variable font. `mix fonts.update` rebuilds them; the version is
-recorded in `assets/fonts/open_sans/VERSION`.
+Sidebar menu buttons, bottom-pinned groups and the difference between menu items and link items are covered in the `Cognit.Sidebar` and `Cognit.DropdownMenu` module docs.
 
 ---
 
 ## Programmatic control
 
-Interactive components (`dialog`, `sheet`, `dropdown_menu`, `popover`,
-`tooltip`, `sidebar`, etc.) are JavaScript state machines. Each component
-listens for `salad_ui:command` events keyed by its `id`, so you can drive
-state transitions from either the server or the client.
+Interactive components (`dialog`, `sheet`, `dropdown_menu`, `popover`, `tooltip`, `sidebar`, etc.) are JavaScript state machines addressed by their `id`, so you can drive state transitions from either the server or the client.
 
 ### From the server: `Cognit.LiveView.send_command/4`
 
-Use this inside a LiveView `handle_event/3` when the command depends on
-server-side state — e.g. close a sheet after a successful form save.
+Use this inside a LiveView `handle_event/3` when the command depends on server-side state, e.g. close a sheet after a successful form save.
 
 ```elixir
 alias Cognit.LiveView, as: CognitLV
@@ -451,14 +373,11 @@ def handle_event("save_employee", %{"employee" => params}, socket) do
 end
 ```
 
-Signature: `send_command(socket, component_id, command, params \\ %{})`.
-`command` is any state-machine transition the component supports — typically
-`"open"`, `"close"`, `"toggle"` for overlays.
+Signature: `send_command(socket, component_id, command, params \\ %{})`. `command` is any state-machine transition the component supports, typically `"open"`, `"close"`, `"toggle"` for overlays.
 
 ### From the client: `Cognit.JS.dispatch_command/3`
 
-Use this for pure UI interactions that don't need a server round-trip — e.g.
-a button that opens a dialog.
+Use this for pure UI interactions that need no server round-trip, e.g. a button that opens a dialog.
 
 ```heex
 <.button phx-click={Cognit.JS.dispatch_command("open", to: "#confirm-dialog")}>
@@ -466,8 +385,7 @@ a button that opens a dialog.
 </.button>
 ```
 
-`dispatch_command/3` returns a `Phoenix.LiveView.JS` struct, so you can chain
-it with other JS commands:
+`dispatch_command/3` returns a `Phoenix.LiveView.JS` struct, so you can chain it with other JS commands:
 
 ```heex
 <.button phx-click={
@@ -479,67 +397,25 @@ it with other JS commands:
 </.button>
 ```
 
-**Rule of thumb:** server-side `send_command/4` when the action follows data
-(form save → close sheet); client-side `dispatch_command/3` when it's pure UI
-(button → open dialog).
-
----
-
-## Configuration notes
-
-### `:default_locale` placement
-
-`Cognit.LocalePlug` reads `:default_locale` at **compile time**, so the
-placement of the config call matters:
-
-- If your app's primary language is German, leave `:default_locale` unset in
-  `config/config.exs` (Cognit defaults to `"de"`) and set it only in
-  `config/test.exs` if your tests need a fixed locale.
-- If your app's primary language is anything else, set
-  `config :cognit, :default_locale, "en"` in `config/config.exs`.
-
-### Custom error translator
-
-If you configure `:error_translator_function`, the function receives a
-`{msg, opts}` tuple — the same shape Phoenix changeset errors use — and must
-return a translated string:
-
-```elixir
-def translate_error({msg, opts}) do
-  Gettext.dgettext(MyApp.Gettext, "errors", msg, opts)
-end
-```
-
-This is only consulted as a fallback when Cognit's bundled translations
-don't cover the msgid. Set
-`config :cognit, :use_default_error_translator, false` to bypass the bundled
-translations entirely.
-
----
-
-## Parallel adoption
-
-Adopting Cognit into an app that already uses shadcn/ui, SaladUI,
-PhoenixUiComponents, or another Tailwind-based system risks clashes —
-duplicate `@tailwind base` rules, conflicting CSS variables, conflicting
-preset configs.
-
-The safe pattern is a **parallel asset pipeline**:
-
-1. **Separate CSS entrypoint** — e.g. `assets/css/cognit.css` that imports
-   `deps/cognit/assets/css/styles.css` and emits Cognit's Tailwind layers.
-2. **Separate Tailwind config** — `assets/tailwind.cognit.config.js`
-   extending Cognit's preset, scoped to Cognit-using templates only.
-3. **Separate esbuild profile** — emit `priv/static/assets/cognit.css` and
-   `cognit.js` alongside your existing `app.*` bundle.
-4. **Separate root layout** — Cognit-rendered LiveViews use a layout that
-   includes only the Cognit bundle; legacy pages keep their existing layout.
-
-Migrate routes from the legacy layout to the Cognit layout one at a time.
-Once the last legacy page is gone, collapse the two pipelines back into one.
+**Rule of thumb:** server-side `send_command/4` when the action follows data (form save → close sheet); client-side `dispatch_command/3` when it is pure UI (button → open dialog).
 
 ---
 
 ## Storybook
 
 The [storybook](storybook/) app renders every component with its variations, the foundation tokens, and composed examples such as the app shell and a CRUD page. See its README for how to run it.
+
+---
+
+## Migrating from another component library
+
+Adopting Cognit into an app that already uses shadcn/ui, SaladUI, PhoenixUiComponents, or another Tailwind-based system risks clashes: duplicate `@tailwind base` rules, conflicting CSS variables, conflicting preset configs.
+
+The safe pattern is a **parallel asset pipeline**:
+
+1. **Separate CSS entrypoint**, e.g. `assets/css/cognit.css` that imports `deps/cognit/assets/css/styles.css` and emits Cognit's Tailwind layers.
+2. **Separate Tailwind config**, `assets/tailwind.cognit.config.js` extending Cognit's preset, scoped to Cognit-using templates only.
+3. **Separate esbuild profile** that emits `priv/static/assets/cognit.css` and `cognit.js` alongside your existing `app.*` bundle.
+4. **Separate root layout** so Cognit-rendered LiveViews use a layout that includes only the Cognit bundle; legacy pages keep their existing layout.
+
+Migrate routes from the legacy layout to the Cognit layout one at a time. Once the last legacy page is gone, collapse the two pipelines back into one.

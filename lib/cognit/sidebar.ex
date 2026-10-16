@@ -1,5 +1,28 @@
 defmodule Cognit.Sidebar do
-  @moduledoc false
+  @moduledoc """
+  Collapsible app sidebar. The README shows a full shell composed from it.
+
+  ## Menu buttons: links vs actions
+
+  `sidebar_menu_button/1` forwards `navigate`, `patch`, `href` and the standard
+  HTML link attributes (`target`, `rel`, ...), so external links work as expected:
+
+      <.sidebar_menu_button href="https://example.com" target="_blank" rel="noopener noreferrer">
+        External
+      </.sidebar_menu_button>
+
+  For a button that triggers JS state instead of navigating, set `as="button"`.
+
+  ## Pinning a group to the bottom
+
+  There is no footer-adjacent slot. Give the group `class="mt-auto"` to push it
+  to the bottom of `sidebar_content/1`:
+
+      <.sidebar_group class="mt-auto">
+        <.sidebar_group_label>Dev Tools</.sidebar_group_label>
+        ...
+      </.sidebar_group>
+  """
   use Cognit, :component
 
   import Cognit.Icon
