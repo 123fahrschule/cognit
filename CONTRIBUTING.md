@@ -73,9 +73,10 @@ Form-capable components accept either `field` (a `Phoenix.HTML.FormField`) or `n
 Maintainers only, from an up-to-date `main`:
 
 1. Bump `@version` in `mix.exs`. In `CHANGELOG.md`, rename `## Unreleased` to `## X.Y.Z` (or add the section if nobody wrote entries) and align the entries with the merged PRs.
-2. Commit as `X.Y.Z` with nothing else in the commit.
-3. Run `mix release`. It runs `mix check`, tags `X.Y.Z`, and pushes `main` and the tag.
+2. If the release has a *Compatibility* section, add a `**X.Y.Z**` line to the *Upgrading* list in `README.md` summarising what a caller must change.
+3. Commit as `X.Y.Z` with nothing else in the commit.
+4. Run `mix release`. It runs `mix check`, tags `X.Y.Z`, and pushes `main` and the tag.
 
-An agent may do steps 1–2 when a maintainer asks for a release on `main`; step 3 stays manual.
+An agent may do steps 1–3 when a maintainer asks for a release on `main`; step 4 stays manual.
 
 Semver: breaking change to a public component or attr → minor while we are on `0.x` (and note it under *Compatibility*); everything else → patch or minor by scope.

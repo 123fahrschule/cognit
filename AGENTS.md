@@ -19,8 +19,9 @@ When the user explicitly asks to prepare or cut a release ("prepare next release
 
 1. Pick the version by semver (see `CONTRIBUTING.md`): patch for fixes, minor for features or any *Compatibility* entry while on `0.x`.
 2. Bump `@version` in `mix.exs` and rename `## Unreleased` to `## X.Y.Z` in `CHANGELOG.md`, aligning the entries with the merged PRs.
-3. Commit as `X.Y.Z` with nothing else in the commit.
-4. Stop. The maintainer runs `mix release`; never run it, `git tag`, or `git push --tags` yourself.
+3. If the release has a *Compatibility* section, add a `**X.Y.Z**` line to the *Upgrading* list in `README.md` summarising what a caller must change.
+4. Commit as `X.Y.Z` with nothing else in the commit.
+5. Stop. The maintainer runs `mix release`; never run it, `git tag`, or `git push --tags` yourself.
 
 ## Before opening a PR
 
