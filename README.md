@@ -30,10 +30,12 @@ Fork of [SaladUI](https://github.com/bluzky/salad_ui). See [CHANGELOG.md](CHANGE
 # mix.exs
 defp deps do
   [
-    {:cognit, github: "123fahrschule/cognit", tag: "0.1.0"}
+    {:cognit, github: "123fahrschule/cognit", tag: "X.Y.Z"}
   ]
 end
 ```
+
+Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md).
 
 ```bash
 mix deps.get
@@ -183,6 +185,88 @@ module.exports = {
   ],
 };
 ```
+
+---
+
+## Components
+
+Everything below is imported by `use Cognit`. Each has a story under `storybook/storybook/components/`.
+
+### Forms and input
+
+| Component | Purpose |
+| --- | --- |
+| `button`, `button_group` | Actions; variants `default`, `destructive`, `success`, `outline`, `secondary`, `ghost`, `link`. The group joins buttons into one segmented control |
+| `input`, `textarea`, `label` | Text entry bound to a form `field` or plain `name`/`value` |
+| `checkbox`, `switch`, `radio_group`, `slider` | Boolean and range controls |
+| `select`, `combobox` | Dropdown choice; combobox adds search, multiple selection and server-side filtering |
+| `calendar`, `date_picker`, `time_picker` | Date, date range and 24-hour time entry |
+| `toggle`, `toggle_group` | Pressed-state buttons, single or multiple |
+| `form`, `form_item`, `form_label`, `form_control`, `form_message` | Low-level form structure and error display |
+| `form_field` | One-liner wrapper: label, control of any `type`, description and errors |
+
+### Overlays
+
+| Component | Purpose |
+| --- | --- |
+| `dialog`, `alert_dialog`, `confirmation_dialog` | Modal dialogs; the confirmation variant is a ready-made yes/no with destructive styling |
+| `sheet` | Panel sliding in from a screen edge |
+| `popover`, `hover_card`, `tooltip` | Anchored floating content on click, hover with delay, and hover |
+| `dropdown_menu`, `menu` | Action menus with items, link items, separators and shortcuts |
+| `command`, `command_dialog` | Command palette with filtering |
+| `toaster`, `send_toast/3` | Toast notifications pushed from any LiveView |
+
+### Navigation and layout
+
+| Component | Purpose |
+| --- | --- |
+| `sidebar_*` | Collapsible app sidebar with groups, menus, sub-menus, rail and inset |
+| `app_side_nav`, `user_side_nav` | Branding entry at the top and signed-in user entry at the bottom of the sidebar |
+| `topbar`, `page`, `page_header`, `page_content`, `page_footer` | Content column structure inside the sidebar inset |
+| `login_layout`, `logo` | Centered auth page frame and the brand mark |
+| `tabs`, `breadcrumb`, `stepper`, `pagination` | Tabbed content, location trail, multi-step progress, page links |
+| `locale_select`, `user_menu` | Topbar widgets for switching locale and showing the current user |
+| `accordion`, `collapsible`, `scroll_area`, `separator` | Expand and collapse, custom scrollbars, dividers |
+
+### Data display and feedback
+
+| Component | Purpose |
+| --- | --- |
+| `table`, `table_container`, `table_empty` | Data tables with a scroll container and an empty-row placeholder |
+| `pagination` with `Cognit.PaginationParams` | Page controls driven by a normalized params struct (Scrivener pages, maps or keyword lists) |
+| `card`, `item`, `item_group` | Content containers and media-title-actions rows |
+| `avatar`, `badge`, `icon`, `copy_button` | Profile images with fallback, status labels, Material Symbols, copy-to-clipboard |
+| `alert`, `flash_group`, `empty_state`, `progress`, `skeleton` | Status messages, LiveView flash, no-data placeholder, progress bars, loading placeholders |
+| `chart` | Chart.js wrapper fed by data and config attrs |
+
+---
+
+## Theming
+
+Colors are HSL triplets in CSS custom properties, declared in `assets/css/theme.css` for `:root` and overridden under `.dark`. The Tailwind preset registers each pair as a color (`bg-primary`, `text-primary-foreground`, `bg-destructive-soft`, and so on) through `assets/tailwind.colors.json`, so components never hard-code hex values.
+
+Token families:
+
+- **Surface and text**: `background`, `foreground`, `card`, `popover`, `muted`, `accent`, `border`, `input`, `ring`
+- **Semantic**: `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, each with a `-foreground` and a tinted `-soft` / `-soft-foreground` pair for badges and alerts
+- **Shape and depth**: `--radius` drives `rounded-xs` through `rounded-xl`; `--shadow-2xs` through `--shadow-2xl` replace Tailwind's stock `shadow-*` scale
+- **Type**: `font-sans` is Open Sans, loaded from `assets/css/open_sans.css`
+
+To rebrand, override the variables after importing `styles.css`:
+
+```css
+@import "../../deps/cognit/assets/css/styles.css";
+
+:root {
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+  --radius: 0.5rem;
+}
+```
+
+Dark mode is class-based (`darkMode: ["class"]` in the preset). Add `class="dark"` to `<html>` to switch; there is no media-query fallback, so wire the toggle yourself.
+
+Adding a token of your own takes two steps: declare the variable in CSS, then register it under `theme.extend.colors` in your Tailwind config. A variable alone produces no utility class.
 
 ---
 
@@ -456,6 +540,6 @@ Once the last legacy page is gone, collapse the two pipelines back into one.
 
 ---
 
-## Usage
+## Storybook
 
-See the [Storybook](storybook/) for component examples and documentation.
+The [storybook](storybook/) app renders every component with its variations, the foundation tokens, and composed examples such as the app shell and a CRUD page. See its README for how to run it.

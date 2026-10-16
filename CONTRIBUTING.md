@@ -44,12 +44,24 @@ You may add the entry yourself under a `## Unreleased` heading at the top of `CH
 
 ## What a change needs
 
-- **Components**: follow the authoring guide in `README.md`. Interactive components need a unique `id`, `data-component`, `data-part`, and a JS state machine under `assets/js/ui/components/`.
+- **Components**: see [Authoring a component](#authoring-a-component).
 - **Class attrs**: `attr :class, :any` and merge through `classes/1`; never concatenate class strings.
 - **User-facing text** goes through Gettext. Add the `msgstr` for every locale under `priv/gettext/`, not just `en`.
 - **Tests** for behaviour, in `test/`. Don't assert on CSS classes.
 - **Storybook**: add or update the story under `storybook/storybook/` for any visible change.
 - **Breaking changes**: call them out in the PR description so they land under *Compatibility* in the changelog.
+
+## Authoring a component
+
+Primitives live in `lib/cognit/<name>.ex`; composed app-shell pieces (page, topbar, side navs, form field) in `lib/cognit/components/`. Start the module with `use Cognit, :component`, which brings in `Phoenix.Component`, Gettext, `Cognit.Helpers`, and the `classes/1` merge helper. Add the module to the import list in `lib/cognit.ex` so `use Cognit` picks it up.
+
+Interactive components (anything with open/close, selection, or keyboard state) are driven by a client-side state machine:
+
+1. The root element carries a required `id`, `data-component="<name>"`, `phx-hook="SaladUI"`, and `phx-mounted={JS.ignore_attributes(["data-state"])}` so LiveView patches don't reset client state. Parts carry `data-part`. Options go in `data-options` as JSON, event-to-LiveView mappings in `data-event-mappings`.
+2. The JS side lives in `assets/js/ui/components/<name>.js`: extend `Component` from `../core/component.js`, return `stateMachine`, `events`, `hiddenConfig`, and `ariaConfig` from `getComponentConfig()`, and register the class with the registry at module level. Import the file in `assets/index.js`.
+3. Server-side control goes through `Cognit.LiveView.send_command/4`; client-side through `Cognit.JS.dispatch_command/3`. Any transition name the state machine defines is a valid command.
+
+Form-capable components accept either `field` (a `Phoenix.HTML.FormField`) or `name`/`value`; `Cognit.Helpers.prepare_assign/1` normalises both. Variants go through `Cognit.Helpers.variant_class/2`; button-like things reuse `button_variant/1`.
 
 ## Releasing
 
