@@ -270,7 +270,7 @@ defmodule Cognit.Command do
   ## Example
 
       <.command_item phx-click="select_command">
-        <.icon name="calendar" />
+        <.icon name="calendar_month" />
         <span>Calendar</span>
       </.command_item>
   """

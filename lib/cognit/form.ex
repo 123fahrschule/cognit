@@ -29,7 +29,7 @@ defmodule Cognit.Form do
         <div class="w-full flex flex-row-reverse">
           <.button
             class="btn btn-secondary btn-md"
-            icon="inbox_arrow_down"
+            icon="save"
             phx-disable-with="Saving..."
           >
             Save project
