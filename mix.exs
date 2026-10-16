@@ -39,6 +39,7 @@ defmodule Cognit.MixProject do
         "deps.unlock --check-unused",
         "compile --force --warnings-as-errors"
       ],
+      "icons.update": ["cmd assets/fonts/material_symbols/update.sh"],
       release: [
         "check",
         "cmd git tag #{@version}",

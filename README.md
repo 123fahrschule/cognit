@@ -325,6 +325,11 @@ nothing on click.
 Use the snake_case form of the icon name (e.g. `dashboard`, `account_circle`,
 `keyboard_arrow_down`).
 
+The bundled font carries the full glyph set but only the `FILL` axis; weight,
+grade and optical size are fixed. To pull the latest upstream release, run
+`mix icons.update` (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The
+installed version is recorded in `assets/fonts/material_symbols/VERSION`.
+
 ---
 
 ## Programmatic control

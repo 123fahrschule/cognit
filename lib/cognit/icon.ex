@@ -102,6 +102,9 @@ defmodule Cognit.Icon do
   Icons are rendered using the Material Symbols Outlined variable font with the FILL axis:
   - Outlined: `font-variation-settings: 'FILL' 0` (default)
   - Filled: `font-variation-settings: 'FILL' 1`
+
+  The bundled font keeps only the FILL axis; weight 400, grade 0 and optical size 24
+  are baked in, so the `wght`, `GRAD` and `opsz` axes cannot be set via CSS.
   """
 
   attr :name, :string,
