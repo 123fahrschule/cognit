@@ -6,7 +6,7 @@
 set -eu
 
 dir=$(cd "$(dirname "$0")" && pwd)
-target="$dir/MaterialSymbolsOutlined.woff2"
+target="$dir/../../../priv/static/fonts/material_symbols/MaterialSymbolsOutlined.woff2"
 upstream='https://raw.githubusercontent.com/google/material-design-icons/master/variablefont/MaterialSymbolsOutlined%5BFILL%2CGRAD%2Copsz%2Cwght%5D.woff2'
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT

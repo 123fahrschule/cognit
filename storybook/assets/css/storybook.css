@@ -7,13 +7,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/*
- * Put your component styling within the Tailwind utilities layer. 
- * See the https://hexdocs.pm/phoenix_storybook/sandboxing.html guide for more info.
- */
-
-/* @layer utilities { */
-/*   * { */
-/*     font-family: system-ui; */
-/*   } */
-/* } */
+/* Beats .psb-sandbox's serif stack: storybook loads it in its `theme` layer, this file in the later `app` layer. */
+.cognit-storybook {
+  font-family: theme("fontFamily.sans");
+}

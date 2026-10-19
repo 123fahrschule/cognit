@@ -1,9 +1,3 @@
-/* Open Sans font */
-import "./css/open_sans.css";
-
-/* Material Symbols icons */
-import "./css/material_symbols.css";
-
 /* SaladUI components */
 import "./js/ui/components/dialog.js";
 import "./js/ui/components/select.js";

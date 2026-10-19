@@ -68,6 +68,8 @@ Form-capable components accept either `field` (a `Phoenix.HTML.FormField`) or `n
 - **Icons**: `mix icons.update` pulls the latest Material Symbols release (needs `curl` and [`uv`](https://docs.astral.sh/uv/)). The font keeps the full glyph set and only the `FILL` axis. Installed version: `assets/fonts/material_symbols/VERSION`.
 - **Fonts**: `mix fonts.update` rebuilds the static latin-subset Open Sans files per weight from the upstream variable font. Installed version: `assets/fonts/open_sans/VERSION`.
 
+Both write into `priv/static/fonts/`, which `Cognit.Static` serves with content hashes computed at compile time, so the next `mix compile` picks the new files up. Adding or renaming a file also needs its `@font-face` entry in `Cognit.Static`.
+
 ## Releasing
 
 Maintainers only, from an up-to-date `main`:

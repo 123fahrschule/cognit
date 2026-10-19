@@ -26,7 +26,7 @@ config :esbuild,
   version: "0.25.8",
   storybook: [
     args:
-      ~w(js/storybook.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/images/* --loader:.woff2=file),
+      ~w(js/storybook.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{
       "NODE_PATH" =>

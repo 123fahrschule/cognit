@@ -25,6 +25,8 @@ defmodule CognitStorybookWeb.Endpoint do
     gzip: false,
     only: CognitStorybookWeb.static_paths()
 
+  plug Cognit.Static
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do

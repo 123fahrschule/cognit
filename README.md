@@ -26,7 +26,7 @@ end
 
 Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then run `mix deps.get`. Moving up several releases at once: see [Upgrading](#upgrading).
 
-### 2. CSS
+### 2. CSS and fonts
 
 ```css
 /* assets/css/app.css */
@@ -37,23 +37,23 @@ Use the newest version listed at the top of [CHANGELOG.md](CHANGELOG.md), then r
 @tailwind utilities;
 ```
 
-`styles.css` holds the component styles, theme tokens and typography. The bundled Open Sans and Material Symbols fonts are loaded by the JavaScript entry (step 4), not by `styles.css`: `import Cognit from "cognit"` pulls in `open_sans.css` and `material_symbols.css`, so esbuild emits a stylesheet next to your JS bundle and needs `--loader:.woff2=file` in its args in `config/config.exs`. Keep the font CSS on this route: the Tailwind CLI inlines an `@import` but leaves `url()` alone, so importing `open_sans.css` from your Tailwind input requests font files nothing serves.
-
-That emitted stylesheet lands at `priv/static/assets/app.css` for `js/app.js`, the same path Tailwind writes to in a stock Phoenix app, and one overwrites the other. Give the Tailwind output its own name and link both files:
+`styles.css` holds the component styles, theme tokens and typography. The Open Sans and Material Symbols fonts stay in the dependency: `Cognit.Static` serves them and `Cognit.Assets.head` links them from the root layout.
 
 ```elixir
-# config/config.exs
-config :tailwind,
-  my_app: [
-    args: ~w(--config=tailwind.config.js --input=css/app.css --output=../priv/static/assets/app_main.css)
-  ]
+# lib/my_app_web/endpoint.ex
+plug Plug.Static, at: "/", from: :my_app, gzip: false, only: MyAppWeb.static_paths()
+plug Cognit.Static
 ```
 
 ```heex
 <%!-- lib/my_app_web/components/layouts/root.html.heex --%>
-<link phx-track-static rel="stylesheet" href={~p"/assets/app_main.css"} />
-<link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+<head>
+  <Cognit.Assets.head />
+  <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+</head>
 ```
+
+Every URL it produces carries a content hash, so browsers and CDNs cache the files for a year and pick up an update on the next release. A layout that renders no Cognit components can load Open Sans alone with `<Cognit.Assets.head fonts={[:open_sans]} />`.
 
 ### 3. Tailwind
 
@@ -180,6 +180,7 @@ config :cognit, :default_locale, "en"
 | ------------------------------- | ------------ | -------------- | ------------------------------------------------------------------------- |
 | `default_locale`                | compile time | `"de"`         | Locale when neither query param nor cookie sets one                       |
 | `locales`                       | compile time | `["de", "en"]` | Accepted locales; also the list `locale_select` offers                    |
+| `static_at`                     | compile time | `"/assets"`    | URL prefix `Cognit.Static` serves the fonts under (`<prefix>/fonts/…`)   |
 | `error_translator_function`     | runtime      | none           | `{module, function}` taking `{msg, opts}` for changeset errors            |
 | `use_default_error_translator`  | runtime      | `true`         | Try Cognit's bundled `errors` translations (EN, DE) before your function |
 
@@ -189,7 +190,7 @@ Form errors resolve in this order: the bundled `errors` domain (when `use_defaul
 
 ### Umbrella projects
 
-Deps live at the umbrella root, so every relative `deps/cognit/...` path in steps 2 and 3 needs one more `../` segment when written from `apps/my_app_web/assets/`. The `file:` entry from step 4 becomes `"cognit": "file:../../../deps/cognit"`.
+Deps live at the umbrella root, so every relative `deps/cognit/...` path in steps 2 and 3 needs one more `../` segment when written from `apps/my_app_web/assets/`. The `file:` entry from step 4 becomes `"cognit": "file:../../../deps/cognit"`. `Cognit.Static` finds the fonts by app name and needs no extra segment; add it to every endpoint whose layouts render `Cognit.Assets.head`.
 
 ### Using Cognit from a library
 

@@ -1,2 +1,3 @@
-@import "storybook.css";
+@import "fonts/open_sans.css";
+@import "fonts/material_symbols.css";
 @import "storybook_tailwind.css";

@@ -7,7 +7,7 @@ Colors are HSL triplets in CSS custom properties, declared in `assets/css/theme.
 - **Surface and text**: `background`, `foreground`, `card`, `popover`, `muted`, `accent`, `border`, `input`, `ring`
 - **Semantic**: `primary`, `secondary`, `destructive`, `success`, `warning`, `info`, each with a `-foreground` and a tinted `-soft` / `-soft-foreground` pair for badges and alerts
 - **Shape and depth**: the whole `rounded-xs` … `rounded-xl` scale is derived from `--radius` with fixed offsets, so changing that one variable moves every corner in step; `--shadow-2xs` through `--shadow-2xl` replace Tailwind's stock `shadow-*` scale
-- **Type**: `font-sans` is Open Sans, loaded from `assets/css/open_sans.css`
+- **Type**: `font-sans` is Open Sans, loaded by `Cognit.Assets.head` in the root layout
 
 ## Rebranding
 
