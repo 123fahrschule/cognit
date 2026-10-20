@@ -15,7 +15,7 @@ class SelectItem extends Component {
 
     this.parent = parentComponent;
     this.value = itemElement.dataset.value;
-    this.disabled = itemElement.dataset.disabled === "true";
+    this.disabled = itemElement.hasAttribute("data-disabled");
     this.label = itemElement.textContent.trim();
 
     this.setupEvents();
