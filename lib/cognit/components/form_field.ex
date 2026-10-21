@@ -27,6 +27,7 @@ defmodule Cognit.Components.FormField do
     "minlength",
     "mode",
     "multiple",
+    "open-ended",
     "pattern",
     "placeholder",
     "readonly",

@@ -18,6 +18,12 @@ defmodule Cognit.DatePicker do
     range. The start is submitted under `name` and the end under `end-name`.
     Picking the start of a selected range again clears it.
 
+    With `open-ended`, a range can also have only a start, e.g. for a filter
+    on everything from a date on. Closing the calendar after picking only the
+    start sets that range, with an empty end; `Escape` still keeps the
+    previous range. A range with only a start counts as finished: the next
+    pick starts a new range, and picking its start again clears it.
+
   `Cognit.Components.FormField.form_field/1` renders this structure for
   `type="date-picker"`.
 
@@ -59,6 +65,13 @@ defmodule Cognit.DatePicker do
         <.date_picker_content />
       </.date_picker>
 
+      <.date_picker mode="range" open-ended field={@form[:from]} end-field={@form[:to]}>
+        <.date_picker_trigger class="w-[260px]">
+          <.date_picker_value placeholder="Any date" />
+        </.date_picker_trigger>
+        <.date_picker_content />
+      </.date_picker>
+
   ## Keyboard
 
   * `Enter` / `Space` on the trigger opens the calendar
@@ -84,6 +97,7 @@ defmodule Cognit.DatePicker do
   * `:value` - Selected date, or range start, as a `Date`, an ISO 8601 string, or `nil`.
   * `:field` - A form field struct, for example `@form[:due_on]`.
   * `:end-name` / `:end-value` / `:end-field` - Same as above for the range end.
+  * `:open-ended` - In range mode, lets the range have only a start. Defaults to `false`.
   * `:min` / `:max` - Earliest and latest selectable date (inclusive).
   * `:disabled-dates` - Dates that can't be selected. A range may span them.
   * `:use-portal` - Whether to render the calendar in a portal. Defaults to `false`.
@@ -91,7 +105,8 @@ defmodule Cognit.DatePicker do
   * `:on-value-changed` - Event pushed with `%{"value" => "2026-08-06"}`, or
     `%{"value" => nil}` when the date is cleared. In range mode, with
     `%{"value" => %{"from" => "2026-08-06", "to" => "2026-08-12"}}` once the
-    range is complete, or with both `nil` when it's cleared.
+    range is complete, or with both `nil` when it's cleared. With
+    `open-ended`, `"to"` is `nil` for a range with only a start.
   * `:on-open` / `:on-close` - Handlers for the calendar opening and closing.
   * `:class` - Additional CSS classes.
   """
@@ -112,6 +127,10 @@ defmodule Cognit.DatePicker do
 
   attr :"end-field", Phoenix.HTML.FormField,
     doc: "a form field struct for the range end, for example: @form[:ends_on]"
+
+  attr :"open-ended", :boolean,
+    default: false,
+    doc: "In range mode, lets the range have only a start"
 
   attr :min, :any, default: nil, doc: "Earliest selectable date (inclusive)"
   attr :max, :any, default: nil, doc: "Latest selectable date (inclusive)"
@@ -139,6 +158,7 @@ defmodule Cognit.DatePicker do
       assigns
       |> calendar_options()
       |> Map.merge(%{
+        openEnded: assigns[:"open-ended"],
         usePortal: assigns[:"use-portal"],
         portalContainer: assigns[:"portal-container"],
         animations: get_animation_config()

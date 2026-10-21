@@ -3,6 +3,8 @@ import SaladUI from "../index";
 import PositionedElement from "../core/positioned-element";
 import CalendarComponent, { formatDisplayDate, today } from "./calendar";
 
+const sameDay = (a, b) => !!a && !!b && a.getTime() === b.getTime();
+
 /**
  * DatePickerComponent: an input-styled trigger that opens the calendar in a
  * popover. Value handling, rendering, and keyboard navigation come from
@@ -101,6 +103,33 @@ class DatePickerComponent extends CalendarComponent {
     return this.draft || super.getSelection();
   }
 
+  // With `open-ended`, a range may have only a start
+  isOpenEnded() {
+    return this.isRange && !!this.options.openEnded;
+  }
+
+  // A set range with only a start counts as finished, like a full range: the
+  // next pick starts a new range rather than adding an end to it
+  hasStartOnlyValue() {
+    return this.isOpenEnded() && !this.draft && !!this.from && !this.to;
+  }
+
+  nextSelection(date) {
+    if (this.hasStartOnlyValue()) {
+      // Picking its start again clears it, like with a full range
+      return sameDay(this.from, date)
+        ? { from: null, to: null, complete: true }
+        : { from: date, to: null, complete: false };
+    }
+    return super.nextSelection(date);
+  }
+
+  // No preview from a set start-only range, since the next pick starts anew
+  handleGridHover(event) {
+    if (this.hasStartOnlyValue()) return;
+    super.handleGridHover(event);
+  }
+
   selectDate(date) {
     if (!date || this.isDateDisabled(date)) return;
 
@@ -144,8 +173,9 @@ class DatePickerComponent extends CalendarComponent {
     });
   }
 
-  close({ restoreFocus = true, event = "close" } = {}) {
+  close({ restoreFocus = true, event = "close", discardDraft = false } = {}) {
     this.restoreFocusOnClose = restoreFocus;
+    this.discardDraft = discardDraft;
     this.transition(event);
   }
 
@@ -175,10 +205,20 @@ class DatePickerComponent extends CalendarComponent {
   }
 
   onClosedEnter() {
-    // Closing halfway through picking a range keeps the previous value
-    if (this.draft) {
-      this.draft = null;
-      this.renderSelection();
+    const draft = this.draft;
+    const discard = this.discardDraft;
+    this.draft = null;
+    this.discardDraft = false;
+
+    if (draft) {
+      if (this.isOpenEnded() && !discard) {
+        // With `open-ended`, closing after picking only the start sets a range
+        // without an end. Escape still keeps the previous value.
+        this.commitSelection({ from: draft.from, to: null }, draft.from);
+      } else {
+        // Closing halfway through picking a range keeps the previous value
+        this.renderSelection();
+      }
     }
     this.pushEvent("closed");
   }
@@ -195,7 +235,7 @@ class DatePickerComponent extends CalendarComponent {
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
-      this.close({ restoreFocus: true });
+      this.close({ restoreFocus: true, discardDraft: true });
       return;
     }
 

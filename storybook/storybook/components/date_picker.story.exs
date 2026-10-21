@@ -127,6 +127,29 @@ defmodule Storybook.CognitComponents.DatePicker do
         ]
       },
       %Variation{
+        id: :open_ended_range,
+        description:
+          "Open-ended range: closing after picking only the start keeps it as a range without an end, e.g. for a filter from a date on. Escape keeps the previous range",
+        attributes: %{
+          id: "date-picker-open-ended-range",
+          mode: "range",
+          "open-ended": true,
+          name: "from",
+          "end-name": "to",
+          value: "2026-08-10",
+          "on-value-changed": "value_changed"
+        },
+        slots: [
+          """
+          <.date_picker_trigger class="w-[260px]">
+            <:leading><.icon name="calendar_today" size="xs" decorative /></:leading>
+            <.date_picker_value placeholder="Any date" />
+          </.date_picker_trigger>
+          <.date_picker_content />
+          """
+        ]
+      },
+      %Variation{
         id: :custom_trigger,
         description: "An icon-only trigger, restyled through its class",
         attributes: %{
