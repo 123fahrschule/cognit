@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.20.2
+
+### Bug Fixes
+
+- **Select / Combobox**: Disabled items can no longer be picked with the arrow keys and `Enter`; they were already blocked for mouse clicks
+- **Switch**: A disabled switch is no longer reachable with `Tab`
+
+### Documentation
+
+- The README now focuses on installation, setup and upgrading. Component reference moved into the module docs: `Cognit` lists every component with its module, and `Cognit.Sidebar`, `Cognit.DropdownMenu`, `Cognit.LiveView`, `Cognit.JS` and `Cognit.LocalePlug` document their usage and config. New guides cover theming and migrating
+
 ## 0.20.1
 
 ### Bug Fixes
