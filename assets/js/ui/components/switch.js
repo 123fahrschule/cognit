@@ -76,10 +76,7 @@ class SwitchComponent extends Component {
 
   setupComponentEvents() {
     // Set up keyboard navigation
-    this.el.setAttribute(
-      "tabindex",
-      this.el.getAttribute("disabled") === "true" ? "-1" : "0",
-    );
+    this.el.setAttribute("tabindex", this.disabled ? "-1" : "0");
     this.config.preventDefaultKeys = [" ", "Enter"];
   }
 
