@@ -145,7 +145,7 @@ class SelectComponent extends Component {
       type: this.multiple ? "multiple" : "single",
       defaultValue: this.options.defaultValue,
       value: this.multiple
-        ? this.options.value?.map((v) => v?.toString())
+        ? this.options.value?.map((v) => v?.toString()).filter((v) => v !== "")
         : this.options.value?.toString(),
       getItemValue: (item) => item.value,
       isItemDisabled: (item) => item.disabled || this.disabled,
@@ -600,11 +600,15 @@ class SelectComponent extends Component {
     const raw = this.options.value;
     if (raw !== undefined) {
       const toStr = (v) => (v == null ? null : v.toString());
-      const normalized = raw == null
-        ? []
-        : Array.isArray(raw)
-          ? raw.map((v) => toStr(v)).filter((v) => v !== null)
-          : [toStr(raw)].filter((v) => v !== null);
+      // In multiple mode "" is the blank `data-input` every form post carries,
+      // not a selection; keeping it would add another "" on each round-trip.
+      const normalized = (
+        raw == null
+          ? []
+          : Array.isArray(raw)
+            ? raw.map((v) => toStr(v)).filter((v) => v !== null)
+            : [toStr(raw)].filter((v) => v !== null)
+      ).filter((v) => !(this.multiple && v === ""));
       const current = this.collection.getValue(true);
       if (JSON.stringify(normalized.sort()) !== JSON.stringify(current.sort())) {
         this.collection.setValues(normalized.length ? normalized : null);
