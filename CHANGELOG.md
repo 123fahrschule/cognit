@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.21.0
+
+### Features
+
+- **Select**: `select_group/1` accepts `selectable` and `label`, like `combobox_group/1`. In a multiple select the heading becomes a row with a checkbox that selects or clears every enabled item in the group, and shows partly checked when only some are selected
+
+### Bug Fixes
+
+- **Combobox**: In a multiple combobox without a search input, a selectable group's checkbox no longer flips back to unchecked when the server re-renders the group
+- **Select / Combobox**: A multiple select bound to a form no longer adds another `""` to the submitted value on every change. One `""` is still sent, so clearing every item still submits the field
+
 ## 0.20.2
 
 ### Bug Fixes
