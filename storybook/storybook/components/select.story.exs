@@ -137,6 +137,37 @@ defmodule Storybook.CognitComponents.Select do
         ]
       },
       %Variation{
+        id: :selectable_groups,
+        description:
+          "Multiple-select with `selectable` groups. Click a group heading to " <>
+            "toggle all of its items at once (tri-state checkbox).",
+        attributes: %{
+          id: "grouped-select",
+          name: "stack[]",
+          multiple: true
+        },
+        slots: [
+          """
+            <.select_trigger class="w-[220px]">
+              <.select_value placeholder="Select your stack" />
+            </.select_trigger>
+            <.select_content>
+              <.select_group selectable label="Backend">
+                <.select_item value="elixir">Elixir</.select_item>
+                <.select_item value="phoenix">Phoenix</.select_item>
+                <.select_item value="ecto">Ecto</.select_item>
+              </.select_group>
+              <.select_separator />
+              <.select_group selectable label="Frontend">
+                <.select_item value="liveview">LiveView</.select_item>
+                <.select_item value="react">React</.select_item>
+                <.select_item value="tailwind" disabled>Tailwind CSS</.select_item>
+              </.select_group>
+            </.select_content>
+          """
+        ]
+      },
+      %Variation{
         id: :in_form,
         description: "A select component used within a form",
         attributes: %{

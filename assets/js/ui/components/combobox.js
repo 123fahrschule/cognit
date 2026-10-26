@@ -47,27 +47,6 @@ class ComboboxComponent extends SelectComponent {
       this.onInput = this.handleSearch.bind(this);
       this.input.addEventListener("input", this.onInput);
       this.applyFilter("");
-    } else {
-      this.updateGroupIndicators();
-    }
-
-    // Group select-all is multiple-only; hide the affordance otherwise.
-    if (!this.multiple) {
-      this.el
-        .querySelectorAll('[data-part="group-trigger"]')
-        .forEach((el) => el.setAttribute("hidden", ""));
-    } else {
-      // Open-state keydowns are routed to the search input, so wire Enter/Space
-      // directly on the group triggers to keep them keyboard-operable.
-      this.onGroupKeydown = (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          this.toggleGroup(e);
-        }
-      };
-      this.el
-        .querySelectorAll('[data-part="group-trigger"]')
-        .forEach((el) => el.addEventListener("keydown", this.onGroupKeydown));
     }
   }
 
@@ -97,11 +76,6 @@ class ComboboxComponent extends SelectComponent {
         e.stopPropagation();
         this.selectHighlighted();
       },
-    };
-
-    base.events.open.mouseMap = {
-      ...base.events.open.mouseMap,
-      "group-trigger": { click: (e) => this.toggleGroup(e) },
     };
 
     return base;
@@ -224,7 +198,6 @@ class ComboboxComponent extends SelectComponent {
 
   selectValue(value) {
     super.selectValue(value);
-    this.updateGroupIndicators();
     this.renderChips();
   }
 
@@ -363,65 +336,16 @@ class ComboboxComponent extends SelectComponent {
     this.pushEvent("value-changed", { value: this.collection.getValue() });
   }
 
-  // Collect the enabled, currently-visible items of a group.
+  // Only items the search filter left visible count toward the group.
   groupItems(group) {
-    return Array.from(group.querySelectorAll('[data-part="item"]'))
-      .filter((el) => this.isItemVisible(el))
-      .map((el) => this.collection.getItemByValue(el.dataset.value))
-      .filter((ci) => ci && !ci.instance.disabled);
+    return super
+      .groupItems(group)
+      .filter((ci) => this.isItemVisible(ci.instance.el));
   }
 
   toggleGroup(event) {
-    if (!this.multiple) return;
-
-    const group = event.currentTarget.closest('[data-part="group"]');
-    if (!group) return;
-
-    const items = this.groupItems(group);
-    if (!items.length) return;
-
-    // If every visible item is already selected, clear them; otherwise select
-    // the remaining ones.
-    const target = !items.every((ci) => ci.selected);
-    items.forEach((ci) => {
-      if (ci.selected !== target) this.collection.select(ci);
-    });
-
-    this.updateValueDisplay();
+    super.toggleGroup(event);
     this.renderChips();
-    this.syncHiddenInputs();
-    this.updateGroupIndicators();
-    this.pushEvent("value-changed", { value: this.collection.getValue() });
-  }
-
-  updateGroupIndicators() {
-    if (!this.multiple) return;
-
-    this.el
-      .querySelectorAll('[data-part="group"][data-selectable]')
-      .forEach((group) => {
-        const trigger = group.querySelector('[data-part="group-trigger"]');
-        if (!trigger) return;
-
-        const items = this.groupItems(group);
-        const selected = items.filter((ci) => ci.selected).length;
-
-        let state = "unchecked";
-        if (items.length && selected === items.length) state = "checked";
-        else if (selected > 0) state = "indeterminate";
-
-        // Use a private attribute: the framework's updateUI() overwrites
-        // data-state on every part with the component's open/closed state.
-        trigger
-          .querySelector('[data-part="group-indicator"]')
-          ?.setAttribute("data-group-state", state);
-        trigger
-          .querySelector('[data-part="group-check"]')
-          ?.toggleAttribute("hidden", state !== "checked");
-        trigger
-          .querySelector('[data-part="group-minus"]')
-          ?.toggleAttribute("hidden", state !== "indeterminate");
-      });
   }
 
   handleSearch() {
@@ -511,10 +435,6 @@ class ComboboxComponent extends SelectComponent {
 
       if (this.input) {
         this.applyFilter(this.input.value.trim().toLowerCase());
-      } else {
-        // Without a search input applyFilter never runs, so redraw the group
-        // select-all checkboxes the server re-render just reset.
-        this.updateGroupIndicators();
       }
 
       // If the dropdown is closed, strip any lingering highlight attributes so
@@ -548,11 +468,6 @@ class ComboboxComponent extends SelectComponent {
     if (this.searchTimer) clearTimeout(this.searchTimer);
     if (this.input && this.onInput) {
       this.input.removeEventListener("input", this.onInput);
-    }
-    if (this.onGroupKeydown) {
-      this.el
-        .querySelectorAll('[data-part="group-trigger"]')
-        .forEach((el) => el.removeEventListener("keydown", this.onGroupKeydown));
     }
     this.clearHighlight();
     super.beforeDestroy();

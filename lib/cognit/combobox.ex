@@ -381,49 +381,7 @@ defmodule Cognit.Combobox do
       class={classes(["data-[visible=false]:hidden", @class])}
       {@rest}
     >
-      <div
-        :if={@selectable and @label}
-        data-part="group-trigger"
-        role="button"
-        tabindex="0"
-        class="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none hover:bg-accent hover:text-accent-foreground"
-      >
-        <span
-          data-part="group-indicator"
-          data-group-state="unchecked"
-          class="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-input text-primary-foreground data-[group-state=checked]:border-primary data-[group-state=checked]:bg-primary data-[group-state=indeterminate]:border-primary data-[group-state=indeterminate]:bg-primary"
-        >
-          <svg
-            data-part="group-check"
-            hidden
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-3 w-3"
-          >
-            <path d="M20 6 9 17l-5-5"></path>
-          </svg>
-          <svg
-            data-part="group-minus"
-            hidden
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-3 w-3"
-          >
-            <path d="M5 12h14"></path>
-          </svg>
-        </span>
-        {@label}
-      </div>
+      <Cognit.Select.select_group_trigger :if={@selectable and @label} label={@label} />
       {render_slot(@inner_block)}
     </div>
     """

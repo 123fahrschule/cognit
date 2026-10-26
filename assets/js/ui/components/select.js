@@ -166,6 +166,8 @@ class SelectComponent extends Component {
     this.initializeItems();
     this.initializePlaceholder();
     this.syncHiddenInputs(false);
+    this.initializeGroupTriggers();
+    this.updateGroupIndicators();
   }
 
   getComponentConfig() {
@@ -222,6 +224,7 @@ class SelectComponent extends Component {
                 this.transition("close");
               },
             },
+            "group-trigger": { click: (e) => this.toggleGroup(e) },
           },
         },
       },
@@ -273,6 +276,26 @@ class SelectComponent extends Component {
 
     // Update value display based on initial selection
     this.updateValueDisplay();
+  }
+
+  initializeGroupTriggers() {
+    const triggers = this.el.querySelectorAll('[data-part="group-trigger"]');
+
+    // Group select-all is multiple-only; hide the affordance otherwise.
+    if (!this.multiple) {
+      triggers.forEach((el) => el.setAttribute("hidden", ""));
+      return;
+    }
+
+    // Open-state keydowns go to the content (select) or the search input
+    // (combobox), so wire Enter/Space directly on the group triggers.
+    this.onGroupKeydown = (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        this.toggleGroup(e);
+      }
+    };
+    triggers.forEach((el) => el.addEventListener("keydown", this.onGroupKeydown));
   }
 
   initializePlaceholder() {
@@ -359,6 +382,7 @@ class SelectComponent extends Component {
 
     // Update value display
     this.updateValueDisplay();
+    this.updateGroupIndicators();
 
     // Sync hidden inputs immediately on value change
     this.syncHiddenInputs();
@@ -378,6 +402,67 @@ class SelectComponent extends Component {
     if (!collectionItem) return;
 
     this.collection.focus(collectionItem);
+  }
+
+  // Collect the enabled items of a group.
+  groupItems(group) {
+    return Array.from(group.querySelectorAll('[data-part="item"]'))
+      .map((el) => this.collection.getItemByValue(el.dataset.value))
+      .filter((ci) => ci && !ci.instance.disabled);
+  }
+
+  toggleGroup(event) {
+    if (!this.multiple) return;
+
+    const group = event.currentTarget.closest('[data-part="group"]');
+    if (!group) return;
+
+    const items = this.groupItems(group);
+    if (!items.length) return;
+
+    // If every item is already selected, clear them; otherwise select the
+    // remaining ones.
+    const target = !items.every((ci) => ci.selected);
+    items.forEach((ci) => {
+      if (ci.selected !== target) this.collection.select(ci);
+    });
+
+    this.updateValueDisplay();
+    this.syncHiddenInputs();
+    this.updateGroupIndicators();
+    this.pushEvent("value-changed", { value: this.collection.getValue() });
+  }
+
+  // The server renders every group indicator unchecked, so this must run after
+  // each selection change and each DOM patch.
+  updateGroupIndicators() {
+    if (!this.multiple) return;
+
+    this.el
+      .querySelectorAll('[data-part="group"][data-selectable]')
+      .forEach((group) => {
+        const trigger = group.querySelector('[data-part="group-trigger"]');
+        if (!trigger) return;
+
+        const items = this.groupItems(group);
+        const selected = items.filter((ci) => ci.selected).length;
+
+        let state = "unchecked";
+        if (items.length && selected === items.length) state = "checked";
+        else if (selected > 0) state = "indeterminate";
+
+        // Use a private attribute: the framework's updateUI() overwrites
+        // data-state on every part with the component's open/closed state.
+        trigger
+          .querySelector('[data-part="group-indicator"]')
+          ?.setAttribute("data-group-state", state);
+        trigger
+          .querySelector('[data-part="group-check"]')
+          ?.toggleAttribute("hidden", state !== "checked");
+        trigger
+          .querySelector('[data-part="group-minus"]')
+          ?.toggleAttribute("hidden", state !== "indeterminate");
+      });
   }
 
   updateValueDisplay() {
@@ -530,6 +615,7 @@ class SelectComponent extends Component {
     this.reinitializeItems();
 
     this.updateValueDisplay();
+    this.updateGroupIndicators();
     this.syncHiddenInputs(false);
   }
 
@@ -566,6 +652,12 @@ class SelectComponent extends Component {
 
   // Cleanup
   beforeDestroy() {
+    if (this.onGroupKeydown) {
+      this.el
+        .querySelectorAll('[data-part="group-trigger"]')
+        .forEach((el) => el.removeEventListener("keydown", this.onGroupKeydown));
+    }
+
     if (this.positionedElement) {
       this.positionedElement.destroy();
       this.positionedElement = null;
