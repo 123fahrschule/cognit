@@ -511,6 +511,10 @@ class ComboboxComponent extends SelectComponent {
 
       if (this.input) {
         this.applyFilter(this.input.value.trim().toLowerCase());
+      } else {
+        // Without a search input applyFilter never runs, so redraw the group
+        // select-all checkboxes the server re-render just reset.
+        this.updateGroupIndicators();
       }
 
       // If the dropdown is closed, strip any lingering highlight attributes so
