@@ -381,6 +381,10 @@ defmodule Cognit.Combobox do
       class={classes(["data-[visible=false]:hidden", @class])}
       {@rest}
     >
+      <.combobox_separator
+        aria-hidden="true"
+        class="hidden [[data-part=group]:not([data-visible=false])~[data-part=group]>&]:block"
+      />
       <Cognit.Select.select_group_trigger :if={@selectable and @label} label={@label} />
       {render_slot(@inner_block)}
     </div>
@@ -455,9 +459,16 @@ defmodule Cognit.Combobox do
     """
   end
 
+  attr :class, :any, default: nil
+  attr :rest, :global
+
   def combobox_separator(assigns) do
     ~H"""
-    <div data-part="separator" class={classes(["-mx-1 my-1 h-px bg-muted"])}></div>
+    <div
+      data-part="separator"
+      class={classes(["-mx-1 my-1 h-px bg-muted", @class])}
+      {@rest}
+    />
     """
   end
 
