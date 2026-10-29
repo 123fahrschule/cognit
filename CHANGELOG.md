@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.22.0
+
+### Features
+
+- **Select / Combobox**: A separator is now rendered automatically between consecutive groups, so `select_separator/1` and `combobox_separator/1` no longer need to be placed between groups by hand; remove any you placed there to avoid a double line. Both separators now accept `class` and global attributes
+
 ## 0.21.0
 
 ### Features
