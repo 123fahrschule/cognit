@@ -43,7 +43,6 @@ defmodule Storybook.BugReproductions.ComboboxGroupSelectWithoutInput do
               <.combobox_item value="phoenix">Phoenix</.combobox_item>
               <.combobox_item value="ecto">Ecto</.combobox_item>
             </.combobox_group>
-            <.combobox_separator />
             <.combobox_group
               selectable
               label={group_label("Frontend", ~w(liveview react tailwind), @form[:stack].value)}

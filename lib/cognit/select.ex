@@ -254,6 +254,10 @@ defmodule Cognit.Select do
   def select_group(assigns) do
     ~H"""
     <div data-part="group" data-selectable={@selectable} class={@class} {@rest}>
+      <.select_separator
+        aria-hidden="true"
+        class="hidden [[data-part=group]:not([data-visible=false])~[data-part=group]>&]:block"
+      />
       <.select_group_trigger :if={@selectable and @label} label={@label} />
       {render_slot(@inner_block)}
     </div>
@@ -371,9 +375,16 @@ defmodule Cognit.Select do
     """
   end
 
+  attr :class, :any, default: nil
+  attr :rest, :global
+
   def select_separator(assigns) do
     ~H"""
-    <div data-part="separator" class={classes(["-mx-1 my-1 h-px bg-muted"])}></div>
+    <div
+      data-part="separator"
+      class={classes(["-mx-1 my-1 h-px bg-muted", @class])}
+      {@rest}
+    />
     """
   end
 

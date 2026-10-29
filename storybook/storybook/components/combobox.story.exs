@@ -252,7 +252,6 @@ defmodule Storybook.CognitComponents.Combobox do
                   <.combobox_item value="phoenix">Phoenix</.combobox_item>
                   <.combobox_item value="ecto">Ecto</.combobox_item>
                 </.combobox_group>
-                <.combobox_separator />
                 <.combobox_group selectable label="Frontend">
                   <.combobox_item value="liveview">LiveView</.combobox_item>
                   <.combobox_item value="react">React</.combobox_item>

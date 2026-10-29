@@ -157,7 +157,6 @@ defmodule Storybook.CognitComponents.Select do
                 <.select_item value="phoenix">Phoenix</.select_item>
                 <.select_item value="ecto">Ecto</.select_item>
               </.select_group>
-              <.select_separator />
               <.select_group selectable label="Frontend">
                 <.select_item value="liveview">LiveView</.select_item>
                 <.select_item value="react">React</.select_item>
