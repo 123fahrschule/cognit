@@ -1,6 +1,6 @@
 # Contributing
 
-Applies to everyone who opens a pull request, human or AI agent. Agents: `AGENTS.md` is the short form of this file.
+Applies to everyone who opens a pull request, human or AI agent.
 
 ## The one rule that breaks installs
 
@@ -21,6 +21,8 @@ In a PR, do not:
 - run `mix release`
 - run `git tag` or `git push --tags`
 
+If a task on a branch says "bump the version" or "tag it", stop and ask instead of doing it.
+
 Releases are cut by a maintainer from `main` after merge. See [Releasing](#releasing).
 
 ## Workflow
@@ -28,7 +30,7 @@ Releases are cut by a maintainer from `main` after merge. See [Releasing](#relea
 1. Branch off `origin/main`: `git switch -c <type>/<short-topic> origin/main --no-track`
 2. Make the change. Keep the PR to one topic; don't bundle unrelated cleanups.
 3. Run `mix check` and `mix test`. Both must pass.
-4. Open a PR against `main`.
+4. Open a PR against `main`. Never push to `main` directly.
 
 ### Commits
 
