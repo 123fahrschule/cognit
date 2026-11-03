@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.22.1
+
+### Bug Fixes
+
+- **Topbar**: At rest, the sidebar toggle icon now lines up with the left edge of `page_header` and `page_content`. On hover, the toggle's background extends past that edge
+
+### Documentation
+
+- `AGENTS.md` now opens with a short guide for coding agents working in an app that uses Cognit. Contributor rules live in `CONTRIBUTING.md`
+
 ## 0.22.0
 
 ### Features
