@@ -19,8 +19,13 @@ defmodule Cognit.Components.Topbar do
       }
       {@rest}
     >
-      <.sidebar_trigger is_mobile class="md:hidden" />
-      <.sidebar_trigger class="hidden md:inline-flex" />
+      <%!-- Hide the wrapper: `class` reaches only the button, so its tooltip root would still take the gap. `-ml-1.5` puts the resting icon on the px-6 edge. --%>
+      <div class="contents md:hidden">
+        <.sidebar_trigger is_mobile class="-ml-1.5" />
+      </div>
+      <div class="hidden md:contents">
+        <.sidebar_trigger class="-ml-1.5" />
+      </div>
 
       {render_slot(@inner_block)}
     </div>
