@@ -113,6 +113,12 @@ msgctxt "sidebar, toggle button"
 msgid "Toggle Sidebar"
 msgstr "Seitenleiste ein- oder ausklappen"
 
+#: lib/cognit/sidebar.ex:160
+#, elixir-autogen, elixir-format
+msgctxt "sidebar, mobile drawer"
+msgid "Navigation"
+msgstr "Navigation"
+
 #: lib/cognit/components/user_helpers.ex:14
 #, elixir-autogen, elixir-format
 msgctxt "user menu, fallback username"

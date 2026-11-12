@@ -7,6 +7,12 @@ defmodule Cognit.Sidebar do
   `sidebar_state` cookie on toggle, `Cognit.SidebarPlug` reads it into the
   session and `Cognit.SidebarHook` puts it into assigns.
 
+  The sidebar renders its content once. The same panel is the docked sidebar
+  from the `md` breakpoint up and an off-canvas drawer with an overlay below
+  it, so ids and hooks inside the slot exist exactly once in the DOM.
+  `sidebar_trigger/1` and `sidebar_rail/1` dispatch `cognit:sidebar:toggle` to
+  the root; the hook collapses on desktop and opens the drawer on mobile.
+
   ## Menu buttons: links vs actions
 
   `sidebar_menu_button/1` forwards `navigate`, `patch`, `href` and the standard
@@ -33,7 +39,6 @@ defmodule Cognit.Sidebar do
   import Cognit.Icon
   import Cognit.Input
   import Cognit.Separator
-  import Cognit.Sheet
   import Cognit.Skeleton
   import Cognit.Tooltip
 
@@ -53,7 +58,11 @@ defmodule Cognit.Sidebar do
 
   def sidebar_provider(assigns) do
     assigns =
-      assign(assigns, %{sidebar_width: @sidebar_width, sidebar_width_icon: @sidebar_width_icon})
+      assign(assigns, %{
+        sidebar_width: @sidebar_width,
+        sidebar_width_mobile: @sidebar_width_mobile,
+        sidebar_width_icon: @sidebar_width_icon
+      })
 
     ~H"""
     <div
@@ -61,6 +70,7 @@ defmodule Cognit.Sidebar do
         style([
           %{
             "--sidebar-width": @sidebar_width,
+            "--sidebar-width-mobile": @sidebar_width_mobile,
             "--sidebar-width-icon": @sidebar_width_icon
           },
           @style
@@ -90,12 +100,6 @@ defmodule Cognit.Sidebar do
   attr :side, :string, values: ~w(left right), default: "left"
   attr :variant, :string, values: ~w(sidebar floating inset), default: "sidebar"
   attr :collapsible, :string, values: ~w(offcanvas icon none), default: "icon"
-  attr :is_mobile, :boolean, default: false
-
-  attr :is_desktop, :boolean,
-    default: false,
-    doc: "forces the desktop layout; leave unset in production and let CSS switch by viewport"
-
   attr :state, :string, values: ~w(expanded collapsed), default: "expanded"
   attr :class, :any, default: nil
   attr :style, :map, default: %{}
@@ -119,55 +123,25 @@ defmodule Cognit.Sidebar do
     """
   end
 
-  def sidebar(%{is_mobile: true} = assigns) do
-    assigns = assign(assigns, :sidebar_width_mobile, @sidebar_width_mobile)
-
-    ~H"""
-    <.sheet id={"#{@id}-mobile"}>
-      <.sheet_content
-        data-sidebar="sidebar"
-        data-mobile="true"
-        class="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-        data-variant={@variant}
-        style={
-          style([
-            %{
-              "--sidebar-width": @sidebar_width_mobile
-            },
-            @style
-          ])
-        }
-        side={@side}
-      >
-        <div
-          class="group flex h-full w-full flex-col"
-          data-collapsible="none"
-          id={"#{@id}-mobile-menu"}
-          phx-hook="Cognit.SidebarMenu"
-        >
-          {render_slot(@inner_block)}
-        </div>
-      </.sheet_content>
-    </.sheet>
-    """
-  end
-
-  def sidebar(%{is_desktop: true} = assigns) do
+  def sidebar(assigns) do
     ~H"""
     <div
-      class="group peer hidden md:block text-sidebar-foreground sidebar-root"
+      class="group peer text-sidebar-foreground sidebar-root"
       data-sidebar="root"
       data-state={@state}
       data-collapsible={(@state == "collapsed" && @collapsible) || "none"}
+      data-collapsible-mode={@collapsible}
+      data-mobile="closed"
       data-variant={@variant}
       data-side={@side}
       id={@id}
       phx-hook="Cognit.Sidebar"
-      phx-toggle-sidebar={toggle_sidebar({"none", @collapsible})}
+      phx-mounted={JS.ignore_attributes(["data-state", "data-collapsible", "data-mobile"])}
+      phx-toggle-sidebar={JS.dispatch("cognit:sidebar:toggle")}
     >
       <div class={
         classes([
-          "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+          "duration-200 relative hidden md:block h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
           ((@variant == "floating" || @variant == "inset") &&
@@ -176,23 +150,34 @@ defmodule Cognit.Sidebar do
         ])
       } />
       <div
+        data-sidebar="overlay"
+        class="fixed inset-0 z-40 hidden bg-overlay group-data-[mobile=open]:block md:!hidden"
+      />
+      <%!-- `invisible`, not just the off-screen translate, takes the closed drawer out of the tab order. --%>
+      <div
+        id={"#{@id}-panel"}
+        data-sidebar="panel"
+        data-dialog-label={pgettext("sidebar, mobile drawer", "Navigation")}
+        phx-mounted={JS.ignore_attributes(["role", "aria-modal", "aria-label", "tabindex"])}
         class={
           classes([
-            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
+            "duration-200 fixed inset-y-0 z-10 flex h-svh w-[--sidebar-width] transition-[left,right,width,transform,visibility] ease-linear",
+            "max-md:z-50 max-md:w-[--sidebar-width-mobile] max-md:shadow-lg max-md:invisible max-md:group-data-[mobile=open]:visible max-md:group-data-[mobile=open]:translate-x-0",
             (@side == "left" &&
-               "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]") ||
-              "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+               "left-0 max-md:-translate-x-full group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]") ||
+              "right-0 max-md:translate-x-full group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
             ((@variant == "floating" || @variant == "inset") &&
-               "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]") ||
+               "md:p-2 max-md:group-data-[side=left]:border-r max-md:group-data-[side=right]:border-l max-md:border-sidebar-border group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]") ||
               "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l border-sidebar-border",
             @class
           ])
         }
+        style={style([@style])}
         {@rest}
       >
         <div
           data-sidebar="sidebar"
-          class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+          class="flex h-full w-full flex-col bg-sidebar md:group-data-[variant=floating]:rounded-lg md:group-data-[variant=floating]:border md:group-data-[variant=floating]:border-sidebar-border md:group-data-[variant=floating]:shadow"
           id={"#{@id}-menu"}
           phx-hook="Cognit.SidebarMenu"
         >
@@ -203,84 +188,16 @@ defmodule Cognit.Sidebar do
     """
   end
 
-  def sidebar(assigns) do
-    ~H"""
-    <.sidebar
-      is_mobile={true}
-      id={@id}
-      side={@side}
-      variant={@variant}
-      state={@state}
-      class={@class}
-      style={@style}
-      {@rest}
-    >
-      {render_slot(@inner_block)}
-    </.sidebar>
-    <.sidebar
-      is_desktop={true}
-      id={@id}
-      side={@side}
-      variant={@variant}
-      state={@state}
-      class={@class}
-      style={@style}
-      collapsible={@collapsible}
-      {@rest}
-    >
-      {render_slot(@inner_block)}
-    </.sidebar>
-    """
-  end
-
   @doc """
   Render sidebar trigger.
 
-  Mobile version (is_mobile=true): Renders in toolbar, opens Sheet with menu icon.
-  Desktop version: Renders in sidebar header, toggles with context-aware arrows.
+  Collapses the sidebar on desktop and opens the drawer on mobile; the sidebar
+  hook picks the action by viewport.
   """
   attr :class, :any, default: nil
   attr :target, :string, default: "cognit-sidebar", doc: "The id of the target sidebar"
   attr :as, :any, default: "button"
-  attr :is_mobile, :boolean, default: false
   attr :rest, :global
-
-  def sidebar_trigger(%{is_mobile: true} = assigns) do
-    assigns =
-      assign(
-        assigns,
-        :tooltip_label,
-        pgettext("sidebar, toggle button", "Toggle Sidebar")
-      )
-
-    ~H"""
-    <.tooltip class="inline-block" close-delay={0}>
-      <.tooltip_trigger>
-        <.dynamic
-          tag={@as}
-          data-sidebar="trigger"
-          aria-label={@tooltip_label}
-          class={
-            classes([
-              "inline-flex items-center justify-center h-7 w-7 rounded-md",
-              "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-              @class
-            ])
-          }
-          phx-click={Cognit.JS.dispatch_command(%JS{}, "open", to: "##{@target}-mobile")}
-          {@rest}
-        >
-          <.icon name="dock_to_left" size="xs" />
-          <span class="sr-only">{@tooltip_label}</span>
-        </.dynamic>
-      </.tooltip_trigger>
-      <.tooltip_content side="right" class="pointer-events-none whitespace-nowrap">
-        {@tooltip_label}
-      </.tooltip_content>
-    </.tooltip>
-    """
-  end
 
   def sidebar_trigger(assigns) do
     assigns =
@@ -305,7 +222,12 @@ defmodule Cognit.Sidebar do
               @class
             ])
           }
-          phx-click={JS.exec("phx-toggle-sidebar", to: "##{@target}")}
+          data-sidebar-target={@target}
+          phx-mounted={
+            JS.ignore_attributes(["aria-controls", "aria-expanded"])
+            |> JS.dispatch("cognit:sidebar:sync", to: "##{@target}")
+          }
+          phx-click={JS.dispatch("cognit:sidebar:toggle", to: "##{@target}")}
           {@rest}
         >
           <.icon name="dock_to_left" size="xs" />
@@ -330,12 +252,12 @@ defmodule Cognit.Sidebar do
     <button
       data-sidebar="rail"
       aria-label={pgettext("sidebar, toggle button", "Toggle Sidebar")}
-      tab-index={-1}
-      onclick={exec_closest("phx-toggle-sidebar", ".sidebar-root")}
+      tabindex="-1"
+      phx-click={JS.dispatch("cognit:sidebar:toggle")}
       title={pgettext("sidebar, toggle button", "Toggle Sidebar")}
       class={
         classes([
-          "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
+          "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 md:flex",
           "[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize",
           "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
           "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar",
@@ -649,8 +571,6 @@ defmodule Cognit.Sidebar do
   attr :size, :string, values: ~w(default sm lg), default: "default"
   attr :is_active, :boolean, default: false
   attr :class, :any, default: nil
-  attr :is_mobile, :boolean, default: false
-  attr :state, :string, default: "expanded"
   attr :as, :any, default: &link/1
 
   attr :rest, :global,
@@ -689,8 +609,7 @@ defmodule Cognit.Sidebar do
           class={
             classes([
               "group-data-[collapsible=none]:hidden group-data-[collapsible=offcanvas]:hidden",
-              "pointer-events-none whitespace-nowrap",
-              @is_mobile && "hidden"
+              "pointer-events-none whitespace-nowrap"
             ])
           }
         >
@@ -908,14 +827,5 @@ defmodule Cognit.Sidebar do
   @shared_classes "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-h-0 group-[.is-transitioning]:truncate [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&_.icon]:text-[16px] [&_.icon]:shrink-0"
   defp sidebar_button_variant(input) do
     @shared_classes <> " " <> variant_class(@variant_config, input)
-  end
-
-  @doc """
-  Toggle sidebar between collapsed and expanded state.
-  """
-  def toggle_sidebar({state1, state2} = _collapsible_states) do
-    {"data-state", "collapsed", "expanded"}
-    |> JS.toggle_attribute()
-    |> JS.toggle_attribute({"data-collapsible", state1, state2})
   end
 end
