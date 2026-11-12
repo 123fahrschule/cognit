@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.23.0
+
+### Features
+
+- **Sidebar**: The sidebar renders its content once, so ids and hooks inside it no longer appear twice on the page. Below the `md` breakpoint the same panel slides in as a drawer over an overlay: it is announced as a dialog labelled "Navigation", keeps keyboard focus inside while open, and closes on `Escape`, an overlay click or a LiveView navigation. `sidebar_trigger/1` opens the drawer on mobile, collapses the sidebar on desktop, and exposes `aria-expanded` and `aria-controls`
+
+### Bug Fixes
+
+- **Dropdown Menu / Select / Popover / Hover Card / Tooltip / Date Picker**: Content that doesn't fit on its preferred side now moves to the opposite side only when it fits there, and otherwise opens below or above its trigger. Menus in the mobile sidebar drawer, such as `app_side_nav` and `user_side_nav`, no longer open off-screen, and opening one no longer scrolls the surrounding page to reveal it
+- **Dialog / Popover / Date Picker**: Focus returns to the element that opened them when they close and are removed from the page in the same update
+
+### Compatibility
+
+- **Sidebar**: `sidebar/1` no longer accepts `is_mobile` or `is_desktop`, `sidebar_trigger/1` no longer accepts `is_mobile`, `sidebar_menu_button/1` no longer accepts `is_mobile` or `state`, and `Cognit.Sidebar.toggle_sidebar/1` is removed. Toggle with `sidebar_trigger/1` or by dispatching `cognit:sidebar:toggle` to the sidebar. The separate mobile sheet (`#<sidebar id>-mobile`) is gone, so commands, JS and tests aimed at it must target the sidebar itself
+- **User Side Nav**: In dropdown mode `id` now defaults to `"user-side-nav"` instead of a generated id. Pass a unique `id` when more than one renders on a page
+
 ## 0.22.1
 
 ### Bug Fixes

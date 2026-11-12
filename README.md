@@ -210,6 +210,7 @@ Each release with a *Compatibility* section in [CHANGELOG.md](CHANGELOG.md) need
 - **0.13.0**: Broad visual refresh of form controls, dialogs, sheets, tabs, tables and menus. `alert_dialog` lost its built-in close button; `rounded-sm`/`rounded-md` shrank by 2px.
 - **0.16.0**: `toaster` lost the `position` attribute; toasts always render top center.
 - **0.20.0**: Open Sans files renamed to `open-sans-*.woff2`; Material Symbols weight, grade and optical size are fixed, so `wght`/`GRAD`/`opsz` overrides no longer apply.
+- **0.23.0**: The mobile sidebar is a drawer of the same panel instead of a separate sheet. Remove `is_mobile`/`is_desktop` from `sidebar`, `is_mobile` from `sidebar_trigger`, `is_mobile`/`state` from `sidebar_menu_button` and calls to `toggle_sidebar/1`; point anything aimed at `#<sidebar id>-mobile` at the sidebar. Give each `user_side_nav` a unique `id` when rendering more than one.
 
 ## Scaffolding an app
 
