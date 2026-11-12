@@ -3,6 +3,13 @@
  * Core Positioning utility for SaladUI components
  * Handles pure positioning calculations without side effects
  */
+const OPPOSITE_SIDE = {
+  top: "bottom",
+  right: "left",
+  bottom: "top",
+  left: "right",
+};
+
 class Positioner {
   /**
    * Calculate position for an element relative to a reference element
@@ -32,51 +39,25 @@ class Positioner {
     // Find container bounds
     let containerRect;
     if (container === document.body) {
-      containerRect = {
-        top: 0,
-        right: window.innerWidth,
-        bottom: window.innerHeight,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+      containerRect = this.getClippingRect(element);
     } else {
       containerRect = container.getBoundingClientRect();
     }
 
-    // Calculate initial position
-    let { x, y } = this.getBasePosition(
-      placement,
-      alignment,
-      elementRect,
-      referenceRect,
-      alignOffset,
-      sideOffset,
-    );
-
-    // Apply flipping if needed
-    let actualPlacement = placement;
-    if (flip) {
-      const flippedPlacement = this.getFlippedPlacement(
-        placement,
-        { x, y, width: elementRect.width, height: elementRect.height },
-        containerRect,
+    const positionFor = (side) =>
+      this.getBasePosition(
+        side,
+        alignment,
+        elementRect,
+        referenceRect,
+        alignOffset,
+        sideOffset,
       );
 
-      if (flippedPlacement !== placement) {
-        actualPlacement = flippedPlacement;
-        const flippedPosition = this.getBasePosition(
-          flippedPlacement,
-          alignment,
-          elementRect,
-          referenceRect,
-          alignOffset,
-          sideOffset,
-        );
-        x = flippedPosition.x;
-        y = flippedPosition.y;
-      }
-    }
+    const actualPlacement = flip
+      ? this.choosePlacement(placement, elementRect, containerRect, positionFor)
+      : placement;
+    const { x, y } = positionFor(actualPlacement);
 
     return {
       x,
@@ -104,6 +85,41 @@ class Positioner {
     element.style.top = y + "px";
     element.style.left = x + "px";
     element.style.margin = "0";
+  }
+
+  /**
+   * The viewport narrowed by every overflow-clipping ancestor from the
+   * containing block up. A fixed element escapes overflow clipping unless a
+   * transformed ancestor (e.g. an open mobile drawer) contains it.
+   */
+  static getClippingRect(element) {
+    const rect = {
+      top: 0,
+      right: window.innerWidth,
+      bottom: window.innerHeight,
+      left: 0,
+    };
+
+    for (
+      let ancestor = this.getContainingBlock(element);
+      ancestor && ancestor !== document.body;
+      ancestor = ancestor.parentElement
+    ) {
+      const style = window.getComputedStyle(ancestor);
+      if (style.overflowX === "visible" && style.overflowY === "visible") {
+        continue;
+      }
+
+      const clip = ancestor.getBoundingClientRect();
+      rect.top = Math.max(rect.top, clip.top);
+      rect.right = Math.min(rect.right, clip.right);
+      rect.bottom = Math.min(rect.bottom, clip.bottom);
+      rect.left = Math.max(rect.left, clip.left);
+    }
+
+    rect.width = rect.right - rect.left;
+    rect.height = rect.bottom - rect.top;
+    return rect;
   }
 
   static getContainingBlock(element) {
@@ -194,42 +210,39 @@ class Positioner {
   }
 
   /**
-   * Determine if placement should be flipped due to lack of space
+   * Pick the first side with room: the requested one, its opposite, then —
+   * for left/right, e.g. a menu inside a full-width mobile drawer — below or
+   * above. With no room anywhere, the side that overflows least wins.
    */
-  static getFlippedPlacement(placement, elementCoords, containerRect) {
-    const { x, y, width, height } = elementCoords;
+  static choosePlacement(placement, elementRect, containerRect, positionFor) {
+    const opposite = OPPOSITE_SIDE[placement];
+    if (!opposite) return placement;
 
-    // Check if element would overflow container
-    const overflowTop = y < containerRect.top;
-    const overflowRight = x + width > containerRect.right;
-    const overflowBottom = y + height > containerRect.bottom;
-    const overflowLeft = x < containerRect.left;
+    const candidates =
+      placement === "left" || placement === "right"
+        ? [placement, opposite, "bottom", "top"]
+        : [placement, opposite];
 
-    // Determine if we need to flip
-    switch (placement) {
+    const overflow = (side) =>
+      this.overflowOnSide(side, positionFor(side), elementRect, containerRect);
+
+    return (
+      candidates.find((side) => overflow(side) <= 0) ||
+      (overflow(placement) <= overflow(opposite) ? placement : opposite)
+    );
+  }
+
+  static overflowOnSide(side, { x, y }, { width, height }, containerRect) {
+    switch (side) {
       case "top":
-        if (overflowTop && !overflowBottom) {
-          return "bottom";
-        }
-        break;
+        return containerRect.top - y;
       case "right":
-        if (overflowRight && !overflowLeft) {
-          return "left";
-        }
-        break;
+        return x + width - containerRect.right;
       case "bottom":
-        if (overflowBottom && !overflowTop) {
-          return "top";
-        }
-        break;
+        return y + height - containerRect.bottom;
       case "left":
-        if (overflowLeft && !overflowRight) {
-          return "right";
-        }
-        break;
+        return containerRect.left - x;
     }
-
-    return placement;
   }
 
   /**
