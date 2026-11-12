@@ -54,16 +54,11 @@ class FocusTrap {
     // Remove event listeners
     this.element.removeEventListener("keydown", this.handleKeyDown);
 
-    // Restore focus if possible
-    if (
-      this.previouslyFocused &&
-      this.previouslyFocused.focus &&
-      this.isElementInViewport(this.previouslyFocused)
-    ) {
-      setTimeout(() => {
-        this.previouslyFocused.focus();
-        this.previouslyFocused = null;
-      }, 0);
+    // Captured locally: destroy() clears the field before the timeout runs.
+    const target = this.previouslyFocused;
+    this.previouslyFocused = null;
+    if (target && target.focus && this.isElementInViewport(target)) {
+      setTimeout(() => target.focus(), 0);
     }
 
     this.active = false;
